@@ -1,4 +1,4 @@
-remote_theme: just-the-docs/just-the-docs
+remote_theme: sighingnow/jekyll-gitbook
 title: "LLMs: From Foundations to Production"
 description: "A comprehensive tutorial for mastering Large Language Models (LLMs) – from core mathematics and computing principles to production deployment, advanced applications, and emerging research trends."
 color_scheme: dark
