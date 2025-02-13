@@ -10,27 +10,27 @@ A hands-on tutorial series for mastering Large Language Models (LLMs) – featur
 This comprehensive tutorial series is designed to provide practical, hands-on experience with LLM development and deployment. Each tutorial combines theoretical concepts with practical implementations, real-world examples, and coding exercises.
 
 ## Tutorial Contents
-- [Tutorial 1: Mathematical Foundations](Tutorials/1_Math_Foundations.md) 🧮
-- [Tutorial 2: Neural Networks & Deep Learning Basics](Tutorials/2_Neural_Networks.md) 🔄
-- [Tutorial 3: NLP Fundamentals in Practice](Tutorials/3_NLP_Basics.md) 📝
-- [Tutorial 4: Building Transformer Models](Tutorials/4_Transformers.md) 🔍
-- [Tutorial 5: Implementing Modern LLM Architectures](Tutorials/5_LLM_Architectures.md) 🏗️
-- [Tutorial 6: Building Data Processing Pipelines](Tutorials/6_Data_Processing.md) 🔤
-- [Tutorial 7: Setting Up Training Infrastructure](Tutorials/7_Training_Infra.md) 💻
-- [Tutorial 8: Pre-Training LLMs Step by Step](Tutorials/8_Pre_Training.md) 📊
-- [Tutorial 9: Fine-Tuning Techniques](Tutorials/9_Post_Training.md) 🔬
-- [Tutorial 10: Testing & Evaluating Models](Tutorials/10_Evaluation.md) ✅
-- [Tutorial 11: Model Optimization Guide](Tutorials/11_Optimization.md) ⚡
-- [Tutorial 12: Deploying Models to Production](Tutorials/12_Production.md) 🏭
-- [Tutorial 13: Implementing LLMOps](Tutorials/13_LLMOps.md) 🛠️
-- [Tutorial 14: Advanced Prompt Engineering & RAG](Tutorials/14_RAG.md) 💭
-- [Tutorial 15: Building AI Agents](Tutorials/15_Agents.md) 🤖
-- [Tutorial 16: Implementing AI Safety Measures](Tutorials/16_Safety.md) 🔒
-- [Tutorial 17: Working with Multimodal Models](Tutorials/17_Multimodal.md) 🚀
-- [Tutorial 18: Performance Optimization Techniques](Tutorials/18_Performance.md) ⚡
-- [Tutorial 19: Production Monitoring Systems](Tutorials/19_Maintenance.md) 📈
-- [Tutorial 20: Enterprise Integration Guide](Tutorials/20_Enterprise.md) 🏢
-- [Tutorial 21: Exploring Cutting-Edge Techniques](Tutorials/21_Future.md) 🔮
+- [Module 1: Mathematical Foundations](Modules/1_Math_Foundations.md) 🧮
+- [Module 2: Neural Networks & Deep Learning Fundamentals](Modules/2_Neural_Networks.md) 🔄
+- [Module 3: Natural Language Processing Fundamentals](Modules/3_NLP_Basics.md) 📝
+- [Module 4: Understanding Transformer Architectures](Modules/4_Transformers.md) 🔍
+- [Module 5: Modern Large Language Model Architectures](Modules/5_LLM_Architectures.md) 🏗️
+- [Module 6: Data Processing & Preparation Pipeline](Modules/6_Data_Processing.md) 🔤
+- [Module 7: Training Infrastructure](Modules/7_Training_Infra.md) 💻
+- [Module 8: Pre-Training Large Language Models](Modules/8_Pre_Training.md) 📊
+- [Module 9: Post-Training Techniques & Fine-Tuning](Modules/9_Post_Training.md) 🔬
+- [Module 10: Model Evaluation & Testing](Modules/10_Evaluation.md) ✅
+- [Module 11: Model Optimization for Inference](Modules/11_Optimization.md) ⚡
+- [Module 12: Production Infrastructure & Deployment](Modules/12_Production.md) 🏭
+- [Module 13: LLMOps & Model Management](Modules/13_LLMOps.md) 🛠️
+- [Module 14: Prompt Engineering & Retrieval Augmented Generation](Modules/14_RAG.md) 💭
+- [Module 15: Function Calling & AI Agents](Modules/15_Agents.md) 🤖
+- [Module 16: AI Safety & Security Considerations](Modules/16_Safety.md) 🔒
+- [Module 17: Working with Multimodal Language Models](Modules/17_Multimodal.md) 🚀
+- [Module 18: Model Performance & Optimization](Modules/18_Performance.md) ⚡
+- [Module 19: Production Monitoring & Maintenance](Modules/19_Maintenance.md) 📈
+- [Module 20: Enterprise Integration & Best Practices](Modules/20_Enterprise.md) 🏢
+- [Module 21: Future Trends & Research Directions](Modules/21_Future.md) 🔮
 
 ## What's Included in Each Tutorial
 Each tutorial features:
