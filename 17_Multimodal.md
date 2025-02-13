@@ -1,3 +1,9 @@
+---
+title: "Multimodal Models"
+nav_order: 18
+---
+
+
 # Module 17: Multimodal Models
 
 ### Vision & Language

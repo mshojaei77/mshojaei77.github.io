@@ -1,3 +1,9 @@
+---
+title: "Data Processing"
+nav_order: 7
+---
+
+
 # Module 6: Data Processing
 
 ### Data Collection

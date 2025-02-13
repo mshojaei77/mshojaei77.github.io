@@ -1,3 +1,9 @@
+---
+title: "Scaling & Enterprise Integration"
+nav_order: 21
+---
+
+
 # Module 20: Scaling & Enterprise Integration
 
 ### Enterprise-Level API Design & Architecture

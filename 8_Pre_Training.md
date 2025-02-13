@@ -1,3 +1,9 @@
+---
+title: "Pretraining Fundamentals"
+nav_order: 9
+---
+
+
 # Module 8: Pretraining Fundamentals
 
 ### Pretraining Objectives & Loss Functions

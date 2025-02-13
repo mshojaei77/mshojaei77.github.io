@@ -1,3 +1,9 @@
+---
+title: "Neural Networks & Deep Learning Basics"
+nav_order: 3
+---
+
+
 # Module 2: Neural Networks & Deep Learning Basics
 
 ![image](https://github.com/user-attachments/assets/c59bce3c-9dea-47b8-8d2a-aadb22662d10)

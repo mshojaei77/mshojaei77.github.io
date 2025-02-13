@@ -1,3 +1,9 @@
+---
+title: "Future Directions"
+nav_order: 22
+---
+
+
 # Module 21: Future Directions
 
 ### Emerging Research Trends & Novel Architectures

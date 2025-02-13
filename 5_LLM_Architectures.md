@@ -1,3 +1,10 @@
+---
+title: "odern LLM Architectures"
+nav_order: 6
+---
+
+
+
 # Module 5: Modern LLM Architectures
 
 ### Encoder-Only Models (BERT)

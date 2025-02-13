@@ -1,3 +1,9 @@
+---
+title: "Model Optimization for Inference"
+nav_order: 12
+---
+
+
 # Module 11: Model Optimization for Inference
 
 ### Inference Speedup with KV-Cache

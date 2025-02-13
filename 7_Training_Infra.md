@@ -1,3 +1,9 @@
+---
+title: "Training Infrastructure"
+nav_order: 8
+---
+
+
 # Module 7: Training Infrastructure
 
 ### Distributed Training Strategies

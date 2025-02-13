@@ -1,3 +1,9 @@
+---
+title: "Function Calling and AI Agents"
+nav_order: 16
+---
+
+
 # Module 15: Function Calling and AI Agents
 
 ### Function Calling Fundamentals

@@ -1,3 +1,9 @@
+---
+title: "NLP Fundamentals"
+nav_order: 4
+---
+
+
 # Module 3: NLP Fundamentals
 
 This module covers essential Natural Language Processing concepts and techniques, focusing on text processing, word representations, and language modeling fundamentals crucial for understanding LLMs.

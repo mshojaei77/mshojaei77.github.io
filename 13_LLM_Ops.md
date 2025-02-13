@@ -1,3 +1,9 @@
+---
+title: "Large Language Model Operations (LLMOps)"
+nav_order: 14
+---
+
+
 # Module 13: Large Language Model Operations (LLMOps)
 
 ### Model Registry & Deployment Pipelines

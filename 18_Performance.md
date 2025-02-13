@@ -1,3 +1,9 @@
+---
+title: "Performance Optimization"
+nav_order: 19
+---
+
+
 # Module 18: Performance Optimization
 
 ### GPU Architecture & Parallel Computing

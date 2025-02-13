@@ -1,3 +1,9 @@
+---
+title: "Prompt Engineering & RAG"
+nav_order: 15
+---
+
+
 # Module 14: Prompt Engineering & RAG
 ### Prompt Engineering Techniques
 - **Description**: Master the art of crafting effective prompts to guide LLM behavior.

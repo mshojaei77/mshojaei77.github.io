@@ -1,3 +1,9 @@
+---
+title: "Evaluation"
+nav_order: 11
+---
+
+
 # Module 10: Evaluation
 
 ### Evaluation Metrics for LLMs
