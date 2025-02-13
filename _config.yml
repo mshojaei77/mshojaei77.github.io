@@ -1,5 +1,17 @@
-remote_theme: sighingnow/jekyll-gitbook
 title: "LLMs: From Foundations to Production"
 description: "A comprehensive tutorial for mastering Large Language Models (LLMs) – from core mathematics and computing principles to production deployment, advanced applications, and emerging research trends."
 color_scheme: dark
 search_enabled: true
+theme: "docsy"
+
+github: "https://github.com/mshojaei77/LLMs-Journey"
+
+# Logo
+logo: "/assets/img/logo.png"
+
+# Social media links
+social:
+  github: "https://github.com/mshojaei77"
+  huggingface: "https://huggingface.co/mshojaei77"
+  twitter: "https://twitter.com/realshojaei"
+  linkedin: "https://linkedin.com/in/mshojaei77"
