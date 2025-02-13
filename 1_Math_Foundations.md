@@ -25,8 +25,7 @@ Linear algebra forms the backbone of machine learning algorithms and data repres
 
 #### Learning Resources
 **Core Materials (Basic to Advanced)**
-- **[Colab: Introduction to Linear Algebra for ML](https://colab.research.google.com/drive/...)**
-- **[Colab: Advanced Linear Algebra Applications in LLMs](https://colab.research.google.com/drive/...)**
+- **[Colab: Introduction to Linear Algebra for ML](https://colab.research.google.com/drive/1fiSXbawfI-EMvntaV81ORDnjKDKZhzAl?usp=sharing)**
 
 Additional Resources:
 - [![3Blue1Brown: Essence of Linear Algebra](https://badgen.net/badge/Video/Essence%20of%20Linear%20Algebra/blue)](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
@@ -47,7 +46,6 @@ Essential for understanding neural network learning, optimization, and modern de
 #### Learning Resources
 **Core Materials (Basic to Advanced)**
 - **[Colab: Calculus Fundamentals for ML](https://colab.research.google.com/drive/...)**
-- **[Colab: Advanced Optimization in Deep Learning](https://colab.research.google.com/drive/...)**
 
 Additional Resources:
 - [![3Blue1Brown: Essence of Calculus](https://badgen.net/badge/Video/Essence%20of%20Calculus/blue)](https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr)
@@ -67,7 +65,6 @@ Framework for understanding uncertainty, data patterns, and model behavior in LL
 #### Learning Resources
 **Core Materials (Basic to Advanced)**
 - **[Colab: Probability and Statistics for ML](https://colab.research.google.com/drive/...)**
-- **[Colab: Advanced Statistical Methods in LLMs](https://colab.research.google.com/drive/...)**
 
 Additional Resources:
 - [![Khan Academy Probability](https://badgen.net/badge/Course/Probability%20%26%20Statistics/green)](https://www.khanacademy.org/math/statistics-probability)

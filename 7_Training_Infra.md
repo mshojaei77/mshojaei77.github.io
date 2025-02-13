@@ -3,115 +3,146 @@ title: "Training Infrastructure"
 nav_order: 8
 ---
 
-
 # Module 7: Training Infrastructure
 
-### Distributed Training Strategies
-- **Description**: Scale model training across multiple devices and nodes for faster processing.
-- **Concepts Covered**: `distributed training`, `data parallelism`, `model parallelism`
+## 1. Distributed Training Strategies
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![DeepSpeed: Distributed Training](https://badgen.net/badge/Docs/DeepSpeed%3A%20Distributed%20Training/green)](https://www.deepspeed.ai/training/) | |
-| [![PyTorch Distributed](https://badgen.net/badge/Docs/PyTorch%20Distributed/green)](https://pytorch.org/docs/stable/distributed.html) | |
+Learn to scale model training across multiple devices and nodes for faster processing.
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![DeepSpeed](https://badgen.net/badge/Framework/DeepSpeed/green)](https://www.deepspeed.ai/) | |
-| [![PyTorch Lightning](https://badgen.net/badge/Framework/PyTorch%20Lightning/green)](https://www.pytorchlightning.ai/) | |
+### Key Concepts
+- Distributed Training Fundamentals
+- Data Parallelism Implementation
+- Model Parallelism Techniques
+- Multi-Node Training Setup
+- Pipeline Parallelism
+- Zero Redundancy Optimizer (ZeRO)
+- Sharded Training
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Distributed Training Basics](https://badgen.net/badge/Notebook/Distributed%20Training%20Basics/orange)](notebooks/distributed_basics.ipynb) | Set up basic distributed training |
-| [![Multi-Node Training](https://badgen.net/badge/Notebook/Multi-Node%20Training/orange)](notebooks/multi_node.ipynb) | Scale training across multiple nodes |
+### Core Learning Materials (Basic to Advanced)
+**Hands-on Practice:**
+- **[Distributed Training Basics](https://colab.research.google.com/notebooks/distributed_basics.ipynb)** - Set up basic distributed training
+- **[Multi-Node Training](https://colab.research.google.com/notebooks/multi_node.ipynb)** - Scale training across multiple nodes
+- **[Advanced Distributed Strategies](https://colab.research.google.com/notebooks/advanced_dist.ipynb)** - Implement complex distribution patterns
 
-### Mixed Precision Training
-- **Description**: Accelerate training and reduce memory usage with mixed precision techniques.
-- **Concepts Covered**: `mixed precision`, `FP16`, `FP32`, `numerical stability`
+### Documentation & Guides
+[![DeepSpeed: Distributed Training](https://badgen.net/badge/Docs/DeepSpeed%3A%20Distributed%20Training/green)]()
+[![PyTorch Distributed](https://badgen.net/badge/Docs/PyTorch%20Distributed/green)]()
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Mixed Precision Training Guide](https://badgen.net/badge/Blog/Mixed%20Precision%20Training%20Guide/pink)](https://developer.nvidia.com/blog/mixed-precision-training-deep-neural-networks/) | |
-| [![PyTorch Automatic Mixed Precision](https://badgen.net/badge/Docs/PyTorch%20Automatic%20Mixed%20Precision/green)](https://pytorch.org/docs/stable/amp.html) | |
+### Tools & Frameworks
+[![DeepSpeed](https://badgen.net/badge/Framework/DeepSpeed/green)]()
+[![PyTorch Lightning](https://badgen.net/badge/Framework/PyTorch%20Lightning/green)]()
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![NVIDIA Apex](https://badgen.net/badge/Github%20Repository/NVIDIA%20Apex/cyan)](https://github.com/NVIDIA/apex) | |
-| [![PyTorch AMP](https://badgen.net/badge/Docs/PyTorch%20AMP/green)](https://pytorch.org/docs/stable/amp.html) | |
+## 2. Mixed Precision Training
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Mixed Precision Basics](https://badgen.net/badge/Notebook/Mixed%20Precision%20Basics/orange)](notebooks/mixed_precision.ipynb) | Implement mixed precision training |
-| [![AMP Integration](https://badgen.net/badge/Notebook/AMP%20Integration/orange)](notebooks/amp_integration.ipynb) | Add AMP to existing training loops |
+Master techniques to accelerate training and reduce memory usage through mixed precision methods.
 
-### Gradient Accumulation & Checkpointing
-- **Description**: Manage large batch sizes and training stability with gradient accumulation and checkpointing.
-- **Concepts Covered**: `gradient accumulation`, `checkpointing`, `large batch training`
+### Key Concepts
+- Mixed Precision Fundamentals
+- FP16 vs FP32 Operations
+- Dynamic Loss Scaling
+- Numerical Stability
+- Memory Optimization
+- Performance Tuning
+- AMP Implementation
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Gradient Accumulation Explained](https://badgen.net/badge/Blog/Gradient%20Accumulation%20Explained/pink)](https://kozodoi.me/python/deep%20learning/pytorch/tutorial/2021/02/19/gradient-accumulation.html) | |
-| [![Model Checkpointing Guide](https://badgen.net/badge/Tutorial/Model%20Checkpointing%20Guide/blue)](https://pytorch.org/tutorials/beginner/saving_loading_models.html) | |
+### Core Learning Materials (Basic to Advanced)
+**Hands-on Practice:**
+- **[Mixed Precision Basics](https://colab.research.google.com/notebooks/mixed_precision.ipynb)** - Implement mixed precision training
+- **[AMP Integration](https://colab.research.google.com/notebooks/amp_integration.ipynb)** - Add AMP to existing training loops
+- **[Advanced Mixed Precision](https://colab.research.google.com/notebooks/advanced_mp.ipynb)** - Advanced optimization techniques
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![Hugging Face Trainer](https://badgen.net/badge/Docs/Hugging%20Face%20Trainer/green)](https://huggingface.co/docs/transformers/main_classes/trainer) | |
+### Documentation & Guides
+[![Mixed Precision Training Guide](https://badgen.net/badge/Blog/Mixed%20Precision%20Training%20Guide/pink)]()
+[![PyTorch Automatic Mixed Precision](https://badgen.net/badge/Docs/PyTorch%20Automatic%20Mixed%20Precision/green)]()
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Gradient Accumulation](https://badgen.net/badge/Notebook/Gradient%20Accumulation/orange)](notebooks/grad_accumulation.ipynb) | Implement gradient accumulation |
-| [![Checkpointing System](https://badgen.net/badge/Notebook/Checkpointing%20System/orange)](notebooks/checkpointing.ipynb) | Build a robust checkpointing system |
+### Tools & Frameworks
+[![NVIDIA Apex](https://badgen.net/badge/Github%20Repository/NVIDIA%20Apex/cyan)]()
+[![PyTorch AMP](https://badgen.net/badge/Docs/PyTorch%20AMP/green)]()
 
-### Memory Optimization Techniques
-- **Description**: Optimize memory usage to train larger models and handle longer sequences.
-- **Concepts Covered**: `memory optimization`, `gradient checkpointing`, `activation recomputation`
+## 3. Gradient Accumulation & Checkpointing
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Efficient Memory Management](https://badgen.net/badge/Docs/Efficient%20Memory%20Management/green)](https://pytorch.org/docs/stable/notes/cuda.html#memory-management) | |
-| [![Gradient Checkpointing Explained](https://badgen.net/badge/Blog/Gradient%20Checkpointing%20Explained/pink)](https://medium.com/tensorflow/fitting-larger-networks-into-memory-583e3c758ff9) | |
+Learn to manage large batch sizes and training stability effectively.
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![DeepSpeed](https://badgen.net/badge/Framework/DeepSpeed/green)](https://www.deepspeed.ai/) | |
+### Key Concepts
+- Gradient Accumulation Strategy
+- Checkpointing Mechanisms
+- Large Batch Training
+- Memory Management
+- Training Stability
+- State Management
+- Recovery Procedures
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Memory Profiling](https://badgen.net/badge/Notebook/Memory%20Profiling/orange)](notebooks/memory_profiling.ipynb) | Profile and optimize memory usage |
-| [![Gradient Checkpointing](https://badgen.net/badge/Notebook/Gradient%20Checkpointing/orange)](notebooks/grad_checkpointing.ipynb) | Implement gradient checkpointing |
+### Core Learning Materials (Basic to Advanced)
+**Hands-on Practice:**
+- **[Gradient Accumulation](https://colab.research.google.com/notebooks/grad_accumulation.ipynb)** - Implement gradient accumulation
+- **[Checkpointing System](https://colab.research.google.com/notebooks/checkpointing.ipynb)** - Build a robust checkpointing system
+- **[Advanced Training Management](https://colab.research.google.com/notebooks/advanced_training.ipynb)** - Advanced training control systems
 
-### Cloud & GPU Providers
-- **Description**: Overview of various cloud providers and GPU rental services for ML/LLM training.
-- **Concepts Covered**: `cloud computing`, `GPU rental`, `cost optimization`, `infrastructure selection`
+### Documentation & Guides
+[![Gradient Accumulation Explained](https://badgen.net/badge/Blog/Gradient%20Accumulation%20Explained/pink)]()
+[![Model Checkpointing Guide](https://badgen.net/badge/Tutorial/Model%20Checkpointing%20Guide/blue)]()
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![AWS Pricing Calculator](https://badgen.net/badge/Tool/AWS%20Pricing%20Calculator/blue)](https://calculator.aws.amazon.com/) | |
-| [![Google Cloud Pricing Calculator](https://badgen.net/badge/Tool/Google%20Cloud%20Pricing%20Calculator/blue)](https://cloud.google.com/products/calculator) | |
+### Tools & Frameworks
+[![Hugging Face Trainer](https://badgen.net/badge/Docs/Hugging%20Face%20Trainer/green)]()
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![AWS](https://badgen.net/badge/Cloud%20Provider/AWS/blue)](https://aws.amazon.com/) | [![Vast.ai](https://badgen.net/badge/Cloud%20Provider/Vast.ai/blue)](https://vast.ai/) |
-| [![Google Cloud Platform](https://badgen.net/badge/Cloud%20Provider/Google%20Cloud%20Platform/blue)](https://cloud.google.com/) | [![RunPod](https://badgen.net/badge/Cloud%20Provider/RunPod/blue)](https://www.runpod.io/) |
-| [![Microsoft Azure](https://badgen.net/badge/Cloud%20Provider/Microsoft%20Azure/blue)](https://azure.microsoft.com/) | [![TensorDock](https://badgen.net/badge/Cloud%20Provider/TensorDock/blue)](https://tensordock.com/) |
-| [![Lambda Cloud](https://badgen.net/badge/Cloud%20Provider/Lambda%20Cloud/blue)](https://lambdalabs.com/service/gpu-cloud) | [![FluidStack](https://badgen.net/badge/Cloud%20Provider/FluidStack/blue)](https://fluidstack.io/) |
+## 4. Memory Optimization Techniques
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Cloud Setup](https://badgen.net/badge/Notebook/Cloud%20Setup/orange)](notebooks/cloud_setup.ipynb) | Set up cloud training environments |
-| [![Cost Analysis](https://badgen.net/badge/Notebook/Cost%20Analysis/orange)](notebooks/cost_analysis.ipynb) | Analyze and optimize training costs |
+Optimize memory usage for training larger models and handling longer sequences.
+
+### Key Concepts
+- Memory Management Strategies
+- Gradient Checkpointing
+- Activation Recomputation
+- Memory Profiling
+- Optimization Techniques
+- Resource Monitoring
+- Memory-Efficient Training
+
+### Core Learning Materials (Basic to Advanced)
+**Hands-on Practice:**
+- **[Memory Profiling](https://colab.research.google.com/notebooks/memory_profiling.ipynb)** - Profile and optimize memory usage
+- **[Gradient Checkpointing](https://colab.research.google.com/notebooks/grad_checkpointing.ipynb)** - Implement gradient checkpointing
+- **[Advanced Memory Optimization](https://colab.research.google.com/notebooks/advanced_memory.ipynb)** - Advanced memory management techniques
+
+### Documentation & Guides
+[![Efficient Memory Management](https://badgen.net/badge/Docs/Efficient%20Memory%20Management/green)]()
+[![Gradient Checkpointing Explained](https://badgen.net/badge/Blog/Gradient%20Checkpointing%20Explained/pink)]()
+
+### Tools & Frameworks
+[![DeepSpeed](https://badgen.net/badge/Framework/DeepSpeed/green)]()
+
+## 5. Cloud & GPU Providers
+
+Comprehensive overview of cloud providers and GPU rental services for ML/LLM training.
+
+### Key Concepts
+- Cloud Infrastructure Setup
+- GPU Selection
+- Cost Optimization
+- Resource Management
+- Scaling Strategies
+- Provider Comparison
+- Infrastructure Selection
+
+### Core Learning Materials (Basic to Advanced)
+**Hands-on Practice:**
+- **[Cloud Setup](https://colab.research.google.com/notebooks/cloud_setup.ipynb)** - Set up cloud training environments
+- **[Cost Analysis](https://colab.research.google.com/notebooks/cost_analysis.ipynb)** - Analyze and optimize training costs
+- **[Advanced Cloud Management](https://colab.research.google.com/notebooks/advanced_cloud.ipynb)** - Advanced cloud resource management
+
+### Tools & Calculators
+[![AWS Pricing Calculator](https://badgen.net/badge/Tool/AWS%20Pricing%20Calculator/blue)]()
+[![Google Cloud Pricing Calculator](https://badgen.net/badge/Tool/Google%20Cloud%20Pricing%20Calculator/blue)]()
+
+### Cloud Providers
+Core Providers:
+[![AWS](https://badgen.net/badge/Cloud%20Provider/AWS/blue)]()
+[![Google Cloud Platform](https://badgen.net/badge/Cloud%20Provider/Google%20Cloud%20Platform/blue)]()
+[![Microsoft Azure](https://badgen.net/badge/Cloud%20Provider/Microsoft%20Azure/blue)]()
+[![Lambda Cloud](https://badgen.net/badge/Cloud%20Provider/Lambda%20Cloud/blue)]()
+
+Additional Providers:
+[![Vast.ai](https://badgen.net/badge/Cloud%20Provider/Vast.ai/blue)]()
+[![RunPod](https://badgen.net/badge/Cloud%20Provider/RunPod/blue)]()
+[![TensorDock](https://badgen.net/badge/Cloud%20Provider/TensorDock/blue)]()
+[![FluidStack](https://badgen.net/badge/Cloud%20Provider/FluidStack/blue)]()

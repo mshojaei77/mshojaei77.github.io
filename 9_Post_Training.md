@@ -3,96 +3,142 @@ title: "Post Training Techniques"
 nav_order: 10
 ---
 
-
 # Module 9: Post Training Techniques
 
-### Fine-tuning & Parameter-Efficient Techniques
-- **Description**: Core concepts and efficient approaches for fine-tuning language models
-- **Concepts Covered**: `learning rate scheduling`, `batch size optimization`, `gradient accumulation`, `early stopping`, `validation strategies`, `model checkpointing`, `LoRA adapters`, `QLoRA`, `prefix tuning`, `prompt tuning`, `adapter tuning`, `BitFit`, `IA3`, `soft prompts`, `parameter-efficient transfer learning`
+## Fine-tuning & Parameter-Efficient Techniques
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Fine-Tuning Transformers](https://badgen.net/badge/Docs/Fine-Tuning%20Transformers/green)](https://huggingface.co/docs/transformers/training) | [![DataCamp Fine-tuning Tutorial](https://badgen.net/badge/Tutorial/DataCamp%20Fine-tuning%20Tutorial/blue)](https://www.datacamp.com/tutorial/fine-tuning-large-language-models) |
-| [![How to Fine-Tune LLMs in 2024 with Hugging Face](https://badgen.net/badge/Blog/How%20to%20Fine-Tune%20LLMs%20in%202024%20with%20Hugging%20Face/pink)](https://philschmid.de/fine-tune-llms-in-2024-with-trl) | [![ColPali Fine-tuning Tutorial](https://badgen.net/badge/Tutorial/ColPali%20Fine-tuning%20Tutorial/blue)](https://github.com/merveenoyan/smol-vision/blob/main/Finetune_ColPali.ipynb) |
-| [![LoRA: Low-Rank Adaptation](https://badgen.net/badge/Blog/LoRA:%20Low-Rank%20Adaptation/pink)](https://huggingface.co/blog/lora) | [![Parameter Freezing Strategies](https://badgen.net/badge/Paper/Parameter%20Freezing%20Strategies/purple)](https://arxiv.org/abs/2501.07818) |
-| [![Practical Tips for Finetuning LLMs Using LoRA](https://badgen.net/badge/Blog/Practical%20Tips%20for%20Finetuning%20LLMs%20Using%20LoRA/pink)](https://magazine.sebastianraschka.com/p/practical-tips-for-finetuning-llms) | [![Memory-Efficient LoRA-FA](https://badgen.net/badge/Paper/Memory-Efficient%20LoRA-FA/purple)](https://arxiv.org/abs/2308.03303) |
+### Key Concepts
+- Learning rate scheduling
+- Batch size optimization 
+- Gradient accumulation
+- Early stopping
+- Validation strategies
+- Model checkpointing
+- LoRA adapters
+- QLoRA
+- Prefix tuning
+- Prompt tuning
+- Adapter tuning
+- BitFit
+- IA3
+- Soft prompts
+- Parameter-efficient transfer learning
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![Hugging Face PEFT](https://badgen.net/badge/Framework/Hugging%20Face%20PEFT/green)](https://huggingface.co/docs/peft) | [![UnslothAI](https://badgen.net/badge/Github%20Repository/UnslothAI/cyan)](https://github.com/unslothai) |
-| [![Lightning AI](https://badgen.net/badge/Framework/Lightning%20AI/green)](https://lightning.ai/) | [![io.net](https://badgen.net/badge/API%20Provider/io.net/blue)](https://io.net/) |
-| [![Kaggle](https://badgen.net/badge/Website/Kaggle/blue)](https://www.kaggle.com/) | |
+### Core Learning Materials (Basic to Advanced)
+**Hands-on Practice:**
+- **[Kaggle Gemma2 9b Unsloth notebook](https://kaggle.com/code/danielhanchen/kaggle-gemma2-9b-unsloth-notebook)**
+- **[Quick Gemma-2B Fine-tuning Notebook](https://colab.research.google.com/drive/12OkGVWuh2lcrokExYhskSJeKrLzdmq4T?usp=sharing)**
+- **[Phi-4 Finetuning Tutorial](https://www.kaggle.com/code/unsloth/phi-4-finetuning)**
+- **[Fine-tuning Gemma 2 with LoRA](https://kaggle.com/code/iamleonie/fine-tuning-gemma-2-jpn-for-yomigana-with-lora)**
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Kaggle Gemma2 9b Unsloth notebook](https://badgen.net/badge/Colab%20Notebook/Kaggle%20Gemma2%209b%20Unsloth%20notebook/orange)](https://kaggle.com/code/danielhanchen/kaggle-gemma2-9b-unsloth-notebook) | Fine-tune Gemma 2 9B with Unsloth optimization |
-| [![Quick Gemma-2B Fine-tuning Notebook](https://badgen.net/badge/Colab%20Notebook/Quick%20Gemma-2B%20Fine-tuning%20Notebook/orange)](https://colab.research.google.com/drive/12OkGVWuh2lcrokExYhskSJeKrLzdmq4T?usp=sharing) | Basic Gemma 2B fine-tuning example |
-| [![Phi-4 Finetuning Tutorial](https://badgen.net/badge/Colab%20Notebook/Phi-4%20Finetuning%20Tutorial%20on%20Kaggle/orange)](https://www.kaggle.com/code/unsloth/phi-4-finetuning) | Fine-tune Phi-4 model efficiently |
-| [![Fine-tuning Gemma 2 with LoRA](https://badgen.net/badge/Colab%20Notebook/Fine-tuning%20Gemma%202%20with%20LoRA/orange)](https://kaggle.com/code/iamleonie/fine-tuning-gemma-2-jpn-for-yomigana-with-lora) | LoRA fine-tuning on T4 GPU |
+### Essential Learning Resources
+[![Fine-Tuning Transformers](https://badgen.net/badge/Docs/Fine-Tuning%20Transformers/green)](https://huggingface.co/docs/transformers/training)
+[![How to Fine-Tune LLMs in 2024 with Hugging Face](https://badgen.net/badge/Blog/How%20to%20Fine-Tune%20LLMs%20in%202024%20with%20Hugging%20Face/pink)](https://philschmid.de/fine-tune-llms-in-2024-with-trl)
+[![LoRA: Low-Rank Adaptation](https://badgen.net/badge/Blog/LoRA:%20Low-Rank%20Adaptation/pink)](https://huggingface.co/blog/lora)
+[![Practical Tips for Finetuning LLMs Using LoRA](https://badgen.net/badge/Blog/Practical%20Tips%20for%20Finetuning%20LLMs%20Using%20LoRA/pink)](https://magazine.sebastianraschka.com/p/practical-tips-for-finetuning-llms)
 
-### Advanced Fine-tuning Techniques
-- **Description**: Specialized approaches for enhancing model capabilities
-- **Concepts Covered**: `direct preference optimization`, `proximal policy optimization`, `constitutional AI`, `reward modeling`, `human feedback integration`, `curriculum learning`
+### Additional Resources
+[![DataCamp Fine-tuning Tutorial](https://badgen.net/badge/Tutorial/DataCamp%20Fine-tuning%20Tutorial/blue)](https://www.datacamp.com/tutorial/fine-tuning-large-language-models)
+[![ColPali Fine-tuning Tutorial](https://badgen.net/badge/Tutorial/ColPali%20Fine-tuning%20Tutorial/blue)](https://github.com/merveenoyan/smol-vision/blob/main/Finetune_ColPali.ipynb)
+[![Parameter Freezing Strategies](https://badgen.net/badge/Paper/Parameter%20Freezing%20Strategies/purple)](https://arxiv.org/abs/2501.07818)
+[![Memory-Efficient LoRA-FA](https://badgen.net/badge/Paper/Memory-Efficient%20LoRA-FA/purple)](https://arxiv.org/abs/2308.03303)
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![How to align open LLMs in 2025 with DPO & synthetic data](https://badgen.net/badge/Blog/How%20to%20align%20open%20LLMs%20in%202025%20with%20DPO%20%26%20synthetic%20data/pink)](https://philschmid.de/rl-with-llms-in-2025-dpo) | [![Multi-Task Fine-tuning](https://badgen.net/badge/Paper/Multi-Task%20Fine-tuning/purple)](https://arxiv.org/abs/2408.03094) |
-| [![How to Fine-Tune LLMs in 2024 with Hugging Face](https://badgen.net/badge/Blog/How%20to%20Fine-Tune%20LLMs%20in%202024%20with%20Hugging%20Face/pink)](https://philschmid.de/fine-tune-llms-in-2024-with-trl) | [![Few-Shot Learning Approaches](https://badgen.net/badge/Paper/Few-Shot%20Learning%20Approaches/purple)](https://arxiv.org/html/2408.13296v1) |
+### Core Tools & Frameworks
+[![Hugging Face PEFT](https://badgen.net/badge/Framework/Hugging%20Face%20PEFT/green)](https://huggingface.co/docs/peft)
+[![Lightning AI](https://badgen.net/badge/Framework/Lightning%20AI/green)](https://lightning.ai/)
+[![Kaggle](https://badgen.net/badge/Website/Kaggle/blue)](https://www.kaggle.com/)
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![TRL (Transformer Reinforcement Learning)](https://badgen.net/badge/Github%20Repository/TRL%20(Transformer%20Reinforcement%20Learning)/cyan)](https://github.com/huggingface/trl) | |
+### Additional Tools
+[![UnslothAI](https://badgen.net/badge/Github%20Repository/UnslothAI/cyan)](https://github.com/unslothai)
+[![io.net](https://badgen.net/badge/API%20Provider/io.net/blue)](https://io.net/)
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Knowledge Distillation Basics](https://badgen.net/badge/Notebook/Knowledge%20Distillation%20Basics/orange)](notebooks/knowledge_distillation_basics.ipynb) | Implement basic knowledge distillation |
-| [![Student Model Training](https://badgen.net/badge/Notebook/Student%20Model%20Training/orange)](notebooks/student_model_training.ipynb) | Train efficient student models |
+## Advanced Fine-tuning Techniques
+
+### Key Concepts
+- Direct preference optimization
+- Proximal policy optimization
+- Constitutional AI
+- Reward modeling
+- Human feedback integration
+- Curriculum learning
+
+### Essential Learning Resources
+[![How to align open LLMs in 2025 with DPO & synthetic data](https://badgen.net/badge/Blog/How%20to%20align%20open%20LLMs%20in%202025%20with%20DPO%20%26%20synthetic%20data/pink)](https://philschmid.de/rl-with-llms-in-2025-dpo)
+[![How to Fine-Tune LLMs in 2024 with Hugging Face](https://badgen.net/badge/Blog/How%20to%20Fine-Tune%20LLMs%20in%202024%20with%20Hugging%20Face/pink)](https://philschmid.de/fine-tune-llms-in-2024-with-trl)
+
+### Additional Resources
+[![Multi-Task Fine-tuning](https://badgen.net/badge/Paper/Multi-Task%20Fine-tuning/purple)](https://arxiv.org/abs/2408.03094)
+[![Few-Shot Learning Approaches](https://badgen.net/badge/Paper/Few-Shot%20Learning%20Approaches/purple)](https://arxiv.org/html/2408.13296v1)
+
+### Core Tools & Frameworks
+[![TRL (Transformer Reinforcement Learning)](https://badgen.net/badge/Github%20Repository/TRL%20(Transformer%20Reinforcement%20Learning)/cyan)](https://github.com/huggingface/trl)
+
+### Core Learning Materials (Basic to Advanced)
+**Hands-on Practice:**
+- **[Knowledge Distillation Basics](notebooks/knowledge_distillation_basics.ipynb)**
+- **[Student Model Training](notebooks/student_model_training.ipynb)**
 
 ### Model Merging
-- **Description**: Combine multiple fine-tuned models or merge model weights to create enhanced capabilities
-- **Concepts Covered**: `weight averaging`, `model fusion`, `task composition`, `knowledge distillation`, `parameter merging`, `model ensembling`
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Merging Language Models](https://badgen.net/badge/Paper/Merging%20Language%20Models/purple)](https://arxiv.org/abs/2401.10597) | [![Task Arithmetic with Language Models](https://badgen.net/badge/Paper/Task%20Arithmetic%20with%20Language%20Models/purple)](https://arxiv.org/abs/2212.04089) |
-| [![Weight Averaging Guide](https://badgen.net/badge/Blog/Weight%20Averaging%20Guide/pink)](https://huggingface.co/blog/merge-models) | [![Parameter-Efficient Model Fusion](https://badgen.net/badge/Paper/Parameter-Efficient%20Model%20Fusion/purple)](https://arxiv.org/abs/2310.13013) |
+Learn to combine multiple fine-tuned models and merge model weights to create enhanced capabilities.
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![mergekit](https://badgen.net/badge/Github%20Repository/mergekit/cyan)](https://github.com/cg123/mergekit) | [![SLERP](https://badgen.net/badge/Github%20Repository/SLERP/cyan)](https://github.com/johnsmith0031/slerp_pytorch) |
-| [![LM-Model-Merger](https://badgen.net/badge/Github%20Repository/LM-Model-Merger/cyan)](https://github.com/lm-sys/LM-Model-Merger) | [![HuggingFace Model Merging Tools](https://badgen.net/badge/Hugging%20Face%20Space/HuggingFace%20Model%20Merging%20Tools/yellow)](https://huggingface.co/spaces/huggingface-projects/Model-Merger) |
+**Key Concepts:**
+- Weight averaging
+- Model fusion 
+- Task composition
+- Knowledge distillation
+- Parameter merging
+- Model ensembling
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Model Merging Basics](https://badgen.net/badge/Notebook/Model%20Merging%20Basics/orange)](notebooks/model_merging_basics.ipynb) | Basic model merging techniques |
-| [![Weight Averaging](https://badgen.net/badge/Notebook/Weight%20Averaging/orange)](notebooks/weight_averaging.ipynb) | Implement weight averaging |
-| [![Model Fusion](https://badgen.net/badge/Notebook/Model%20Fusion/orange)](notebooks/model_fusion.ipynb) | Advanced model fusion techniques |
+**Core Learning Materials (Basic to Advanced):**
+- **[Model Merging Basics](notebooks/model_merging_basics.ipynb)**
+- **[Weight Averaging](notebooks/weight_averaging.ipynb)**
+- **[Model Fusion](notebooks/model_fusion.ipynb)**
+
+**Essential Resources:**
+[![Merging Language Models](https://badgen.net/badge/Paper/Merging%20Language%20Models/purple)](https://arxiv.org/abs/2401.10597)
+[![Weight Averaging Guide](https://badgen.net/badge/Blog/Weight%20Averaging%20Guide/pink)](https://huggingface.co/blog/merge-models)
+
+**Additional Resources:**
+[![Task Arithmetic with Language Models](https://badgen.net/badge/Paper/Task%20Arithmetic%20with%20Language%20Models/purple)](https://arxiv.org/abs/2212.04089)
+[![Parameter-Efficient Model Fusion](https://badgen.net/badge/Paper/Parameter-Efficient%20Model%20Fusion/purple)](https://arxiv.org/abs/2310.13013)
+
+**Core Tools & Frameworks:**
+[![mergekit](https://badgen.net/badge/Github%20Repository/mergekit/cyan)](https://github.com/cg123/mergekit)
+[![LM-Model-Merger](https://badgen.net/badge/Github%20Repository/LM-Model-Merger/cyan)](https://github.com/lm-sys/LM-Model-Merger)
+
+**Additional Tools:**
+[![SLERP](https://badgen.net/badge/Github%20Repository/SLERP/cyan)](https://github.com/johnsmith0031/slerp_pytorch)
+[![HuggingFace Model Merging Tools](https://badgen.net/badge/Hugging%20Face%20Space/HuggingFace%20Model%20Merging%20Tools/yellow)](https://huggingface.co/spaces/huggingface-projects/Model-Merger)
 
 ### Fine-tuning Datasets
-- **Description**: Curated datasets for instruction tuning, alignment, and specialized task adaptation of language models.
-- **Concepts Covered**: `instruction tuning`, `RLHF`, `task-specific data`, `data quality`, `prompt engineering`, `human feedback`
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Anthropic's Constitutional AI](https://badgen.net/badge/Website/Anthropic's%20Constitutional%20AI/blue)](https://www.anthropic.com/research/constitutional) - Core principles of aligned fine-tuning | [![Self-Instruct Paper](https://badgen.net/badge/Paper/Self-Instruct%20Paper/purple)](https://arxiv.org/abs/2212.10560) - Automated instruction generation |
-| [![OpenAI's InstructGPT Paper](https://badgen.net/badge/Paper/OpenAI's%20InstructGPT%20Paper/purple)](https://arxiv.org/abs/2203.02155) - Foundational RLHF approach | [![UltraFeedback Paper](https://badgen.net/badge/Paper/UltraFeedback%20Paper/purple)](https://arxiv.org/abs/2310.01377) - Advanced feedback collection |
-| [![DeepSeek-R1 Local Fine-tuning Guide](https://badgen.net/badge/Blog/DeepSeek-R1%20Local%20Fine-tuning%20Guide/pink)](https://x.com/_avichawla/status/1884126766132011149) - Step-by-step local setup | |
+Learn about curated datasets for instruction tuning, alignment, and specialized task adaptation of language models.
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![Self-Instruct](https://badgen.net/badge/Github%20Repository/Self-Instruct/cyan)](https://github.com/yizhongw/self-instruct) - Automated instruction generation | [![LIDA](https://badgen.net/badge/Github%20Repository/LIDA/cyan)](https://github.com/microsoft/LIDA) - Automatic dataset creation |
-| [![Argilla](https://badgen.net/badge/Github%20Repository/Argilla/cyan)](https://github.com/argilla-io/argilla) - Data annotation platform | [![Stanford Alpaca Tools](https://badgen.net/badge/Github%20Repository/Stanford%20Alpaca%20Tools/cyan)](https://github.com/tatsu-lab/stanford_alpaca) - Dataset generation |
+**Key Concepts:**
+- Instruction tuning
+- RLHF
+- Task-specific data
+- Data quality
+- Prompt engineering
+- Human feedback
+
+**Essential Resources:**
+[![Anthropic's Constitutional AI](https://badgen.net/badge/Website/Anthropic's%20Constitutional%20AI/blue)](https://www.anthropic.com/research/constitutional)
+[![OpenAI's InstructGPT Paper](https://badgen.net/badge/Paper/OpenAI's%20InstructGPT%20Paper/purple)](https://arxiv.org/abs/2203.02155)
+[![DeepSeek-R1 Local Fine-tuning Guide](https://badgen.net/badge/Blog/DeepSeek-R1%20Local%20Fine-tuning%20Guide/pink)](https://x.com/_avichawla/status/1884126766132011149)
+
+**Additional Resources:**
+[![Self-Instruct Paper](https://badgen.net/badge/Paper/Self-Instruct%20Paper/purple)](https://arxiv.org/abs/2212.10560)
+[![UltraFeedback Paper](https://badgen.net/badge/Paper/UltraFeedback%20Paper/purple)](https://arxiv.org/abs/2310.01377)
+
+**Core Tools & Frameworks:**
+[![Self-Instruct](https://badgen.net/badge/Github%20Repository/Self-Instruct/cyan)](https://github.com/yizhongw/self-instruct)
+[![Argilla](https://badgen.net/badge/Github%20Repository/Argilla/cyan)](https://github.com/argilla-io/argilla)
+
+**Additional Tools:**
+[![LIDA](https://badgen.net/badge/Github%20Repository/LIDA/cyan)](https://github.com/microsoft/LIDA)
+[![Stanford Alpaca Tools](https://badgen.net/badge/Github%20Repository/Stanford%20Alpaca%20Tools/cyan)](https://github.com/tatsu-lab/stanford_alpaca)
 
 #### Popular Datasets
 | Dataset | Description |
@@ -103,74 +149,73 @@ nav_order: 10
 | [![UltraFeedback](https://badgen.net/badge/Hugging%20Face%20Dataset/UltraFeedback/yellow)](https://huggingface.co/datasets/openbmb/UltraFeedback) | Comprehensive model evaluation data |
 | [![Synthia-Coder-v1.5-I](https://badgen.net/badge/Hugging%20Face%20Dataset/Synthia-Coder-v1.5-I/yellow)](https://huggingface.co/datasets/migtissera/Synthia-Coder-v1.5-I) | 23.5K coding samples from Claude Opus |
 | [![Synthetic Medical Conversations](https://badgen.net/badge/Hugging%20Face%20Dataset/Synthetic%20Medical%20Conversations/yellow)](https://huggingface.co/datasets/OnDeviceMedNotes/synthetic-medical-conversations-deepseek-v3) | Multilingual medical dialogues |
+
 ### Knowledge Distillation
-- **Description**: Transfer expertise from large teacher models to smaller, efficient student models.
-- **Concepts Covered**: `knowledge distillation`, `teacher-student`, `model compression`
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Knowledge Distillation Explained](https://badgen.net/badge/Tutorial/Knowledge%20Distillation%20Explained/blue)](https://towardsdatascience.com/knowledge-distillation-simplified-ddc070724770) | [![DistilBERT Paper](https://badgen.net/badge/Paper/DistilBERT%20Paper/purple)](https://arxiv.org/abs/1910.01108) |
+Learn how to transfer expertise from large teacher models to smaller, efficient student models.
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![Hugging Face Transformers](https://badgen.net/badge/Framework/Hugging%20Face%20Transformers/green)](https://huggingface.co/docs/transformers) | |
+**Key Concepts:**
+- Knowledge distillation
+- Teacher-student architecture
+- Model compression
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![Knowledge Distillation Basics](https://badgen.net/badge/Notebook/Knowledge%20Distillation%20Basics/orange)](notebooks/knowledge_distillation_basics.ipynb) | Implement basic knowledge distillation |
-| [![Student Model Training](https://badgen.net/badge/Notebook/Student%20Model%20Training/orange)](notebooks/student_model_training.ipynb) | Train efficient student models |
+**Essential Learning Resources:**
+[![Knowledge Distillation Explained](https://badgen.net/badge/Tutorial/Knowledge%20Distillation%20Explained/blue)](https://towardsdatascience.com/knowledge-distillation-simplified-ddc070724770)
+
+**Additional Resources:**
+[![DistilBERT Paper](https://badgen.net/badge/Paper/DistilBERT%20Paper/purple)](https://arxiv.org/abs/1910.01108)
+
+**Core Tools:**
+[![Hugging Face Transformers](https://badgen.net/badge/Framework/Hugging%20Face%20Transformers/green)](https://huggingface.co/docs/transformers)
+
+**Practice Materials:**
+- **Basic:** [Knowledge Distillation Basics](notebooks/knowledge_distillation_basics.ipynb)
+- **Advanced:** [Student Model Training](notebooks/student_model_training.ipynb)
 
 ### Reasoning Models, Reinforcement Learning and Group Relative Policy Optimization (GRPO)
-- **Description**: Explore models that enhance reasoning capabilities through chain-of-thought and GRPO-based training, focusing on efficient preference learning and resource-constrained environments.
-- **Concepts Covered**: `chain-of-thought`, `reasoning`, `GRPO`, `preference learning`, `reward modeling`, `group-based advantage estimation`, `resource-efficient training`, `reasoning enhancement`, `reinforcement learning`, `long context scaling`
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![DeepSeek R1 Reasoning Primer](https://badgen.net/badge/Blog/DeepSeek%20R1%20Reasoning%20Primer/pink)](https://aman.ai/primers/ai/deepseek-R1/) | [![DeepSeek R1 Theory Overview](https://badgen.net/badge/Video/DeepSeek%20R1%20Theory%20Overview/red)](https://www.youtube.com/watch?v=QdEuh2UVbu0) |
-| [![DeepSeek GRPO Paper](https://badgen.net/badge/Paper/DeepSeek%20GRPO%20Paper/purple)](https://arxiv.org/pdf/2402.03300) | [![GRPO Explained by Yannic Kilcher](https://badgen.net/badge/Video/GRPO%20Explained%20by%20Yannic%20Kilcher/red)](https://youtube.com/watch?v=bAWV_yrqx4w) |
-| [![DeepSeek R1 Reasoning Blog](https://badgen.net/badge/Blog/DeepSeek%20R1%20Reasoning%20Blog/pink)](https://unsloth.ai/blog/r1-reasoning) | [![Open-R1](https://badgen.net/badge/Blog/Open-R1/pink)](https://huggingface.co/blog/open-r1/update-1) |
-| [![Kimi k1.5 Paper](https://badgen.net/badge/Paper/Kimi%20k1.5%20Paper/purple)](https://arxiv.org/abs/2401.12863) | [![AGIEntry Kimi Overview](https://badgen.net/badge/Website/AGIEntry%20Kimi%20Overview/blue)](https://agientry.com) |
+Learn about models that enhance reasoning capabilities through chain-of-thought and GRPO-based training, focusing on efficient preference learning and resource-constrained environments.
 
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![Unsloth](https://badgen.net/badge/Github%20Repository/Unsloth/cyan)](https://github.com/unslothai/unsloth) | [![TinyZero](https://badgen.net/badge/Github%20Repository/TinyZero/cyan)](https://github.com/Jiayi-Pan/TinyZero) |
-| [![DeepSeek-R1 Training Framework](https://badgen.net/badge/Github%20Repository/DeepSeek-R1%20Training%20Framework/cyan)](https://github.com/deepseek-ai/DeepSeek-R1) | [![Kimi.ai](https://badgen.net/badge/Website/Kimi.ai/blue)](https://kimi.ai) |
+**Key Concepts:**
+- Chain-of-thought
+- Reasoning
+- GRPO
+- Preference learning
+- Reward modeling
+- Group-based advantage estimation
+- Resource-efficient training
+- Reasoning enhancement
+- Reinforcement learning
+- Long context scaling
 
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![GRPO Poetry Generation](https://badgen.net/badge/Colab%20Notebook/GRPO%20Poetry%20Generation/orange)](https://colab.research.google.com/drive/1Ty0ovsrpw8i-zJvDhlSAtBIVw3EZfHK5?usp=sharing) | Implement GRPO for poetry generation |
-| [![Qwen 0.5B GRPO Implementation](https://badgen.net/badge/Colab%20Notebook/Qwen%200.5B%20GRPO%20Implementation/orange)](https://colab.research.google.com/drive/1bfhs1FMLW3FGa8ydvkOZyBNxLYOu0Hev?usp=sharing) | Train small models with GRPO |
-| [![Phi-4 14B GRPO Training](https://badgen.net/badge/Colab%20Notebook/Phi-4%2014B%20GRPO%20Training/orange)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Phi_4_(14B)-GRPO.ipynb) | Scale GRPO to larger models |
-| [![Llama 3.1 8B GRPO](https://badgen.net/badge/Colab%20Notebook/Llama%203.1%208B%20GRPO/orange)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb) | Advanced GRPO implementation |
+**Essential Learning Resources:**
+[![DeepSeek R1 Reasoning Primer](https://badgen.net/badge/Blog/DeepSeek%20R1%20Reasoning%20Primer/pink)](https://aman.ai/primers/ai/deepseek-R1/)
+[![DeepSeek GRPO Paper](https://badgen.net/badge/Paper/DeepSeek%20GRPO%20Paper/purple)](https://arxiv.org/pdf/2402.03300)
+[![DeepSeek R1 Reasoning Blog](https://badgen.net/badge/Blog/DeepSeek%20R1%20Reasoning%20Blog/pink)](https://unsloth.ai/blog/r1-reasoning)
+[![Kimi k1.5 Paper](https://badgen.net/badge/Paper/Kimi%20k1.5%20Paper/purple)](https://arxiv.org/abs/2401.12863)
+
+**Additional Resources:**
+[![DeepSeek R1 Theory Overview](https://badgen.net/badge/Video/DeepSeek%20R1%20Theory%20Overview/red)](https://www.youtube.com/watch?v=QdEuh2UVbu0)
+[![GRPO Explained by Yannic Kilcher](https://badgen.net/badge/Video/GRPO%20Explained%20by%20Yannic%20Kilcher/red)](https://youtube.com/watch?v=bAWV_yrqx4w)
+[![Open-R1](https://badgen.net/badge/Blog/Open-R1/pink)](https://huggingface.co/blog/open-r1/update-1)
+[![AGIEntry Kimi Overview](https://badgen.net/badge/Website/AGIEntry%20Kimi%20Overview/blue)](https://agientry.com)
+
+**Core Tools:**
+[![Unsloth](https://badgen.net/badge/Github%20Repository/Unsloth/cyan)](https://github.com/unslothai/unsloth)
+[![DeepSeek-R1 Training Framework](https://badgen.net/badge/Github%20Repository/DeepSeek-R1%20Training%20Framework/cyan)](https://github.com/deepseek-ai/DeepSeek-R1)
+
+**Additional Tools:**
+[![TinyZero](https://badgen.net/badge/Github%20Repository/TinyZero/cyan)](https://github.com/Jiayi-Pan/TinyZero)
+[![Kimi.ai](https://badgen.net/badge/Website/Kimi.ai/blue)](https://kimi.ai)
+
+**Practice Materials (From Basic to Advanced):**
+- **Basic:** [GRPO Poetry Generation](https://colab.research.google.com/drive/1Ty0ovsrpw8i-zJvDhlSAtBIVw3EZfHK5?usp=sharing)
+- **Intermediate:** [Qwen 0.5B GRPO Implementation](https://colab.research.google.com/drive/1bfhs1FMLW3FGa8ydvkOZyBNxLYOu0Hev?usp=sharing)
+- **Advanced:** [Phi-4 14B GRPO Training](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Phi_4_(14B)-GRPO.ipynb)
+- **Expert:** [Llama 3.1 8B GRPO](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb)
+
 ### GRPO Datasets
-- **Description**: Curated datasets for training and evaluating GRPO-based models, with focus on reasoning, poetry, and domain-specific tasks.
-- **Concepts Covered**: `dataset curation`, `chain-of-thought patterns`, `reasoning verification`, `poetry generation`, `scientific problem-solving`, `data preprocessing`, `quality filtering`
 
-#### Learning Sources
-| Essential | Optional |
-|-----------|----------|
-| [![Guide to Creating CoT Datasets](https://badgen.net/badge/Blog/Guide%20to%20Creating%20CoT%20Datasets/pink)](https://huggingface.co/blog/creating-chain-of-thought-datasets) | [![Scientific Dataset Curation Guide](https://badgen.net/badge/Github%20Repository/Scientific%20Dataset%20Curation%20Guide/cyan)](https://github.com/EricLu1/SCP-Guide) |
-| [![Data Generation with R1 Models](https://badgen.net/badge/Github%20Repository/Data%20Generation%20with%20R1%20Models/cyan)](https://github.com/deepseek-ai/DeepSeek-R1/blob/main/data_generation.md) | [![Verse Dataset Creation Tutorial](https://badgen.net/badge/Tutorial/Verse%20Dataset%20Creation%20Tutorial/blue)](https://github.com/PleIAs/verse-wikisource/blob/main/TUTORIAL.md) |
-
-#### Tools & Frameworks
-| Core | Additional |
-|-----------|----------|
-| [![Hugging Face Datasets](https://badgen.net/badge/Framework/Hugging%20Face%20Datasets/green)](https://huggingface.co/datasets) | [![Verse Dataset Tools](https://badgen.net/badge/Github%20Repository/Verse%20Dataset%20Tools/cyan)](https://github.com/PleIAs/verse-wikisource) |
-
-#### Guided Practice
-| Notebook | Description |
-|----------|-------------|
-| [![CoT Dataset Creation](https://badgen.net/badge/Notebook/CoT%20Dataset%20Creation/orange)](notebooks/cot_dataset_creation.ipynb) | Build chain-of-thought datasets from scratch |
-| [![Data Quality Assessment](https://badgen.net/badge/Notebook/Data%20Quality%20Assessment/orange)](notebooks/data_quality_assessment.ipynb) | Implement filtering and verification techniques |
-| [![Poetry Dataset Generation](https://badgen.net/badge/Notebook/Poetry%20Dataset%20Generation/orange)](notebooks/poetry_dataset_generation.ipynb) | Create specialized poetry training data |
-
-#### Popular Datasets
 | Dataset | Description |
 |----------|-------------|
 | [![PleIAs Verse Wikisource](https://badgen.net/badge/Hugging%20Face%20Dataset/PleIAs%20Verse%20Wikisource/yellow)](https://huggingface.co/datasets/PleIAs/verse-wikisource) | 200,000 verses for poetry training |
