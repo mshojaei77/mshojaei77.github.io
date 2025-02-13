@@ -14,7 +14,7 @@ This module covers fundamental concepts and practical implementation of neural n
 ## 1. Programming Foundations
 Master practical programming and algorithmic skills needed for LLM development.
 
-### Core Materials (Basic to Advanced)
+### Core Materials
 **[Colab: Python Fundamentals for ML](https://colab.research.google.com/drive/...)**
 **[Colab: Data Structures & Algorithms in ML](https://colab.research.google.com/drive/...)**
 **[Colab: Advanced Optimization Techniques](https://colab.research.google.com/drive/...)**
@@ -34,7 +34,7 @@ Master practical programming and algorithmic skills needed for LLM development.
 ## 2. Neural Network Fundamentals
 Understanding the core building blocks of neural networks.
 
-### Core Materials (Basic to Advanced)
+### Core Materials
 **[Colab: Neural Networks from Ground Up](https://colab.research.google.com/drive/...)**
 **[Colab: Backpropagation & Gradient Descent](https://colab.research.google.com/drive/...)**
 **[Colab: Advanced Neural Network Concepts](https://colab.research.google.com/drive/...)**
@@ -55,7 +55,7 @@ Understanding the core building blocks of neural networks.
 ## 3. Advanced Architectures
 Exploring modern neural network architectures essential for deep learning.
 
-### Core Materials (Basic to Advanced)
+### Core Materials
 **[Colab: Introduction to CNNs & RNNs](https://colab.research.google.com/drive/...)**
 **[Colab: Transformer Architecture Basics](https://colab.research.google.com/drive/...)**
 **[Colab: Advanced Architecture Implementation](https://colab.research.google.com/drive/...)**
@@ -80,7 +80,7 @@ Exploring modern neural network architectures essential for deep learning.
 ## 4. Training & Optimization
 Understanding model training dynamics and optimization techniques.
 
-### Core Materials (Basic to Advanced)
+### Core Materials
 **[Colab: Training Neural Networks](https://colab.research.google.com/drive/...)**
 **[Colab: Advanced Optimization Strategies](https://colab.research.google.com/drive/...)**
 **[Colab: Hyperparameter Tuning](https://colab.research.google.com/drive/...)**
