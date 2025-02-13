@@ -1,3 +1,8 @@
+---
+title: "Module 1: Mathematical Foundations"
+nav_order: 2
+---
+
 # Module 1: Mathematical Foundations for LLMs
 
 ## Overview
