@@ -51,7 +51,22 @@ This comprehensive tutorial series is designed to provide practical, hands-on ex
 - [Future of LLMs](Future_LLMs.md) 
 
 ## Prerequisites
-- Basic Python programming knowledge
+- Basic Python programming
+  - [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/)
+  - [Real Python Tutorials](https://realpython.com/)
+- Mathematics fundamentals
+    - [3Blue1Brown Essence of Linear Algebra](https://www.3blue1brown.com/topics/linear-algebra)
+    - [3Blue1Brown Essence of Calculus](https://www.3blue1brown.com/topics/calculus)
+    - [MIT Probability Course](https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2014/)
+
+- Basic understanding of machine learning concepts
+  - [Stanford CS229: Machine Learning](https://cs229.stanford.edu/)
+- Familiarity with neural networks
+  - [3Blue1Brown Neural Network Series](https://www.3blue1brown.com/topics/neural-networks)
+  - [Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning)
+  - [PyTorch Tutorials](https://pytorch.org/tutorials/)
+
+Don't worry if you're not an expert in these areas - we'll review key concepts as needed throughout the tutorials.
 
 ## How to Follow Along
 1. Follow tutorials sequentially
