@@ -1,6 +1,6 @@
 ---
 title: "LLMs: From Foundations to Production"
-nav_order: 1
+nav_order: 0
 ---
 # LLMs: From Foundations to Production
 
@@ -12,27 +12,43 @@ A hands-on tutorial series for mastering Large Language Models (LLMs) – featur
 This comprehensive tutorial series is designed to provide practical, hands-on experience with LLM development and deployment. Each tutorial combines theoretical concepts with practical implementations, real-world examples, and coding exercises.
 
 ## Tutorial Contents
-- [Module 1: Mathematical Foundations](1_Math_Foundations.md) 🧮
-- [Module 2: Neural Networks & Deep Learning Fundamentals](2_Neural_Networks.md) 🔄
-- [Module 3: Natural Language Processing Fundamentals](3_NLP_Basics.md) 📝
-- [Module 4: Understanding Transformer Architectures](4_Transformers.md) 🔍
-- [Module 5: Modern Large Language Model Architectures](5_LLM_Architectures.md) 🏗️
-- [Module 6: Data Processing & Preparation Pipeline](6_Data_Processing.md) 🔤
-- [Module 7: Training Infrastructure](7_Training_Infra.md) 💻
-- [Module 8: Pre-Training Large Language Models](8_Pre_Training.md) 📊
-- [Module 9: Post-Training Techniques & Fine-Tuning](9_Post_Training.md) 🔬
-- [Module 10: Model Evaluation & Testing](10_Evaluation.md) ✅
-- [Module 11: Model Optimization for Inference](11_Optimization.md) ⚡
-- [Module 12: Production Infrastructure & Deployment](12_Production.md) 🏭
-- [Module 13: LLMOps & Model Management](13_LLMOps.md) 🛠️
-- [Module 14: Prompt Engineering & Retrieval Augmented Generation](14_RAG.md) 💭
-- [Module 15: Function Calling & AI Agents](15_Agents.md) 🤖
-- [Module 16: AI Safety & Security Considerations](16_Safety.md) 🔒
-- [Module 17: Working with Multimodal Language Models](17_Multimodal.md) 🚀
-- [Module 18: Model Performance & Optimization](18_Performance.md) ⚡
-- [Module 19: Production Monitoring & Maintenance](19_Maintenance.md) 📈
-- [Module 20: Enterprise Integration & Best Practices](20_Enterprise.md) 🏢
-- [Module 21: Future Trends & Research Directions](21_Future.md) 🔮
+
+### Phase 1: Foundations
+- [Intro to Large Language Models](Intro.md) 
+- [Natural Language Processing Fundamentals](NLP_Basics.md) 
+- [Understanding Transformer Architectures](Transformers.md) 
+- [Modern Large Language Model Architectures](LLM_Architectures.md) 
+
+### Phase 2: Training
+- [Data Processing & Preparation](Data_Processing.md) 
+- [Pre-Training Large Language Models](Pre_Training.md) 
+- [Post-Training Techniques](Post_Training.md) 
+- [Model Evaluation](Evaluation.md) 
+
+### Phase 3: Inference
+- [Model Optimization & Quantization](Inference_Optimization.md) 
+- [Serving LLMs](Serving_LLMs.md) 
+- [Latency Reduction Techniques](Latency_Reduction.md) 
+- [Hardware Acceleration](Hardware_Acceleration.md) 
+
+### Phase 5: Applications
+- [Prompt Engineering](Prompt_Engineering.md) 
+- [Retrieval Augmented Generation](RAG.md) 
+- [Function Calling & AI Agents](Agents.md) 
+
+### Phase 6: Multimodal
+- [Multimodal Architectures](Multimodal_Architectures.md) 
+- [Cross-Modal Learning](Cross_Modal_Learning.md) 
+- [Image & Text Fusion](Vision_Language.md) 
+- [Audio Processing Integration](Audio_Processing.md) 
+- [Multimodal Applications](Multimodal_Apps.md) 
+
+### Phase 7: Advanced Topics & Future Directions
+- [Model Compression Techniques](Model_Compression.md) 
+- [AI Security & Robustness](AI_Security.md) 
+- [Research Frontiers](Research_Frontiers.md) 
+- [Industry Best Practices](Industry_Best_Practices.md) 
+- [Future of LLMs](Future_LLMs.md) 
 
 ## Prerequisites
 - Basic Python programming knowledge
