@@ -11,45 +11,6 @@ A hands-on tutorial series for mastering Large Language Models (LLMs) – featur
 ## About This Tutorial Series
 This comprehensive tutorial series is designed to provide practical, hands-on experience with LLM development and deployment. Each tutorial combines theoretical concepts with practical implementations, real-world examples, and coding exercises.
 
-## Tutorial Contents
-
-### Phase 1: Foundations
-- [Intro to Large Language Models](Intro.md) 
-- [Natural Language Processing Fundamentals](NLP_Basics.md) 
-- [Understanding Transformer Architectures](Transformers.md) 
-- [Modern Large Language Model Architectures](LLM_Architectures.md) 
-
-### Phase 2: Training
-- [Data Processing & Preparation](Data_Processing.md) 
-- [Pre-Training Large Language Models](Pre_Training.md) 
-- [Post-Training Techniques](Post_Training.md) 
-- [Model Evaluation](Evaluation.md) 
-
-### Phase 3: Inference
-- [Model Optimization & Quantization](Inference_Optimization.md) 
-- [Serving LLMs](Serving_LLMs.md) 
-- [Latency Reduction Techniques](Latency_Reduction.md) 
-- [Hardware Acceleration](Hardware_Acceleration.md) 
-
-### Phase 5: Applications
-- [Prompt Engineering](Prompt_Engineering.md) 
-- [Retrieval Augmented Generation](RAG.md) 
-- [Function Calling & AI Agents](Agents.md) 
-
-### Phase 6: Multimodal
-- [Multimodal Architectures](Multimodal_Architectures.md) 
-- [Cross-Modal Learning](Cross_Modal_Learning.md) 
-- [Image & Text Fusion](Vision_Language.md) 
-- [Audio Processing Integration](Audio_Processing.md) 
-- [Multimodal Applications](Multimodal_Apps.md) 
-
-### Phase 7: Advanced Topics & Future Directions
-- [Model Compression Techniques](Model_Compression.md) 
-- [AI Security & Robustness](AI_Security.md) 
-- [Research Frontiers](Research_Frontiers.md) 
-- [Industry Best Practices](Industry_Best_Practices.md) 
-- [Future of LLMs](Future_LLMs.md) 
-
 ## Prerequisites
 - Basic Python programming
   - [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/)
@@ -67,6 +28,194 @@ This comprehensive tutorial series is designed to provide practical, hands-on ex
   - [PyTorch Tutorials](https://pytorch.org/tutorials/)
 
 Don't worry if you're not an expert in these areas - we'll review key concepts as needed throughout the tutorials.
+
+## Table of Contents
+- [Intro to Large Language Models](Intro.md)
+  - Fundamentals of Language Models
+  - LLM Capabilities and Applications
+- [Tokenization](Tokenization.md)
+  - Text Preprocessing for LLMs
+  - BPE and WordPiece Tokenization
+  - Building Custom LLM Tokenizers
+  - Multilingual Tokenization
+- [Embedding Models](Embedding_Models.md)
+  - Word and Token Embeddings
+  - Word2Vec Architecture
+  - GloVe Embeddings
+  - Contextual Embeddings
+  - Fine-tuning LLM Embeddings
+  - Semantic Search Implementation
+- [Neural Network Foundations for LLMs](Neural_Networks.md)
+  - Activation Functions, Gradients, and Backpropagation
+  - Loss Functions and Regularization Strategies  
+  - Optimization Algorithms and Hyperparameter Tuning
+  - Best Practices for Training Deep Neural Networks
+- [Traditional Language Models](Traditional_LMs.md)
+  - N-gram Language Models and Smoothing Techniques
+  - Feedforward Neural Language Models
+  - Recurrent Neural Network Language Models
+    - Long Short-Term Memory (LSTM) Networks
+    - Gated Recurrent Units (GRUs)
+    - Bidirectional and Multilayer RNNs
+- [The Transformer Architecture](Transformers.md)
+  - Attention Mechanisms and Self-Attention
+  - Multi-Head Attention and Positional Encodings  
+  - Transformer Encoder and Decoder Stacks
+  - Residual Connections and Layer Normalization
+  - Implementing the Transformer from Scratch
+- [Data Preparation](Data_Preparation.md)
+  - LLM Training Data Collection
+  - Text Cleaning for LLMs
+  - Data Filtering and Deduplication
+  - Creating Training Datasets
+  - Dataset Curation and Quality Control
+  - Dataset Annotation Workflows
+  - Hugging Face Hub Dataset Management
+- [Pre-Training Large Language Models](Pre_Training.md)
+  - Model Architecture Selection
+  - Unsupervised Pre-Training Objectives
+    - Masked Language Modeling (MLM)
+    - Permutation Language Modeling (PLM)
+    - Replaced Token Detection (RTD)
+  - Efficient Pre-Training Techniques
+    - Dynamic Masking and Whole Word Masking
+    - Large Batch Training and Learning Rate Scheduling
+  - Training Infrastructure
+    - Distributed Training Setup
+    - Mixed Precision Training
+    - Multi-device Optimization
+  - Training Optimization
+    - Weight Initialization
+    - AdamW Optimizer
+    - Learning Rate Scheduling
+  - Precision Formats
+    - FP16/BF16 Training
+    - FP8 Optimization
+  - Distributed Training
+    - Data Parallel Training
+    - ZeRO Optimization
+    - Distributed Data Processing
+  - Scaling Laws and Model Architecture Variants
+- [Post-Training Datasets](Post_Training_Datasets.md)
+  - Dataset Storage and Chat Templates
+  - Generating Synthetic Training Data
+  - Dataset Augmentation Techniques
+  - Quality Control and Filtering
+- [Supervised Fine-Tuning](Supervised_Fine_Tuning.md)
+  - Post-Training Techniques
+  - Parameter Efficient Fine-Tuning (PEFT)
+  - LoRA Implementation
+  - Chat Model Fine-tuning
+  - Distributed Fine-tuning
+- [Preference Alignment](Preference_Alignment.md)
+  - Reinforcement Learning Fundamentals
+  - Deep Reinforcement Learning for LLMs
+  - Policy Optimization Methods
+  - Proximal Policy Optimization (PPO)
+  - Direct Preference Optimization (DPO)
+  - Rejection sampling
+- [Model Architecture Variants](Model_Architecture_Variants.md)
+  - Mixture of Experts (MoE)
+  - Sparse Architectures
+  - Mamba Architecture
+- [Reasoning](Reasoning.md)
+  - Reasoning Fundamentals
+  - Chain of Thought
+  - Group Relative Policy Optimization (GRPO)
+- [Model Evaluation](Evaluation.md)
+  - LLM Benchmarking
+  - Human evaluation
+  - Model-based evaluation
+  - Feedback-based evaluation
+  - Bias and Safety Testing
+- [Quantization](Quantization.md)
+  - Quantization Fundamentals
+  - Post-Training Quantization (PTQ)
+  - Quantization-Aware Training (QAT)
+  - GGUF Format and llama.cpp Implementation
+  - Advanced Techniques: GPTQ and AWQ
+  - Integer Quantization Methods
+  - Modern Approaches: SmoothQuant and ZeroQuant
+  - Pruning and Sparsity in LLMs
+  - Knowledge Distillation and Model Compression
+  - Optimizing Inference with Specialized Hardware
+  - Deploying LLMs in Production Environments
+- [Inference Optimization](Inference_Optimization.md)
+  - Flash Attention
+  - KV Cache Implementation
+  - Batch Processing
+  - GPU Optimization
+  - Quantization Techniques
+    - Integer Quantization
+    - Mixed Precision Inference
+    - Optimal Format Selection
+- [Running LLMs](Running_LLMs.md)
+  - Using LLM APIs
+  - Building Memory-Enabled Chatbots
+  - Working with Open-Source Models
+  - Prompt Engineering
+  - Structured Outputs
+  - Deploying Models Locally
+  - Creating Interactive Demos
+  - Setting Up Production Servers
+  - Developing REST APIs
+  - Managing Concurrent Users
+- [Retrieval Augmented Generation](RAG.md)
+  - Ingesting documents
+  - Chunking Strategies
+  - Embedding models
+  - Vector databases
+  - Retrieval Implementation
+  - RAG Pipeline Building
+  - Evaluating RAG Performance
+- [Tool Use & AI Agents](Agents.md)
+  - Tool Integration
+  - Agent Implementation
+  - Planning Systems
+  - Agentic RAG
+  - Multi-agent Orchestration
+- [Text-to-SQL Systems](Text_to_SQL.md)
+  - Fundamentals of Text-to-SQL 
+  - Few-Shot Prompting Techniques
+  - In-Context Learning and Self-Correction
+  - Schema-Aware Approaches
+  - Fine-Tuning Strategies for SQL Generation
+  - Hybrid Neural-Symbolic Methods
+  - Benchmarking and Evaluation
+- [Multimodal](Multimodal.md)
+  - Transfer Learning & Pre-trained Models
+  - Multimodal Transformers
+  - Vision-Language Models
+  - Multimodal Attention
+  - Feature Fusion
+  - Cross-modal Training
+  - Image Understanding
+  - Visual QA Systems
+  - Text-to-Image Generation
+  - Multimodal Chatbots
+  - Large Multimodal Models
+  - Joint Image-Text Representations
+- [Securing LLMs](Securing_LLMs.md)
+  - Prompt Injection Attacks
+  - Data/Prompt Leaking
+  - Jailbreaking Techniques
+  - Training Data Poisoning
+  - Backdoor Attacks
+  - Model Theft Prevention
+  - Fairness in LLMs
+  - Bias Detection and Mitigation
+  - Responsible AI Development
+- [Large Language Model Operations (LLMOps)](LLMOps.md)
+  - Hugging Face Hub Integration
+    - Model Card Creation
+    - Model Sharing
+    - Version Control
+  - Monitoring Systems
+- [Model Enhancement and Extension](Model_Enhancement.md)
+  - Context Window Expansion Techniques
+  - Model Fusion and Combination Methods
+
+---
 
 ## How to Follow Along
 1. Follow tutorials sequentially

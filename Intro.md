@@ -35,26 +35,3 @@ Explore the diverse applications of LLMs in real-world scenarios, from text gene
 [![Research Paper](https://badgen.net/badge/Paper/GPT-4%20Technical%20Report/purple)](https://arxiv.org/abs/2303.08774)
 [![Blog](https://badgen.net/badge/Blog/Hugging%20Face%20Blog/pink)](https://huggingface.co/blog)
 
-## 3. Working with OpenAI API
-Get started with the OpenAI API, learning how to integrate powerful language models like GPT into your applications.
-
-### Core Materials
-- **[📘 Medium Article: OpenAI API Guide for Beginners](url)**
-  - *Step-by-step introduction to using the OpenAI API*
-
-### Additional Resources
-[![Documentation](https://badgen.net/badge/Documentation/OpenAI%20Cookbook/green)](https://cookbook.openai.com/)
-[![Tutorial](https://badgen.net/badge/Tutorial/OpenAI%20Examples/blue)](https://platform.openai.com/examples)
-[![GitHub](https://badgen.net/badge/GitHub/OpenAI%20Cookbook%20Code/cyan)](https://github.com/openai/openai-cookbook)
-
-## 4. Exploring Hugging Face Platform
-Learn to use the Hugging Face platform, accessing thousands of pre-trained models and datasets for various NLP tasks.
-
-### Core Materials
-- **[📘 Medium Article: Exploring Hugging Face Platform](url)**
-  - *Introduction to the Hugging Face ecosystem and tools*
-
-### Additional Resources
-[![Documentation](https://badgen.net/badge/Documentation/Hugging%20Face%20Course/green)](https://huggingface.co/course)
-[![Hugging Face](https://badgen.net/badge/Hub/Model%20Repository/yellow)](https://huggingface.co/models)
-[![GitHub](https://badgen.net/badge/GitHub/Transformers%20Library/cyan)](https://github.com/huggingface/transformers)

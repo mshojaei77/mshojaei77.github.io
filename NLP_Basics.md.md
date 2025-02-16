@@ -11,12 +11,12 @@ nav_order: 3
 ## Overview
 This module covers essential Natural Language Processing concepts and techniques, focusing on text processing, word representations, and language modeling fundamentals crucial for understanding LLMs.
 
-## 1. Tokenization Strategies
+## 1. Tokenization
 Learn various tokenization methods to convert text into model-readable tokens. This fundamental NLP concept is crucial for understanding how language models process and interpret text data.
 
 ### Core Materials
 - **[📘 Colab Notebook: BPE Implementation](https://colab.research.google.com/drive/1RwrtINbHTPBSRIoW8Zn9BRabxXguRRf0?usp=sharing)**
-  - *Hands-on implementation of Byte Pair Encoding*
+  - *Hands-on implementation of Simple Byte Pair Encoding*
 - **[📘 Colab Notebook: Hugging Face Tokenizers](https://colab.research.google.com/drive/1mcFgQ9PX1TFyEAsFOnoS1ozeSz3vM6A1?usp=sharing)**
   - *Working with Hugging Face tokenization tools*
 - **[📘 Colab Notebook: Custom Tokenizer](https://colab.research.google.com/drive/1uYFoxwCKwshkchBgQ4y4z9cDfKRlwZ-e?usp=sharing)**
