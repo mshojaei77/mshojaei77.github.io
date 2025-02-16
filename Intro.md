@@ -3,7 +3,7 @@ title: "Introduction to Large Language Models"
 nav_order: 1
 ---
 
-# Module 1: Introduction to Large Language Models
+# Introduction to Large Language Models
 
 ![LLM Introduction Banner](https://github.com/user-attachments/assets/57f00617-fc23-425d-95e6-b28ec361898c)
 *The evolution of language models: From simple text prediction to advanced AI assistants*
