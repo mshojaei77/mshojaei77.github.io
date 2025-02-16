@@ -46,10 +46,10 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Fine-tuning LLM Embeddings
   - Semantic Search Implementation
 - [Neural Network Foundations for LLMs](Neural_Networks.md)
+  - Neural Network Basics
   - Activation Functions, Gradients, and Backpropagation
   - Loss Functions and Regularization Strategies  
   - Optimization Algorithms and Hyperparameter Tuning
-  - Best Practices for Training Deep Neural Networks
 - [Traditional Language Models](Traditional_LMs.md)
   - N-gram Language Models and Smoothing Techniques
   - Feedforward Neural Language Models
@@ -136,19 +136,10 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Advanced Techniques: GPTQ and AWQ
   - Integer Quantization Methods
   - Modern Approaches: SmoothQuant and ZeroQuant
-  - Pruning and Sparsity in LLMs
-  - Knowledge Distillation and Model Compression
-  - Optimizing Inference with Specialized Hardware
-  - Deploying LLMs in Production Environments
 - [Inference Optimization](Inference_Optimization.md)
   - Flash Attention
   - KV Cache Implementation
-  - Batch Processing
-  - GPU Optimization
-  - Quantization Techniques
-    - Integer Quantization
-    - Mixed Precision Inference
-    - Optimal Format Selection
+  - Optimizing Inference with Specialized Hardware
 - [Running LLMs](Running_LLMs.md)
   - Using LLM APIs
   - Building Memory-Enabled Chatbots
@@ -211,10 +202,10 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
     - Model Sharing
     - Version Control
   - Monitoring Systems
-- [Model Enhancement and Extension](Model_Enhancement.md)
-  - Context Window Expansion Techniques
-  - Model Fusion and Combination Methods
-
+- [Model Enhancement](Model_Enhancement.md)
+  - Context Window Expansion
+  - Model Merging
+  - Knowledge Distillation 
 ---
 
 ## How to Follow Along
