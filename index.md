@@ -34,10 +34,12 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Fundamentals of Language Models
   - LLM Capabilities and Applications
 - [Tokenization](Tokenization.md)
-  - Text Preprocessing for LLMs
-  - BPE and WordPiece Tokenization
-  - Building Custom LLM Tokenizers
-  - Multilingual Tokenization
+  - Understanding Tokenization Fundamentals
+  - BPE Tokenization
+  - Working with Hugging Face Tokenizers
+  - Building Custom Tokenizers
+  - GPT Tokenization Approach
+  - Multilingual Tokenization Strategies
 - [Embeddings](Embeddings.md)
   - Word and Token Embeddings
   - Word2Vec Architecture
