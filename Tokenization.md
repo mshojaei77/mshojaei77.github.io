@@ -5,7 +5,7 @@ nav_order: 3
 
 # Tokenization in Natural Language Processing
 
-![Tokenization Banner](https://raw.githubusercontent.com/your-repo/images/tokenization-banner.png)
+![image](https://github.com/user-attachments/assets/25fc9856-d849-4874-9e06-16d25fc88dd5)
 *Understanding how machines break down and process text*
 
 ## Overview
@@ -15,8 +15,10 @@ Tokenization is a fundamental concept in Natural Language Processing (NLP) that 
 Tokenization serves as the foundation for text processing in NLP, converting raw text into machine-processable tokens. This section explores basic tokenization concepts, different token types, and their applications in text processing.
 
 ### Learning Materials 
-- **[📘 Medium Article: Introduction to NLP Tokenization](url)**
-  - *Comprehensive guide to tokenization basics, types, and best practices*
+- **[📘 Medium Article: Introduction to Tokenization](https://medium.com/@mshojaei77/introduction-to-tokenization-a-theoretical-perspective-b1cc22fe98c5)**
+  - *Comprehensive guide to tokenization basics, types, and theoretical perspective*
+- **[📘 Colab Notebook: Tokenization Techniques](https://colab.research.google.com/drive/1RwrtINbHTPBSRIoW8Zn9BRabxXguRRf0?usp=sharing)**
+  - *Hands-on implementation of Simple Tokenizers*
 
 ## 2. BPE Tokenization
 Byte Pair Encoding (BPE) is a crucial tokenization algorithm used in modern language models. Learn how BPE efficiently handles large vocabularies and unknown words through subword tokenization.
@@ -24,19 +26,10 @@ Byte Pair Encoding (BPE) is a crucial tokenization algorithm used in modern lang
 ### Core Materials
 - **[📘 Medium Article: Understanding BPE Tokenization](url)**
   - *Deep dive into BPE algorithm, its advantages, and applications*
-- **[📘 Colab Notebook: BPE Implementation](https://colab.research.google.com/drive/1RwrtINbHTPBSRIoW8Zn9BRabxXguRRf0?usp=sharing)**
-  - *Hands-on implementation of Simple Byte Pair Encoding*
+- **[📘 Colab Notebook: Build and Push a Tokenizer](https://colab.research.google.com/drive/1uYFoxwCKwshkchBgQ4y4z9cDfKRlwZ-e?usp=sharing)**
+  - *Building a tokenizer from scratch and pushing it to Hugging Face Hub*
 
-## 3. Building Custom Tokenizers
-Learn to design and implement custom tokenization solutions for specific languages or domains.
-
-### Core Materials
-- **[📘 Medium Article: Building Custom Tokenizers](url)**
-  - *Design principles and strategies for custom tokenization solutions*
-- **[📘 Colab Notebook: Custom Tokenizer](https://colab.research.google.com/drive/1uYFoxwCKwshkchBgQ4y4z9cDfKRlwZ-e?usp=sharing)**
-  - *Building and customizing your own tokenizer for specific use cases*
-
-## 4. GPT Tokenization Approach
+## 5. GPT Tokenization Approach
 Understand the specific tokenization method used by GPT models and its impact on model performance.
 
 ### Core Materials
