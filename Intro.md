@@ -18,7 +18,7 @@ Large Language Models (LLMs) represent a revolutionary advancement in artificial
 - Future directions and challenges
 
 ### Learning Materials
-- **[📘 Medium Article: Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)**
+- **[Medium Article: Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)**
   - *A beginner-friendly introduction to language models and their basic principles*
 
 ### Additional Resources
