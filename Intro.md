@@ -2,36 +2,28 @@
 title: "Introduction to Large Language Models"
 nav_order: 1
 ---
-
 # Introduction to Large Language Models
 
 ![LLM Introduction Banner](https://github.com/user-attachments/assets/57f00617-fc23-425d-95e6-b28ec361898c)
 *The evolution of language models: From simple text prediction to advanced AI assistants*
 
 ## Overview
-This introductory module provides a gentle introduction to Large Language Models (LLMs), covering their basic concepts, capabilities, and practical applications. You'll learn the fundamentals of how LLMs work and get hands-on experience with popular platforms like OpenAI and Hugging Face.
+Large Language Models (LLMs) represent a revolutionary advancement in artificial intelligence, fundamentally changing how machines understand and generate human language. This guide will walk you through the essential concepts, development, and applications of LLMs.
 
-## 1. Fundamentals of Language Models
-Learn the core concepts behind language models, their architecture, and how they process and generate human language. This section provides an essential foundation for understanding modern AI language systems.
+### What You'll Learn
+- Fundamental concepts of Large Language Models
+- Historical development and key breakthroughs
+- How LLMs work and their architecture
+- Real-world applications and limitations
+- Future directions and challenges
 
-### Core Materials 
-- **[📘 Medium Article: Understanding Language Models](url)**
+### Learning Materials
+- **[📘 Medium Article: Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)**
   - *A beginner-friendly introduction to language models and their basic principles*
 
 ### Additional Resources
-[![Video Guide](https://badgen.net/badge/Video/Stanford%20CS224N%20NLP/red)](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ)
-[![Documentation](https://badgen.net/badge/Documentation/Papers%20With%20Code/green)](https://paperswithcode.com/methods/category/language-models)
-[![Blog](https://badgen.net/badge/Blog/Andrej%20Karpathy/pink)](https://karpathy.ai/)
-
-## 2. LLM Capabilities and Applications
-Explore the diverse applications of LLMs in real-world scenarios, from text generation and summarization to code assistance and creative writing.
-
-### Core Materials
-- **[📘 Medium Article: LLM Use Cases](url)**
-  - *Overview of practical applications and capabilities of modern LLMs*
-
-### Additional Resources
-[![Tutorial](https://badgen.net/badge/Tutorial/DeepLearning.AI/blue)](https://www.deeplearning.ai/short-courses/)
-[![Research Paper](https://badgen.net/badge/Paper/GPT-4%20Technical%20Report/purple)](https://arxiv.org/abs/2303.08774)
-[![Blog](https://badgen.net/badge/Blog/Hugging%20Face%20Blog/pink)](https://huggingface.co/blog)
-
+[![Research Paper](https://badgen.net/badge/Paper/LLMs%20Overview/purple)](https://arxiv.org/pdf/2307.06435)
+[![Video](https://badgen.net/badge/Video/LLMs%20Explained%20Briefly/red)](https://www.youtube.com/watch?v=LPZh9BOjkQs)
+[![Video](https://badgen.net/badge/Video/Deep%20Dive%20into%20LLMs/red)](https://www.youtube.com/watch?v=7xTGNNLPyMI)
+[![Research Paper](https://badgen.net/badge/Paper/LLMs%20Survey/purple)](https://arxiv.org/abs/2402.06196)
+[![Video](https://badgen.net/badge/Video/Intro%20to%20LLMs/red)](https://www.youtube.com/watch?v=zjkBMFhNj_g)
