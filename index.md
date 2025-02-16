@@ -38,7 +38,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - BPE and WordPiece Tokenization
   - Building Custom LLM Tokenizers
   - Multilingual Tokenization
-- [Embedding Models](Embedding_Models.md)
+- [Embeddings](Embeddings.md)
   - Word and Token Embeddings
   - Word2Vec Architecture
   - GloVe Embeddings

@@ -1,7 +1,3 @@
----
-title: "NLP Fundamentals"
-nav_order: 3
----
 
 # Module 3: NLP Fundamentals
 
