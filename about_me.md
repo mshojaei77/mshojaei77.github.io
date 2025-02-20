@@ -1,4 +1,5 @@
-# Mohammad Shojaei
+# About Me
+## Mohammad Shojaei
 **Machine Learning Engineer - NLP & Large Language Models**
 
 [shojaei.dev@gmail.com](mailto:shojaei.dev@gmail.com)  
@@ -22,6 +23,14 @@ I'm a hands-on AI engineer specializing in building practical large language mod
 - **Development Tools** Python, PyTorch, LangChain, FastAPI, Docker, Git
 
 ## Professional Experience
+
+
+### LLM Engineer
+**No Limits Market Ltd** | UAE, Remote | Feb 2025 – Present
+- Developed an AI-powered research system for financial analysis using custom-trained embeddings
+- Implemented automated report generation using structured LLM outputs
+- Built evaluation frameworks to ensure accuracy of AI-generated financial insights
+
 ### ML Engineer  
 **Alpha Neuroscience Company** | Tehran, Iran Remote | May 2023 – Present  
 - Developed signal processing algorithms for EEG data analysis using Python and specialized neuroscience libraries
@@ -29,12 +38,6 @@ I'm a hands-on AI engineer specializing in building practical large language mod
 - Implemented artifact detection models achieving 70% accuracy in identifying noise patterns
 - Fine-tuned a domain-specific medical LLM using LoRA for specialized neurological Q&A
 - Built and deployed a desktop application for EEG analysis using PyQt5 and scientific computing libraries
-
-### AI-Driven Financial Analysis Engineer
-**No Limits Matket Ltd** | UAE, Remote | Feb 2025 – Present
-- Developed an AI-powered research system for financial analysis using custom-trained embeddings
-- Implemented automated report generation using structured LLM outputs
-- Built evaluation frameworks to ensure accuracy of AI-generated financial insights
 
 ### AI Engineer  
 **Owlio** | Italy, Remote | Sep 2024 – Jan 2025  
@@ -74,13 +77,13 @@ I'm a hands-on AI engineer specializing in building practical large language mod
 
 **Language Models & Tokenizers:**
 - Developed [Collection of Persian Tokenizers](https://huggingface.co/mshojaei77/persian-tokenizers) (LlamaFast, GemmaFast, Unigram, WordPiece, BPE) for optimized Persian language processing
-- Fine-tuned [`persian_gemma-2-9b-4bit`](https://huggingface.co/mshojaei77/persian-gemma-2-9b-4bit): Quantized Persian language model based on Gemma-2 9B 
-- Fine-tuned [`persian_phi-3`](https://huggingface.co/mshojaei77/persian-phi-3): Persian language version of Phi-3 model for improved local language support
+- Fine-tuned [persian_gemma-2-9b-4bit](https://huggingface.co/mshojaei77/persian-gemma-2-9b-4bit): Quantized Persian language model based on Gemma-2 9B 
+- Fine-tuned [persian_phi-3](https://huggingface.co/mshojaei77/persian-phi-3): Persian language version of Phi-3 model for improved local language support
 
 **Datasets:**
-- [`Persian_QA`](https://huggingface.co/datasets/mshojaei77/Persian_QA): Synthetic question-answering dataset for Persian language model training and evaluation
-- [`SCED`](https://huggingface.co/datasets/mshojaei77/SCED): Synthetic Contextual Enrichment Dataset - A specialized dataset designed for fine-tuning LLMs using web search and RAG, containing query-context-response pairs for enhanced language model training
-- [`Midjourney-Art-Prompts`](https://huggingface.co/datasets/mshojaei77/Midjourney-Art-Prompts): Collection of curated prompts for AI art generation, facilitating creative applications
+- [Persian_QA](https://huggingface.co/datasets/mshojaei77/Persian_QA): Synthetic question-answering dataset for Persian language model training and evaluation
+- [SCED](https://huggingface.co/datasets/mshojaei77/SCED): Synthetic Contextual Enrichment Dataset - A specialized dataset designed for fine-tuning LLMs using web search and RAG, containing query-context-response pairs for enhanced language model training
+- [Midjourney-Art-Prompts](https://huggingface.co/datasets/mshojaei77/Midjourney-Art-Prompts): Collection of curated prompts for AI art generation, facilitating creative applications
 
 --
 ## Education & Certifications
