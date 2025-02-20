@@ -27,9 +27,9 @@ Byte Pair Encoding (BPE) is a crucial tokenization algorithm used in modern lang
 - **[📄 Medium Article: Understanding BPE Tokenization](https://medium.com/@mshojaei77/understanding-bpe-tokenization-a-hands-on-tutorial-80570314b12f)**
   - *Deep dive into BPE algorithm, its advantages, and applications*
 - **[🟠 Colab Notebook: Build and Push a Tokenizer](https://colab.research.google.com/drive/1uYFoxwCKwshkchBgQ4y4z9cDfKRlwZ-e?usp=sharing)**
-  - *Building a tokenizer from scratch and pushing it to Hugging Face Hub*
+  - *Building diffrent kind of tokenizers and pushing them to Hugging Face Hub*
 
-## 5. GPT Tokenization Approach
+## 3. GPT Tokenization Approach
 Understand the specific tokenization method used by GPT models and its impact on model performance.
 
 ### Learning Materials
@@ -38,7 +38,7 @@ Understand the specific tokenization method used by GPT models and its impact on
 - **[🟠 Colab Notebook: Let's build the GPT Tokenizer by Andrej Karpathy](https://colab.research.google.com/drive/1y0KnCFZvGVf_odSfcNAws6kcDD7HsI0L?usp=sharing)**
   - *Implementing and analyzing GPT tokenization approach*
 
-## 5. Working with Hugging Face Tokenizers
+## 4. Working with Hugging Face Tokenizers
 Explore the powerful Hugging Face Tokenizers library, which provides fast and efficient tokenization for modern transformer models.
 
 ### Learning Materials
@@ -46,20 +46,13 @@ Explore the powerful Hugging Face Tokenizers library, which provides fast and ef
   - *Complete guide to Hugging Face tokenization ecosystem*
 - **[🟠 Colab Notebook: Hugging Face Tokenizers](https://colab.research.google.com/drive/1mcFgQ9PX1TFyEAsFOnoS1ozeSz3vM6A1?usp=sharing)**
 - **[🟠 Colab Notebook: New Tokenizer Training](https://colab.research.google.com/drive/1452WFn66MZzYylTNcL6hV5Zd45sskzs7?usp=sharing)**
-  - *Training a new tokenizer from scratch*
 
-## 6. Evaluating Tokenizers
-  - **[🟠 Colab Notebook: Tokenizer Comparison](https://colab.research.google.com/drive/1wVSCBGFm7KjJy-KugYGYETpncWsPgx5N?usp=sharing)**
-  - *Comparing different tokenization models*
-
-## 7. Multilingual Tokenization Strategies
-Explore approaches for handling multiple languages and scripts in tokenization systems.
+## 5. Evaluating Tokenizers
+Learn how to assess and compare different tokenization approaches to choose the best one for your specific use case.
 
 ### Learning Materials
-- **[📄 Medium Article: Multilingual Tokenization Guide](url)**
-  - *Comprehensive guide to handling multiple languages in tokenization*
-- **[🟠 Colab Notebook: Multilingual Tokenizer](url)**
-  - *Building a robust multilingual tokenization system*
+  - **[🟠 Colab Notebook: Tokenizer Comparison](https://colab.research.google.com/drive/1wVSCBGFm7KjJy-KugYGYETpncWsPgx5N?usp=sharing)**
+  - *Comparing different tokenization models*
 
 ## Additional Resources
 
