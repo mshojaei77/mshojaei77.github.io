@@ -1,4 +1,4 @@
 ---
 title: "Traditional Language Models"
-nav_order:6
+nav_order: 6
 ---
