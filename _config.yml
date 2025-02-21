@@ -15,3 +15,7 @@ social:
   huggingface: "https://huggingface.co/mshojaei77"
   twitter: "https://twitter.com/realshojaei"
   linkedin: "https://linkedin.com/in/mshojaei77"
+  
+plugins:
+  - jekyll-default-layout
+  
