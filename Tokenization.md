@@ -57,12 +57,14 @@ Learn how to assess and compare different tokenization approaches to choose the 
 ## Additional Resources
 
 **Interactive Playgrounds:**
+
 [![TikTokenizer](https://badgen.net/badge/Playground/TikTokenizer/blue)](https://tiktokenizer.vercel.app/)
 [![Hugging Face Tokenizer](https://badgen.net/badge/Playground/HF%20Tokenizer/blue)](https://huggingface.co/spaces/Xenova/the-tokenizer-playground)
 [![OpenAI Tokenizer](https://badgen.net/badge/Playground/OpenAI%20Tokenizer/blue)](https://platform.openai.com/tokenizer)
 [![Tokenizer Arena](https://badgen.net/badge/Playground/Tokenizer%20Arena/blue)](https://huggingface.co/spaces/Cognitive-Lab/Tokenizer_Arena)
 
 **Documentation & Tools:**
+
 [![Tokenizers Library](https://badgen.net/badge/Documentation/Hugging%20Face%20Tokenizers/green)](https://huggingface.co/docs/tokenizers)
 [![SentencePiece](https://badgen.net/badge/GitHub/SentencePiece/cyan)](https://github.com/google/sentencepiece)
 [![SentencePiece Guide](https://badgen.net/badge/Docs/SentencePiece%20Training%20Guide/green)](https://github.com/google/sentencepiece#train-sentencepiece-model)
