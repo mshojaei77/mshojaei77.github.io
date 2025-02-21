@@ -19,7 +19,6 @@ This comprehensive tutorial series is designed to provide practical, hands-on ex
     - [3Blue1Brown Essence of Linear Algebra](https://www.3blue1brown.com/topics/linear-algebra)
     - [3Blue1Brown Essence of Calculus](https://www.3blue1brown.com/topics/calculus)
     - [MIT Probability Course](https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2014/)
-
 - Basic understanding of machine learning concepts
   - [Stanford CS229: Machine Learning](https://cs229.stanford.edu/)
 - Familiarity with neural networks
@@ -165,6 +164,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - RAG Pipeline Building
   - Graph RAG Techniques
   - Constructing and Optimizing Knowledge Graphs
+  - Intelligent Document Processing (IDP) with RAG
 - [Tool Use & AI Agents](Agents.md)
   - Function Calling and Tool Usage
   - Agent Implementation
@@ -210,6 +210,9 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
     - Version Control
   - LLM Observability Tools
   - Techniques for Debugging and Monitoring
+  - Docker, OpenShift, CI/CD
+  - Dependency Management and Containerization
+  - Apache Spark usage for LLM Inference
 - [Model Enhancement](Model_Enhancement.md)
   - Context Window Expansion
   - Model Merging
