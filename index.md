@@ -28,6 +28,8 @@ This comprehensive tutorial series is designed to provide practical, hands-on ex
 
 Don't worry if you're not an expert in these areas - we'll review key concepts as needed throughout the tutorials.
 
+---
+
 ## Table of Contents
 - [Intro to Large Language Models](Intro.md)
   - Fundamentals of Language Models
