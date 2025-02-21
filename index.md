@@ -29,7 +29,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
 
 ---
 
-## Table of Contents
+# Roadmap
 
 ![image](https://github.com/user-attachments/assets/8c634f07-a928-43f0-a79c-5651c12678a1)
 
