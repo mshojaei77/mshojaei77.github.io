@@ -14,7 +14,11 @@ social:
   github: "https://github.com/mshojaei77"
   huggingface: "https://huggingface.co/mshojaei77"
   twitter: "https://twitter.com/realshojaei"
-  linkedin: "https://linkedin.com/in/mshojaei77"
+  
+plugins:
+  - jekyll-default-layout
+  
+
   
 plugins:
   - jekyll-default-layout
