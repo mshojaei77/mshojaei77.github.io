@@ -31,6 +31,9 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
 ---
 
 ## Table of Contents
+
+![image](https://github.com/user-attachments/assets/8c634f07-a928-43f0-a79c-5651c12678a1)
+
 - [Intro to Large Language Models](Intro.md)
   - Fundamentals of Language Models
   - LLM Capabilities and Applications
@@ -48,6 +51,9 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Contextual Embeddings
   - Fine-tuning LLM Embeddings
   - Semantic Search Implementation
+
+![image](https://github.com/user-attachments/assets/42dd0c30-a1f3-4802-a3cd-0dab17a86122)
+
 - [Neural Network Foundations for LLMs](Neural_Networks.md)
   - Neural Network Basics
   - Activation Functions, Gradients, and Backpropagation
@@ -66,6 +72,9 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Transformer Encoder and Decoder Stacks
   - Residual Connections and Layer Normalization
   - Implementing the Transformer from Scratch
+
+![image](https://github.com/user-attachments/assets/b19f699f-87bf-4120-9677-9d459b51ea71)
+
 - [Data Preparation](Data_Preparation.md)
   - LLM Training Data Collection
   - Text Cleaning for LLMs
@@ -130,6 +139,9 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Benchmarking LLM Models
   - Assessing Performance (Human evaluation)
   - Bias and Safety Testing
+
+![image](https://github.com/user-attachments/assets/81b2e913-2b36-4cbe-a2b7-549e04720b6e)
+
 - [Quantization](Quantization.md)
   - Quantization Fundamentals
   - Post-Training Quantization (PTQ)
@@ -157,6 +169,9 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Managing Concurrent Users
   - Test-Time Autoscaling
   - Batching for Model Deployment
+
+![image](https://github.com/user-attachments/assets/f37130fc-850b-4e12-a9d0-a765269cddc8)
+
 - [Retrieval Augmented Generation](RAG.md)
   - Ingesting documents
   - Chunking Strategies
