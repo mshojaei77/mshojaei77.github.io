@@ -9,17 +9,15 @@ github: "https://github.com/mshojaei77/LLMs-Journey"
 # Logo
 logo: "/assets/img/logo.png"
 
-# Social media links
-social:
-  github: "https://github.com/mshojaei77"
-  huggingface: "https://huggingface.co/mshojaei77"
-  twitter: "https://twitter.com/realshojaei"
-  
 plugins:
   - jekyll-default-layout
   
+favicon_ico: "/assets/img/favicon.ico"
 
-  
-plugins:
-  - jekyll-default-layout
-  
+# Aux links for the upper right navigation
+aux_links:
+  "GitHub":
+    - "https://github.com/mshojaei77"
+
+aux_links_new_tab: true
+
