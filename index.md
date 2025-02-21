@@ -73,6 +73,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Dataset Curation and Quality Control
   - Dataset Annotation Workflows
   - Hugging Face Hub Dataset Management
+  - Data Preparation Techniques for Large-Scale NLP Applications
 - [Pre-Training Large Language Models](Pre_Training.md)
   - Model Architecture Selection
   - Unsupervised Pre-Training Objectives
@@ -125,10 +126,8 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Chain of Thought
   - Group Relative Policy Optimization (GRPO)
 - [Model Evaluation](Evaluation.md)
-  - LLM Benchmarking
-  - Human evaluation
-  - Model-based evaluation
-  - Feedback-based evaluation
+  - Benchmarking LLM Models
+  - Assessing Performance (Human evaluation)
   - Bias and Safety Testing
 - [Quantization](Quantization.md)
   - Quantization Fundamentals
@@ -141,7 +140,8 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
 - [Inference Optimization](Inference_Optimization.md)
   - Flash Attention
   - KV Cache Implementation
-  - Optimizing Inference with Specialized Hardware
+  - Test-Time Preference Optimization (TPO)
+  - Compression Methods to Enhance LLM Performance
 - [Running LLMs](Running_LLMs.md)
   - Using LLM APIs
   - Building Memory-Enabled Chatbots
@@ -151,8 +151,11 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Deploying Models Locally
   - Creating Interactive Demos
   - Setting Up Production Servers
+  - Serving Open Source LLMs in a Production Environment
   - Developing REST APIs
   - Managing Concurrent Users
+  - Test-Time Autoscaling
+  - Batching for Model Deployment
 - [Retrieval Augmented Generation](RAG.md)
   - Ingesting documents
   - Chunking Strategies
@@ -160,9 +163,10 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Vector databases
   - Retrieval Implementation
   - RAG Pipeline Building
-  - Evaluating RAG Performance
+  - Graph RAG Techniques
+  - Constructing and Optimizing Knowledge Graphs
 - [Tool Use & AI Agents](Agents.md)
-  - Tool Integration
+  - Function Calling and Tool Usage
   - Agent Implementation
   - Planning Systems
   - Agentic RAG
@@ -176,17 +180,16 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Hybrid Neural-Symbolic Methods
   - Benchmarking and Evaluation
 - [Multimodal](Multimodal.md)
+  - Working with Multi-Modal LLMs, Including Text, Audio Input/Output, and Images
   - Transfer Learning & Pre-trained Models
   - Multimodal Transformers
   - Vision-Language Models
   - Multimodal Attention
   - Feature Fusion
-  - Cross-modal Training
-  - Image Understanding
+  - Image Captioning
   - Visual QA Systems
   - Text-to-Image Generation
   - Multimodal Chatbots
-  - Large Multimodal Models
   - Joint Image-Text Representations
 - [Securing LLMs](Securing_LLMs.md)
   - Prompt Injection Attacks
@@ -198,12 +201,15 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Fairness in LLMs
   - Bias Detection and Mitigation
   - Responsible AI Development
+  - Personal Information Masking
+  - Reconstruction Methods
 - [Large Language Model Operations (LLMOps)](LLMOps.md)
   - Hugging Face Hub Integration
     - Model Card Creation
     - Model Sharing
     - Version Control
-  - Monitoring Systems
+  - LLM Observability Tools
+  - Techniques for Debugging and Monitoring
 - [Model Enhancement](Model_Enhancement.md)
   - Context Window Expansion
   - Model Merging
