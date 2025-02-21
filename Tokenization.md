@@ -14,31 +14,23 @@ Tokenization is a fundamental concept in Natural Language Processing (NLP) that 
 ## 1. Understanding Tokenization Fundamentals
 Tokenization serves as the foundation for text processing in NLP, converting raw text into machine-processable tokens. This section explores basic tokenization concepts, different token types, and their applications in text processing.
 
-### Learning Materials 
+### Learning Materials
 - **[📄 Medium Article: Introduction to Tokenization](https://medium.com/@mshojaei77/introduction-to-tokenization-a-theoretical-perspective-b1cc22fe98c5)**
   - *Comprehensive guide to tokenization basics, types, and theoretical perspective*
 - **[🟠 Colab Notebook: Tokenization Techniques](https://colab.research.google.com/drive/1RwrtINbHTPBSRIoW8Zn9BRabxXguRRf0?usp=sharing)**
   - *Hands-on implementation of Simple Tokenizers*
-
-## 2. BPE Tokenization
-Byte Pair Encoding (BPE) is a crucial tokenization algorithm used in modern language models. Learn how BPE efficiently handles large vocabularies and unknown words through subword tokenization.
-
-### Learning Materials
-- **[📄 Medium Article: Understanding BPE Tokenization](https://medium.com/@mshojaei77/understanding-bpe-tokenization-a-hands-on-tutorial-80570314b12f)**
-  - *Deep dive into BPE algorithm, its advantages, and applications*
-- **[🟠 Colab Notebook: Build and Push a Tokenizer](https://colab.research.google.com/drive/1uYFoxwCKwshkchBgQ4y4z9cDfKRlwZ-e?usp=sharing)**
-  - *Building diffrent kind of tokenizers and pushing them to Hugging Face Hub*
-
-## 3. GPT Tokenization Approach
-Understand the specific tokenization method used by GPT models and its impact on model performance.
-
-### Learning Materials
 - **[▶️ YouTube Video: Let's build the GPT Tokenizer by Andrej Karpathy](https://www.youtube.com/watch?v=zduSFxRajkE)**
  - *Practical implementation of GPT tokenization approach*
 - **[🟠 Colab Notebook: Let's build the GPT Tokenizer by Andrej Karpathy](https://colab.research.google.com/drive/1y0KnCFZvGVf_odSfcNAws6kcDD7HsI0L?usp=sharing)**
   - *Implementing and analyzing GPT tokenization approach*
-
-## 4. Working with Hugging Face Tokenizers
+- **[📄 Medium Article: Understanding BPE Tokenization](https://medium.com/@mshojaei77/understanding-bpe-tokenization-a-hands-on-tutorial-80570314b12f)**
+  - *Deep dive into BPE algorithm, its advantages, and applications*
+- **[🟠 Colab Notebook: Build and Push a Tokenizer](https://colab.research.google.com/drive/1uYFoxwCKwshkchBgQ4y4z9cDfKRlwZ-e?usp=sharing)**
+  - *Building different kinds of tokenizers and pushing them to Hugging Face Hub*
+- **[🟠 Colab Notebook: Tokenizer Comparison](https://colab.research.google.com/drive/1wVSCBGFm7KjJy-KugYGYETpncWsPgx5N?usp=sharing)**
+  - *Comparing different tokenization models*
+  
+## 2. Fast Tokenizers
 Explore the powerful Hugging Face Tokenizers library, which provides fast and efficient tokenization for modern transformer models.
 
 ### Learning Materials
@@ -46,13 +38,7 @@ Explore the powerful Hugging Face Tokenizers library, which provides fast and ef
   - *Complete guide to Hugging Face tokenization ecosystem*
 - **[🟠 Colab Notebook: Hugging Face Tokenizers](https://colab.research.google.com/drive/1mcFgQ9PX1TFyEAsFOnoS1ozeSz3vM6A1?usp=sharing)**
 - **[🟠 Colab Notebook: New Tokenizer Training](https://colab.research.google.com/drive/1452WFn66MZzYylTNcL6hV5Zd45sskzs7?usp=sharing)**
-
-## 5. Evaluating Tokenizers
-Learn how to assess and compare different tokenization approaches to choose the best one for your specific use case.
-
-### Learning Materials
-  - **[🟠 Colab Notebook: Tokenizer Comparison](https://colab.research.google.com/drive/1wVSCBGFm7KjJy-KugYGYETpncWsPgx5N?usp=sharing)**
-  - *Comparing different tokenization models*
+- **[📄 Medium Article: Fast Tokenizers: How Rust is Turbocharging NLP](https://medium.com/@mshojaei77/fast-tokenizers-how-rust-is-turbocharging-nlp-dd12a1d13fa9)**
 
 ## Additional Resources
 
