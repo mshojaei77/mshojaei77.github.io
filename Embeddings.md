@@ -5,30 +5,96 @@ nav_order: 4
 
 # Embeddings
 
-![image](https://github.com/user-attachments/assets/944f2cce-c66d-4c51-a443-cebc151055ff)
+![Module Banner](https://github.com/user-attachments/assets/944f2cce-c66d-4c51-a443-cebc151055ff)
+*Image caption or credit*
 
 ## Overview
-Word embeddings are fundamental to Natural Language Processing, serving as dense vector representations of words that capture semantic and syntactic relationships. This module explores both static and contextual word embeddings, their evolution, and their applications in modern NLP.
+Embeddings are **numerical vector representations** of objects like words, images, or items, capturing their semantic meaning and relationships in a continuous vector space. They serve as a **translator**, converting data into a numerical code that machine learning models can understand. This is crucial in natural language processing (NLP) and large language models (LLMs), enabling machines to interpret and manipulate human language effectively. 
 
-## 1. Word Embeddings
-Word embeddings are dense vector representations of words that capture semantic and syntactic relationships. Understanding these embeddings is crucial for various NLP tasks.
+### Example
+For instance, the words "king" and "queen" might be represented as vectors that are close to each other in the embedding space, reflecting their semantic relationship.
 
-### Learning Materials
-- **[📄 Medium Article: Word Embeddings Deep Dive](https://lilianweng.github.io/posts/2017-10-15-word-embedding/)**
-  - *Comprehensive overview of various word embedding techniques.*
-- **[🟠 Colab Notebook: Word2Vec Implementation](https://colab.research.google.com/drive/yournotebooklink3)**
-  - *Implement Word2Vec from scratch to understand its mechanics.*
-- **[🟠 Colab Notebook: GloVe Implementation](https://colab.research.google.com/drive/yournotebooklink4)**
-  - *Implement GloVe to learn about global co-occurrence statistics.*
+## 1. Definition and Purpose of Embeddings
+Embeddings transform **non-numeric data into a format that neural networks can process**. They capture the semantic meaning of text, ensuring that semantically similar words are positioned close together in the vector space. The main purposes of embeddings include:
 
-## 2. Contextual Embeddings
-Contextual embeddings vary based on the context in which words appear, capturing nuanced meanings. This section highlights the significance of these embeddings in modern NLP applications.
+- **Converting Data**: Transforming various forms of data into numerical formats.
+- **Capturing Semantic Meaning**: Ensuring that similar concepts are represented closely in the vector space.
+- **Enabling Machine Learning**: Providing a numerical representation for words, images, and audio data, which is essential for machine learning models.
 
 ### Learning Materials
-- **[📄 Paper: BERT Paper](https://arxiv.org/abs/2204.03503)**
-  - *Revolutionizing context: Understanding the architecture that advanced contextual word embeddings.*
-- **[🟠 Colab Notebook: BERT Embeddings Exploration](https://colab.research.google.com/drive/yournotebooklink_bert_exploration)**
-  - *Experiment with pre-trained BERT models to analyze contextual embeddings.*
+- **[📄 Medium Article: Understanding Embeddings](https://medium.com/some-article-url)**
+  - *An introduction to the concept of word embeddings and their significance in NLP.*
+- **[📄 Video: Introduction to Word Embeddings](https://www.youtube.com/watch?v=example)**
+  - *A visual explanation of how embeddings work and their applications.*
+
+## 2. Types of Embeddings
+Embeddings can be categorized into several types, each serving different purposes:
+
+- **Word Embeddings**: Represent individual words as vectors.
+- **Sentence/Paragraph Embeddings**: Represent entire sentences or paragraphs.
+- **Token Embeddings**: Represent individual tokens, which are small chunks of text.
+- **Contextualized Word Embeddings**: Capture the meaning of a word based on its context in a sentence.
+- **Positional Embeddings**: Encode the position of words in a sequence, crucial for LLMs' self-attention mechanisms.
+- **Multimodal Embeddings**: Capture both textual and visual representations, useful in multimodal LLMs.
+
+### Learning Materials
+- **[📄 Blog: A Deep Dive into Word2Vec](https://medium.com/some-word2vec-url)**
+  - *Explains the Word2Vec model and its applications.*
+- **[🟠 Colab Notebook: Basic Word Embedding Implementation](https://colab.research.google.com/some-notebook-url)**
+  - *A simple implementation of word embeddings using Python.*
+- **[🟠 Colab Notebook: Advanced Word Embedding Techniques](https://colab.research.google.com/some-advanced-notebook-url)**
+  - *An advanced look at training and using embeddings.*
+- **[🟠 Colab Notebook: GloVe Implementation](https://colab.research.google.com/some-glove-url)**
+  - *Hands-on implementation of GloVe embeddings.*
+
+## 3. How Embeddings are Created
+Embeddings are created through various methods, primarily using deep learning models that understand context and semantics:
+
+- **Deep Learning Models**: Generate embeddings as part of the input layer, optimized during training.
+- **Training Process**: Initially, vectors are randomly initialized, and the training process assigns values that enable useful behavior.
+- **Word2Vec**: An early method using a neural network to predict the context of a word, clustering similar terms together.
+- **Contrastive Learning**: Models learn from similar and dissimilar pairs of documents to understand their relationships.
+
+### Learning Materials
+- **[📄 Paper: Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)**
+  - *The original paper on Word2Vec.*
+- **[🟠 Colab Notebook: Training Custom Embeddings](https://colab.research.google.com/some-training-url)**
+  - *A guide to training your own embeddings.*
+
+## 4. Importance of Embeddings in LLMs
+Embeddings play a critical role in LLMs by enabling:
+
+- **Text Processing**: Converting raw text into numerical vectors that LLMs can process.
+- **Contextual Understanding**: Attention mechanisms use embeddings to relate every token to others in a sequence.
+- **Foundation for Applications**: Essential for various applications like text classification, semantic search, and retrieval-augmented generation.
+
+### Learning Materials
+- **[📄 Blog: Applications of Word Embeddings in NLP](https://medium.com/some-applications-url)**
+  - *Discusses various applications of embeddings in real-world scenarios.*
+- **[🟠 Colab Notebook: Using Embeddings for Sentiment Analysis](https://colab.research.google.com/some-sentiment-url)**
+  - *A practical example of using embeddings for sentiment analysis.*
+
+## 5. Working with Embeddings
+The process of working with embeddings involves several steps:
+
+- **Tokenization**: Breaking raw text into tokens.
+- **Token IDs**: Converting tokens into integer representations.
+- **Embedding Vectors**: Transforming token IDs into embedding vectors.
+
+## 6. Advanced Techniques and Considerations
+When working with embeddings, consider the following advanced techniques:
+
+- **Fine-Tuning**: Pre-trained embedding models can be fine-tuned to adapt to specific jargon and nuances of a domain.
+- **Data Categories**: Embeddings can be computed for various digital data categories like words, sentences, documents, images, and videos.
+- **Dimensionality Reduction**: Techniques like UMAP and t-SNE are used to visualize embeddings by projecting them into 2D or 3D space.
+
+## 7. Applications of Embeddings
+Embeddings have a wide range of applications, including:
+
+- **Semantic Search**: Developing a semantic search engine using LLM embeddings.
+- **Document Clustering**: Performing clustering with embedding models.
+- **Recommendation Systems**: Employing embeddings for recommender engines.
+- **RAG (Retrieval-Augmented Generation)**: Combining embeddings with retrieval to pull relevant information when generating text.
 
 ## Additional Resources
 [![Word Embeddings Deep Dive](https://badgen.net/badge/Blog/Word%20Embeddings%20Deep%20Dive/pink)](https://lilianweng.github.io/posts/2017-10-15-word-embedding/)
