@@ -25,7 +25,7 @@ Embeddings can be categorized into several types, each serving different purpose
   - *From Words to Vectors: A Gentle Introduction to Word Embeddings*
 - **[📄 Medium Article: Contextual Embeddings](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)**
   - *Beyond "One-Word, One-Meaning": A Deep Dive into Contextual Embeddings*
-- **[📄 Medium Article: Sentence Embeddings](https://towardsdatascience.com/sentence-embeddings-in-nlp-a-complete-guide-4d7c39c5196)**
+- **[📄 Medium Article: Sentence Embeddings](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)**
   - *Exploring Sentence Embeddings and Their Applications*
 - **[📄 Medium Article: Multimodal Embeddings](https://arxiv.org/abs/2103.00020)**
   - *Multimodal Embeddings: Bridging Text and Image Data*
