@@ -16,55 +16,27 @@ Embeddings are **numerical vector representations** of objects like words, image
 Embeddings transform **non-numeric data into a format that neural networks can process**. They capture the semantic meaning of text, ensuring that semantically similar words are positioned close together in the vector space.
 Embeddings can be categorized into several types, each serving different purposes:
 - **Word Embeddings**: Represent individual words as vectors.
-- **Token Embeddings**: Represent individual tokens, which are small chunks of text.
-- **Contextualized Word Embeddings**: Capture the meaning of a word based on its context in a sentence.
-- **Positional Embeddings**: Encode the position of words in a sequence, crucial for LLMs' self-attention mechanisms.
+- **Contextual Embeddings**: Capture the meaning of a word based on its context in a sentence.
 - **Sentence/Paragraph Embeddings**: Represent entire sentences or paragraphs.
 - **Multimodal Embeddings**: Capture both textual and visual representations, useful in multimodal LLMs.
 
 ### Learning Materials
-- **[📄 Medium Article: Word Embeddings](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)**
+- **[📄 Medium Article: Static Embeddings](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)**
   - *From Words to Vectors: A Gentle Introduction to Word Embeddings*
-- **[📄 Medium Article: Token Embeddings](https://towardsdatascience.com/token-embeddings-what-are-they-and-why-do-they-matter-1c1c1e1c1c1c)**
-  - *Understanding Token Embeddings and Their Importance in NLP*
-- **[📄 Medium Article: Contextualized Word Embeddings](https://towardsdatascience.com/contextualized-word-embeddings-what-are-they-and-how-do-they-work-1c1c1e1c1c1c)**
-  - *A Deep Dive into Contextualized Word Embeddings*
-- **[📄 Medium Article: Positional Embeddings](https://arxiv.org/abs/1706.03762)**
-  - *Attention is All You Need: Understanding Positional Embeddings*
+- **[📄 Medium Article: Contextual Embeddings](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)**
+  - *Beyond "One-Word, One-Meaning": A Deep Dive into Contextual Embeddings*
 - **[📄 Medium Article: Sentence Embeddings](https://towardsdatascience.com/sentence-embeddings-what-are-they-and-how-to-use-them-1c1c1e1c1c1c)**
   - *Exploring Sentence Embeddings and Their Applications*
 - **[📄 Medium Article: Multimodal Embeddings](https://arxiv.org/abs/2105.00001)**
   - *Multimodal Embeddings: Bridging Text and Image Data*
-- **[🟠 Colab Notebook: Word Embeddings Implementation](https://colab.research.google.com/drive/1a2b3c4d5e6f7g8h9i0j)**
-  - *Hands-on with Word Embeddings: A Simple Implementation*
-- **[🟠 Colab Notebook: Token Embeddings Implementation](https://colab.research.google.com/drive/1j2k3l4m5n6o7p8q9r0s)**
-  - *Exploring Token Embeddings: A Practical Guide*
-- **[🟠 Colab Notebook: Contextualized Word Embeddings Implementation](https://colab.research.google.com/drive/1t2u3v4w5x6y7z8a9b0c)**
-  - *Implementing Contextualized Word Embeddings in Python*
-- **[🟠 Colab Notebook: Positional Embeddings Implementation](https://colab.research.google.com/drive/1d2e3f4g5h6i7j8k9l0m)**
-  - *Understanding Positional Embeddings through Code*
-- **[🟠 Colab Notebook: Sentence Embeddings Implementation](https://colab.research.google.com/drive/1n2o3p4q5r6s7t8u9v0w)**
-  - *Creating Sentence Embeddings: A Step-by-Step Guide*
-- **[🟠 Colab Notebook: Multimodal Embeddings Implementation](https://colab.research.google.com/drive/1x2y3z4a5b6c7d8e9f0g)**
-  - *Working with Multimodal Embeddings: An Interactive Notebook*
+- **[🟠 Colab Notebook: Hands-on Experiences with Embedding Models](https://colab.research.google.com/drive/1a2b3c4d5e6f7g8h9i0j)**
+  - *Hands-on Experiences with Embeddings*
 
-## 2. Creating Embeddings
+## 2. Training Embeddings
 Embeddings are created through various methods, primarily using deep learning models that understand context and semantics:
 
 - **Training Process**: Initially, vectors are randomly initialized, and the training process assigns values that enable useful behavior.
 - **Contrastive Learning**: Models learn from similar and dissimilar pairs of documents to understand their relationships.
-
-### Learning Materials
-- **[📄 Medium Article: Topic 1 Theory](url)**
-  - *Brief description*
-- **[🟠 Colab Notebook: Topic 1 Simple Implementation](url)**
-  - *Brief description*
-- **[🟠 Colab Notebook: Topic 1 Advanced Implementation](url)**
-  - *Brief description*
-
-## 3. Advanced Techniques and Considerations
-When working with embeddings, consider the following advanced techniques:
-
 - **Fine-Tuning**: Pre-trained embedding models can be fine-tuned to adapt to specific jargon and nuances of a domain.
 - **Dimensionality Reduction**: Techniques like UMAP and t-SNE are used to visualize embeddings by projecting them into 2D or 3D space.
 
@@ -76,7 +48,7 @@ When working with embeddings, consider the following advanced techniques:
 - **[🟠 Colab Notebook: Topic 1 Advanced Implementation](url)**
   - *Brief description*
 
-## 5. Applications of Embeddings
+## 3. Applications of Embeddings
 Embeddings have a wide range of applications, including:
 
 - **Semantic Search**: Developing a semantic search engine using LLM embeddings.

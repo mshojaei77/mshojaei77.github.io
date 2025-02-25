@@ -86,9 +86,13 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
     - Masked Language Modeling (MLM)
     - Permutation Language Modeling (PLM)
     - Replaced Token Detection (RTD)
+    - Span-based Masking
+    - Prefix Language Modeling
   - Efficient Pre-Training Techniques
     - Dynamic Masking and Whole Word Masking
     - Large Batch Training and Learning Rate Scheduling
+    - Curriculum Learning
+    - Progressive Training Strategies
   - Training Infrastructure
     - Distributed Training Setup
     - Mixed Precision Training
@@ -127,6 +131,9 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Mixture of Experts (MoE)
   - Sparse Architectures
   - Mamba Architecture
+  - Sliding Window Attention Models
+  - Hybrid Transformer-RNN Architectures
+  - GraphFormers and Graph-based LLMs
 - [Reasoning](Reasoning.md)
   - Reasoning Fundamentals
   - Chain of Thought
