@@ -9,69 +9,39 @@ nav_order: 4
 *Vector representations of data in multidimensional space*
 
 ## Overview
-Embeddings are **numerical vector representations** of objects like words, images, or items, capturing their semantic meaning and relationships in a continuous vector space. They serve as a **translator**, converting data into a numerical code that machine learning models can understand. This is crucial in natural language processing (NLP) and large language models (LLMs), enabling machines to interpret and manipulate human language effectively. 
+Embeddings are **numerical vector representations** that transform data into meaningful points in a high-dimensional space. Think of them as coordinates that capture the essence and relationships between objects - whether they're words, images, or any other type of data. These vectors serve as a sophisticated **translation layer**, converting complex information into a mathematical format that machine learning models can process and understand.
 
+### Key Concepts
+- **Dimensional Meaning**: Each dimension in the embedding space represents different features or aspects of the data
+- **Similarity Metrics**: The closer two vectors are in the embedding space, the more semantically similar their corresponding items
+- **Learned Representations**: Embeddings are typically learned from data, allowing them to capture nuanced relationships
 
-## 1. Definition, Purpose, and Types of Embeddings
-Embeddings transform **non-numeric data into a format that neural networks can process**. They capture the semantic meaning of text, ensuring that semantically similar words are positioned close together in the vector space.
-Embeddings can be categorized into several types, each serving different purposes:
-- **Word Embeddings**: Represent individual words as vectors.
-- **Contextual Embeddings**: Capture the meaning of a word based on its context in a sentence.
-- **Sentence/Paragraph Embeddings**: Represent entire sentences or paragraphs.
-- **Multimodal Embeddings**: Capture both textual and visual representations, useful in multimodal LLMs.
+### Types of Embeddings
+1. **Word Embeddings**
+   - Transform individual words into vectors (e.g., "cat" → [0.2, -0.5, 0.1])
+   - Popular models: Word2Vec, GloVe, FastText
+   - Capture semantic relationships like: king - man + woman ≈ queen
 
-### Learning Materials
-- **[📄 Medium Article: Static Embeddings](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)**
-  - *From Words to Vectors: A Gentle Introduction to Word Embeddings*
-- **[📄 Medium Article: Contextual Embeddings](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)**
-  - *Beyond "One-Word, One-Meaning": A Deep Dive into Contextual Embeddings*
-- **[📄 Medium Article: Sentence Embeddings](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)**
-  - *Exploring Sentence Embeddings and Their Applications*
-- **[📄 Medium Article: Multimodal Embeddings](https://arxiv.org/abs/2103.00020)**
-  - *Multimodal Embeddings: Bridging Text and Image Data*
-- **[🟠 Colab Notebook: Hands-on Experiences with Embedding Models](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/text/word_embeddings.ipynb)**
-  - *Hands-on Experiences with Embeddings*
+2. **Contextual Embeddings**
+   - Generate dynamic vectors based on context
+   - Same word can have different embeddings in different contexts
+   - Examples: BERT, GPT, RoBERTa
 
-## 2. Training Embeddings
-Embeddings are created through various methods, primarily using deep learning models that understand context and semantics:
+3. **Sentence/Document Embeddings**
+   - Represent entire text segments as single vectors
+   - Preserve semantic meaning across longer contexts
+   - Used for document similarity, clustering, and retrieval
 
-- **Training Process**: Initially, vectors are randomly initialized, and the training process assigns values that enable useful behavior.
-- **Contrastive Learning**: Models learn from similar and dissimilar pairs of documents to understand their relationships.
-- **Fine-Tuning**: Pre-trained embedding models can be fine-tuned to adapt to specific jargon and nuances of a domain.
-- **Dimensionality Reduction**: Techniques like UMAP and t-SNE are used to visualize embeddings by projecting them into 2D or 3D space.
+### Learning Resources
+- **[📄 Word Embeddings Deep Dive](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)**
+  - *Comprehensive introduction to word vector representations*
+- **[📄 Contextual Embedding Guide](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)**
+  - *Advanced concepts in context-aware embeddings*
+- **[📄 Sentence Embedding Techniques](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)**
+  - *Modern approaches to sentence-level embeddings*
+- **[🟠 Interactive Word2Vec Tutorial](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)**
+  - *Hands-on implementation with detailed explanations*
 
-### Learning Materials
-- **[🟠 Colab Notebook: Word2Vec Implementation](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/text/word2vec.ipynb)**
-  - *Hands-on implementation of Word2Vec from scratch using TensorFlow*
-- **[🟠 Colab Notebook: BERT Embeddings with Transformers](https://colab.research.google.com/github/huggingface/notebooks/blob/main/examples/extract_bert_embeddings.ipynb)**
-  - *Extracting and analyzing BERT embeddings with Hugging Face Transformers*
-- **[🟠 Colab Notebook: Contrastive Learning for Sentence Embeddings](https://colab.research.google.com/github/UKPLab/sentence-transformers/blob/master/examples/training/contrastive/contrastive_learning_training.ipynb)**
-  - *Training sentence embeddings using contrastive learning objectives*
-- **[🟠 Colab Notebook: Fine-tuning Sentence Transformers](https://colab.research.google.com/github/UKPLab/sentence-transformers/blob/master/examples/training/sts/training_stsbenchmark.ipynb)**
-  - *Fine-tuning Sentence Transformers for semantic similarity tasks*
-- **[🟠 Colab Notebook: Domain-Specific Embeddings](https://colab.research.google.com/github/huggingface/notebooks/blob/main/examples/language_modeling.ipynb)**
-  - *Fine-tuning language models for domain-specific embedding generation*
-- **[🟠 Colab Notebook: Visualizing Embeddings with UMAP](https://colab.research.google.com/github/tensorflow/tensorboard/blob/master/docs/tensorboard_projector_plugin.ipynb)**
-  - *Using UMAP and TensorBoard for dimensionality reduction and visualization of embeddings*
-- **[🟠 Colab Notebook: t-SNE Visualization of Word Embeddings](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/text/word_embeddings.ipynb#scrollTo=JgXok9E1NVhy)**
-  - *Implementing t-SNE to visualize relationships between word vectors*
-- **[🟠 Colab Notebook: Multilingual Embeddings Training](https://colab.research.google.com/github/huggingface/notebooks/blob/main/examples/token_classification_multilingual.ipynb)**
-  - *Working with and fine-tuning multilingual embedding models*
-
-## 3. Applications of Embeddings
-Embeddings have a wide range of applications, including:
-
-- **Semantic Search**: Developing a semantic search engine using LLM embeddings.
-- **Document Clustering**: Performing clustering with embedding models.
-- **RAG (Retrieval-Augmented Generation)**: Combining embeddings with retrieval to pull relevant information when generating text.
-
-### Learning Materials
-- **[📄 Medium Article: Building Semantic Search](https://towardsdatascience.com/semantic-search-with-embeddings-efb59cb9ec4a)**
-  - *Implementing Semantic Search with Vector Embeddings*
-- **[🟠 Colab Notebook: Document Clustering with Embeddings](https://colab.research.google.com/github/pinecone-io/examples/blob/master/learn/nlp/semantic-search/semantic-search.ipynb)**
-  - *Clustering Documents Using Sentence Embeddings*
-- **[🟠 Colab Notebook: RAG Implementation](https://colab.research.google.com/github/langchain-ai/langchain/blob/master/docs/docs/use_cases/question_answering/how_to/vector_db_qa.ipynb)**
-  - *Building a Retrieval-Augmented Generation System with Embeddings*
 
 ## Additional Resources
 [![Word Embeddings Deep Dive](https://badgen.net/badge/Blog/Word%20Embeddings%20Deep%20Dive/pink)](https://lilianweng.github.io/posts/2017-10-15-word-embedding/)
