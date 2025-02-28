@@ -33,13 +33,13 @@ Embeddings are **numerical vector representations** that transform data into mea
    - Used for document similarity, clustering, and retrieval
 
 ### Learning Resources
-- **[📄 Word Embeddings Deep Dive](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)**
+- **[📄 Medium Article: Word Embeddings Deep Dive](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)**
   - *Comprehensive introduction to word vector representations*
-- **[📄 Contextual Embedding Guide](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)**
+- **[📄 Medium Article: Contextual Embedding Guide](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)**
   - *Advanced concepts in context-aware embeddings*
-- **[📄 Sentence Embedding Techniques](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)**
+- **[📄 Medium Article: Sentence Embedding Techniques](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)**
   - *Modern approaches to sentence-level embeddings*
-- **[🟠 Interactive Word2Vec Tutorial](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)**
+- **[🟠 Colab Notebook: Interactive Word2Vec Tutorial](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)**
   - *Hands-on implementation with detailed explanations*
 
 
