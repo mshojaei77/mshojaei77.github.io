@@ -21,3 +21,18 @@ aux_links:
 
 aux_links_new_tab: true
 
+# _config.yml
+nav:
+  - title: "Home"
+    url: "/"
+  - title: "Documentation"
+    url: "/docs/"
+    children:
+      - title: "Getting Started"
+        url: "/docs/getting-started/"
+      - title: "Configuration"
+        url: "/docs/configuration/"
+      - title: "Customization"
+        url: "/docs/customization/"
+  - title: "About"
+    url: "/about/"
