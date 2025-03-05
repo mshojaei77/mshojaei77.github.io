@@ -10,7 +10,7 @@ github: "https://github.com/mshojaei77"
 logo: "/assets/img/logo.png"
 
 plugins:
-  - jekyll-default-layout
+  - jekyll-include-cache
   
 favicon_ico: "/assets/img/favicon.ico"
 
