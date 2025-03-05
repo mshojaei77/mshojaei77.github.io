@@ -2,7 +2,7 @@ title: "LLMs: From Foundations to Production"
 description: "A comprehensive tutorial for mastering Large Language Models (LLMs) – from core mathematics and computing principles to production deployment, advanced applications, and emerging research trends."
 color_scheme: light
 search_enabled: true
-remote_theme: just-the-docs/just-the-docs
+remote_theme: tomjoht/documentation-theme-jekyll
 
 github: "https://github.com/mshojaei77/LLMs-Journey"
 
