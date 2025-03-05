@@ -1,5 +1,7 @@
 ---
-title: "Introduction to Large Language Models"
+layout: default
+title: Intro to Large Language Models
+parent: Tutorials
 nav_order: 1
 ---
 # Introduction to Large Language Models
