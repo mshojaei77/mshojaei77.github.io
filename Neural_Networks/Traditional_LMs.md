@@ -1,8 +1,9 @@
 ---
 title: "Traditional Language Models"
-nav_order: 6
+nav_order: 2
+parent: Neural Networks
+layout: default
 ---
-
 # Traditional Language Models
 
 Traditional language models form the foundation of modern NLP and are crucial for understanding the evolution towards transformer-based architectures. This guide provides an overview of classical approaches to language modeling.

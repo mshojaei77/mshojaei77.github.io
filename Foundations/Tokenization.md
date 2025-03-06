@@ -1,7 +1,7 @@
 ---
 title: "Tokenization"
-nav_order: 2
-parent: Tutorials
+parent: Foundations
+nav_order: 3
 layout: default
 ---
 
