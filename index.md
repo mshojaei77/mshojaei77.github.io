@@ -30,17 +30,17 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
 
 ![image](https://github.com/user-attachments/assets/8c634f07-a928-43f0-a79c-5651c12678a1)
 
-- [Intro to Large Language Models](Intro.md)
+- [Intro to Large Language Models](Foundations/Intro.md)
   - Fundamentals of Language Models
   - LLM Capabilities and Applications
-- [Tokenization](Tokenization.md)
+- [Tokenization](Foundations/Tokenization.md)
   - Understanding Tokenization Fundamentals
   - BPE Tokenization
   - Working with Hugging Face Tokenizers
   - Building Custom Tokenizers
   - GPT Tokenization Approach
   - Multilingual Tokenization Strategies
-- [Embeddings](Embeddings.md)
+- [Embeddings](Foundations/Embeddings.md)
   - Word and Token Embeddings
   - Word2Vec Architecture
   - GloVe Embeddings
@@ -50,19 +50,19 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
 
 ![image](https://github.com/user-attachments/assets/42dd0c30-a1f3-4802-a3cd-0dab17a86122)
 
-- [Neural Network Foundations for LLMs](Neural_Networks.md)
+- [Neural Network Foundations for LLMs](Neural_Networks/Neural_Networks.md)
   - Neural Network Basics
   - Activation Functions, Gradients, and Backpropagation
   - Loss Functions and Regularization Strategies  
   - Optimization Algorithms and Hyperparameter Tuning
-- [Traditional Language Models](Traditional_LMs.md)
+- [Traditional Language Models](Neural_Networks/Traditional_LMs.md)
   - N-gram Language Models and Smoothing Techniques
   - Feedforward Neural Language Models
   - Recurrent Neural Network Language Models
     - Long Short-Term Memory (LSTM) Networks
     - Gated Recurrent Units (GRUs)
     - Bidirectional and Multilayer RNNs
-- [The Transformer Architecture](Transformers.md)
+- [The Transformer Architecture](Neural_Networks/Transformers.md)
   - Attention Mechanisms and Self-Attention
   - Multi-Head Attention and Positional Encodings  
   - Transformer Encoder and Decoder Stacks
@@ -71,7 +71,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
 
 ![image](https://github.com/user-attachments/assets/b19f699f-87bf-4120-9677-9d459b51ea71)
 
-- [Data Preparation](Data_Preparation.md)
+- [Data Preparation](Training/Data_Preparation.md)
   - LLM Training Data Collection
   - Text Cleaning for LLMs
   - Data Filtering and Deduplication
@@ -80,7 +80,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Dataset Annotation Workflows
   - Hugging Face Hub Dataset Management
   - Data Preparation Techniques for Large-Scale NLP Applications
-- [Pre-Training Large Language Models](Pre_Training.md)
+- [Pre-Training Large Language Models](Training/Pre_Training.md)
   - Model Architecture Selection
   - Unsupervised Pre-Training Objectives
     - Masked Language Modeling (MLM)
@@ -109,43 +109,43 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
     - ZeRO Optimization
     - Distributed Data Processing
   - Scaling Laws and Model Architecture Variants
-- [Post-Training Datasets](Post_Training_Datasets.md)
+- [Post-Training Datasets](Training/Post_Training_Datasets.md)
   - Dataset Storage and Chat Templates
   - Generating Synthetic Training Data
   - Dataset Augmentation Techniques
   - Quality Control and Filtering
-- [Supervised Fine-Tuning](Supervised_Fine_Tuning.md)
+- [Supervised Fine-Tuning](Training/Supervised_Fine_Tuning.md)
   - Post-Training Techniques
   - Parameter Efficient Fine-Tuning (PEFT)
   - LoRA Implementation
   - Chat Model Fine-tuning
   - Distributed Fine-tuning
-- [Preference Alignment](Preference_Alignment.md)
+- [Preference Alignment](Training/Preference_Alignment.md)
   - Reinforcement Learning Fundamentals
   - Deep Reinforcement Learning for LLMs
   - Policy Optimization Methods
   - Proximal Policy Optimization (PPO)
   - Direct Preference Optimization (DPO)
   - Rejection sampling
-- [Model Architecture Variants](Model_Architecture_Variants.md)
+- [Model Architecture Variants](Training/Model_Architecture_Variants.md)
   - Mixture of Experts (MoE)
   - Sparse Architectures
   - Mamba Architecture
   - Sliding Window Attention Models
   - Hybrid Transformer-RNN Architectures
   - GraphFormers and Graph-based LLMs
-- [Reasoning](Reasoning.md)
+- [Reasoning](Training/Reasoning.md)
   - Reasoning Fundamentals
   - Chain of Thought
   - Group Relative Policy Optimization (GRPO)
-- [Model Evaluation](Evaluation.md)
+- [Model Evaluation](Training/Evaluation.md)
   - Benchmarking LLM Models
   - Assessing Performance (Human evaluation)
   - Bias and Safety Testing
 
 ![image](https://github.com/user-attachments/assets/81b2e913-2b36-4cbe-a2b7-549e04720b6e)
 
-- [Quantization](Quantization.md)
+- [Quantization](Deployment_Optimization/Quantization.md)
   - Quantization Fundamentals
   - Post-Training Quantization (PTQ)
   - Quantization-Aware Training (QAT)
@@ -153,12 +153,12 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Advanced Techniques: GPTQ and AWQ
   - Integer Quantization Methods
   - Modern Approaches: SmoothQuant and ZeroQuant
-- [Inference Optimization](Inference_Optimization.md)
+- [Inference Optimization](Deployment_Optimization/Inference_Optimization.md)
   - Flash Attention
   - KV Cache Implementation
   - Test-Time Preference Optimization (TPO)
   - Compression Methods to Enhance LLM Performance
-- [Running LLMs](Running_LLMs.md)
+- [Running LLMs](Deployment_Optimization/Running_LLMs.md)
   - Using LLM APIs
   - Building Memory-Enabled Chatbots
   - Working with Open-Source Models
@@ -175,7 +175,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
 
 ![image](https://github.com/user-attachments/assets/f37130fc-850b-4e12-a9d0-a765269cddc8)
 
-- [Retrieval Augmented Generation](RAG.md)
+- [Retrieval Augmented Generation](Advanced/RAG.md)
   - Ingesting documents
   - Chunking Strategies
   - Embedding models
@@ -185,13 +185,13 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Graph RAG Techniques
   - Constructing and Optimizing Knowledge Graphs
   - Intelligent Document Processing (IDP) with RAG
-- [Tool Use & AI Agents](Agents.md)
+- [Tool Use & AI Agents](Advanced/Agents.md)
   - Function Calling and Tool Usage
   - Agent Implementation
   - Planning Systems
   - Agentic RAG
   - Multi-agent Orchestration
-- [Text-to-SQL Systems](Text_to_SQL.md)
+- [Text-to-SQL Systems](Advanced/Text_to_SQL.md)
   - Fundamentals of Text-to-SQL 
   - Few-Shot Prompting Techniques
   - In-Context Learning and Self-Correction
@@ -199,7 +199,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Fine-Tuning Strategies for SQL Generation
   - Hybrid Neural-Symbolic Methods
   - Benchmarking and Evaluation
-- [Multimodal](Multimodal.md)
+- [Multimodal](Advanced/Multimodal.md)
   - Working with Multi-Modal LLMs, Including Text, Audio Input/Output, and Images
   - Transfer Learning & Pre-trained Models
   - Multimodal Transformers
@@ -211,7 +211,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Text-to-Image Generation
   - Multimodal Chatbots
   - Joint Image-Text Representations
-- [Securing LLMs](Securing_LLMs.md)
+- [Securing LLMs](Advanced/Securing_LLMs.md)
   - Prompt Injection Attacks
   - Data/Prompt Leaking
   - Jailbreaking Techniques
@@ -223,7 +223,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Responsible AI Development
   - Personal Information Masking
   - Reconstruction Methods
-- [Large Language Model Operations (LLMOps)](LLMOps.md)
+- [Large Language Model Operations (LLMOps)](Advanced/LLMOps.md)
   - Hugging Face Hub Integration
     - Model Card Creation
     - Model Sharing
@@ -233,7 +233,7 @@ Don't worry if you're not an expert in these areas - we'll review key concepts a
   - Docker, OpenShift, CI/CD
   - Dependency Management and Containerization
   - Apache Spark usage for LLM Inference
-- [Model Enhancement](Model_Enhancement.md)
+- [Model Enhancement](Advanced/Model_Enhancement.md)
   - Context Window Expansion
   - Model Merging
   - Knowledge Distillation 
