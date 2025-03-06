@@ -1,4 +1,6 @@
 ---
 title: "Quantization"
-nav_order: 16
+nav_order: 1
+parent: Deployment and Optimization
+layout: default
 ---

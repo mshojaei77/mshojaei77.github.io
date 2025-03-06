@@ -1,7 +1,7 @@
 ---
 title: "The Transformer Architecture"
 nav_order: 3
-parent: Neural Networks
+parent: Neural Networks and Transformers
 layout: default
 ---
 

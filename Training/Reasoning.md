@@ -1,6 +1,6 @@
 ---
 title: "Reasoning"
 nav_order: 7
-parent: Training
+parent: Training and Fine-tuning
 layout: default
 ---
