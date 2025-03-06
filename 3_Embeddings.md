@@ -1,6 +1,8 @@
 ---
 title: "Embeddings"
-nav_order: 4
+nav_order: 3
+parent: Tutorials
+layout: default
 ---
 
 # Embeddings

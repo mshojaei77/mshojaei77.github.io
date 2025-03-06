@@ -1,6 +1,8 @@
 ---
 title: "Tokenization"
-nav_order: 3
+nav_order: 2
+parent: Tutorials
+layout: default
 ---
 
 # Tokenization in Natural Language Processing
