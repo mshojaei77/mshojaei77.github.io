@@ -1,8 +1,8 @@
 ---
-title: "LLMs: From Foundations to Production"
+title: "Home"
 nav_order: 0
 ---
-# Home
+# LLMs: From Foundations to Production
 
 [![Tutorial Status](https://img.shields.io/badge/Status-In_Progress-yellow)](https://img.shields.io/badge/Status-In_Progress-yellow)
 

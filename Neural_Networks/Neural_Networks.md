@@ -1,7 +1,7 @@
 ---
 title: "Neural Networks"
-nav_order: 4
-parent: Tutorials
+nav_order: 1
+parent: Neural Networks
 layout: default
 ---
 
