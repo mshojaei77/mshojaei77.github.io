@@ -1,7 +1,7 @@
 ---
 title: "Neural Networks"
 nav_order: 1
-parent: Neural Networks
+parent: Neural Networks and Transformers
 layout: default
 ---
 
