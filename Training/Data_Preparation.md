@@ -1,8 +1,9 @@
 ---
 title: "Data Preparation"
-nav_order: 8
+nav_order: 1
+parent: Training
+layout: default
 ---
-
 # Data Preparation for LLMs
 
 Data preparation is a crucial step in training large language models. This guide covers the essential processes and techniques for creating high-quality training datasets.

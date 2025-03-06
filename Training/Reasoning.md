@@ -1,4 +1,6 @@
 ---
 title: "Reasoning"
-nav_order: 14
+nav_order: 7
+parent: Training
+layout: default
 ---

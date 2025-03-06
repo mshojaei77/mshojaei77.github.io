@@ -1,4 +1,6 @@
 ---
 title: "Post-Training Datasets"
-nav_order: 10
+nav_order: 3
+parent: Training
+layout: default
 ---
