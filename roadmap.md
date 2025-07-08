@@ -3,6 +3,8 @@
 This comprehensive learning roadmap is designed to provide practical, hands-on experience with LLM development and deployment. Each section combines theoretical concepts with practical implementations, real-world examples, and coding exercises to build expertise progressively.
 
 ## Roadmap Overview
+This roadmap is structured as a clear progression. Master the fundamentals as an Intern, innovate as a Scientist, and build scalable systems as an Engineer.
+![image](https://github.com/user-attachments/assets/ddd877d4-791f-4e20-89ce-748e0db839a0)
 
 | Part | Focus | Key Skills |
 |------|-------|------------|
@@ -18,36 +20,25 @@ This comprehensive learning roadmap is designed to provide practical, hands-on e
 
 Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5=Expert):
 
-#### Programming & Development
+**Programming & Development**
 - [ ] **Python (4/5 required)**: Classes, decorators, async/await, context managers
 - [ ] **Git & Version Control (3/5 required)**: Branching, merging, pull requests
 - [ ] **Linux/Unix (3/5 required)**: Command line, shell scripting, file permissions
 - [ ] **SQL & Databases (2/5 required)**: SELECT, JOIN, basic database design
-
-#### Mathematics & Statistics
+**Mathematics & Statistics**
 - [ ] **Linear Algebra (3/5 required)**: Matrix operations, eigenvalues, SVD
 - [ ] **Probability & Statistics (3/5 required)**: Distributions, Bayes' theorem, hypothesis testing
 - [ ] **Calculus (2/5 required)**: Derivatives, chain rule, gradients
-
-#### Machine Learning
+**Machine Learning**
 - [ ] **ML Fundamentals (3/5 required)**: Supervised/unsupervised learning, overfitting, validation
 - [ ] **Deep Learning (2/5 required)**: Neural networks, backpropagation, optimization
 
-### 📚 Recommended Preparation Resources
-
-**If you scored < 3 in any essential area:**
-
-| Area | Resource |
-|------|----------|
-| **Python** | [Python Crash Course](https://nostarch.com/python-crash-course-3rd-edition) |
-| **Linear Algebra** | [3Blue1Brown Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) |
-| **Machine Learning** | [Andrew Ng's ML Course](https://www.coursera.org/learn/machine-learning) |
-| **Deep Learning** | [Fast.ai Practical Deep Learning](https://course.fast.ai/) |
+⚠️ **If you scored < 3 in any essential area take toturials and improve that area**
 
 ### 🛠️ Development Environment Setup
 
 **Essential Tools:**
-- **Python 3.9+** with conda/mamba
+- **Python 3.9+**
 - **CUDA-capable GPU** (RTX 3080+ recommended) or cloud access
 - **Docker** for containerization
 - **Jupyter Lab** for interactive development
