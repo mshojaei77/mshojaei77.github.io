@@ -1,4 +1,4 @@
-# **LLM Development Roadmap** 🚀
+# Mini Roadmap
 
 Comprehensive learning roadmap for LLM development and deployment with practical, hands-on experience.
 
