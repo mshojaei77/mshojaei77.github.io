@@ -2,267 +2,216 @@
 title: "Home"
 nav_order: 0
 ---
-# LLMs: From Foundations to Production
 
-[![Tutorial Status](https://img.shields.io/badge/Status-In_Progress-yellow)](https://img.shields.io/badge/Status-In_Progress-yellow)
+<div align="center">
 
-A hands-on tutorial series for mastering Large Language Models (LLMs) – featuring practical examples, code implementations, and real-world applications. This series takes you from foundational concepts to building production-ready LLM applications.
+# 👋 Mohammad Shojaei
+## **AI Engineer | Large Language Models Specialist**
 
-## About This Tutorial Series
-This comprehensive tutorial series is designed to provide practical, hands-on experience with LLM development and deployment. Each tutorial combines theoretical concepts with practical implementations, real-world examples, and coding exercises.
+[![Status](https://img.shields.io/badge/Status-🟢_Online-brightgreen)](mailto:shojaei.dev@gmail.com)
+[![Current Role](https://img.shields.io/badge/Current-LLM_Engineer_@_No_Limits_Market-blue)](https://nolimitmarkets.com/)
+[![Experience](https://img.shields.io/badge/Experience-2%2B_Years_LLM_Engineering-orange)]()
+[![Location](https://img.shields.io/badge/Location-Dubai,_UAE_(Remote)-red)]()
 
-## Prerequisites
-- Basic Python programming
-  - [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/)
-  - [Real Python Tutorials](https://realpython.com/)
-- Mathematics fundamentals
-    - [3Blue1Brown Essence of Linear Algebra](https://www.3blue1brown.com/topics/linear-algebra)
-    - [3Blue1Brown Essence of Calculus](https://www.3blue1brown.com/topics/calculus)
-    - [MIT Probability Course](https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2014/)
-- Basic understanding of machine learning concepts
-  - [Stanford CS229: Machine Learning](https://cs229.stanford.edu/)
+[📧 Email](mailto:shojaei.dev@gmail.com) • [💼 LinkedIn](https://www.linkedin.com/in/mshojaei77) • [🐙 GitHub](https://github.com/mshojaei77) • [🤗 Hugging Face](https://huggingface.co/mshojaei77)
 
-Don't worry if you're not an expert in these areas - we'll review key concepts as needed throughout the tutorials.
+</div>
 
 ---
 
-# Roadmap
+## 🚀 Hey there! Welcome to My Corner of the AI Universe
 
-![image](https://github.com/user-attachments/assets/8c634f07-a928-43f0-a79c-5651c12678a1)
+<p align="center">
+  <em>Cooking up cool AI solutions with a sprinkle of LLM magic and a dash of NLP.</em>
+</p>
 
-- [Intro to Large Language Models](Foundations/Intro.md)
-  - Fundamentals of Language Models
-  - LLM Capabilities and Applications
-- [Tokenization](Foundations/Tokenization.md)
-  - Understanding Tokenization Fundamentals
-  - BPE Tokenization
-  - Working with Hugging Face Tokenizers
-  - Building Custom Tokenizers
-  - GPT Tokenization Approach
-  - Multilingual Tokenization Strategies
-- [Embeddings](Foundations/Embeddings.md)
-  - Word and Token Embeddings
-  - Word2Vec Architecture
-  - GloVe Embeddings
-  - Contextual Embeddings
-  - Fine-tuning LLM Embeddings
-  - Semantic Search Implementation
+I'm Mohammad Shojaei, an **AI Engineer** who genuinely gets a buzz from building smart systems with **Large Language Models (LLMs)** and **NLP**. My mission? To take gnarly, complex problems and transform them into sleek, intelligent AI solutions that actually make a difference. I spend my days (and sometimes nights!) diving deep into **RAG setups**, **fine-tuning models** to perfection, and architecting **autonomous AI agents** that are *this* close to taking over the world (just kidding... mostly 😉).
 
-![image](https://github.com/user-attachments/assets/42dd0c30-a1f3-4802-a3cd-0dab17a86122)
+Currently building AI-powered financial analysis systems at **No Limits Market Ltd** in Dubai, UAE, where I get to flex my LLM muscles on real-world problems.
 
-- [Neural Network Foundations for LLMs](Neural_Networks/Neural_Networks.md)
-  - Neural Network Basics
-  - Activation Functions, Gradients, and Backpropagation
-  - Loss Functions and Regularization Strategies  
-  - Optimization Algorithms and Hyperparameter Tuning
-- [Traditional Language Models](Neural_Networks/Traditional_LMs.md)
-  - N-gram Language Models and Smoothing Techniques
-  - Feedforward Neural Language Models
-  - Recurrent Neural Network Language Models
-    - Long Short-Term Memory (LSTM) Networks
-    - Gated Recurrent Units (GRUs)
-    - Bidirectional and Multilayer RNNs
-- [The Transformer Architecture](Neural_Networks/Transformers.md)
-  - Attention Mechanisms and Self-Attention
-  - Multi-Head Attention and Positional Encodings  
-  - Transformer Encoder and Decoder Stacks
-  - Residual Connections and Layer Normalization
-  - Implementing the Transformer from Scratch
+### 🎯 **What I'm Up To:**
+*   🚀 **Currently:** Pushing the boundaries of LLMs for advanced research, building AI-powered study buddies, and making specialized models even brainier
+*   🤓 **Always Learning:** Tinkering with the latest LLM tricks, figuring out MLOps for smooth sailing, and exploring multimodal AI
+*   💬 **Let's Chat:** Got questions about RAG, fine-tuning, or why custom embeddings are the bee's knees? Curious about my work with Persian NLP? Hit me up!
+*   ⚡ **Fun Fact:** I'm developing [OllamaDesktop](https://github.com/mshojaei77/ollama-desktop), a fully open-source app making powerful LLMs, vision, RAG, and Agents super easy to use for everyone. Eager developers needed – come contribute!
 
-![image](https://github.com/user-attachments/assets/b19f699f-87bf-4120-9677-9d459b51ea71)
-
-- [Data Preparation](Training/Data_Preparation.md)
-  - LLM Training Data Collection
-  - Text Cleaning for LLMs
-  - Data Filtering and Deduplication
-  - Creating Training Datasets
-  - Dataset Curation and Quality Control
-  - Dataset Annotation Workflows
-  - Hugging Face Hub Dataset Management
-  - Data Preparation Techniques for Large-Scale NLP Applications
-- [Pre-Training Large Language Models](Training/Pre_Training.md)
-  - Model Architecture Selection
-  - Unsupervised Pre-Training Objectives
-    - Masked Language Modeling (MLM)
-    - Permutation Language Modeling (PLM)
-    - Replaced Token Detection (RTD)
-    - Span-based Masking
-    - Prefix Language Modeling
-  - Efficient Pre-Training Techniques
-    - Dynamic Masking and Whole Word Masking
-    - Large Batch Training and Learning Rate Scheduling
-    - Curriculum Learning
-    - Progressive Training Strategies
-  - Training Infrastructure
-    - Distributed Training Setup
-    - Mixed Precision Training
-    - Multi-device Optimization
-  - Training Optimization
-    - Weight Initialization
-    - AdamW Optimizer
-    - Learning Rate Scheduling
-  - Precision Formats
-    - FP16/BF16 Training
-    - FP8 Optimization
-  - Distributed Training
-    - Data Parallel Training
-    - ZeRO Optimization
-    - Distributed Data Processing
-  - Scaling Laws and Model Architecture Variants
-- [Post-Training Datasets](Training/Post_Training_Datasets.md)
-  - Dataset Storage and Chat Templates
-  - Generating Synthetic Training Data
-  - Dataset Augmentation Techniques
-  - Quality Control and Filtering
-- [Supervised Fine-Tuning](Training/Supervised_Fine_Tuning.md)
-  - Post-Training Techniques
-  - Parameter Efficient Fine-Tuning (PEFT)
-  - LoRA Implementation
-  - Chat Model Fine-tuning
-  - Distributed Fine-tuning
-- [Preference Alignment](Training/Preference_Alignment.md)
-  - Reinforcement Learning Fundamentals
-  - Deep Reinforcement Learning for LLMs
-  - Policy Optimization Methods
-  - Proximal Policy Optimization (PPO)
-  - Direct Preference Optimization (DPO)
-  - Rejection sampling
-- [Model Architecture Variants](Training/Model_Architecture_Variants.md)
-  - Mixture of Experts (MoE)
-  - Sparse Architectures
-  - Mamba Architecture
-  - Sliding Window Attention Models
-  - Hybrid Transformer-RNN Architectures
-  - GraphFormers and Graph-based LLMs
-- [Reasoning](Training/Reasoning.md)
-  - Reasoning Fundamentals
-  - Chain of Thought
-  - Group Relative Policy Optimization (GRPO)
-- [Model Evaluation](Training/Evaluation.md)
-  - Benchmarking LLM Models
-  - Assessing Performance (Human evaluation)
-  - Bias and Safety Testing
-
-![image](https://github.com/user-attachments/assets/81b2e913-2b36-4cbe-a2b7-549e04720b6e)
-
-- [Quantization](Deployment_Optimization/Quantization.md)
-  - Quantization Fundamentals
-  - Post-Training Quantization (PTQ)
-  - Quantization-Aware Training (QAT)
-  - GGUF Format and llama.cpp Implementation
-  - Advanced Techniques: GPTQ and AWQ
-  - Integer Quantization Methods
-  - Modern Approaches: SmoothQuant and ZeroQuant
-- [Inference Optimization](Deployment_Optimization/Inference_Optimization.md)
-  - Flash Attention
-  - KV Cache Implementation
-  - Test-Time Preference Optimization (TPO)
-  - Compression Methods to Enhance LLM Performance
-- [Running LLMs](Deployment_Optimization/Running_LLMs.md)
-  - Using LLM APIs
-  - Building Memory-Enabled Chatbots
-  - Working with Open-Source Models
-  - Prompt Engineering
-  - Structured Outputs
-  - Deploying Models Locally
-  - Creating Interactive Demos
-  - Setting Up Production Servers
-  - Serving Open Source LLMs in a Production Environment
-  - Developing REST APIs
-  - Managing Concurrent Users
-  - Test-Time Autoscaling
-  - Batching for Model Deployment
-
-![image](https://github.com/user-attachments/assets/f37130fc-850b-4e12-a9d0-a765269cddc8)
-
-- [Retrieval Augmented Generation](Advanced/RAG.md)
-  - Ingesting documents
-  - Chunking Strategies
-  - Embedding models
-  - Vector databases
-  - Retrieval Implementation
-  - RAG Pipeline Building
-  - Graph RAG Techniques
-  - Constructing and Optimizing Knowledge Graphs
-  - Intelligent Document Processing (IDP) with RAG
-- [Tool Use & AI Agents](Advanced/Agents.md)
-  - Function Calling and Tool Usage
-  - Agent Implementation
-  - Planning Systems
-  - Agentic RAG
-  - Multi-agent Orchestration
-- [Text-to-SQL Systems](Advanced/Text_to_SQL.md)
-  - Fundamentals of Text-to-SQL 
-  - Few-Shot Prompting Techniques
-  - In-Context Learning and Self-Correction
-  - Schema-Aware Approaches
-  - Fine-Tuning Strategies for SQL Generation
-  - Hybrid Neural-Symbolic Methods
-  - Benchmarking and Evaluation
-- [Multimodal](Advanced/Multimodal.md)
-  - Working with Multi-Modal LLMs, Including Text, Audio Input/Output, and Images
-  - Transfer Learning & Pre-trained Models
-  - Multimodal Transformers
-  - Vision-Language Models
-  - Multimodal Attention
-  - Feature Fusion
-  - Image Captioning
-  - Visual QA Systems
-  - Text-to-Image Generation
-  - Multimodal Chatbots
-  - Joint Image-Text Representations
-- [Securing LLMs](Advanced/Securing_LLMs.md)
-  - Prompt Injection Attacks
-  - Data/Prompt Leaking
-  - Jailbreaking Techniques
-  - Training Data Poisoning
-  - Backdoor Attacks
-  - Model Theft Prevention
-  - Fairness in LLMs
-  - Bias Detection and Mitigation
-  - Responsible AI Development
-  - Personal Information Masking
-  - Reconstruction Methods
-- [Large Language Model Operations (LLMOps)](Advanced/LLMOps.md)
-  - Hugging Face Hub Integration
-    - Model Card Creation
-    - Model Sharing
-    - Version Control
-  - LLM Observability Tools
-  - Techniques for Debugging and Monitoring
-  - Docker, OpenShift, CI/CD
-  - Dependency Management and Containerization
-  - Apache Spark usage for LLM Inference
-- [Model Enhancement](Advanced/Model_Enhancement.md)
-  - Context Window Expansion
-  - Model Merging
-  - Knowledge Distillation 
-
+> **"Transforming complex AI research into production-ready solutions that solve real business problems."**
 
 ---
 
-## How to Follow Along
-1. Follow tutorials sequentially
-2. Complete the coding exercises
-3. Build the suggested projects
-4. Experiment with the provided examples
+## 💼 Professional Journey
 
-## Contributing
-We welcome contributions! If you'd like to:
-- Fix my mistakes
-- Improve existing content
-- Share your implementations
+### 🔥 **Current Role: LLM Engineer @ No Limits Market Ltd**
+*Jan 2025 - Present | Dubai, UAE (Remote)*
 
-Please submit a pull request or open an issue.
+- 🧠 **AI-Powered Financial Analysis**: Developing research systems using custom-trained embeddings
+- 📊 **Automated Report Generation**: Building structured LLM outputs for financial insights  
+- ✅ **Evaluation Frameworks**: Ensuring accuracy of AI-generated financial analysis
+- 🛠️ **Technologies**: Large Language Models, LLMOps, Financial AI
 
-## Community Support
-- Join our Telegram Channel for discussions
-- Check out the Issues section for help
-- Share your implementations in Discussions
+### 🎯 **AI Team Lead @ Real Estate Company**
+*May 2025 - Present | Tehran, Iran (Remote)*
 
-## Acknowledgments
-Thanks to all contributors and the AI/ML community for their valuable input and code contributions.
+Leading a team of AI specialists creating **AI agents** and **Voice Assistants** for the real estate industry.
+
+### 🧠 **ML Engineer @ Alpha Neuroscience Company**
+*May 2023 - Apr 2025 | Tehran, Iran (Remote)*
+
+- 📡 **EEG Signal Processing**: Developed algorithms for brain signal analysis
+- 🤖 **Medical AI Assistant**: Built RAG-powered assistant for EEG technicians
+- 🎯 **Artifact Detection**: Achieved 70% accuracy in noise pattern identification
+- 🔧 **Desktop Applications**: Created EEG analysis tools using PyQt5
+
+### 🎓 **Educational AI @ Owlio**
+*Sep 2024 - Jan 2025 | Turin, Italy (Remote)*
+
+- 📚 **Learning Material Conversion**: RAG + fine-tuned LLMs for interactive content
+- 🎥 **Video Transcript Processing**: Custom chunking strategies for optimal retrieval
+- 💰 **Cost Optimization**: Reduced API costs by 40% through efficient caching
+- 📈 **Performance Evaluation**: Built pipelines for RAG accuracy measurement
 
 ---
 
-Let's start building with LLMs! 🚀
+## 🛠️ My Go-To Tech Stack
+
+**Languages & Core Libraries:**
+<p align="left">
+  <a href="https://www.python.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/></a>
+  <a href="https://pytorch.org/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg" alt="pytorch" width="40" height="40"/></a>
+  <a href="https://numpy.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt="numpy" width="40" height="40"/></a>
+  <a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40"/></a>
+</p>
+
+**LLM & NLP Ecosystem:**
+<p align="left">
+  <a href="https://www.langchain.com/" target="_blank" rel="noreferrer"><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/langgraph-color.png" alt="Langchain/LangGraph" width="40" height="40"/></a>
+  <a href="https://huggingface.co/docs/transformers/index" target="_blank" rel="noreferrer"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="transformers" width="40" height="40"/></a>
+  <a href="https://ollama.com/" target="_blank" rel="noreferrer"><img src="https://ollama.com/public/ollama.png" alt="ollama" width="40" height="40"/></a>
+</p>
+
+**Frameworks & Tools:**
+<p align="left">
+  <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg" alt="fastapi" width="40" height="40"/></a>
+  <a href="https://www.docker.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/></a>
+  <a href="https://git-scm.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/></a>
+  <a href="https://nextjs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg" alt="nextjs" width="40" height="40"/></a>
+  <a href="https://streamlit.io/" target="_blank" rel="noreferrer"><img src="https://streamlit.io/images/brand/streamlit-logo-primary-colormark-darktext.svg" alt="streamlit" width="40" height="40"/></a>
+</p>
+
+---
+
+## 🎓 Knowledge Sharing: LLM Mastery Guide
+
+Based on my hands-on experience building production LLM systems, I've created a comprehensive learning guide that takes you from foundations to production-ready skills.
+
+### 📚 **Learning Tracks I've Designed**
+
+#### 🔍 **LLM Intern Track** → Foundation Building
+*Based on my early learning journey and mentoring junior developers*
+- **[Tokenization](Foundations/Tokenization.md)** - How I learned to build tokenizers from scratch
+- **[Embeddings](Foundations/Embeddings.md)** - From Word2Vec to production semantic search
+- **[Neural Networks](Neural_Networks/Neural_Networks.md)** - Mathematical foundations I wish I knew earlier
+- **[Transformers](Neural_Networks/Transformers.md)** - Architecture deep-dive from my research
+
+#### 🧬 **LLM Scientist Track** → Research & Innovation
+*Advanced techniques I've applied in production*
+- **[Pre-Training](Training/Pre_Training.md)** - Lessons from training custom models
+- **[Fine-Tuning](Training/Supervised_Fine_Tuning.md)** - LoRA, QLoRA techniques I use daily
+- **[Preference Alignment](Training/Preference_Alignment.md)** - RLHF and DPO from my experiments
+- **[Model Architectures](Training/Model_Architecture_Variants.md)** - MoE, Mamba, and novel designs
+
+#### 🚀 **LLM Engineer Track** → Production Systems
+*Everything I've learned building real applications*
+- **[RAG Systems](Advanced/RAG.md)** - From my medical and financial RAG implementations
+- **[AI Agents](Advanced/Agents.md)** - Real estate and educational agent architectures
+- **[Multimodal LLMs](Advanced/Multimodal.md)** - Document analysis and VLM fine-tuning
+- **[LLMOps](Advanced/LLMOps.md)** - Production deployment lessons learned
+
+---
+
+## 🛠️ Featured Projects & Contributions
+
+### 🚀 **Flagship Project**
+- **[OllamaDesktop](https://github.com/mshojaei77/ollama-desktop)**: 🔥 **Open-source desktop app** making powerful LLMs, vision models, RAG, and AI agents accessible to everyone. Built with modern tech stack for seamless user experience. *Contributors welcome!*
+
+### 🏗️ **Open Source Projects**
+- **[Cortex](https://github.com/mshojaei77/Cortex)**: Full-stack intelligent research companion using FastAPI, Milvus, and Next.js
+- **[RAG-Agent](https://github.com/mshojaei77/RAG-Agent)**: Production-ready RAG implementation with LangChain and FAISS
+- **[Persian LLM Models](https://huggingface.co/mshojaei77)**: Custom tokenizers and fine-tuned models for Persian language processing
+
+### 💼 **Freelance Highlights**
+- **Document Analysis**: Multimodal VLM for automated salary document processing
+- **Property Valuation**: RAG-based real estate assistance with market data integration
+- **Computer Vision**: Florence-2 optimization for production deployment
+- **Content Generation**: Safety-aware prompt engineering framework for social media
+
+### 📊 **GitHub Activity**
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=mshojaei77&show_icons=true&theme=radical&locale=en&count_private=true" alt="GitHub Stats" width="420"/>
+</p>
+
+---
+
+## 🎯 Quick Navigation
+
+| 📖 Resource | 💡 Description | 🎯 Best For |
+|-------------|----------------|-------------|
+| **[Complete Roadmap](roadmap.md)** | My comprehensive 22-module LLM guide | Structured learning path |
+| **[Quick Reference](mini-roadmap.md)** | Keywords and concepts for rapid lookup | Daily development work |
+| **[Interview Prep](interview.md)** | 400+ questions from my interview experience | Job preparation |
+| **[Resume](about.md)** | Detailed background and experience | Know my journey |
+
+---
+
+## 💡 Why I Share This Knowledge
+
+### 🎯 **Real-World Focus**
+Every tutorial comes from actual problems I've solved in production - from reducing API costs to building accurate medical AI assistants.
+
+### 🔄 **Continuously Updated**
+I regularly update content based on new techniques I'm implementing at work and latest industry developments.
+
+### 🤝 **Community Driven**
+Learning from the community that helped me grow, and giving back through practical, tested knowledge.
+
+---
+
+## 📬 Let's Connect
+
+### 💼 **Professional**
+- 📧 **Email**: [shojaei.dev@gmail.com](mailto:shojaei.dev@gmail.com)
+- 💼 **LinkedIn**: [Connect with me](https://www.linkedin.com/in/mshojaei77)
+- 🐙 **GitHub**: [Follow my projects](https://github.com/mshojaei77)
+- 🤗 **Hugging Face**: [Check my models](https://huggingface.co/mshojaei77)
+
+### 🤝 **Collaboration Opportunities**
+- 💡 **Consulting**: LLM implementation for your business
+- 🎓 **Mentoring**: One-on-one guidance for AI career transition
+- 🛠️ **Open Source**: Contribute to my projects or start new ones
+- 📝 **Content**: Guest writing and technical discussions
+
+---
+
+<div align="center">
+
+## 🚀 Start Your LLM Journey
+
+Whether you're a **beginner** looking to enter AI, a **researcher** wanting to go deeper, or an **engineer** building production systems - I've documented the path that worked for me.
+
+**[📖 Start Learning](Foundations/Tokenization.md)** | **[⚡ Quick Reference](mini-roadmap.md)** | **[💼 Interview Prep](interview.md)**
+
+---
+
+*Building the future of AI, one production system at a time* 🚀
+
+**⭐ Star this repo if you find my knowledge sharing helpful!**
+
+---
+
+<p align="center">
+  <em>Thanks for dropping by! Let's connect and whip up something awesome together.</em>
+</p>
+
+*Last updated: January 2025 | Currently: Building AI systems @ No Limits Market Ltd*
+
+</div>
