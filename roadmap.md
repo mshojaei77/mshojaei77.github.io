@@ -59,18 +59,23 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 **📈 Difficulty:** Beginner | **🎯 Prerequisites:** Python basics
 
 ### Key Topics
-- Understanding Tokenization Fundamentals
-- Byte-Pair Encoding (BPE) & SentencePiece
-- Working with Hugging Face Tokenizers
-- Building Custom Tokenizers
-- GPT vs BERT Tokenization Approaches
+- Token Fundamentals
+- Normalization & Pre-tokenization
+- Sub-word Tokenization Principles
+- Byte-Pair Encoding (BPE)
+- WordPiece Algorithm
+- Unigram Model
+- SentencePiece Framework
+- Byte-level BPE
+- Vocabulary Management
+- Context Window Optimization
 - Multilingual & Visual Tokenization Strategies
 - Tokenizer Transplantation (TokenAdapt)
 
 ### Skills & Tools
 - **Libraries:** Hugging Face Tokenizers, SentencePiece, spaCy, NLTK, tiktoken
-- **Concepts:** Subword Tokenization, Text Preprocessing, Vocabulary Management, OOV Handling
-- **Modern Tools:** tiktoken (OpenAI), SentencePiece (Google), BPE (OpenAI)
+- **Concepts:** Subword Tokenization, Text Preprocessing, Vocabulary Management, OOV Handling, Byte-level Processing
+- **Modern Tools:** tiktoken (OpenAI), SentencePiece (Google), BPE (OpenAI), WordPiece (BERT)
 
 ### **🔬 Hands-On Labs:**
 
