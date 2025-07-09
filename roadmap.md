@@ -95,11 +95,14 @@ Build a web application using Streamlit or Gradio that allows users to compare d
 **📈 Difficulty:** Beginner-Intermediate | **🎯 Prerequisites:** Linear algebra, Python
 
 ### Key Topics
-- Word, Token, and Contextual Embeddings (Word2Vec, GloVe, BERT)
-- Fine-tuning Embedding Models
+- Word and Token Embeddings (Word2Vec Architecture, GloVe Embeddings)
+- Contextual Embeddings (BERT, RoBERTa, CLIP)
+- Fine-tuning LLM Embeddings
 - Semantic Search Implementation
 - Multimodal Embeddings (CLIP, ALIGN)
 - Embedding Evaluation Metrics
+- Dense/Sparse Retrieval Techniques
+- Vector Similarity and Distance Metrics
 
 ### Skills & Tools
 - **Libraries:** SentenceTransformers, Hugging Face Transformers, OpenAI Embeddings
@@ -376,8 +379,13 @@ Develop memory-efficient training pipelines that enable fine-tuning large models
 **📈 Difficulty:** Expert | **🎯 Prerequisites:** Reinforcement learning basics
 
 ### Key Topics
-- Reinforcement Learning from Human Feedback (RLHF)
+- Reinforcement Learning Fundamentals
+- Deep Reinforcement Learning for LLMs
+- Policy Optimization Methods
+- Proximal Policy Optimization (PPO)
 - Direct Preference Optimization (DPO) and variants
+- Rejection Sampling
+- Reinforcement Learning from Human Feedback (RLHF)
 - Reward Model Training and Evaluation
 - Constitutional AI and AI Feedback
 - Safety and Alignment Evaluation
@@ -410,9 +418,12 @@ Implement Constitutional AI systems that can critique and revise their own respo
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Transformer architecture
 
 ### Key Topics
-- Mixture of Experts (MoE) and Sparse Models
-- State Space Models (Mamba, RWKV)
+- Mixture of Experts (MoE) and Sparse Architectures
+- State Space Models (Mamba Architecture, RWKV)
+- Sliding Window Attention Models
 - Long Context Architectures (Longformer, BigBird)
+- Hybrid Transformer-RNN Architectures
+- GraphFormers and Graph-based LLMs
 - Hybrid and Novel Architectures
 - Efficient Architecture Search
 
@@ -444,44 +455,78 @@ Design and implement hybrid architectures combining different components (attent
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Prompt engineering
 
 ### Key Topics
-- Chain-of-Thought (CoT) and Advanced Prompting
+- Reasoning Fundamentals and System 2 Thinking
+- Chain-of-Thought (CoT) Supervision and Advanced Prompting
+- Reinforcement Learning for Reasoning (RL-R)
+- Process/Step-Level Reward Models (PRM, HRM, STEP-RLHF)
+- Group Relative Policy Optimization (GRPO)
+- Self-Reflection and Self-Consistency Loops
+- Deliberation Budgets and Test-Time Compute Scaling
+- Planner-Worker (Plan-Work-Solve) Decoupling
+- Synthetic Reasoning Data and Bootstrapped Self-Training
+- Monte Carlo Tree Search (MCTS) for Reasoning
+- Symbolic Logic Systems Integration
+- Verifiable Domains for Automatic Grading
+- Multi-Stage and Curriculum Training Pipelines
 - Tool Use and External Knowledge Integration
 - Mathematical and Logical Reasoning
 - Multi-step Problem Solving
+- Safety and Usability of Reasoning Traces
 - Reasoning Evaluation and Benchmarks
 
 ### Skills & Tools
-- **Techniques:** CoT, Tree-of-Thoughts, ReAct
-- **Concepts:** Tool Use, External Memory, Planning
-- **Evaluation:** GSM8K, MATH, HumanEval
+- **Techniques:** CoT, Tree-of-Thoughts, ReAct, MCTS, RL-R, Self-Reflection, Bootstrapped Self-Training
+- **Concepts:** System 2 Thinking, Step-Level Rewards, Deliberation Budgets, Planner-Worker Architecture, Symbolic Logic Integration
+- **Frameworks:** DeepSeek-R1, OpenAI o1/o3, Gemini-2.5, Process Reward Models
+- **Evaluation:** GSM8K, MATH, HumanEval, Conclusion-Based, Rationale-Based, Interactive, Mechanistic
+- **Tools:** ROSCOE, RECEVAL, RICE, Verifiable Domain Graders
 
 ### **🔬 Hands-On Labs:**
 
-**1. Advanced Chain-of-Thought Reasoning Systems**
+**1. Chain-of-Thought Supervision and RL-R Training Pipeline**
 
-Develop comprehensive Chain-of-Thought (CoT) systems for complex problem-solving. Implement few-shot prompting, tree-of-thoughts, and graph-of-thoughts reasoning paradigms. Create evaluation frameworks for different domains and measure reasoning improvement across various tasks.
+Implement a complete CoT supervision pipeline that teaches models to emit step-by-step rationales during fine-tuning. Build reinforcement learning for reasoning (RL-R) systems that use rewards to favor trajectories reaching correct answers. Compare supervised CoT vs RL-R approaches on mathematical and coding problems, following DeepSeek-R1 and o1 methodologies.
 
-**2. ReAct Agent with Tool Integration**
+**2. Process-Level Reward Models and Step-RLHF**
 
-Build ReAct (Reason + Act) agents that can interact with external APIs and systems. Implement agent reasoning, tool use, and external memory integration. Create agents that can solve multi-step problems requiring external knowledge and API interactions.
+Build step-level reward models (PRM) that score every reasoning step rather than just final answers. Implement STEP-RLHF training that guides PPO to prune faulty reasoning branches early and search deeper on promising paths. Create comprehensive evaluation frameworks for process-level reward accuracy and reasoning quality.
 
-**3. Mathematical and Logical Reasoning Specialization**
+**3. Self-Reflection and Deliberation Budget Systems**
 
-Develop specialized systems for mathematical reasoning through targeted training and prompting. Implement mathematical reasoning models and evaluate on standardized benchmarks like GSM8K and MATH. Create reasoning evaluation frameworks for mathematical domains.
+Develop self-reflection systems where models judge and rewrite their own reasoning chains. Implement deliberation budget controls (like Gemini-2.5's "thinkingBudget") that allow dynamic allocation of reasoning tokens. Create test-time compute scaling experiments showing accuracy improvements with increased reasoning budgets.
 
-**4. Multi-Step Reasoning and Planning Systems**
+**4. Synthetic Reasoning Data and Bootstrapped Self-Training**
 
-Build comprehensive multi-step reasoning systems for complex tasks. Implement planning mechanisms, reasoning traces, and evaluation frameworks. Create systems that can handle complex problem decomposition and solution synthesis across multiple domains.
+Build synthetic reasoning data generation pipelines using stronger teacher models to create step-by-step rationales. Implement bootstrapped self-training where models iteratively improve by learning from their own high-confidence reasoning traces. Create quality filtering and confidence scoring mechanisms for synthetic reasoning data.
+
+**5. Monte Carlo Tree Search for Reasoning**
+
+Implement MCTS-based reasoning systems that explore multiple reasoning paths dynamically. Build tree search algorithms that can backtrack from incorrect reasoning steps and explore alternative solution paths. Compare MCTS reasoning against linear CoT approaches on complex multi-step problems.
+
+**6. Planner-Worker Architecture and Verifiable Domains**
+
+Create planner-worker systems that separate reasoning into planning and execution phases (like ReWOO). Build training pipelines using verifiable domains (unit-testable code, mathematical problems) for automatic reward signals. Implement multi-stage curriculum training that progresses from supervised fine-tuning to reasoning-focused RL.
+
+**7. Comprehensive Reasoning Evaluation Framework**
+
+Build multi-faceted evaluation systems covering conclusion-based, rationale-based, interactive, and mechanistic assessment methods. Implement automated reasoning chain evaluation using tools like RICE, ROSCOE, and RECEVAL. Create safety and usability evaluation for reasoning traces, including privacy protection and readability assessment.
+
+**8. Advanced Reasoning Applications**
+
+Develop reasoning-enhanced applications for mathematical problem solving, code generation, and logical reasoning. Implement symbolic logic integration for formal reasoning tasks. Create reasoning systems that can handle multi-hop queries and complex problem decomposition across different domains.
 
 ## [Model Evaluation](Training/Evaluation.md)
 ![image](https://github.com/user-attachments/assets/dbfa313a-2b29-449e-ae62-75a052894259)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Statistics, model training
 
 ### Key Topics
+- Benchmarking LLM Models
 - Standardized Benchmarks (MMLU, GSM8K, HumanEval)
+- Assessing Performance (Human evaluation)
 - Human Evaluation and Crowdsourcing
 - Automated Evaluation with LLMs
-- Bias, Safety, and Fairness Testing
+- Bias and Safety Testing
+- Fairness Testing and Assessment
 - Performance Monitoring and Analysis
 
 ### Skills & Tools
@@ -513,10 +558,14 @@ Design and implement custom benchmarks for specific use cases and requirements. 
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Model optimization
 
 ### Key Topics
-- Post-Training Quantization (PTQ) and Quantization-Aware Training (QAT)
-- Advanced Quantization (GPTQ, AWQ, SmoothQuant)
+- Quantization Fundamentals and Theory
+- Post-Training Quantization (PTQ)
+- Quantization-Aware Training (QAT)
+- GGUF Format and llama.cpp Implementation
+- Advanced Techniques: GPTQ and AWQ
+- Integer Quantization Methods
+- Modern Approaches: SmoothQuant and ZeroQuant
 - Hardware-Specific Optimization
-- GGUF Format and llama.cpp Integration
 - Quantization Quality Assessment
 
 ### Skills & Tools
@@ -548,10 +597,13 @@ Build complete mobile and edge deployment systems for quantized models. Implemen
 
 ### Key Topics
 - Flash Attention and Memory Optimization
-- KV Cache Management and PagedAttention
+- KV Cache Implementation and Management
+- Test-Time Preference Optimization (TPO)
+- Compression Methods to Enhance LLM Performance
 - Speculative Decoding and Parallel Sampling
 - Dynamic and Continuous Batching
 - Multi-GPU and Multi-Node Inference
+- PagedAttention and Advanced Memory Management
 
 ### Skills & Tools
 - **Frameworks:** vLLM, TensorRT-LLM, DeepSpeed-Inference
@@ -616,9 +668,16 @@ Build continual learning systems that can adapt to new data without forgetting. 
 
 ### Key Topics
 - OWASP LLM Top 10 and Attack Vectors
-- Prompt Injection and Jailbreak Defense
-- Bias Detection and Mitigation
-- Privacy-Preserving Techniques
+- Prompt Injection Attacks and Defense
+- Data/Prompt Leaking Prevention
+- Jailbreaking Techniques and Mitigation
+- Training Data Poisoning and Backdoor Attacks
+- Model Theft Prevention
+- Fairness in LLMs and Bias Detection
+- Bias Detection and Mitigation Strategies
+- Responsible AI Development
+- Personal Information Masking
+- Reconstruction Methods and Privacy Protection
 - AI Governance and Compliance
 
 ### Skills & Tools
@@ -658,10 +717,19 @@ Ensure privacy compliance through proper data handling and processing. Implement
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Web development, APIs
 
 ### Key Topics
-- LLM API Integration and Management
-- Building Conversational Interfaces
+- Using LLM APIs and Integration
+- Building Memory-Enabled Chatbots
+- Working with Open-Source Models
+- Prompt Engineering and Structured Outputs
+- Deploying Models Locally
+- Creating Interactive Demos
+- Setting Up Production Servers
+- Serving Open Source LLMs in Production Environment
+- Developing REST APIs
+- Managing Concurrent Users
+- Test-Time Autoscaling
+- Batching for Model Deployment
 - Streaming and Real-Time Applications
-- Prompt Engineering and Template Management
 - Application Architecture and Scalability
 
 ### Skills & Tools
@@ -692,11 +760,19 @@ Build comprehensive multi-modal applications that handle text, images, and other
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Embeddings, databases
 
 ### Key Topics
+- Ingesting Documents and Data Sources
+- Chunking Strategies for Document Processing
+- Embedding Models and Vector Representations
+- Vector Databases and Storage Solutions
+- Retrieval Implementation and Optimization
+- RAG Pipeline Building and Architecture
+- Graph RAG Techniques
+- Constructing and Optimizing Knowledge Graphs
+- Intelligent Document Processing (IDP) with RAG
 - Advanced Retrieval Strategies and Hybrid Search
-- Vector Database Optimization
 - Reranking and Query Enhancement
 - Multi-Turn Conversational RAG
-- Graph-Based and Agentic RAG
+- Agentic RAG Systems
 
 ### Skills & Tools
 - **Frameworks:** LangChain, LlamaIndex, Haystack
@@ -726,9 +802,11 @@ Create an agentic RAG system that maintains context across conversation turns an
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Function calling, planning
 
 ### Key Topics
-- Function Calling and Tool Integration
-- Agent Planning and Reasoning
-- Multi-Agent Coordination
+- Function Calling and Tool Usage
+- Agent Implementation and Architecture
+- Planning Systems and Reasoning
+- Agentic RAG Integration
+- Multi-agent Orchestration and Coordination
 - Autonomous Task Execution
 - Safety and Control in Agent Systems
 
@@ -760,11 +838,16 @@ Design an agent system that can automate complex business processes with proper 
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Computer vision, audio processing
 
 ### Key Topics
-- Vision-Language Models (CLIP, LLaVA, GPT-4V)
-- Multimodal Embeddings and Feature Fusion
+- Working with Multi-Modal LLMs (Text, Audio Input/Output, Images)
+- Transfer Learning & Pre-trained Models
+- Multimodal Transformers and Vision-Language Models (CLIP, LLaVA, GPT-4V)
+- Multimodal Attention and Feature Fusion
+- Image Captioning and Visual QA Systems
+- Text-to-Image Generation
+- Multimodal Chatbots and Agent Systems
+- Joint Image-Text Representations
 - Audio Processing and Speech Integration
 - Document Understanding and OCR
-- Multimodal Agent Systems
 
 ### Skills & Tools
 - **Models:** CLIP, LLaVA, Whisper, GPT-4V
@@ -794,9 +877,13 @@ Create multimodal agents that can interact with different types of content. Buil
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** DevOps, MLOps
 
 ### Key Topics
+- Hugging Face Hub Integration (Model Card Creation, Model Sharing, Version Control)
+- LLM Observability Tools and Monitoring
+- Techniques for Debugging and Monitoring
+- Docker, OpenShift, CI/CD Pipelines
+- Dependency Management and Containerization
+- Apache Spark Usage for LLM Inference
 - Model Versioning and Registry Management
-- CI/CD for LLM Applications
-- Monitoring and Observability
 - Cost Optimization and Resource Management
 - Deployment Strategies and Rollback
 
