@@ -8,16 +8,15 @@
 ## Summary
 Mid-level ML Engineer with 2 + years of hands-on experience designing, fine-tuning, and shipping LLM-powered products in finance, real-estate, and healthcare. Deep knowledge of Retrieval-Augmented Generation (RAG), parameter-efficient tuning (LoRA / QLoRA), and inference optimisation (quantisation, KV-cache, speculative decoding). Proven to:
 - Cut cloud spend **35 %+**, deliver p95 latency **< 250 ms**, and lift user engagement **40 %+**
-- Lead cross-functional teams from PoC to production with CI/CD, observability, and automated eval suites
 
 ---
 
 ## Core Competencies
-- **LLM Development:** GPT-style models (Gemma, Phi-3), Instruction & Alignment (SFT, RLHF), PEFT (LoRA, QLoRA)
-- **RAG & Vector Search:** FAISS, Milvus, ANN search, Re-ranking, Custom chunking, Retrieval eval (Recall@k)
-- **Inference Optimisation:** Quantisation (AWQ, GPTQ), KV-Cache, Speculative decoding, Batching, Throughput tuning
-- **MLOps & Deployment:** Docker, FastAPI, Uvicorn, GitHub Actions, Prometheus / Grafana, HF Hub, LangServe
-- **Programming & Cloud:** Python, SQL, AWS, GCP, Git
+- **LLM Development:** GPT-style models (Gemma, Phi, Llama), Instruction & Alignment (SFT, RLHF), PEFT (LoRA, QLoRA)
+- **RAG & Vector Search:** Qdrant, Milvus, ANN search, Re-ranking, Custom chunking, Retrieval eval (Recall@k)
+- **Inference Optimisation:** Quantisation (AWQ, GGUF), KV-Cache, Speculative decoding, Batching, Throughput tuning
+- **MLOps & Deployment:** Docker, FastAPI, Uvicorn, HF Hub, LangServe
+- **Programming & Cloud:** Python, SQL, AWS, Runpod, Git
 
 ---
 
