@@ -1,7 +1,7 @@
 ---
 title: "Data Preparation"
-nav_order: 1
-parent: Training and Fine-tuning
+nav_order: 7
+parent: Tutorial
 layout: default
 ---
 # Data Preparation for LLMs

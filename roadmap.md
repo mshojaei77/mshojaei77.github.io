@@ -54,7 +54,7 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 
 **🎯 Learning Objectives:** This foundational track builds essential LLM knowledge through hands-on implementation, starting with core concepts like tokenization and embeddings, progressing to neural networks and transformers, and culminating in data preparation and basic training techniques.
 
-## [Tokenization](Foundations/Tokenization.md)
+## [Tokenization](Tutorial/Tokenization.md)
 ![image](https://github.com/user-attachments/assets/bf96e231-c41b-47de-b109-aa7af4e1bdb4)
 **📈 Difficulty:** Beginner | **🎯 Prerequisites:** Python basics
 
@@ -95,7 +95,7 @@ Create a single, efficient SentencePiece tokenizer trained on a mixed corpus of 
 
 Build a web application using Streamlit or Gradio that allows users to compare different tokenization strategies side-by-side. Users should be able to input text and see how it's tokenized by various popular models (e.g., GPT-4, Llama 3, BERT), with a clear visualization of the token counts and resulting tokens for each.
 
-## [Embeddings](Foundations/Embeddings.md)
+## [Embeddings](Tutorial/Embeddings.md)
 ![image](https://github.com/user-attachments/assets/eac0881a-2655-484f-ba56-9c9cc2b09619)
 **📈 Difficulty:** Beginner-Intermediate | **🎯 Prerequisites:** Linear algebra, Python
 
@@ -132,7 +132,7 @@ Implement a comprehensive search system for an e-commerce platform where users c
 
 Fine-tune a pre-trained embedding model on a dataset of financial news headlines labeled with sentiment. Evaluate embedding quality using both intrinsic metrics (similarity tasks) and extrinsic metrics (downstream sentiment classification). Compare performance against general-purpose embeddings and optimize for financial domain.
 
-## [Neural Network Foundations for LLMs](Neural_Networks/Neural_Networks.md)
+## [Neural Network Foundations for LLMs](Tutorial/Neural_Networks.md)
 ![image](https://github.com/user-attachments/assets/9c70c637-ffcb-4787-a20c-1ea5e4c5ba5e)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Calculus, linear algebra
 
@@ -166,7 +166,7 @@ Implement FP16/BF16 mixed precision training to improve efficiency and handle la
 
 Build a systematic comparison of different regularization techniques (L1/L2 regularization, dropout, batch normalization, early stopping). Evaluate their effects on model performance, generalization, and training stability across different datasets and architectures.
 
-## [Traditional Language Models](Neural_Networks/Traditional_LMs.md)
+## [Traditional Language Models](Tutorial/Traditional_LMs.md)
 ![image](https://github.com/user-attachments/assets/f900016c-6fcd-43c4-bbf9-75cb395b7d06)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Probability, statistics
 
@@ -199,7 +199,7 @@ Build a complete sequence-to-sequence model for machine translation or text summ
 
 Create a multi-task system that uses LSTM networks for both sentiment analysis on movie reviews and stock price prediction. Compare different architectures and demonstrate the versatility of RNN-based models for various sequence modeling tasks.
 
-## [The Transformer Architecture](Neural_Networks/Transformers.md)
+## [The Transformer Architecture](Tutorial/Transformers.md)
 ![image](https://github.com/user-attachments/assets/3dad10b8-ae87-4a7a-90c6-dadb810da6ab)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Neural networks, linear algebra
 
@@ -233,7 +233,7 @@ Implement and compare multiple positional encoding schemes (sinusoidal, learned,
 
 Build a decoder-only Transformer (mini-GPT) with modern optimizations like Flash Attention, KV caching, and grouped-query attention. Optimize attention computation for efficiency and implement text generation with beam search and nucleus sampling.
 
-## [Data Preparation](Training/Data_Preparation.md)
+## [Data Preparation](Tutorial/Data_Preparation.md)
 ![image](https://github.com/user-attachments/assets/997b8b9b-611c-4eae-a335-9532a1e143cc)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Python, SQL
 
@@ -277,7 +277,7 @@ Use LLM APIs to generate high-quality synthetic instruction datasets for specifi
 
 **🎯 Learning Objectives:** This advanced track develops research-grade expertise in LLM development, covering pre-training methodologies, supervised fine-tuning, preference alignment, novel architectures, reasoning enhancement, and comprehensive evaluation frameworks for cutting-edge research.
 
-## [Pre-Training Large Language Models](Training/Pre_Training.md)
+## [Pre-Training Large Language Models](Tutorial/Pre_Training.md)
 ![image](https://github.com/user-attachments/assets/a39abc0a-84c4-4014-a84f-c06baf54280e)
 **📈 Difficulty:** Expert | **🎯 Prerequisites:** Transformers, distributed systems
 
@@ -311,7 +311,7 @@ Design and implement a curriculum learning approach for pre-training models on m
 
 Build a comprehensive training optimization system that includes gradient checkpointing, mixed precision training, and advanced optimization techniques. Monitor and optimize training throughput, memory usage, and convergence speed across different model sizes and hardware configurations.
 
-## [Post-Training Datasets](Training/Post_Training_Datasets.md)
+## [Post-Training Datasets](Tutorial/Post_Training_Datasets.md)
 ![image](https://github.com/user-attachments/assets/60996b60-99e6-46db-98c8-205fd2f57393)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Data preparation
 
@@ -345,7 +345,7 @@ Create an advanced synthetic conversation generator that can produce diverse, hi
 
 Develop a comprehensive system for evaluating instruction dataset quality across multiple dimensions. Implement automated quality scoring, bias detection, and optimization techniques. Create tools for dataset composition analysis and capability-specific optimization.
 
-## [Supervised Fine-Tuning (SFT)](Training/Supervised_Fine_Tuning.md)
+## [Supervised Fine-Tuning (SFT)](Tutorial/Supervised_Fine_Tuning.md)
 ![image](https://github.com/user-attachments/assets/9c3c00b6-6372-498b-a84b-36b08f66196c)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Pre-training basics
 
@@ -379,7 +379,7 @@ Fine-tune separate models for different tasks and combine them using advanced me
 
 Develop memory-efficient training pipelines that enable fine-tuning large models on consumer GPUs. Implement 4-bit quantization, gradient checkpointing, and other optimization techniques. Create comprehensive analysis of memory usage and training efficiency.
 
-## [Preference Alignment (RL Fine-Tuning)](Training/Preference_Alignment.md)
+## [Preference Alignment (RL Fine-Tuning)](Tutorial/Preference_Alignment.md)
 ![image](https://github.com/user-attachments/assets/eea2348b-4819-44b1-9477-9bfdeff1a037)
 **📈 Difficulty:** Expert | **🎯 Prerequisites:** Reinforcement learning basics
 
@@ -418,7 +418,7 @@ Build a full RLHF pipeline from reward model training to PPO-based alignment. Im
 
 Implement Constitutional AI systems that can critique and revise their own responses based on defined principles. Create comprehensive evaluation frameworks for principle-based alignment and develop methods for improving model behavior through AI feedback.
 
-## [Model Architecture Variants](Training/Model_Architecture_Variants.md)
+## [Model Architecture Variants](Tutorial/Model_Architecture_Variants.md)
 ![image](https://github.com/user-attachments/assets/34befded-227a-4229-bd2b-d9d4345e0b80)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Transformer architecture
 
@@ -455,7 +455,7 @@ Extend context windows using various techniques including interpolation, extrapo
 
 Design and implement hybrid architectures combining different components (attention, state space, convolution). Apply architecture search techniques to discover optimal configurations for specific tasks. Evaluate architectural innovations on relevant benchmarks and create new architecture variants.
 
-## [Reasoning](Training/Reasoning.md)
+## [Reasoning](Tutorial/Reasoning.md)
 ![image](https://github.com/user-attachments/assets/2b34f5c2-033a-4b75-8c15-fd6c2155a7da)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Prompt engineering
 
@@ -516,7 +516,7 @@ Build multi-faceted evaluation systems covering conclusion-based, rationale-base
 
 Develop reasoning-enhanced applications for mathematical problem solving, code generation, and logical reasoning. Implement symbolic logic integration for formal reasoning tasks. Create reasoning systems that can handle multi-hop queries and complex problem decomposition across different domains.
 
-## [Model Evaluation](Training/Evaluation.md)
+## [Model Evaluation](Tutorial/Evaluation.md)
 ![image](https://github.com/user-attachments/assets/dbfa313a-2b29-449e-ae62-75a052894259)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Statistics, model training
 
@@ -554,7 +554,7 @@ Build comprehensive bias and toxicity detection systems using datasets like BOLD
 Design and implement custom benchmarks for specific use cases and requirements. Create domain-specific evaluation metrics and develop evaluation frameworks for specialized tasks. Build tools for benchmark creation and validation across different domains.
 
 ---
-## [Quantization](Deployment_Optimization/Quantization.md)
+## [Quantization](Tutorial/Quantization.md)
 ![image](https://github.com/user-attachments/assets/82b857f5-12de-45bb-8306-8ba6eb7b4656)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Model optimization
 
@@ -592,7 +592,7 @@ Implement advanced quantization methods like SmoothQuant and calibration techniq
 
 Build complete mobile and edge deployment systems for quantized models. Implement hardware-specific optimizations and create mobile LLM deployment frameworks. Develop quality vs speed analysis tools and optimize for resource-constrained environments.
 
-## [Inference Optimization](Deployment_Optimization/Inference_Optimization.md)
+## [Inference Optimization](Tutorial/Inference_Optimization.md)
 ![image](https://github.com/user-attachments/assets/a674bf9a-b7ed-48e8-9911-4bca9b8d69a3)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Model deployment
 
@@ -629,7 +629,7 @@ Implement Flash Attention and other memory-efficient attention mechanisms. Optim
 
 Build systems that serve multiple models efficiently with dynamic batching capabilities. Implement resource allocation strategies and optimize for different model sizes and requirements. Create comprehensive serving systems with proper load balancing and scaling.
 
-## [Model Enhancement](Advanced/Model_Enhancement.md)
+## [Model Enhancement](Tutorial/Model_Enhancement.md)
 ![image](https://github.com/user-attachments/assets/5916e535-c227-474b-830a-6ceb0816f0c4)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Model training, optimization
 
@@ -663,7 +663,7 @@ Implement knowledge distillation to create efficient compressed models. Build te
 
 Build continual learning systems that can adapt to new data without forgetting. Implement self-improvement mechanisms for ongoing model enhancement and create systems that can learn from user feedback and interactions over time.
 
-## [Securing LLMs & Responsible AI](Advanced/Securing_LLMs.md)
+## [Securing LLMs & Responsible AI](Tutorial/Securing_LLMs.md)
 ![image](https://github.com/user-attachments/assets/e638866a-313f-4ea8-9b52-3330168b74d8)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Security fundamentals
 
@@ -713,7 +713,7 @@ Ensure privacy compliance through proper data handling and processing. Implement
 
 **🎯 Learning Objectives:** This production-focused track teaches deployment optimization, inference acceleration, application development with RAG systems and agents, multimodal integration, LLMOps implementation, and responsible AI practices for scalable LLM solutions.
 
-## [Running LLMs & Building Applications](Deployment_Optimization/Running_LLMs.md)
+## [Running LLMs & Building Applications](Tutorial/Running_LLMs.md)
 ![image](https://github.com/user-attachments/assets/5c7cee25-bc67-4246-ae74-29ad3346ce53)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Web development, APIs
 
@@ -756,7 +756,7 @@ Containerize LLM inference servers using Docker and deploy to Kubernetes cluster
 
 Build comprehensive multi-modal applications that handle text, images, and other media types. Implement unified LLM API services and create scalable application architectures. Apply best practices for application performance and reliability.
 
-## [Retrieval Augmented Generation (RAG)](Advanced/RAG.md)
+## [Retrieval Augmented Generation (RAG)](Tutorial/RAG.md)
 ![image](https://github.com/user-attachments/assets/2f3388a5-aa33-49a4-80b4-84cd5c38b68c)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Embeddings, databases
 
@@ -798,7 +798,7 @@ Build a Graph RAG system using Neo4j that can handle complex relational queries.
 
 Create an agentic RAG system that maintains context across conversation turns and can decompose complex queries into sub-questions. Implement query planning, multi-step reasoning, and result synthesis. Include features for handling follow-up questions and context management.
 
-## [Tool Use & AI Agents](Advanced/Agents.md)
+## [Tool Use & AI Agents](Tutorial/Agents.md)
 ![image](https://github.com/user-attachments/assets/a5448477-bb1e-43cb-98a3-09a00c0f17ac)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Function calling, planning
 
@@ -834,7 +834,7 @@ Build a programming assistant that can generate code, debug issues, and conduct 
 
 Design an agent system that can automate complex business processes with proper planning and reasoning. Implement task decomposition, workflow execution, and recovery mechanisms. Include features for human oversight and approval workflows.
 
-## [Multimodal LLMs](Advanced/Multimodal.md)
+## [Multimodal LLMs](Tutorial/Multimodal.md)
 ![image](https://github.com/user-attachments/assets/76d57fea-5bd1-476b-affd-eb259969a84f)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Computer vision, audio processing
 
@@ -873,7 +873,7 @@ Build text-to-image generation systems using Stable Diffusion and other models. 
 
 Create multimodal agents that can interact with different types of content. Build e-commerce chatbots that handle both text and images. Implement cross-modal attention and feature fusion techniques. Handle multimodal conversation flows and optimize for different deployment scenarios.
 
-## [Large Language Model Operations (LLMOps)](Advanced/LLMOps.md)
+## [Large Language Model Operations (LLMOps)](Tutorial/LLMOps.md)
 ![image](https://github.com/user-attachments/assets/15de93dc-e984-4786-831a-2592a1ed9d4b)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** DevOps, MLOps
 
@@ -1034,4 +1034,4 @@ Optimize deployment costs through resource management and scaling strategies. Cr
 
 **🙏 Acknowledgments:**
 Thanks to the open-source community, researchers, and practitioners who make LLM development accessible to everyone.
-=
+

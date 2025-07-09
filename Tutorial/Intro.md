@@ -1,8 +1,8 @@
 ---
-layout: default
-title: Intro to Large Language Models
-parent: Foundations
+title: "Intro to Large Language Models"
 nav_order: 1
+parent: Tutorial
+layout: default
 ---
 # Introduction to Large Language Models
 

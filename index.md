@@ -8,7 +8,7 @@ nav_order: 0
 [![Status](https://img.shields.io/badge/Status-🟢_Available-brightgreen)](mailto:shojaei.dev@gmail.com)
 [![Current Role](https://img.shields.io/badge/LLM_Engineer-No_Limits_Market-blue)](https://nolimitmarkets.com/)
 [![Experience](https://img.shields.io/badge/Experience-2%2B_Years_LLM-orange)]()
-[![Location](https://img.shields.io/badge/Location-Dubai,_UAE-red)]()
+[![Location](https://img.shields.io/badge/Location-iRAN,_Shiraz-red)]()
 
 [📧 Email](mailto:shojaei.dev@gmail.com) • [💼 LinkedIn](https://www.linkedin.com/in/mshojaei77) • [🐙 GitHub](https://github.com/mshojaei77) • [🤗 Hugging Face](https://huggingface.co/mshojaei77)
 

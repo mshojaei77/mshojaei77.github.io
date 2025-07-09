@@ -1,7 +1,7 @@
 ---
 title: "Traditional Language Models"
-nav_order: 2
-parent: Neural Networks and Transformers
+nav_order: 5
+parent: Tutorial
 layout: default
 ---
 # Traditional Language Models
