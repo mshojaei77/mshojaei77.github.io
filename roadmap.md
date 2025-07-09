@@ -468,10 +468,6 @@ Design and implement hybrid architectures combining different components (attent
 - Symbolic Logic Systems Integration
 - Verifiable Domains for Automatic Grading
 - Multi-Stage and Curriculum Training Pipelines
-- Tool Use and External Knowledge Integration
-- Mathematical and Logical Reasoning
-- Multi-step Problem Solving
-- Safety and Usability of Reasoning Traces
 - Reasoning Evaluation and Benchmarks
 
 ### Skills & Tools
