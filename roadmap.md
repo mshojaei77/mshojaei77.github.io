@@ -10,7 +10,7 @@ This roadmap is structured as a clear progression. Master the fundamentals as an
 |------|-------|------------|
 | **🔍 The LLM Intern** | Foundation building, transformer implementation, data preparation, research support | Python/PyTorch, ML/NLP theory, Git, transformer architecture |
 | **🧬 The LLM Scientist** | Advanced training methods, research & innovation, theoretical depth, academic excellence | Deep learning theory, distributed training, experimental design, research methodology |
-| **🚀 The LLM Engineer** | Production deployment, application development, systems integration, operational excellence | Inference optimization, vector databases, LangChain/LlamaIndex, MLOps, security |
+| **🚀 The LLM Engineer** | Production deployment, application development, systems integration, operational excellence | Infrence, Agents, RAG, LangChain/LlamaIndex, LLMOps |
 
 ---
 
@@ -379,7 +379,7 @@ Fine-tune separate models for different tasks and combine them using advanced me
 
 Develop memory-efficient training pipelines that enable fine-tuning large models on consumer GPUs. Implement 4-bit quantization, gradient checkpointing, and other optimization techniques. Create comprehensive analysis of memory usage and training efficiency.
 
-## [Preference Alignment](Training/Preference_Alignment.md)
+## [Preference Alignment (RL Fine-Tuning)](Training/Preference_Alignment.md)
 ![image](https://github.com/user-attachments/assets/eea2348b-4819-44b1-9477-9bfdeff1a037)
 **📈 Difficulty:** Expert | **🎯 Prerequisites:** Reinforcement learning basics
 
