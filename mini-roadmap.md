@@ -1,11 +1,12 @@
 # Mini Roadmap
 
 This mini-roadmap is a friendly, bite-sized version of our detailed [Full Roadmap](roadmap.md), guiding you straight to the good stuff. Each section is packed with **handy keyword lists** to help you search for tutorials, research papers, code snippets, and other awesome resources across the web. Check out these spots to dig deeper:
-📚 **Academic Stuff:** Google Scholar, arXiv, Papers With Code
-🎥 **Videos:** YouTube, Coursera, edX  
-💻 **Code Examples:** GitHub, Hugging Face, Kaggle
-📖 **Guides & Reads:** Official docs, tutorials, blogs
-🤖 **AI Buddies:** Chat with ChatGPT, Claude, or any AI assistant
+
+- 📚 **Academic Stuff:** Google Scholar, arXiv, Papers With Code
+- 🎥 **Videos:** YouTube, Coursera, edX  
+- 💻 **Code Examples:** GitHub, Hugging Face, Kaggle
+- 📖 **Guides & Reads:** Official docs, tutorials, blogs
+- 🤖 **AI Buddies:** Chat with ChatGPT, Claude, or any AI assistant
 
 
 ## 📋 Prerequisites
