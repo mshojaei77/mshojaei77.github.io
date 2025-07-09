@@ -102,22 +102,12 @@ Custom tokenizers and fine-tuned models specifically designed for Persian langua
 
 I've created a comprehensive learning guide based on my production experience, taking you from foundations to advanced implementations:
 
-### **🎓 Learning Tracks**
-
-| Track | Focus | Best For |
-|-------|-------|----------|
-| **[LLM Intern](Foundations/Intro.md)** | Foundation Building | Beginners entering AI |
-| **[LLM Scientist](Training/Pre_Training.md)** | Research & Innovation | Advanced practitioners |
-| **[LLM Engineer](Advanced/RAG.md)** | Production Systems | Industry professionals |
-
-### **📖 Key Resources**
-
 | Resource | Description | Use Case |
 |----------|-------------|----------|
 | **[Complete Roadmap](roadmap.md)** | 22-module comprehensive guide | Structured learning |
 | **[Quick Reference](mini-roadmap.md)** | Rapid concept lookup | Daily development |
 | **[Interview Prep](interview.md)** | 400+ real interview questions | Job preparation |
-| **[About Me](about.md)** | Detailed background | Professional context |
+| **[Resume](about.md)** | Detailed background | Professional context |
 
 ---
 
@@ -143,22 +133,7 @@ I've created a comprehensive learning guide based on my production experience, t
 - **🛠️ Open Source**: Contributing to impactful projects
 - **📝 Knowledge Sharing**: Technical writing and speaking
 
----
-## 🎯 Start Your LLM Journey
-
-Choose your path based on your current level and goals:
-
-**[📖 Begin Learning](Foundations/Intro.md)** | **[⚡ Quick Reference](mini-roadmap.md)** | **[💼 Interview Prep](interview.md)** | **[🚀 View Projects](https://github.com/mshojaei77)**
-
----
-
-*Building production-ready AI solutions that matter* 🚀
-
-**⭐ Found this helpful? Star this repository!**
-
 <p align="center">
   <em>Let's connect and build something amazing together.</em>
 </p>
-
-*Last updated: January 2025 | Status: Building AI systems @ No Limits Market Ltd*
 
