@@ -4,17 +4,6 @@
 
 ### Prerequisites
 
-**Courses & Universities:**
-- [Stanford CS224n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/)
-- [CS224N YouTube Playlists](https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVRd4)
-- [CS224N 2021 Videos](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ)
-- [CS224N 2019 Videos](https://www.youtube.com/playlist?list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z)
-- [CS224N 2017 Videos](https://www.youtube.com/playlist?list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6)
-- [XCS224N: Stanford Online NLP Course](https://online.stanford.edu/courses/xcs224n-natural-language-processing-deep-learning)
-- [CS224N Course Archives](https://web.stanford.edu/class/archive/cs/cs224n/)
-- [Stanford CS231n](http://cs231n.stanford.edu/)
-- [Oxford Deep NLP](https://github.com/oxford-cs-deepnlp-2017/lectures)
-
 **Mathematics & Statistics:**
 - [3Blue1Brown - Essence of Linear Algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 - [StatQuest - Statistics Fundamentals](https://www.youtube.com/watch?v=qBigTkBLU6g&list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9)
@@ -45,24 +34,6 @@
 - [Deep Learning Book](https://www.deeplearningbook.org/)
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
 - [Introduction to Deep Learning](https://mitpress.mit.edu/books/introduction-deep-learning)
-
-**Essential Books:**
-- [Speech and Language Processing (2024 pre-release)](https://web.stanford.edu/~jurafsky/slp3/)
-- [Natural Language Processing](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
-- [A Primer on Neural Network Models for Natural Language Processing](http://u.cs.biu.ac.il/~yogo/nnlp.pdf)
-- [Natural Language Processing with PyTorch](http://library.stanford.edu/sfx?genre=book&title=Natural%20language%20processing%20with%20PyTorch)
-- [Natural Language Processing with Transformers](https://transformersbook.com/)
-
-**Development Tools:**
-- [Google Colab](https://colab.research.google.com/)
-- [Weights & Biases](https://wandb.ai/)
-- [MLflow](https://mlflow.org/)
-- [GitHub Actions](https://github.com/features/actions)
-- [Docker](https://www.docker.com/)
-- [NumPy](https://numpy.org/)
-- [PyTorch](https://pytorch.org/)
-- [TensorFlow Guide](https://www.tensorflow.org/guide)
-- [PyTorch Tutorials](https://pytorch.org/tutorials/)
 
 ### Tokenization
 
@@ -827,3 +798,49 @@
 **CI/CD & Model Management:**
 - [GitHub Actions](https://github.com/features/actions)
 - [Hugging Face Hub](https://huggingface.co/docs/hub/index)
+
+
+
+### Courses & Matrials
+
+- [Stanford CS224n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/)
+- [CS224N YouTube Playlists](https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVRd4)
+- [CS224N 2021 Videos](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ)
+- [CS224N 2019 Videos](https://www.youtube.com/playlist?list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z)
+- [CS224N 2017 Videos](https://www.youtube.com/playlist?list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6)
+- [XCS224N: Stanford Online NLP Course](https://online.stanford.edu/courses/xcs224n-natural-language-processing-deep-learning)
+- [CS224N Course Archives](https://web.stanford.edu/class/archive/cs/cs224n/)
+- [Stanford CS231n](http://cs231n.stanford.edu/)
+- [Oxford Deep NLP](https://github.com/oxford-cs-deepnlp-2017/lectures)
+- [UWaterloo CS 886: Recent Advances on Foundation Models](https://cs.uwaterloo.ca/~wenhuche/teaching/cs886/)
+- [CS25-Transformers United](https://web.stanford.edu/class/cs25/)
+- [CS324 - Large Language Models](https://stanford-cs324.github.io/winter2022/)
+- [Princeton: Understanding Large Language Models](https://www.cs.princeton.edu/courses/archive/fall22/cos597G/)
+- [ChatGPT Prompt Engineering](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
+
+**Video Tutorials:**
+- [Andrej Karpathy Series](https://www.youtube.com/@AndrejKarpathy)
+- [Umar Jamil Series](https://www.youtube.com/@umarjamilai)
+- [Alexander Rush Series](https://rush-nlp.com/projects/)
+- [Let's build GPT: from scratch, in code, spelled out](https://www.youtube.com/watch?v=kCc8FmEb1nY)
+- [State of GPT](https://build.microsoft.com/en-US/sessions/db3f4859-cd30-4445-a0cd-553c3304f8e2)
+- [Why you should work on AI AGENTS!](https://www.youtube.com/watch?v=fqVLjtvWgq8)
+- [Open Pretrained Transformers](https://www.youtube.com/watch?v=p9IxoSkvZ-M&t=4s)
+
+**Interactive Courses:**
+- [llm-course](https://github.com/mlabonne/llm-course)
+- [GPT in 60 Lines of NumPy](https://jaykmody.com/blog/gpt-from-scratch/)
+- [minbpe](https://www.youtube.com/watch?v=zduSFxRajkE&t=1157s)
+- [femtoGPT](https://github.com/keyvank/femtoGPT)
+
+**Essential Books:**
+- [Speech and Language Processing (2024 pre-release)](https://web.stanford.edu/~jurafsky/slp3/)
+- [Natural Language Processing](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
+- [A Primer on Neural Network Models for Natural Language Processing](http://u.cs.biu.ac.il/~yogo/nnlp.pdf)
+- [Natural Language Processing with PyTorch](http://library.stanford.edu/sfx?genre=book&title=Natural%20language%20processing%20with%20PyTorch)
+- [Natural Language Processing with Transformers](https://transformersbook.com/)
+- [Generative AI with LangChain](https://amzn.to/3GUlRng)
+- [Build a Large Language Model (From Scratch)](https://www.manning.com/books/build-a-large-language-model-from-scratch)
+- [BUILD GPT: HOW AI WORKS](https://www.amazon.com/dp/9152799727)
+- [Hands-On Large Language Models](https://www.llm-book.com/)
+- [The Chinese Book for Large Language Models](http://aibox.ruc.edu.cn/zws/index.htm)
