@@ -21,10 +21,35 @@
 - [freeCodeCamp - Learn Python](https://www.youtube.com/watch?v=rfscVS0vtbw)
 - [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
 
+**Books:**
+- [Speech and Language Processing (2024 pre-release)](https://web.stanford.edu/~jurafsky/slp3/)
+- [Natural Language Processing](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
+- [A Primer on Neural Network Models for Natural Language Processing](http://u.cs.biu.ac.il/~yogo/nnlp.pdf)
+- [Natural Language Processing with PyTorch](http://library.stanford.edu/sfx?genre=book&title=Natural%20language%20processing%20with%20PyTorch)
+- [Natural Language Processing with Transformers](https://transformersbook.com/)
+- [Generative AI with LangChain](https://amzn.to/3GUlRng)
+- [Build a Large Language Model (From Scratch)](https://www.manning.com/books/build-a-large-language-model-from-scratch)
+- [LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch)
+- [BUILD GPT: HOW AI WORKS](https://www.amazon.com/dp/9152799727)
+- [Hands-On Large Language Models](https://www.llm-book.com/)
+- [The Chinese Book for Large Language Models](http://aibox.ruc.edu.cn/zws/index.htm)
+
 **Machine Learning Fundamentals:**
 - [Machine Learning for Everybody](https://youtu.be/i_LwzRVP7bg)
 - [Udacity - Intro to Machine Learning](https://www.udacity.com/course/intro-to-machine-learning--ud120)
 - [A Course in Machine Learning](https://web.archive.org/web/20250114002202/http://ciml.info/dl/v0_99/ciml-v0_99-all.pdf)
+- [Caltech CS156: Learning from Data](https://www.youtube.com/playlist?list=PLD63A284B7615313A)
+- [Stanford CS229: Machine Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU)
+- [Stanford CS224n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/)
+- [Oxford Deep NLP](https://github.com/oxford-cs-deepnlp-2017/lectures)
+- [Making Friends with Machine Learning](https://www.youtube.com/playlist?list=PLRKtJ4IpxJpDxl0NTvNYQWKCYzHNuy2xG)
+- [Applied Machine Learning](https://www.youtube.com/playlist?list=PL2UML_KCiC0UlY7iCQDSiGDMovaupqc83)
+- [Introduction to Machine Learning (Tübingen)](https://www.youtube.com/playlist?list=PL05umP7R6ij35ShKLDqccJSDntugY4FQT)
+- [Machine Learning Lecture (Stefan Harmeling)](https://www.youtube.com/playlist?list=PLzrCXlf6ypbxS5OYOY3EN_0u2fDuIT6Gt)
+- [Statistical Machine Learning (Tübingen)](https://www.youtube.com/playlist?list=PL05umP7R6ij2XCvrRzLokX6EoHWaGA2cC)
+- [Probabilistic Machine Learning](https://www.youtube.com/playlist?list=PL05umP7R6ij2YE8rRJSb-olDNbntAQ_Bx)
+- [MIT 6.S897: Machine Learning for Healthcare (2019)](https://www.youtube.com/playlist?list=PLUl4u3cNGP60B0PQXVQyGNdCyCTDU1Q5j)
+- [Machine Learning with Graphs (Stanford)](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
 
 **Deep Learning Basics:**
 - [3Blue1Brown - But What is a Neural Network?](https://www.youtube.com/watch?v=aircAruvnKk)
@@ -34,19 +59,32 @@
 - [Deep Learning Book](https://www.deeplearningbook.org/)
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
 - [Introduction to Deep Learning](https://mitpress.mit.edu/books/introduction-deep-learning)
+- [Neural Networks: Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
+- [Andrej Karpathy Series](https://www.youtube.com/@AndrejKarpathy)
+- [Umar Jamil Series](https://www.youtube.com/@umarjamilai)
+- [Let's build GPT: from scratch, in code, spelled out](https://www.youtube.com/watch?v=kCc8FmEb1nY)
+- [State of GPT](https://build.microsoft.com/en-US/sessions/db3f4859-cd30-4445-a0cd-553c3304f8e2)
+- [MIT: Deep Learning for Art, Aesthetics, and Creativity](https://www.youtube.com/playlist?list=PLCpMvp7ftsnIbNwRnQJbDNRqO6qiN3EyH)
+- [Stanford CS230: Deep Learning (2018)](https://youtube.com/playlist?list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb)
+- [Introduction to Deep Learning (MIT)](https://www.youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI)
+- [CMU Introduction to Deep Learning (11-785)](https://www.youtube.com/playlist?list=PLp-0K3kfddPxRmjgjm0P1WT6H-gTqE8j9)
+- [Deep Learning: CS 182](https://www.youtube.com/playlist?list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A)
+- [Deep Unsupervised Learning](https://www.youtube.com/playlist?list=PLwRJQ4m4UJjPiJP3691u-qWwPGVKzSlNP)
+- [NYU Deep Learning SP21](https://www.youtube.com/playlist?list=PLLHTzKZzVU9e6xUfG10TkTWApKSZCzuBI)
+- [Foundation Models](https://www.youtube.com/playlist?list=PL9t0xVFP90GD8hox0KipBkJcLX_C3ja67)
+- [Deep Learning (Tübingen)](https://www.youtube.com/playlist?list=PL05umP7R6ij3NTWIdtMbfvX7Z-4WEXRqD)
+- [Introduction to Deep Learning and Deep Generative Models](https://www.youtube.com/watch?v=1nqCZqDYPp0&list=PLTKMiZHVd_2KJtIXOW0zFhFfBaJJilH51)
+- [Parallel Computing and Scientific Machine Learning](https://www.youtube.com/playlist?list=PLCAl7tjCwWyGjdzOOnlbGnVNZk0kB8VSa)
 
 ### Tokenization
-
-* Custom BPE tokenizer
-* Tokenizer comparison tool
-* Multilingual tokenizer
-* Legal text tokenizer
 
 **Core Concepts & Tutorials:**
 - [Introduction to Tokenization: A Theoretical Perspective](https://medium.com/@mshojaei77/introduction-to-tokenization-a-theoretical-perspective-b1cc22fe98c5)
 - [Understanding BPE Tokenization](https://medium.com/@mshojaei77/understanding-bpe-tokenization-a-hands-on-tutorial-80570314b12f)
 - [Fast Tokenizers: How Rust is Turbocharging NLP](https://medium.com/@mshojaei77/fast-tokenizers-how-rust-is-turbocharging-nlp-dd12a1d13fa9)
 - [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE)
+- [minbpe](https://github.com/karpathy/minbpe/blob/master/lecture.md)
+- [minbpe](https://www.youtube.com/watch?v=zduSFxRajkE&t=1157s)
 
 **Hands-On Implementations:**
 - [Tokenization Techniques](https://colab.research.google.com/drive/1RwrtINbHTPBSRIoW8Zn9BRabxXguRRf0?usp=sharing)
@@ -73,11 +111,6 @@
 - [MOM: Memory-Efficient Token Handling](https://arxiv.org/abs/2504.12526)
 
 ### Embeddings
-
-* Semantic search engine
-* Text similarity API
-* Recommendation system
-* Multimodal search
 
 **Core Concepts & Tutorials:**
 - [Word Embeddings Deep Dive](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)
@@ -110,11 +143,6 @@
 
 ### Neural Networks
 
-* Neural network from scratch
-* Optimization visualizer
-* Regularization experiments
-* Mixed precision training
-
 **Core Textbooks & Courses:**
 - [Deep Learning Book](https://www.deeplearningbook.org/)
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
@@ -130,11 +158,6 @@
 - [Natural Language Processing (Almost) from Scratch](http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf)
 
 ### Traditional Language Models
-
-* N-gram language model
-* Text generator
-* Perplexity calculator
-* RNN text classifier
 
 **Core Textbooks:**
 - [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/)
@@ -173,11 +196,6 @@
 
 ### Transformers
 
-* Transformer from scratch
-* Attention visualizer
-* Positional encoding explorer
-* Mini-GPT
-
 **Foundational Paper:**
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 
@@ -190,6 +208,22 @@
 - [nanoGPT](https://www.youtube.com/watch?v=kCc8FmEb1nY)
 - [Attention? Attention!](https://lilianweng.github.io/posts/2018-06-24-attention/)
 - [Decoding Strategies in LLMs](https://mlabonne.github.io/blog/posts/2023-06-07-Decoding_strategies.html)
+- [Stanford CS25 - Transformers United](https://www.youtube.com/playlist?list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM)
+- [CS25-Transformers United](https://web.stanford.edu/class/cs25/)
+- [CS324 - Large Language Models](https://stanford-cs324.github.io/winter2022/)
+- [UWaterloo CS 886: Recent Advances on Foundation Models](https://cs.uwaterloo.ca/~wenhuche/teaching/cs886/)
+- [Princeton: Understanding Large Language Models](https://www.cs.princeton.edu/courses/archive/fall22/cos597G/)
+- [XCS224U: Natural Language Understanding (2023)](https://www.youtube.com/playlist?list=PLoROMvodv4rOwvldxftJTmoR3kRcWkJBp)
+- [NLP Course (Hugging Face)](https://www.youtube.com/playlist?list=PLo2EIpI_JMQvWfQndUesu0nPBAtZ9gP1o)
+- [CS224N: Natural Language Processing with Deep Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ)
+- [CMU Neural Networks for NLP](https://www.youtube.com/playlist?list=PL8PYTP1V4I8AkaHEJ7lOOrlex-pcxS-XV)
+- [CS224U: Natural Language Understanding](https://www.youtube.com/playlist?list=PLoROMvodv4rPt5D0zs3YhbWSZA8Q_DyiJ)
+- [CMU Advanced NLP 2021](https://www.youtube.com/playlist?list=PL8PYTP1V4I8AYSXn_GKVgwXVluCT9chJ6)
+- [CMU Advanced NLP 2022](https://www.youtube.com/playlist?list=PL8PYTP1V4I8D0UkqW2fEhgLrnlDW9QK7z)
+- [CMU Advanced NLP 2024](https://www.youtube.com/playlist?list=PL8PYTP1V4I8DZprnWryM4nR8IZl1ZXDjg)
+- [Multilingual NLP 2020](https://www.youtube.com/playlist?list=PL8PYTP1V4I8CHhppU6n1Q9-04m96D9gt5)
+- [Multilingual NLP 2022](https://www.youtube.com/playlist?list=PL8PYTP1V4I8BhCpzfdKKdd1OnTfLcyZr7)
+- [Advanced NLP](https://www.youtube.com/playlist?list=PLWnsVgP6CzadmQX6qevbar3_vDBioWHJL)
 
 **Technical Deep Dives:**
 - [Transformer Positional Encoding](https://kazemnejad.com/blog/transformer_architecture_positional_encoding/)
@@ -208,11 +242,6 @@
 - [Music Transformer](https://arxiv.org/pdf/1809.04281.pdf)
 
 ### Data Preparation
-
-* Web scraping pipeline
-* Data deduplication tool
-* Data quality scorer
-* Synthetic data generator
 
 **Data Collection & Scraping:**
 - [Common Crawl Documentation](https://commoncrawl.org/the-data/)
@@ -249,11 +278,6 @@
 
 ### Pre-Training
 
-* Mini-LLM pre-training
-* Distributed training setup
-* Curriculum learning
-* Training efficiency optimizer
-
 **Foundational Understanding:**
 - [Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)
 - [LLMs Overview](https://arxiv.org/pdf/2307.06435)
@@ -263,6 +287,7 @@
 - [LLMs Explained Briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs)
 - [Deep Dive into LLMs](https://www.youtube.com/watch?v=7xTGNNLPyMI)
 - [Intro to LLMs](https://www.youtube.com/watch?v=zjkBMFhNj_g)
+- [Open Pretrained Transformers](https://www.youtube.com/watch?v=p9IxoSkvZ-M&t=4s)
 
 **Key Research Papers:**
 - [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
@@ -279,11 +304,6 @@
 - [LLM360](https://www.llm360.ai/)
 
 ### Post-Training Datasets
-
-* Instruction dataset creator
-* Chat template designer
-* Synthetic conversation generator
-* Dataset quality evaluator
 
 **Instruction Datasets:**
 - [Alpaca Dataset](https://github.com/tatsu-lab/stanford_alpaca)
@@ -304,11 +324,6 @@
 - [Chat Template](https://huggingface.co/docs/transformers/main/en/chat_templating)
 
 ### Supervised Fine-Tuning
-
-* Parameter-efficient fine-tuning
-* Domain-specific model
-* Instruction-following model
-* Model merging toolkit
 
 **Libraries & Tools:**
 - [PEFT Library](https://github.com/huggingface/peft)
@@ -332,6 +347,7 @@
 - [Fine-tune Llama 2 with QLoRA](https://mlabonne.github.io/blog/posts/Fine_Tune_Your_Own_Llama_2_Model_in_a_Colab_Notebook.html)
 - [Mastering LLMs](https://parlance-labs.com/education/)
 - [LoRA Insights](https://lightning.ai/pages/community/lora-insights/)
+- [ChatGPT Prompt Engineering](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
 
 **Parameter-Efficient Methods:**
 - [Parameter-Efficient Transfer Learning for NLP](https://arxiv.org/abs/1902.00751)
@@ -341,11 +357,6 @@
 - [Practical Methodology](https://www.deeplearningbook.org/contents/guidelines.html)
 
 ### Preference Alignment
-
-* Reward model training
-* DPO implementation
-* RLHF pipeline
-* Constitutional AI
 
 **Libraries & Frameworks:**
 - [TRL (Transformer Reinforcement Learning)](https://github.com/huggingface/trl)
@@ -373,13 +384,16 @@
 - [Fine-tune with DPO](https://mlabonne.github.io/blog/posts/Fine_tune_Mistral_7b_with_DPO.html)
 - [Fine-tune with GRPO](https://huggingface.co/learn/llm-course/en/chapter12/5)
 - [DPO Wandb Logs](https://wandb.ai/alexander-vishnevskiy/dpo/reports/TRL-Original-DPO--Vmlldzo1NjI4MTc4)
+- [Why you should work on AI AGENTS!](https://www.youtube.com/watch?v=fqVLjtvWgq8)
+- [Deep Reinforcement Learning](https://www.youtube.com/playlist?list=PL_iWQOsE6TfURIIhCrlt-wj9ByIVpbfGc)
+- [Reinforcement Learning Lecture Series (DeepMind)](https://www.youtube.com/playlist?list=PLqYmG7hTraZDVH599EItlEWsUOsJbAodm)
+- [Reinforcement Learning (Polytechnique Montreal, Fall 2021)](https://www.youtube.com/playlist?list=PLImtCgowF_ES_JdF_UcM60EXTcGZg67Ua)
+- [Foundations of Deep RL](https://www.youtube.com/playlist?list=PLwRJQ4m4UJjNymuBM9RdmB3Z9N5-0IlY0)
+- [Stanford CS234: Reinforcement Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rOSOPzutgyCTapiGlY2Nd8u)
+- [Advanced Robotics: UC Berkeley](https://www.youtube.com/playlist?list=PLwRJQ4m4UJjNBPJdt8WamRAt4XKc639wF)
+- [Stanford CS330: Deep Multi-Task and Meta Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rMC6zfYmnD7UG3LVvwaITY5)
 
 ### Model Architectures
-
-* MoE model
-* State space model
-* Long context model
-* Hybrid architecture
 
 **Sparse & Efficient Architectures:**
 - [Mixture of Experts](https://arxiv.org/abs/1701.06538)
@@ -398,11 +412,6 @@
 - [ALiBi Paper](https://arxiv.org/abs/2108.12409)
 
 ### Reasoning
-
-* Chain-of-thought trainer
-* Tool-using agent
-* Mathematical reasoning model
-* Multi-step reasoning system
 
 **Core Reasoning Papers:**
 - [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903)
@@ -429,11 +438,6 @@
 - [Scaling Test-time Compute](https://huggingface.co/spaces/HuggingFaceH4/blogpost-scaling-test-time-compute)
 
 ### Evaluation
-
-* Comprehensive evaluation suite
-* Custom benchmark creator
-* Human evaluation platform
-* Model comparison dashboard
 
 **Standard Benchmarks:**
 - [GLUE](https://gluebenchmark.com/)
@@ -473,11 +477,6 @@
 
 ### Quantization
 
-* Quantization toolkit
-* Mobile LLM deployer
-* Inference optimizer
-* Quality vs speed analyzer
-
 **Quantization Libraries:**
 - [llama.cpp](https://github.com/ggerganov/llama.cpp)
 - [BitsAndBytes](https://github.com/TimDettmers/bitsandbytes)
@@ -504,11 +503,6 @@
 
 ### Inference Optimization
 
-* High-throughput inference server
-* Dynamic batching system
-* Speculative decoding
-* Multi-model serving
-
 **High-Performance Inference Engines:**
 - [vLLM](https://github.com/vllm-project/vllm)
 - [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)
@@ -534,11 +528,6 @@
 
 ### Model Enhancement
 
-* Context window expander
-* Model merger
-* Knowledge distillation system
-* Continual learning pipeline
-
 **Context Window Extension:**
 - [YaRN](https://arxiv.org/abs/2309.00071)
 - [Position Interpolation](https://arxiv.org/abs/2306.15595)
@@ -561,11 +550,6 @@
 - [Large Multimodal Models](https://huyenchip.com/2023/10/10/multimodal.html)
 
 ### Security & Responsible AI
-
-* LLM security scanner
-* Guardrail system
-* Bias detection tool
-* Privacy-preserving LLM
 
 **Security Frameworks:**
 - [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
@@ -597,11 +581,6 @@
 - [Investigating Gender Bias Using Causal Mediation Analysis](https://proceedings.neurips.cc/paper/2020/file/92650b2e92217715fe312e6fa7b90d82-Paper.pdf)
 
 ### Running LLMs
-
-* LLM-powered chatbot
-* API gateway
-* Streaming response system
-* Multi-modal assistant
 
 **Web Frameworks:**
 - [FastAPI](https://fastapi.tiangolo.com/)
@@ -635,6 +614,17 @@
 - [AutoAbliteration](https://colab.research.google.com/drive/1RmLv-pCMBBsQGXQIM8yF-OdCNyoylUR1?usp=sharing)
 - [AutoDedup](https://colab.research.google.com/drive/1o1nzwXWAa8kdkEJljbJFW1VuI-3VZLUn?usp=sharing)
 
+**Technologies:**
+- [Supabase](https://supabase.com/) - Database, authentication, storage, and realtime
+- [LangChain](https://langchain.com/) - Building RAG pipelines
+- [PostHog](https://posthog.com/) - Analytics
+- [FastAPI](https://fastapi.tiangolo.com/) - Backend framework
+- [Next.js](https://nextjs.org/) - Frontend framework
+- [Resend](https://resend.com/) - Email service
+- [LiteLLM](https://litellm.ai/) - LLM compatibility layer
+- [Ollama](https://ollama.ai/) - Local LLM serving
+- [Mistral AI](https://mistral.ai/) - Open source LLMs
+
 **Educational Platforms:**
 - [Gradescope](https://www.gradescope.com/)
 - [Stanford Canvas](https://canvas.stanford.edu/)
@@ -650,13 +640,28 @@
 - [HF LLM Inference Container](https://huggingface.co/blog/sagemaker-huggingface-llm)
 - [Philschmid Blog](https://www.philschmid.de/)
 - [SkyPilot](https://skypilot.readthedocs.io/en/latest/)
+- [LLMOps: Building Real-World Applications With Large Language Models](https://www.comet.com/site/llm-course/)
+- [Evaluating and Debugging Generative AI](https://www.deeplearning.ai/short-courses/evaluating-debugging-generative-ai/)
+- [LangChain for LLM Application Development](https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/)
+- [LangChain: Chat with Your Data](https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt/)
+- [Building Systems with the ChatGPT API](https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt/)
+- [LangChain & Vector Databases in Production](https://learn.activeloop.ai/courses/langchain)
+- [Building LLM-Powered Apps](https://www.wandb.courses/courses/building-llm-powered-apps)
+- [Full Stack LLM Bootcamp](https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/)
+- [Full Stack Deep Learning](https://www.youtube.com/playlist?list=PL1T8fO7ArWlcWg04OgNiJy91PywMKT2lv)
+- [Practical Deep Learning for Coders - Part 1](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSvpQjSnJJ_PmDQB_VyT5iU)
+- [Practical Deep Learning for Coders - Part 2](https://www.youtube.com/watch?v=_7rMfsA24Ls&ab_channel=JeremyHoward)
+- [Stanford MLSys Seminars](https://www.youtube.com/playlist?list=PLSrTvUm384I9PV10koj_cqit9OfbJXEkq)
+- [Machine Learning Engineering for Production (MLOps)](https://www.youtube.com/playlist?list=PLkDaE6sCZn6GMoA0wbpJLi3t34Gd8l0aK)
+- [MIT Introduction to Data-Centric AI](https://www.youtube.com/watch?v=ayzOzZGHZy4&list=PLnSYPjg2dHQKdig0vVbN-ZnEU0yNJ1mo5)
+- [llm-course](https://github.com/mlabonne/llm-course)
+- [GPT in 60 Lines of NumPy](https://jaykmody.com/blog/gpt-from-scratch/)
+- [femtoGPT](https://github.com/keyvank/femtoGPT)
+- [Master and Build Large Language Models](https://www.manning.com/livevideo/master-and-build-large-language-models)
+- [Test Yourself On Build a Large Language Model (From Scratch)](https://www.manning.com/books/test-yourself-on-build-a-large-language-model-from-scratch)
+- [PyTorch in One Hour: From Tensors to Training Neural Networks on Multiple GPUs](https://sebastianraschka.com/teaching/pytorch-1h/)
 
 ### RAG
-
-* Enterprise RAG system
-* Multi-modal RAG
-* Conversational RAG
-* Graph RAG implementation
 
 **RAG Frameworks:**
 - [LangChain](https://python.langchain.com/docs/get_started/introduction)
@@ -710,11 +715,6 @@
 
 ### Agents
 
-* Multi-agent system
-* Code generation agent
-* Research assistant
-* Workflow automation
-
 **Agent Frameworks:**
 - [LangGraph](https://langchain-ai.github.io/langgraph/concepts/why-langgraph/)
 - [AutoGen](https://github.com/microsoft/autogen)
@@ -740,11 +740,6 @@
 
 ### Multimodal
 
-* Vision-language assistant
-* Document analysis system
-* Code screenshot analyzer
-* Audio-visual assistant
-
 **Vision-Language Models:**
 - [CLIP](https://github.com/openai/CLIP)
 - [LLaVA](https://github.com/haotian-liu/LLaVA)
@@ -765,15 +760,15 @@
 - [Pillow](https://pillow.readthedocs.io/)
 
 **Learning Resources:**
-- [Large Multimodal Models](https://huyenchip.com/2023/10/10/multimodal.html)
+- [Large Multimodal Models](https://huyenchip.com/2023/10/multimodal.html)
 - [Smol Vision](https://github.com/merveenoyan/smol-vision)
+- [CS231N: Convolutional Neural Networks for Visual Recognition](https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv)
+- [Deep Learning for Computer Vision](https://www.youtube.com/playlist?list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r)
+- [Deep Learning for Computer Vision (DL4CV)](https://www.youtube.com/playlist?list=PL_Z2_U9MIJdNgFM7-f2fZ9ZxjVRP_jhJv)
+- [Deep Learning for Computer Vision (neuralearn.ai)](https://www.youtube.com/watch?v=IA3WxTTPXqQ)
+- [AMMI Geometric Deep Learning Course](https://www.youtube.com/playlist?list=PLn2-dEmQeTfSLXW8yXP4q_Ii58wFdxb3C)
 
 ### LLMOps
-
-* ML pipeline automation
-* Model monitoring dashboard
-* A/B testing framework
-* Cost optimization system
 
 **MLOps Platforms:**
 - [MLflow](https://mlflow.org/)
@@ -798,49 +793,3 @@
 **CI/CD & Model Management:**
 - [GitHub Actions](https://github.com/features/actions)
 - [Hugging Face Hub](https://huggingface.co/docs/hub/index)
-
-
-
-### Courses & Matrials
-
-- [Stanford CS224n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/)
-- [CS224N YouTube Playlists](https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVRd4)
-- [CS224N 2021 Videos](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ)
-- [CS224N 2019 Videos](https://www.youtube.com/playlist?list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z)
-- [CS224N 2017 Videos](https://www.youtube.com/playlist?list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6)
-- [XCS224N: Stanford Online NLP Course](https://online.stanford.edu/courses/xcs224n-natural-language-processing-deep-learning)
-- [CS224N Course Archives](https://web.stanford.edu/class/archive/cs/cs224n/)
-- [Stanford CS231n](http://cs231n.stanford.edu/)
-- [Oxford Deep NLP](https://github.com/oxford-cs-deepnlp-2017/lectures)
-- [UWaterloo CS 886: Recent Advances on Foundation Models](https://cs.uwaterloo.ca/~wenhuche/teaching/cs886/)
-- [CS25-Transformers United](https://web.stanford.edu/class/cs25/)
-- [CS324 - Large Language Models](https://stanford-cs324.github.io/winter2022/)
-- [Princeton: Understanding Large Language Models](https://www.cs.princeton.edu/courses/archive/fall22/cos597G/)
-- [ChatGPT Prompt Engineering](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
-
-**Video Tutorials:**
-- [Andrej Karpathy Series](https://www.youtube.com/@AndrejKarpathy)
-- [Umar Jamil Series](https://www.youtube.com/@umarjamilai)
-- [Alexander Rush Series](https://rush-nlp.com/projects/)
-- [Let's build GPT: from scratch, in code, spelled out](https://www.youtube.com/watch?v=kCc8FmEb1nY)
-- [State of GPT](https://build.microsoft.com/en-US/sessions/db3f4859-cd30-4445-a0cd-553c3304f8e2)
-- [Why you should work on AI AGENTS!](https://www.youtube.com/watch?v=fqVLjtvWgq8)
-- [Open Pretrained Transformers](https://www.youtube.com/watch?v=p9IxoSkvZ-M&t=4s)
-
-**Interactive Courses:**
-- [llm-course](https://github.com/mlabonne/llm-course)
-- [GPT in 60 Lines of NumPy](https://jaykmody.com/blog/gpt-from-scratch/)
-- [minbpe](https://www.youtube.com/watch?v=zduSFxRajkE&t=1157s)
-- [femtoGPT](https://github.com/keyvank/femtoGPT)
-
-**Essential Books:**
-- [Speech and Language Processing (2024 pre-release)](https://web.stanford.edu/~jurafsky/slp3/)
-- [Natural Language Processing](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
-- [A Primer on Neural Network Models for Natural Language Processing](http://u.cs.biu.ac.il/~yogo/nnlp.pdf)
-- [Natural Language Processing with PyTorch](http://library.stanford.edu/sfx?genre=book&title=Natural%20language%20processing%20with%20PyTorch)
-- [Natural Language Processing with Transformers](https://transformersbook.com/)
-- [Generative AI with LangChain](https://amzn.to/3GUlRng)
-- [Build a Large Language Model (From Scratch)](https://www.manning.com/books/build-a-large-language-model-from-scratch)
-- [BUILD GPT: HOW AI WORKS](https://www.amazon.com/dp/9152799727)
-- [Hands-On Large Language Models](https://www.llm-book.com/)
-- [The Chinese Book for Large Language Models](http://aibox.ruc.edu.cn/zws/index.htm)
