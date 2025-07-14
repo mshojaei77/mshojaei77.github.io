@@ -7,12 +7,9 @@ My comprehensive collection of research, development projects, and educational r
 ### Prerequisites
 
 #### 💻 Interactive Notebooks:
-- **[🟠 Linear Algebra Fundamentals for LLMs (Colab)](https://colab.research.google.com/drive/1nCNL7Ro5vOPWS5yaqTMpz2B056TyjsHy?usp=sharing)**
-- **[🟠 Linear Algebra Visualizer (Colab)](https://colab.research.google.com/drive/1pcBIJeTSIm3doZV4x73IjyTQmMoh4zgu?usp=sharing)**
-- **[🟠 Linear Algebra (Colab)](https://colab.research.google.com/drive/1oFu5ZL0AUlxDU8xhygr-datwEnHS9JVN?usp=sharing)**
-- **[🟠 Probability and Statistics for LLMs (Colab)](https://colab.research.google.com/drive/1nlMVUcjNP6W6E_i8r2PjmkyFNgFMgYmY?usp=sharing)**
-- **[🟠 Data Structures Algorithms for ML/CV (Colab)](https://colab.research.google.com/drive/1Rs1eXp-iXHIeeGVF1cPpjY_tfC01l2kX?usp=sharing)**
-- **[🟠 GPU Essentials for LLMs (Colab)](https://colab.research.google.com/drive/1-C3QW1K6y-b4u2PdiO-u267LTxCARRH3?usp=sharing)**
+- **[🟠 Linear Algebra Fundamentals for LLMs (Colab)](https://colab.research.google.com/drive/1nCNL7Ro5vOPWS5yaqTMpz2B056TyjsHy?usp=sharing)** - This notebook will guide you through the essential linear algebra concepts required for understanding Large Language Models (LLMs). We'll cover vectors, matrices, and basic operations using NumPy, with a focus on their application within the attention mechanism.
+- **[🟠 Probability and Statistics for LLMs (Colab)](https://colab.research.google.com/drive/1oFu5ZL0AUlxDU8xhygr-datwEnHS9JVN)** - This notebook provides an in-depth exploration of probability concepts foundational to Large Language Models (LLMs), combining theoretical explanations with real-world examples and code implementations in PyTorch.
+- **[🟠 GPU Essentials for LLMs (Colab)](https://colab.research.google.com/drive/1S-LwgyO_bmS135nJmJxm1ZKVlpv9Acfv)** - This Jupyter Notebook tutorial explores the crucial role of GPUs (Graphics Processing Units) in powering Large Language Models (LLMs). You'll learn why GPUs are essential, how they accelerate AI workloads, and the latest advancements in GPU technology.
 
 ### 1. [Tokenization](Tutorial/Tokenization.md)
 Text preprocessing, BPE, WordPiece, SentencePiece, multilingual tokenization
