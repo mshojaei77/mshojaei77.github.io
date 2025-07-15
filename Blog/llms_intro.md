@@ -9,6 +9,8 @@ layout: default
 
 **Expanded summary of "A Comprehensive Overview of Large Language Models"**
 
+<img width="2578" height="3320" alt="image" src="https://github.com/user-attachments/assets/8e5508c9-4338-4361-adc6-b81b754cbb55" />
+
 Everything an LLM touches is grouped into seven branches - Pre‑Training, Fine‑Tuning, Efficiency, Inference, Evaluation, Applications, and Challenges.
 
 Have you ever wondered how ChatGPT, Gemini, or Claude can write an email, explain a complex topic, or even create a poem in seconds? The magic behind these tools is something called a **Large Language Model**, or **LLM**.
@@ -51,7 +53,7 @@ LLM architectures generally come in a few flavors:
 
 ## The Life of an LLM: From Birth to Graduation
 An LLM goes through several stages of training to become the powerful tool you interact with. We can think of it as a three-step educational journey.
-
+<img width="1880" height="1280" alt="image" src="https://github.com/user-attachments/assets/90e36e49-0798-4b69-89e2-f48045d5f14c" />
 *The training pipeline of an LLM, from pre-training to alignment. (A simplified version of Figure 6 from the paper)*
 
 ### Step 1: Pre-training (Reading the Entire Library)
