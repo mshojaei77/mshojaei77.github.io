@@ -1,11 +1,11 @@
 ---
-title: "Fine-Tuning Large Language Models"
+title: "Intro to LLMs"
 nav_order: 1
 parent: Blog
 layout: default
 ---
 
-# Large Language Models - An Up‑to‑Date Pocket Guide
+## Large Language Models - An Up‑to‑Date Pocket Guide
 
 **Expanded summary of "A Comprehensive Overview of Large Language Models"**
 
