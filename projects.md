@@ -11,7 +11,7 @@ My comprehensive collection of research, development projects, and educational r
 - **[🟠 Probability and Statistics for LLMs (Colab)](https://colab.research.google.com/drive/1oFu5ZL0AUlxDU8xhygr-datwEnHS9JVN)** - This notebook provides an in-depth exploration of probability concepts foundational to Large Language Models (LLMs), combining theoretical explanations with real-world examples and code implementations in PyTorch.
 - **[🟠 GPU Essentials for LLMs (Colab)](https://colab.research.google.com/drive/1S-LwgyO_bmS135nJmJxm1ZKVlpv9Acfv)** - This Jupyter Notebook tutorial explores the crucial role of GPUs (Graphics Processing Units) in powering Large Language Models (LLMs). You'll learn why GPUs are essential, how they accelerate AI workloads, and the latest advancements in GPU technology.
 
-### 1. [Tokenization](Tutorial/Tokenization.md)
+### 1. Tokenization
 Text preprocessing, BPE, WordPiece, SentencePiece, multilingual tokenization
 
 #### 📄 Publications:
@@ -41,7 +41,7 @@ Text preprocessing, BPE, WordPiece, SentencePiece, multilingual tokenization
 - **[PersianUnigramTokenizer](https://huggingface.co/mshojaei77/PersianUnigramTokenizer)** - Unigram-based tokenizer for Persian
 - **[PersianLlamaTokenizerFast](https://huggingface.co/mshojaei77/PersianLlamaTokenizerFast)** - Fast tokenizer for Persian Llama models
 
-### 2. [Embeddings](Tutorial/Embeddings.md)
+### 2. Embeddings
 Word2Vec, GloVe, BERT, contextual embeddings, semantic search, multimodal embeddings
 
 #### 📄 Publications:
@@ -57,11 +57,11 @@ Word2Vec, GloVe, BERT, contextual embeddings, semantic search, multimodal embedd
 - **[🟠 Train a Word2Vec Model (Colab)](https://colab.research.google.com/drive/1xxH3Ak6ycH6UITpFytac7JHEJTj__eiX?usp=sharing)**
 - **[🟠 Word Embeddings (Colab)](https://colab.research.google.com/drive/1yu0JxtCn5cYBFeTrCPeheSG0p9zRnxYR?usp=sharing)**
 
-### 3. [Neural Networks](Tutorial/Neural_Networks.md)
+### 3. Neural Networks
 Backpropagation, activation functions, optimization, regularization, mixed precision training
 
 
-### 4. [Traditional Language Models](Tutorial/Traditional_LMs.md)
+### 4. Traditional Language Models
 N-gram models, RNNs, LSTMs, GRUs, sequence-to-sequence models, attention mechanisms
 
 #### 📄 Publications:
@@ -71,10 +71,10 @@ N-gram models, RNNs, LSTMs, GRUs, sequence-to-sequence models, attention mechani
 - **[🟠 Intro to Large Language Models (Colab)](https://colab.research.google.com/drive/1HGqq9dKb-JlAgw0gdUhSmTKf-0v9Xq1Y?usp=sharing)**
 - **[🟠 Understanding Large Language Models (Colab)](https://colab.research.google.com/drive/1wmHSypXDmiAhb1SgjLZR2wJDRj34lb4L?usp=sharing)**
 
-### 5. [Transformers](Tutorial/Transformers.md)
+### 5. Transformers
 Self-attention, multi-head attention, positional encodings, decoder-only architecture
 
-### 6. [Data Preparation](Tutorial/Data_Preparation.md)
+### 6. Data Preparation
 Data collection, web scraping, cleaning, deduplication, quality assessment, synthetic data generation
 
 #### 💻 Interactive Notebooks:
@@ -94,10 +94,10 @@ Data collection, web scraping, cleaning, deduplication, quality assessment, synt
 
 ## 🧪 Model Training & Fine-Tuning
 
-### 7. [Pre-Training](Tutorial/Pre_Training.md)
+### 7. Pre-Training
 Unsupervised pre-training, causal language modeling, distributed training, scaling laws
 
-### 8. [Post-Training Datasets](Tutorial/Post_Training_Datasets.md)
+### 8. Post-Training Datasets
 Instruction datasets, chat templates, conversation formatting, synthetic data generation
 
 #### 📄 Publications:
@@ -107,7 +107,7 @@ Instruction datasets, chat templates, conversation formatting, synthetic data ge
 - **[🟠 Persian SFT Formattings (Colab)](https://colab.research.google.com/drive/1S-LwgyO_bmS135nJmJxm1ZKVlpv9Acfv?usp=sharing)**
 - **[🟠 CAG (Cache-Augmented Generation) (Colab)](https://colab.research.google.com/drive/1-EIO5M6zeQgTd715PKCk-XK9odfEgOZY?usp=sharing)**
 
-### 9. [Supervised Fine-Tuning](Tutorial/Supervised_Fine_Tuning.md)
+### 9. Supervised Fine-Tuning
 LoRA, QLoRA, PEFT, instruction tuning, domain adaptation, model merging
 
 #### 📄 Publications:
@@ -138,27 +138,27 @@ LoRA, QLoRA, PEFT, instruction tuning, domain adaptation, model merging
 - **[🟠 SFT (Supervised Fine-Tuning) (Colab)](https://colab.research.google.com/drive/1tdPUEUQb97HkNObhQD8YsJ1zy4sGAPjU?usp=sharing)**
 - **[🟠 GGUF Maker (Colab)](https://colab.research.google.com/drive/1gw4QwKABzwJgVzs91_lEUW5R0y_GFz52?usp=sharing)**
 
-### 10. [Preference Alignment](Tutorial/Preference_Alignment.md)
+### 10. Preference Alignment
 RLHF, DPO, reward modeling, Constitutional AI, safety evaluation
 
-### 11. [Model Architectures](Tutorial/Model_Architecture_Variants.md)
+### 11. Model Architectures
 Mixture of Experts, state space models, Mamba, RWKV, long context architectures
 
-### 12. [Reasoning](Tutorial/Reasoning.md)
+### 12. Reasoning
 Chain-of-Thought, tree-of-thoughts, process reward models, test-time compute scaling
 
 #### 📄 Publications:
 - **[How AI Learns to Fix Own Mistakes](https://medium.com/@mshojaei77/how-ai-learns-to-fix-own-mistakes-a1234567890a)**
 
-### 13. [Evaluation](Tutorial/Evaluation.md)
+### 13. Evaluation
 Benchmarking, MMLU, GSM8K, HumanEval, human evaluation, bias testing
 
 ## 🚀 Production & Deployment
 
-### 14. [Quantization](Tutorial/Quantization.md)
+### 14. Quantization
 Post-training quantization, quantization-aware training, GGUF, INT4/INT8 quantization
 
-### 15. [Inference Optimization](Tutorial/Inference_Optimization.md)
+### 15. Inference Optimization
 Flash Attention, KV cache, speculative decoding, high-throughput inference
 
 #### 📄 Publications:
@@ -167,13 +167,13 @@ Flash Attention, KV cache, speculative decoding, high-throughput inference
 #### 🚀 Open Source Projects:
 - **[vram-calculator](https://github.com/mshojaei77/vram-calculator)** - Calculate VRAM requirements for LLMs and recommend suitable GPUs
 
-### 16. [Model Enhancement](Tutorial/Model_Enhancement.md)
+### 16. Model Enhancement
 Context window extension, model merging, knowledge distillation, continual learning
 
-### 17. [Security & Responsible AI](Tutorial/Securing_LLMs.md)
+### 17. Security & Responsible AI
 OWASP LLM Top 10, prompt injection, jailbreaking, bias detection, privacy protection
 
-### 18. [Running LLMs](Tutorial/Running_LLMs.md)
+### 18. Running LLMs
 API integration, local deployment, production servers, streaming responses
 
 #### 📄 Publications:
@@ -191,7 +191,7 @@ API integration, local deployment, production servers, streaming responses
 
 ## 🤖 Applications & Systems
 
-### 19. [RAG](Tutorial/RAG.md)
+### 19. RAG
 Retrieval Augmented Generation, vector databases, Graph RAG, conversational RAG
 
 #### 🚀 Open Source Projects:
@@ -203,7 +203,7 @@ Retrieval Augmented Generation, vector databases, Graph RAG, conversational RAG
 - **[RAG-Agent](https://github.com/mshojaei77/RAG-Agent)** - RAG implementation with LangChain and LangGraph libraries
 - **[RAG_CAG_SFT](https://github.com/mshojaei77/RAG_CAG_SFT)** - Educational overview of RAG, Cache-Augmented Generation, and SFT techniques
 
-### 20. [Agents](Tutorial/Agents.md)
+### 20. Agents
 Function calling, tool usage, multi-agent systems, autonomous task execution
 
 #### 🚀 Open Source Projects:
@@ -215,7 +215,7 @@ Function calling, tool usage, multi-agent systems, autonomous task execution
 - **[SuperAgent](https://github.com/mshojaei77/SuperAgent)** - Advanced agent implementation
 - **[SuperNova-Desktop](https://github.com/mshojaei77/SuperNova-Desktop)** - Desktop agent application
 
-### 21. [Multimodal](Tutorial/Multimodal.md)
+### 21. Multimodal
 Vision-language models, text-to-image generation, audio processing, document understanding
 
 #### 💻 Interactive Notebooks:
@@ -228,7 +228,7 @@ Vision-language models, text-to-image generation, audio processing, document und
 - **[Text2Prompt2Image](https://github.com/mshojaei77/Text2Prompt2Image)** - Flask app using Mixtral-8x7B & Playground-v2 for text-to-image generation
 - **[flux_local](https://github.com/mshojaei77/flux_local)** - Lightweight toolkit for running FLUX.1-schnell text-to-image models locally
 
-### 22. [LLMOps](Tutorial/LLMOps.md)
+### 22. LLMOps
 Model versioning, CI/CD pipelines, monitoring, deployment strategies, cost optimization
 
 ---
