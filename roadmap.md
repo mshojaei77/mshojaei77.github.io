@@ -1141,10 +1141,6 @@ Build text-to-image generation systems using Stable Diffusion and other models. 
 **4. Multimodal Agent Systems and E-commerce Applications**
 Create multimodal agents that can interact with different types of content. Build e-commerce chatbots that handle both text and images. Implement cross-modal attention and feature fusion techniques. Handle multimodal conversation flows and optimize for different deployment scenarios.
 
-**4. Continual Learning and Self-Improvement**
-
-Build continual learning systems that can adapt to new data without forgetting. Implement self-improvement mechanisms for ongoing model enhancement and create systems that can learn from user feedback and interactions over time.
-
 ## 21. Securing LLMs & Responsible AI
 ![image](https://github.com/user-attachments/assets/e638866a-313f-4ea8-9b52-3330168b74d8)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Security fundamentals, ethical AI
@@ -1214,14 +1210,14 @@ Implement differential privacy techniques for model training and inference. Buil
 
 ### Key Topics
 - **Model Lifecycle Management**
-- Model Versioning and Registry Management
+  - Model Versioning and Registry Management
   - Model Card Creation and Documentation
   - Model Sharing and Collaboration
   - Lifecycle Tracking and Governance
 - **Continuous Integration and Deployment**
   - CI/CD Pipelines for LLM Applications
   - Automated Testing and Validation
-- Deployment Strategies and Rollback
+  - Deployment Strategies and Rollback
   - Infrastructure as Code (IaC)
 - **Monitoring and Observability**
   - LLM Performance Monitoring
