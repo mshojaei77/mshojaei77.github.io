@@ -1,3 +1,11 @@
+---
+title: "The Transformer"
+nav_order: 3
+parent: Blog
+layout: default
+---
+
+
 # The Transformer 
 **A Deep Dive into the Paper That Changed Everything in AI**
 
