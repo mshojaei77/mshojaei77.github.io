@@ -89,20 +89,19 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 - **Concepts:** Automatic Differentiation, Mixed Precision (FP16/BF16), Gradient Clipping
 - **Tools:** Weights & Biases, Optuna, Ray Tune
 - **Modern Techniques:** Mixed Precision Training, Gradient Accumulation
-
 ### 🔬 Hands-On Labs
 
-**1. Neural Network from Scratch Implementation**
-Build a complete multi-layer neural network from scratch in NumPy. Include forward propagation, backpropagation, and multiple optimization algorithms (SGD, Adam, AdamW). Train on MNIST with proper initialization and regularization. Diagnose vanishing/exploding gradients.
+**1. Perceptron From Scratch — Iris Flower Classifier**
+Build a single-layer perceptron in pure NumPy to separate *Iris setosa* from the other species. Implement the perceptron learning rule, normalise features, and plot the decision boundary as training progresses. *Outcome*: students grasp linear separability, weight-update intuition, and how preprocessing affects convergence.
 
-**2. Advanced Optimization Visualizer**
-Create an interactive tool comparing optimization algorithms (SGD, Adam, AdamW, RMSprop) on various loss landscapes. Include hyperparameter experiments and demonstrate effects of learning rate, momentum, and weight decay on convergence.
+**2. Tiny Autograd & Activation Playground**
+Fork Karpathy’s **micrograd** (≈100 LOC) and extend it to support ReLU, GELU, and Swish, then train a two-layer net on XOR and the 8×8 mini-MNIST digits from `sklearn`. Key tasks: write forward & backward functions, validate gradients with `torch.autograd.gradcheck`, and graph loss curves for each activation. *Outcome*: deep understanding of the chain rule, automatic differentiation, and the practical impact of activation choice.
 
-**3. Mixed Precision Training System**
-Implement FP16/BF16 mixed precision training with gradient scaling. Compare memory usage and training speed while maintaining accuracy. Include proper loss scaling and numerical stability techniques.
+**3. Regularisation Lab — Taming Overfitting on Fashion-MNIST**
+Port your Lab 2 network to PyTorch, then add L2 weight-decay, dropout, and batch-normalisation. Log training/validation metrics to **Weights & Biases**, enable early stopping on a held-out set, and compare runs side-by-side. *Outcome*: students see how each regulariser shifts loss curves and can articulate why certain combinations generalise better.
 
-**4. Comprehensive Regularization Study**
-Systematically compare regularization techniques (L1/L2, dropout, batch normalization, early stopping). Evaluate effects on generalization across different datasets and architectures.
+**4. Optimiser & LR-Schedule Showdown**
+Train a three-layer MLP on the 10 k-image CIFAR-10-tiny subset. Benchmark SGD + momentum, Adam, and AdamW while sweeping learning-rate schedules (step decay vs. cosine annealing) with **Optuna**; keep `‖g‖₂ ≤ 1` via gradient clipping. *Outcome*: a notebook (or Colab) and W\&B dashboard demonstrating which optimiser/schedule pair achieves the highest validation accuracy and a reflection on how LR tuning and clipping stabilise training.
 
 ## 2. Traditional Language Models (Understanding the 'Why' for Transformers)
 ![image](https://github.com/user-attachments/assets/f900016c-6fcd-43c4-bbf9-75cb395b7d06)
