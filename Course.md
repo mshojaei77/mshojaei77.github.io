@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Tutorial
+title: Course
 nav_order: 8
 has_children: true
 ---
