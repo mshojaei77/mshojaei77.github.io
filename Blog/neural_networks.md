@@ -111,9 +111,12 @@ Once you are comfortable with these building blocks, the natural next step is to
 For a practical, hands-on next step, we highly recommend Andrej Karpathy's classic blog post, **[A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/)**, which provides an invaluable practitioner's guide.
 
 ### References and Further Reading
-[1] Schmidhuber, J. (2015). *Deep Learning in Neural Networks: An Overview*. [arXiv:1404.7828](https://arxiv.org/abs/1404.7828)
-[2] Stanford CS231n Course Notes. *Lecture 4: Neural Networks and Backpropagation*. [[PDF]](https://cs231n.stanford.edu/slides/2024/lecture_4.pdf)
-[3] Karpathy, A. (2019). *A Recipe for Training Neural Networks*. [Andrej Karpathy Blog](https://karpathy.github.io/2019/04/25/recipe/)
-[4] Zhou, V. *A Beginner's Introduction to Neural Networks*. [Victor Zhou's Blog](https://victorzhou.com/blog/intro-to-neural-networks/)
-[5] Lado, J., et al. (2020). *Introduction to deep learning*. [arXiv:2003.03253](https://arxiv.org/abs/2003.03253)
-[6] PyTorch Documentation. *torch.nn.Linear*. [[Docs]](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html)
+1. Schmidhuber, J. (2015). *Deep Learning in Neural Networks: An Overview*. [arXiv:1404.7828](https://arxiv.org/abs/1404.7828)
+2. Lado, J., et al. (2020). *Introduction to deep learning*. [arXiv:2003.03253](https://arxiv.org/abs/2003.03253)
+3. Stanford CS231n Course Notes. *Lecture 4: Neural Networks and Backpropagation*. [[PDF]](https://cs231n.stanford.edu/slides/2024/lecture_4.pdf)
+4. MIT 6.S191 – Intro to Deep Learning. Layer types and topologies with Colab notebooks. [[YouTube]](https://www.youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI)
+5. Karpathy, A. (2019). *A Recipe for Training Neural Networks*. [[Blog]](https://karpathy.github.io/2019/04/25/recipe/)
+6. Zhou, V. *A Beginner's Introduction to Neural Networks*. [[Blog]](https://victorzhou.com/blog/intro-to-neural-networks/)
+7. 3Blue1Brown – "But what is a neural network?" [[YouTube]](https://www.youtube.com/watch?v=aircAruvnKk)
+8. Neural Networks: Zero-to-Hero by Andrej Karpathy. Code-along sessions building MLPs from scratch. [[YouTube Playlist]](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
+9. PyTorch Documentation. *torch.nn.Linear*. [[Docs]](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html)

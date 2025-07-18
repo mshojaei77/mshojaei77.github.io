@@ -30,6 +30,7 @@ Use this guide to assess candidates at different experience levels or to prepare
 - How do you benchmark embedding models on your data?
 - How do you improve the accuracy of embedding-based search?
 - How are gradients computed for embeddings in LLMs?
+- How is Word2Vec trained from scratch?
 
 ## 3. Neural Networks Fundamentals
 - What is a hyperparameter, and why is it important?
@@ -40,7 +41,6 @@ Use this guide to assess candidates at different experience levels or to prepare
 - What is the role of initialization schemes in deep learning?
 - How does the chain rule apply to gradient descent in LLMs?
 - How do transformers address the vanishing gradient problem?
-- How is Word2Vec trained from scratch?
 
 ## 4. Traditional Language Models
 - What is the difference between Predictive/Discriminative AI and Generative AI?
