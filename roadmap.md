@@ -1,4 +1,4 @@
-# The Perfect LLM Learning Path: From Zero to Hero
+# LLM Learning Path
 
 This comprehensive learning roadmap is designed to provide practical, hands-on experience with LLM development and deployment. Each section combines theoretical concepts with practical implementations, real-world examples, and coding exercises to build expertise progressively.
 

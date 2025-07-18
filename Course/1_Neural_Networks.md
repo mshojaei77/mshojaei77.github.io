@@ -9,52 +9,112 @@ layout: default
 ## 1. Neural Networks Foundations for LLMs
 ![image](https://github.com/user-attachments/assets/9c70c637-ffcb-4787-a20c-1ea5e4c5ba5e)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Calculus, linear algebra
-
 ### Key Topics
-- **What is a Neural Network?**
-  - Mathematical Definition: Input → Output Functions
-  - Neurons as Number Holders (Activations)
-  - Basic Network Structure: Nodes and Connections
-- **Core Components**
-  - Layers: Input, Hidden, Output
-  - Weights and Biases
-  - Network Topology Basics
-- **Perceptrons and Multi-layer Networks (MLPs)**
-  - Single Perceptron Fundamentals
-  - Multi-layer Perceptron Design
-  - Feedforward Information Flow
-- **Network Structure Design**
-  - Layer Sizing Considerations
-  - Connection Patterns
-  - Universal Approximation Theorem
-- **Activation Functions**
-  - Sigmoid, Tanh, ReLU Functions
-  - Modern Activations: GELU, Swish
-  - Function Properties and Use Cases
-- **Forward and Backward Propagation**
-  - Forward Pass Computation
-  - Gradient Computation and Chain Rule
-  - Backpropagation Algorithm Implementation
-  - Automatic Differentiation
-- **Loss Functions**
-  - Mean Squared Error (MSE)
-  - Cross-entropy Loss
-  - Huber Loss and Other Variants
-- **Training Mechanics**
-  - Training vs Validation Performance
-  - Model Evaluation and Performance Metrics
-  - Basic Optimization with Gradient Descent
-- **Optimization Algorithms**
-  - Stochastic Gradient Descent (SGD)
-  - Adam, AdamW, RMSprop Optimizers
-  - Learning Rate Scheduling
-  - Gradient Clipping and Normalization
-- **Regularization Strategies**
-  - Understanding Overfitting: Training vs Unseen Data Performance
-  - L1/L2 Regularization Techniques
-  - Dropout and Batch Normalization
-  - Early Stopping and Validation Strategies
-  - Data Augmentation Techniques
+
+#### **What is a Neural Network?**
+- Mathematical Definition: Input → Output Functions
+- Neurons as Number Holders (Activations)
+- Basic Network Structure: Nodes and Connections
+
+**📚 Learning Resources:**
+- **3Blue1Brown – "But what is a neural network?"** Visual 10-min tour that ties matrices, activations and function-composition together. ([YouTube](https://www.youtube.com/watch?pp=0gcJCfwAo7VqN5tD&v=aircAruvnKk))
+- **Stanford CS231n — Lecture 1 video** Introduces feed-forward nets before diving into vision; clearest white-board derivation. ([YouTube](https://www.youtube.com/watch?v=vT1JzLTH4G4))
+- **Goodfellow et al. Deep Learning — Ch.6** Formalizes "input → output functions" and computational graphs. ([Free Online](https://www.deeplearningbook.org/contents/mlp.html))
+
+#### **Core Components**
+- Layers: Input, Hidden, Output
+- Weights and Biases
+- Network Topology Basics
+
+**📚 Learning Resources:**
+- **Neural Networks: Zero-to-Hero by Andrej Karpathy** Code-along sessions building MLPs from scratch. ([YouTube Playlist](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ))
+- **MIT 6.S191 – Intro to Deep Learning** Layer types and topologies with Colab notebooks. ([YouTube](https://www.youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI))
+
+#### **Perceptrons and Multi-layer Networks (MLPs)**
+- Single Perceptron Fundamentals
+- Multi-layer Perceptron Design
+- Feedforward Information Flow
+
+**📚 Learning Resources:**
+- **Cornell CS4780 slides – "The Perceptron Algorithm"** Derives update rule and geometric intuition. ([PDF](https://www.cs.cornell.edu/courses/cs4780/2023fa/slides/Perceptron_no_animation.pdf))
+- **Pablo Insente blog** Bridges single-layer perceptron ➜ MLP with NumPy + PyTorch code. ([Blog](https://pabloinsente.github.io/the-multilayer-perceptron))
+- **Technion CS236605 Tutorial 3** Hands-on back-prop for MLPs with PyTorch. ([Notebook](https://vistalab-technion.github.io/cs236605/tutorials/tutorial_03/))
+
+#### **Network Structure Design**
+- Layer Sizing Considerations
+- Connection Patterns
+- Universal Approximation Theorem
+
+**📚 Learning Resources:**
+- **Lilian Weng – "Are Deep Nets Dramatically Over-fitted?"** Width vs. depth tradeoffs under UAT. ([Lil'Log](https://lilianweng.github.io/posts/2019-03-14-overfit/))
+- **Hornik et al. (1989)** Original Universal Approximation Theorem paper. ([arXiv](https://arxiv.org/pdf/2101.09181))
+
+#### **Activation Functions**
+- Sigmoid, Tanh, ReLU Functions
+- Modern Activations: GELU, Swish
+- Function Properties and Use Cases
+
+**📚 Learning Resources:**
+- **GELU Paper** Hendrycks & Gimpel 2016 - default in Transformers/LLMs. ([arXiv](https://arxiv.org/abs/1606.08415))
+- **Swish Paper** Ramachandran et al. 2017 - discovered by NAS. ([arXiv](https://arxiv.org/abs/1710.05941))
+- **Distill.pub Feature Visualization** Visual intuition for activation responses. ([Distill](https://distill.pub/2017/feature-visualization))
+
+#### **Forward and Backward Propagation**
+- Forward Pass Computation
+- Gradient Computation and Chain Rule
+- Backpropagation Algorithm Implementation
+- Automatic Differentiation
+
+**📚 Learning Resources:**
+- **3Blue1Brown – "Back-propagation, Intuitively"** Gradient flow without messy indices. ([YouTube](https://www.youtube.com/watch?pp=0gcJCfwAo7VqN5tD&v=Ilg3gGewQ5U))
+- **Colah's blog** Breaks chain-rule math into tiny graph transforms. ([Blog](https://colah.github.io/posts/2015-08-Backprop/))
+- **PyTorch AutoGrad Guide** Practical autodiff for modern frameworks. ([Docs](https://pytorch.org/docs/stable/autograd.html))
+
+#### **Loss Functions**
+- Mean Squared Error (MSE)
+- Cross-entropy Loss
+- Huber Loss and Other Variants
+
+**📚 Learning Resources:**
+- **PyTorch Loss Functions Documentation:**
+  - [MSELoss](https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html)
+  - [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html)
+  - [HuberLoss](https://pytorch.org/docs/stable/generated/torch.nn.HuberLoss.html)
+
+#### **Training Mechanics**
+- Training vs Validation Performance
+- Model Evaluation and Performance Metrics
+- Basic Optimization with Gradient Descent
+
+**📚 Learning Resources:**
+- **Keras EarlyStopping** Canonical pattern for validation monitoring. ([Docs](https://keras.io/api/callbacks/early_stopping/))
+- **Karpathy – "A Recipe for Training Neural Networks"** Battle-tested checklist for training. ([Blog](https://karpathy.github.io/2019/04/25/recipe/))
+
+#### **Optimization Algorithms**
+- Stochastic Gradient Descent (SGD)
+- Adam, AdamW, RMSprop Optimizers
+- Learning Rate Scheduling
+- Gradient Clipping and Normalization
+
+**📚 Learning Resources:**
+- **Ruder 2016 – "Overview of Gradient Descent Optimization"** Comprehensive survey of SGD variants. ([Blog](https://www.ruder.io/optimizing-gradient-descent/))
+- **Adam Paper** Kingma & Ba 2014 original ICLR paper. ([arXiv](https://arxiv.org/abs/1412.6980))
+- **AdamW Paper** Loshchilov & Hutter 2017 - decoupled weight decay. ([arXiv](https://arxiv.org/abs/1711.05101))
+- **PyTorch Scheduler Docs** StepLR, CosineAnnealingLR implementations. ([Docs](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.LRScheduler.html))
+- **Gradient Clipping** Handles exploding gradients. ([PyTorch](https://pytorch.org/docs/stable/generated/torch.nn.utils.clip_grad_norm_.html))
+
+#### **Regularization Strategies**
+- Understanding Overfitting: Training vs Unseen Data Performance
+- L1/L2 Regularization Techniques
+- Dropout and Batch Normalization
+- Early Stopping and Validation Strategies
+- Data Augmentation Techniques
+
+**📚 Learning Resources:**
+- **Dropout Paper** Srivastava et al. 2014 original technique. ([arXiv](https://arxiv.org/abs/1207.0580))
+- **Batch Normalization** Ioffe & Szegedy 2015 - crucial for modern training. ([arXiv](https://arxiv.org/abs/1502.03167))
+- **TensorFlow Data Augmentation Tutorial** On-the-fly transforms for images. ([TensorFlow](https://www.tensorflow.org/tutorials/images/data_augmentation))
+- **Torchvision v2 Transforms** Unified API for multi-modal augmentation. ([PyTorch](https://docs.pytorch.org/vision/main/transforms.html))
 
 ### Skills & Tools
 - **Frameworks:** PyTorch, JAX, TensorFlow
