@@ -1,5 +1,5 @@
 ---
-title: "Neural Networks"
+title: "Neural Networks Fundamentals"
 nav_order: 2
 parent: Blog
 layout: default
@@ -7,7 +7,7 @@ layout: default
 
 # Neural Network Fundamentals
 
-Neural networks are the computational backbone of modern artificial intelligence, powering everything from a self-driving car’s vision system to the large language models that can write poetry and code. They are inspired by the human brain's structure but are, at their core, powerful mathematical tools for finding patterns in data.
+Neural networks are the computational backbone of modern artificial intelligence, powering everything from a self-driving car's vision system to the large language models that can write poetry and code. They are inspired by the human brain's structure but are, at their core, powerful mathematical tools for finding patterns in data.
 
 This comprehensive tutorial will guide you through the fundamental concepts of neural networks. We will start with a high-level definition, break the network down into its core components—neurons, layers, weights, and biases—and finally, explore how these components are arranged into different architectures.
 
@@ -15,22 +15,20 @@ This comprehensive tutorial will guide you through the fundamental concepts of n
 
 At its most fundamental level, a **neural network** is a sophisticated, parameterised mathematical function that learns to map an input to a desired output.
 
-Formally, we can describe a network as a function $f$:
+Formally, we can describe a network as a function f:
 
-$$
-\mathbf{y} = f_\theta(\mathbf{x})
-$$
+**y = f_θ(x)**
 
 Where:
-*   $\mathbf{x}$ is the input vector (e.g., the pixel values of an image, or a sequence of words). It exists in a space $\mathbb R^{d_\text{in}}$.
-*   $\mathbf{y}$ is the output vector (e.g., a probability that the image is a cat, or the next word in a sentence). It exists in a space $\mathbb R^{d_\text{out}}$.
-*   $\theta$ represents all the learnable **parameters** of the network—its **weights and biases**.
+*   **x** is the input vector (e.g., the pixel values of an image, or a sequence of words). It exists in a space with dimension d_in.
+*   **y** is the output vector (e.g., a probability that the image is a cat, or the next word in a sentence). It exists in a space with dimension d_out.
+*   **θ** represents all the learnable **parameters** of the network—its **weights and biases**.
 
-The goal of "training" a neural network is to find the optimal set of parameters $\theta$ so that the function $f_\theta$ correctly approximates the unknown, underlying relationship between the training examples $(\mathbf{x}, \mathbf{y})$ we provide it.
+The goal of "training" a neural network is to find the optimal set of parameters θ so that the function f_θ correctly approximates the unknown, underlying relationship between the training examples (x, y) we provide it.
 
 ## The Building Blocks: Neurons and Activations
 
-To understand how the function $f_\theta$ works, we must look at its smallest unit: the neuron.
+To understand how the function f_θ works, we must look at its smallest unit: the neuron.
 
 ### Neurons as Number Holders
 A **neuron** is the fundamental processing unit of a network. It can be intuitively understood as a "number holder" that performs a simple two-step computation:
@@ -40,17 +38,15 @@ A **neuron** is the fundamental processing unit of a network. It can be intuitiv
 
 The final output of this computation, called the **activation**, is then passed as input to neurons in the next layer.
 
-Mathematically, the activation $a_j$ of a single neuron $j$ is calculated as:
+Mathematically, the activation a_j of a single neuron j is calculated as:
 
-$$
-a_j = \sigma \left( \sum_i w_{ji} x_i + b_j \right)
-$$
+**a_j = σ(Σ w_ji * x_i + b_j)**
 
 Where:
-*   $x_i$ are the input values to the neuron.
-*   $w_{ji}$ are the **weights**, which scale the importance of each input $x_i$.
-*   $b_j$ is the **bias**, a learnable offset that allows the neuron to shift its output.
-*   $\sigma$ (sigma) is the non-linear **activation function** (e.g., ReLU, Sigmoid, or Tanh), which introduces the non-linearity that allows networks to learn complex patterns.
+*   x_i are the input values to the neuron.
+*   w_ji are the **weights**, which scale the importance of each input x_i.
+*   b_j is the **bias**, a learnable offset that allows the neuron to shift its output.
+*   σ (sigma) is the non-linear **activation function** (e.g., ReLU, Sigmoid, or Tanh), which introduces the non-linearity that allows networks to learn complex patterns.
 
 ## Assembling the Network: Layers and Connections
 
@@ -61,33 +57,31 @@ A neural network's structure is an **acyclic directed graph**: nodes (neurons) a
 
 A typical network consists of three types of layers:
 
-*   **Input Layer**: This is not a computational layer but a passive one that holds the raw features of your data (e.g., pixel intensities, word indices, sensor readings). Its size is determined by the number of features in your input, $d_\text{in}$.
+*   **Input Layer**: This is not a computational layer but a passive one that holds the raw features of your data (e.g., pixel intensities, word indices, sensor readings). Its size is determined by the number of features in your input, d_in.
 *   **Hidden Layers**: These are the intermediate layers between the input and output. Each hidden layer takes the activations from the previous layer as input and extracts progressively higher-level features and representations from the data. The number and size of hidden layers (the network's "depth" and "width") largely determine the network's capacity to learn.
 *   **Output Layer**: This is the final layer that transforms the final hidden representation into a task-specific output, such as class probabilities for a classification problem or a single continuous value for a regression task.
 
 ### The Mathematics of a Layer
-When we move from a single neuron to a full layer, we can express the computation more efficiently using vectors and matrices. The forward pass from layer $\ell-1$ to layer $\ell$ is calculated as:
+When we move from a single neuron to a full layer, we can express the computation more efficiently using vectors and matrices. The forward pass from layer ℓ-1 to layer ℓ is calculated as:
 
-$$
-\mathbf{h}^{(\ell)} \;=\; \sigma\!\bigl(W^{(\ell)}\mathbf{h}^{(\ell-1)} + \mathbf{b}^{(\ell)}\bigr)
-$$
+**h^(ℓ) = σ(W^(ℓ) * h^(ℓ-1) + b^(ℓ))**
 
 Where:
-*   $\mathbf{h}^{(\ell-1)}$ is the vector of activations from the previous layer.
-*   $W^{(\ell)}$ is the **weight matrix** for layer $\ell$, where each entry $W_{ij}$ contains the weight connecting neuron $i$ in layer $\ell$ to neuron $j$ in layer $\ell-1$.
-*   $\mathbf{b}^{(\ell)}$ is the **bias vector** for layer $\ell$, containing the bias for each neuron.
-*   $\sigma(\cdot)$ is the activation function, applied element-wise to the result.
-*   $\mathbf{h}^{(\ell)}$ is the resulting vector of activations for the current layer $\ell$.
+*   h^(ℓ-1) is the vector of activations from the previous layer.
+*   W^(ℓ) is the **weight matrix** for layer ℓ, where each entry W_ij contains the weight connecting neuron i in layer ℓ to neuron j in layer ℓ-1.
+*   b^(ℓ) is the **bias vector** for layer ℓ, containing the bias for each neuron.
+*   σ(·) is the activation function, applied element-wise to the result.
+*   h^(ℓ) is the resulting vector of activations for the current layer ℓ.
 
-Chaining these blocks together, from the input layer to the output layer, forms the entire network function $f_\theta$.
+Chaining these blocks together, from the input layer to the output layer, forms the entire network function f_θ.
 
 ## The Learnable Parts: Weights and Biases
 
-The parameters $\theta$ that the network learns during training are its weights and biases.
+The parameters θ that the network learns during training are its weights and biases.
 
-*   **Weights ($W$)**: These are learnable scaling factors on every connection between neurons. They determine the strength and direction of influence one neuron has on another. A high positive weight means the input is strongly excitatory, while a high negative weight means it's strongly inhibitory. In code, they often live in tensors like PyTorch's `nn.Linear.weight` (with shape *out\_features × in\_features*).
+*   **Weights (W)**: These are learnable scaling factors on every connection between neurons. They determine the strength and direction of influence one neuron has on another. A high positive weight means the input is strongly excitatory, while a high negative weight means it's strongly inhibitory. In code, they often live in tensors like PyTorch's `nn.Linear.weight` (with shape *out_features × in_features*).
 
-*   **Biases ($b$)**: These are learnable, per-neuron offsets that allow the activation function to be shifted left or right. This added flexibility is often crucial for the model to fit the data properly.
+*   **Biases (b)**: These are learnable, per-neuron offsets that allow the activation function to be shifted left or right. This added flexibility is often crucial for the model to fit the data properly.
 
 During training, an **optimizer** (like SGD or Adam) uses a **loss function** to measure the network's error. It then calculates the gradient of this error with respect to all weights and biases and updates them in the direction that minimizes the error. This process is known as **backpropagation** and **gradient descent**.
 
@@ -114,7 +108,7 @@ You now have a solid foundation in what neural networks are and how they work. T
 
 Once you are comfortable with these building blocks, the natural next step is to dive into the mechanics of training, including loss functions, backpropagation, optimizers, and regularization.
 
-For a practical, hands-on next step, we highly recommend Andrej Karpathy’s classic blog post, **[A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/)**, which provides an invaluable practitioner's guide.
+For a practical, hands-on next step, we highly recommend Andrej Karpathy's classic blog post, **[A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/)**, which provides an invaluable practitioner's guide.
 
 ### References and Further Reading
 [1] Schmidhuber, J. (2015). *Deep Learning in Neural Networks: An Overview*. [arXiv:1404.7828](https://arxiv.org/abs/1404.7828)

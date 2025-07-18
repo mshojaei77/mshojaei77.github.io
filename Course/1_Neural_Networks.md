@@ -115,11 +115,17 @@ layout: default
 - **TensorFlow Data Augmentation Tutorial** On-the-fly transforms for images. ([TensorFlow](https://www.tensorflow.org/tutorials/images/data_augmentation))
 - **Torchvision v2 Transforms** Unified API for multi-modal augmentation. ([PyTorch](https://docs.pytorch.org/vision/main/transforms.html))
 
+
+---
+
+
 ### Skills & Tools
 - **Frameworks:** PyTorch, JAX, TensorFlow
 - **Concepts:** Automatic Differentiation, Mixed Precision (FP16/BF16), Gradient Clipping
 - **Tools:** Weights & Biases, Optuna, Ray Tune
 - **Modern Techniques:** Mixed Precision Training, Gradient Accumulation
+
+
 ### 🔬 Hands-On Labs
 
 **1. Perceptron From Scratch — Iris Flower Classifier**
