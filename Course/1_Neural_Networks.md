@@ -17,9 +17,8 @@ layout: default
 - Basic Network Structure: Nodes and Connections
 
 **📚 Learning Resources:**
-- **3Blue1Brown – "But what is a neural network?"** Visual 10-min tour that ties matrices, activations and function-composition together. ([YouTube](https://www.youtube.com/watch?pp=0gcJCfwAo7VqN5tD&v=aircAruvnKk))
-- **Stanford CS231n — Lecture 1 video** Introduces feed-forward nets before diving into vision; clearest white-board derivation. ([YouTube](https://www.youtube.com/watch?v=vT1JzLTH4G4))
-- **Goodfellow et al. Deep Learning — Ch.6** Formalizes "input → output functions" and computational graphs. ([Free Online](https://www.deeplearningbook.org/contents/mlp.html))
+- [3Blue1Brown – "But what is a neural network?](https://www.youtube.com/watch?pp=0gcJCfwAo7VqN5tD&v=aircAruvnKk)
+- [An Introduction to Neural Networks](https://victorzhou.com/blog/intro-to-neural-networks/)
 
 #### **Core Components**
 - Layers: Input, Hidden, Output
