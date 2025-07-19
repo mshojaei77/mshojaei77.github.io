@@ -39,21 +39,14 @@ By the end of Part I, you will:
 
 ## 🗺️ Learning Path
 
-```mermaid
-graph TD
-    A[Chapter 1: Neural Networks] --> B[Chapter 2: Traditional LMs]
-    B --> C[Chapter 3: Tokenization]
-    C --> D[Chapter 4: Embeddings]
-    D --> E[Chapter 5: Transformers]
-    
-    A --> |Mathematical Foundation| F[Linear Algebra & Calculus]
-    B --> |Statistical Foundation| G[Probability & Statistics]
-    E --> |Ready for| H[Part II: Building Models]
-    
-    style A fill:#e1f5fe
-    style E fill:#c8e6c9
-    style H fill:#fff3e0
-```
+**Sequential Progression:**
+1. **Chapter 1**: Neural Networks → Mathematical foundations
+2. **Chapter 2**: Traditional Language Models → Statistical understanding  
+3. **Chapter 3**: Tokenization → Text processing fundamentals
+4. **Chapter 4**: Embeddings → Semantic representation
+5. **Chapter 5**: Transformers → Modern architecture mastery
+
+**Completion**: Ready for Part II: Building & Training Models
 
 ## 🛠️ Hands-On Projects
 

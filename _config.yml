@@ -1,18 +1,43 @@
-title: "LLMs: From Foundations to Production"
+title: "LLMs: From Foundation to Production"
 description: "A comprehensive tutorial for mastering Large Language Models (LLMs) – from core mathematics and computing principles to production deployment, advanced applications, and emerging research trends."
-color_scheme: light
-search_enabled: true
+
+# Theme
 remote_theme: just-the-docs/just-the-docs
+color_scheme: light
 
-github: "https://github.com/mshojaei77"
-
-# Logo
+# Site logo and branding
 logo: "/assets/img/logo.png"
-
-plugins:
-  - jekyll-include-cache
-  
 favicon_ico: "/assets/img/favicon.ico"
+
+# Navigation
+nav_sort: case_insensitive
+nav_external_links: true
+
+# Search configuration
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+
+# Content features
+heading_anchors: true
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Last modified timestamps
+last_edit_timestamp: true
+last_edit_time_format: "%b %e %Y at %I:%M %p"
+
+# GitHub integration
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub"
+gh_edit_repository: "https://github.com/mshojaei77/mshojaei77.github.io"
+gh_edit_branch: "main"
 
 # Aux links for the upper right navigation
 aux_links:
@@ -20,28 +45,46 @@ aux_links:
     - "/book/"
   "🐙 GitHub":
     - "https://github.com/mshojaei77"
+  "💬 Community":
+    - "https://t.me/AI_LLMs"
 
 aux_links_new_tab: false
 
-# Enable navigation
-nav_external_links: true
+# Collections for better organization
+collections:
+  chapters:
+    output: true
+    permalink: /:collection/:name/
 
-# Book-specific settings
-nav_sort: case_insensitive
-heading_anchors: true
-
-# Enable back to top link
-back_to_top: true
-back_to_top_text: "Back to top"
+# Plugins
+plugins:
+  - jekyll-include-cache
 
 # Footer content
 footer_content: "Copyright &copy; 2024 Mohammad Shojaei. Distributed under <a href=\"https://opensource.org/licenses/MIT\">MIT License</a>."
 
-# Enable last modified date
-last_edit_timestamp: true
-last_edit_time_format: "%b %e %Y at %I:%M %p"
+# Callouts configuration
+callouts_level: quiet
+callouts:
+  highlight:
+    color: yellow
+  new:
+    title: "New"
+    color: green
+  note:
+    title: "Note"
+    color: blue
+  warning:
+    title: "Warning"
+    color: red
 
-gh_edit_link: true
-gh_edit_link_text: "Edit this page on GitHub"
-gh_edit_repository: "https://github.com/mshojaei77/mshojaei77.github.io"
-gh_edit_branch: "main"
+# kramdown settings
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+# Exclude files
+exclude:
+  - Gemfile
+  - Gemfile.lock
