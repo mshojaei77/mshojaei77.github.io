@@ -6,7 +6,7 @@ permalink: /book/
 description: "A comprehensive guide to Large Language Models from mathematical foundations to production deployment."
 keywords: "LLM, Large Language Models, Transformer Architecture, Fine-Tuning, RAG, LLMOps, Deep Learning"
 author: "Mohammad Shojaei"
-date: 2024-01-01
+date: 2025-01-01
 ---
 
 # LLMs: From Foundation to Production
@@ -70,7 +70,7 @@ This work is licensed under the [MIT License](https://opensource.org/licenses/MI
 @book{shojaei2024llms,
   title={LLMs: From Foundation to Production},
   author={Mohammad Shojaei},
-  year={2024},
+  year={2025},
   url={https://mshojaei77.github.io/book/}
 }
 ``` 
