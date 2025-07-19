@@ -22,7 +22,9 @@ Before diving into the math, let's start with a simple analogy. Imagine you're t
 
 A neural network learns in a conceptually similar way. It's a system of simple, interconnected computational "neurons" that work together to find patterns. We show it thousands of pictures of cats (and non-cats), and with each example, it slightly adjusts the connections between its neurons. A connection that helps correctly identify a cat gets stronger, while a connection that leads to a wrong guess gets weaker. After enough training, the network has "learned" a complex set of features that, together, define a cat.
 
-<img width="800" height="520" alt="image" src="https://github.com/user-attachments/assets/74406fb8-3475-4b33-bb1d-4e4ffc7b3442" />
+<img width="800" height="520" alt="Neural network learning process flowchart showing cat images being processed through a neural network to extract features like ears, whiskers, and patterns, leading to cat classification" src="https://github.com/user-attachments/assets/74406fb8-3475-4b33-bb1d-4e4ffc7b3442" />
+
+**Figure 1.1:** Neural Network Learning Process. The conceptual flow of how a neural network learns to recognize cats by processing training images, extracting hierarchical features, and making classification decisions.
 
 At its core, a neural network is a powerful and flexible pattern-finding machine. It's a mathematical function that can, in theory, approximate *any* continuous function. This is known as the **Universal Approximation Theorem**, and it's why neural networks are such a powerful tool for a vast range of problems.
 
@@ -39,7 +41,9 @@ A single neuron is the atomic unit of a neural network. It's a simple calculator
 3.  **Adds a Bias**: A **bias** term is added to the sum. This is like a tunable offset that allows the neuron to shift its output, giving it more flexibility.
 4.  **Applies an Activation Function**: The result is passed through a non-linear **activation function**. This is a critical step that allows the network to learn complex, non-linear patterns. Without it, the entire network would just be a simple linear equation.
 
-<img width="2022" height="1038" alt="image" src="https://github.com/user-attachments/assets/1cc17c3c-d8b7-40e0-94d5-dd3dca68ab8b" />
+<img width="2022" height="1038" alt="Detailed diagram of a single neuron showing inputs x1, x2, x3 with weights w1, w2, w3, bias term b, weighted sum computation, activation function sigma, and final output a" src="https://github.com/user-attachments/assets/1cc17c3c-d8b7-40e0-94d5-dd3dca68ab8b" />
+
+**Figure 1.2:** Anatomy of a Single Neuron. The computational flow within a neuron: inputs (x₁, x₂, x₃) are multiplied by weights (w₁, w₂, w₃), summed with bias (b), and passed through activation function σ to produce output (a).
 
 Mathematically, the output (`a`) of a single neuron is:
 
@@ -58,7 +62,9 @@ Activation functions are the secret sauce. They introduce non-linearity, allowin
 *   **Tanh (Hyperbolic Tangent)**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`. Similar to sigmoid but squashes values to a range between -1 and 1. It's zero-centered, which can be helpful.
 *   **GELU (Gaussian Error Linear Unit)**: A smoother, more sophisticated function that has become popular in transformer models.
 
-<img width="1209" height="624" alt="image" src="https://github.com/user-attachments/assets/36bdc0ee-e3e0-4d88-a9cf-2404a1972e9b" />
+<img width="1209" height="624" alt="Four-panel comparison plot showing activation functions: ReLU with sharp corner at zero, S-shaped Sigmoid curve from 0 to 1, S-shaped Tanh curve from -1 to 1, and smooth GELU curve similar to ReLU" src="https://github.com/user-attachments/assets/36bdc0ee-e3e0-4d88-a9cf-2404a1972e9b" />
+
+**Figure 1.3:** Common Activation Functions. Comparison of four widely-used activation functions: ReLU (top-left), Sigmoid (top-right), Tanh (bottom-left), and GELU (bottom-right), each showing their characteristic output ranges and shapes.
 
 
 ### Layers: Stacking Neurons for Abstract Representations
@@ -69,7 +75,9 @@ A single neuron isn't very powerful. The magic happens when we organize them int
 *   **Hidden Layers**: These are the workhorses. Each layer receives input from the previous layer and produces an output for the next. As data passes through the hidden layers, the network learns to identify increasingly abstract features. The first layer might learn to detect simple edges, the next might combine edges to find shapes like eyes and ears, and a deeper layer might combine those to identify a cat's face.
 *   **Output Layer**: The final layer that produces the network's prediction (e.g., the probability that the image contains a cat).
 
-<img width="600" height="313" alt="image" src="https://github.com/user-attachments/assets/56b25b68-27cb-4170-9561-4dddd7e621ea" />
+<img width="600" height="313" alt="Multi-layer neural network diagram showing input layer with 4 nodes, two hidden layers with 3 and 2 nodes respectively, and single output node, with all connections between layers illustrated" src="https://github.com/user-attachments/assets/56b25b68-27cb-4170-9561-4dddd7e621ea" />
+
+**Figure 1.4:** Multi-Layer Neural Network Architecture. A fully connected feedforward network with input layer (4 neurons), two hidden layers (3 and 2 neurons), and output layer (1 neuron), showing how information flows from inputs to prediction.
 
 
 The computation for an entire layer can be written efficiently using matrix multiplication:
@@ -82,7 +90,9 @@ This equation describes how the activations of one layer (`h^(ℓ-1)`) are trans
 
 "Training" a network means finding the optimal values for all its weights and biases to solve a specific task. This is achieved through an iterative process called the **training loop**.
 
-<img width="4025" height="1545" alt="image" src="https://github.com/user-attachments/assets/18cac33e-31af-4bf2-8eda-a1ebfe54f870" />
+<img width="4025" height="1545" alt="Training loop flowchart showing four steps: forward propagation feeding input through network, loss calculation comparing prediction vs target, backward propagation calculating gradients, parameter update adjusting weights, with convergence check determining if process continues or completes" src="https://github.com/user-attachments/assets/18cac33e-31af-4bf2-8eda-a1ebfe54f870" />
+
+**Figure 1.5:** Neural Network Training Loop. The iterative four-step process of training: (1) Forward propagation, (2) Loss calculation, (3) Backward propagation (backpropagation), and (4) Parameter update, repeated until convergence.
 
 
 1.  **Forward Propagation**: We feed the input data into the network and let it flow through the layers to generate a prediction.
@@ -109,13 +119,17 @@ The optimizer's job is to update the parameters based on the gradients computed 
 
 The **learning rate** is a crucial hyperparameter that controls the step size of each update. Too large, and the optimizer might overshoot the optimal solution. Too small, and training will be painfully slow. **Learning rate scheduling**, where the learning rate is adjusted over the course of training, is a common technique to achieve better results.
 
-<img width="3897" height="567" alt="image" src="https://github.com/user-attachments/assets/e8d188bb-f0cf-422c-ba96-2f8592986e28" />
+<img width="3897" height="567" alt="Optimization process diagram showing current weights flowing to gradient calculation, then to optimizer (SGD/Adam/AdamW) with learning rate input, then to weight update using formula w = w - η∇L(w), resulting in updated weights" src="https://github.com/user-attachments/assets/e8d188bb-f0cf-422c-ba96-2f8592986e28" />
+
+**Figure 1.6:** Optimization Process in Neural Networks. The weight update mechanism showing how current weights are modified using gradients computed via backpropagation, processed by an optimizer, and scaled by the learning rate η.
 
 ## Building Robust Models: Regularization and Best Practices
 
 A powerful network can have millions of parameters. This gives it the capacity to learn complex patterns, but also to "cheat" by simply memorizing the training data. This is called **overfitting**. A model that has overfit performs well on data it has seen but fails to generalize to new, unseen data. **Regularization** techniques are designed to combat this.
 
-<img width="387" height="256" alt="image" src="https://github.com/user-attachments/assets/0b25c93c-0e0b-49d4-a655-1c0e3f1199e7" />
+<img width="387" height="256" alt="Learning curves comparison showing two scenarios: left panel displays overfitting with training loss decreasing while validation loss increases after initial decline; right panel shows good generalization with both training and validation losses decreasing together" src="https://github.com/user-attachments/assets/0b25c93c-0e0b-49d4-a655-1c0e3f1199e7" />
+
+**Figure 1.7:** Overfitting vs. Good Generalization. Learning curves illustrating the difference between overfitting (left) where validation loss diverges from training loss, and proper generalization (right) where both losses decrease in tandem.
 
 ### Common Regularization Techniques
 
@@ -124,7 +138,9 @@ A powerful network can have millions of parameters. This gives it the capacity t
 *   **Batch Normalization**: Normalizes the inputs to each layer to have a mean of zero and a standard deviation of one. This stabilizes training, allows for higher learning rates, and provides a slight regularization effect.
 *   **Early Stopping**: Monitor the model's performance on a separate validation set during training and stop when performance stops improving.
   
-<img width="4857" height="1125" alt="image" src="https://github.com/user-attachments/assets/0d6d1bcf-bf88-4f08-95b4-814f1150fa4b" />
+<img width="4857" height="1125" alt="Regularization techniques taxonomy diagram showing neural network training branching into four main regularization methods: L1/L2 regularization with weight magnitude penalties, Dropout with random neuron deactivation, Batch Normalization for layer input normalization, and Early Stopping for validation-based training termination, all converging to prevent overfitting" src="https://github.com/user-attachments/assets/0d6d1bcf-bf88-4f08-95b4-814f1150fa4b" />
+
+**Figure 1.8:** Regularization Techniques Taxonomy. Overview of four primary regularization methods used to prevent overfitting: L1/L2 regularization, Dropout, Batch Normalization, and Early Stopping, each addressing different aspects of model generalization.
 
 ### The Importance of Initialization
 
@@ -139,7 +155,9 @@ While all networks are built from neurons and layers, their topology—how they 
 *   **Recurrent Neural Networks (RNNs)**: Designed for sequential data like text or time series. They have connections that loop back on themselves, giving them a form of "memory" to process inputs in context.
 *   **Residual Networks (ResNets)**: A key innovation that uses "skip connections" to allow gradients to bypass layers. This makes it possible to train extremely deep networks without suffering from the vanishing gradient problem.
 
-<img width="792" height="430" alt="image" src="https://github.com/user-attachments/assets/de185435-7d48-4054-a08b-04f39ec39916" />
+<img width="792" height="430" alt="Four neural network architectures comparison: feedforward network with linear layer progression, CNN with convolutional and pooling layers for image processing, RNN with recurrent connections for sequential data, and ResNet block with skip connections bypassing convolutional layers" src="https://github.com/user-attachments/assets/de185435-7d48-4054-a08b-04f39ec39916" />
+
+**Figure 1.9:** Common Neural Network Architectures. Comparison of four fundamental architectures: Feedforward (fully connected), CNN (convolutional), RNN (recurrent), and ResNet (residual), each optimized for different data types and tasks.
 
 
 ## Common Training Challenges
@@ -150,7 +168,9 @@ Training neural networks is part art, part science. Here are some common dragons
 *   **Dead Neurons**: ReLU neurons can get stuck in a state where they only output zero. Using variants like Leaky ReLU can help.
 *   **Hyperparameter Tuning**: Finding the right architecture, learning rate, and regularization strength can be a long process of trial and error.
 
-<img width="1920" height="1124" alt="image" src="https://github.com/user-attachments/assets/7737a32a-55a1-43fd-b122-a70de555c2d6" />
+<img width="1920" height="1124" alt="Gradient flow visualization showing three scenarios across network layers: normal gradient flow with consistent magnitudes, vanishing gradients with exponentially decreasing magnitudes in deeper layers, and exploding gradients with exponentially increasing magnitudes, illustrated through color intensity and arrow thickness" src="https://github.com/user-attachments/assets/7737a32a-55a1-43fd-b122-a70de555c2d6" />
+
+**Figure 1.10:** Gradient Flow Problems in Deep Networks. Visualization of three gradient behaviors: normal flow (top), vanishing gradients (middle), and exploding gradients (bottom), showing how gradient magnitudes change across network depth and impact training stability.
 
 ## Conclusion
 
