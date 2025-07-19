@@ -60,4 +60,4 @@ An SFT model knows how to follow instructions, but it doesn't have a sense of wh
 
 - **[Ouyang et al. (2022), "Training language models to follow instructions with human feedback"](https://arxiv.org/abs/2203.02155)**: The original InstructGPT paper from OpenAI that popularized the RLHF process.
 - **[Rafailov et al. (2023), "Direct Preference Optimization: Your Language Model is Secretly a Reward Model"](https://arxiv.org/abs/2305.18290)**: The paper that introduced DPO.
-- **[The TRL Library](https://huggingface.co/docs/trl/index)**: The primary Hugging Face library for implementing SFT, RLHF, and DPO. 
+- **[The TRL Library](https://huggingface.co/docs/trl/index)**: The primary Hugging Face library for implementing SFT, RLHF, and DPO.  

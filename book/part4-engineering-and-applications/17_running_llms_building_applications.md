@@ -1,60 +1,65 @@
 ---
-layout: default
-title: Running LLMs & Building Applications
-parent: Course
+title: "Running LLMs & Building Applications"
 nav_order: 17
+parent: "Part IV: Engineering & Applications"
+grand_parent: "LLMs: From Foundation to Production"
+description: "A practical guide to building applications on top of LLMs, covering API usage, prompt engineering, memory, and deploying models with frameworks like FastAPI and LangChain."
+keywords: "LLM Applications, API, FastAPI, LangChain, Prompt Engineering, Chatbot Memory, Deployment, Docker"
 ---
 
-# Running LLMs & Building Applications
+# 17. Running LLMs & Building Applications
+{: .no_toc }
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Web development, APIs
+**Difficulty:** Intermediate | **Prerequisites:** Web Development, APIs
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Using LLM APIs and Integration**
-  - OpenAI, Anthropic, and Other API Services
-  - API Key Management and Rate Limiting
-  - Cost Optimization and Usage Monitoring
-- **Building Memory-Enabled Chatbots**
-  - Conversation Memory Management
-  - Context Window Optimization
-  - Session State Handling
-- **Working with Open-Source Models**
-  - Local Model Deployment
-  - Model Selection and Evaluation
-  - Hardware Requirements Planning
-- **Prompt Engineering and Structured Outputs**
-  - Advanced Prompting Techniques
-  - JSON Schema Validation
-  - Function Calling Integration
-- **Deploying Models Locally**
-  - Local Inference Servers
-  - Resource Management
-  - Performance Optimization
-- **Setting Up Production Servers**
-  - Scalable Architecture Design
-  - Load Balancing and Auto-scaling
-  - Monitoring and Observability
-- **Application Architecture and Scalability**
-  - Microservices Design
-  - Caching Strategies
-  - Real-time Communication
+This chapter bridges the gap between models and products. We'll cover the practical software engineering skills needed to build real-world applications powered by Large Language Models, whether you're using a commercial API or hosting an open-source model yourself.
 
-## Skills & Tools
-- **Frameworks:** FastAPI, Flask, Streamlit, Gradio, LangChain
-- **Concepts:** REST APIs, WebSockets, Rate Limiting, Load Balancing
-- **Tools:** Docker, Redis, Nginx, Kubernetes
-- **Modern Platforms:** Ollama, LocalAI, Text Generation WebUI
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Production-Ready LLM API with Streaming**
-Build complete LLM applications with proper architecture using FastAPI. Implement streaming responses for real-time user interactions and create robust APIs with proper error handling and rate limiting. Include authentication and authorization for secure access.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>Using LLM APIs</h4>
+    <p>Interacting with commercial LLM providers like OpenAI and Anthropic, including managing API keys, handling rate limits, and monitoring costs.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Prompt Engineering</h4>
+    <p>The art and science of designing effective prompts to elicit the desired behavior from a model.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Structured Outputs</h4>
+    <p>Techniques like JSON mode and function calling that force a model to produce output in a specific, machine-readable format.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Chatbot Memory</h4>
+    <p>Methods for managing conversation history to give chatbots memory, from simple buffers to more complex summarization techniques.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Application Frameworks</h4>
+    <p>Using libraries like FastAPI to build robust API backends and frameworks like LangChain or LlamaIndex to orchestrate complex LLM workflows.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Containerization</h4>
+    <p>Packaging an LLM application and its dependencies into a Docker container for portable and scalable deployment.</p>
+  </div>
+</div>
 
-**2. Conversational AI with Memory Management**
-Build memory-enabled chatbots using LangChain that maintain conversation history and context. Implement conversation buffer management and contextually aware conversations. Create comprehensive conversation systems with proper memory handling.
+---
 
-**3. Containerized Deployment and Scaling**
-Containerize LLM inference servers using Docker and deploy to Kubernetes clusters. Handle concurrent users with proper load balancing and resource management. Deploy applications to production environments with monitoring and scaling capabilities.
+## 🛠️ Hands-On Labs
 
-**4. Multi-Modal Assistant Applications**
-Build comprehensive multi-modal applications that handle text, images, and other media types. Implement unified LLM API services and create scalable application architectures. Apply best practices for application performance and reliability. 
+1.  **Build a FastAPI Backend**: Create a simple API endpoint that takes a prompt, sends it to an LLM, and streams back the response.
+2.  **Chatbot with Memory**: Use LangChain to build a simple chatbot that remembers the last few turns of the conversation.
+3.  **Structured Output with Function Calling**: Use an API that supports function calling (like OpenAI's) to build a tool that can answer questions by calling a simple calculator function.
+4.  **Dockerize Your Application**: Write a Dockerfile for your FastAPI application and build a container image.
+
+---
+
+## 🧠 Further Reading
+
+- **[FastAPI Documentation](https://fastapi.tiangolo.com/)**: The official documentation for the FastAPI framework.
+- **[LangChain Documentation](https://python.langchain.com/docs/get_started/introduction)**: The documentation for the LangChain library.
+- **[OpenAI API Documentation](https://platform.openai.com/docs/overview)**: The API reference for OpenAI models, including details on function calling.
+- **[Docker Documentation](https://docs.docker.com/get-started/)**: An introduction to Docker and containerization. 

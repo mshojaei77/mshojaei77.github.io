@@ -65,17 +65,14 @@ last_edit_time_format: "%b %e %Y at %I:%M %p"
 # GitHub integration
 gh_edit_link: true
 gh_edit_link_text: "Edit this page on GitHub"
-gh_edit_repository: "https://github.com/mshojaei77/mshojaei77.github.io"
+gh_edit_repository: "mshojaei77/mshojaei77.github.io"
 gh_edit_branch: "main"
 
 # Aux links for the upper right navigation
 aux_links:
-  "📚 Read Book":
-    - "/book/"
-  "🐙 GitHub":
-    - "https://github.com/mshojaei77"
-  "💬 Community":
-    - "https://t.me/AI_LLMs"
+  "📚 Read Book": "/book/"
+  "🐙 GitHub": "https://github.com/mshojaei77"
+  "💬 Community": "https://t.me/AI_LLMs"
 
 aux_links_new_tab: false
 

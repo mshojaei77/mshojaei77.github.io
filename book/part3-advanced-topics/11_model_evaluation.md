@@ -1,56 +1,63 @@
 ---
-layout: default
-title: Model Evaluation
-parent: Course
+title: "Model Evaluation"
 nav_order: 11
+parent: "Part III: Advanced Topics & Specialization"
+grand_parent: "LLMs: From Foundation to Production"
+description: "An in-depth guide to evaluating Large Language Models, covering academic benchmarks, LLM-as-a-judge methodologies, and crucial testing for bias, safety, and fairness."
+keywords: "Model Evaluation, Benchmarks, MMLU, GSM8K, HumanEval, LLM-as-a-Judge, Bias Testing, Safety, Fairness"
 ---
 
-# Model Evaluation
+# 11. Model Evaluation
+{: .no_toc }
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Statistics, model training
+**Difficulty:** Intermediate | **Prerequisites:** Statistics, Model Training
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Benchmarking LLM Models**
-  - Standardized Benchmarks (MMLU, GSM8K, HumanEval)
-  - Domain-Specific Benchmarks
-  - Benchmark Selection and Design
-- **Assessing Performance (Human evaluation)**
-  - Human Evaluation Frameworks
-  - Crowdsourcing and Annotation
-  - Inter-Annotator Agreement
-- **Automated Evaluation with LLMs**
-  - LLM-as-Judge Systems
-  - Automated Scoring Methods
-  - Bias in Automated Evaluation
-- **Bias and Safety Testing**
-  - Toxicity Detection
-  - Bias Measurement
-  - Safety Assessment
-- **Fairness Testing and Assessment**
-  - Demographic Parity
-  - Equalized Odds
-  - Fairness Metrics
-- **Performance Monitoring and Analysis**
-  - Real-time Performance Tracking
-  - A/B Testing Frameworks
-  - Statistical Analysis
+How do we know if one model is "better" than another? This chapter tackles the complex and evolving field of LLM evaluation. We'll explore standardized benchmarks for measuring capabilities, the emerging practice of using LLMs to judge other LLMs, and the critical importance of testing for safety and bias.
 
-## Skills & Tools
-- **Benchmarks:** MMLU, GSM8K, HumanEval, BigBench, HellaSwag
-- **Metrics:** Accuracy, F1, BLEU, ROUGE, Win Rate, Perplexity
-- **Tools:** Evaluation frameworks, Statistical analysis, A/B testing
-- **Modern Frameworks:** EleutherAI Eval Harness, OpenAI Evals
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Comprehensive Automated Evaluation Suite**
-Build complete automated evaluation system for LLMs across multiple benchmarks including MMLU, GSM8K, and HumanEval. Create comprehensive evaluation pipelines for continuous assessment with proper statistical analysis and performance monitoring. Generate consolidated reports and performance dashboards.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>Academic Benchmarks</h4>
+    <p>Standardized tests like MMLU (general knowledge), GSM8K (math), and HumanEval (code) used to compare models' core capabilities.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Human Evaluation</h4>
+    <p>The gold standard of evaluation, where humans rate model responses, often in head-to-head comparisons (e.g., Chatbot Arena).</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>LLM-as-a-Judge</h4>
+    <p>Using a powerful "judge" LLM (like GPT-4) to automatically evaluate the quality of another model's output, which is faster and cheaper than human evaluation.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Bias and Safety Testing</h4>
+    <p>Using specialized benchmarks and prompts (e.g., RealToxicityPrompts) to measure a model's propensity to generate toxic, biased, or otherwise harmful content.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Fairness Assessment</h4>
+    <p>Evaluating whether a model's performance and behavior are equitable across different demographic groups.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Evaluation Frameworks</h4>
+    <p>Libraries and tools (like the EleutherAI Eval Harness) that standardize the process of running benchmarks on different models.</p>
+  </div>
+</div>
 
-**2. LLM-as-Judge and Human Evaluation Frameworks**
-Implement LLM-as-judge evaluation systems for chatbot comparison and quality assessment. Create human evaluation frameworks with proper annotation guidelines and crowdsourcing mechanisms. Develop comparative evaluation methods and quality metrics.
+---
 
-**3. Bias, Safety, and Fairness Testing System**
-Build comprehensive bias and toxicity detection systems using datasets like BOLD and RealToxicityPrompts. Implement fairness testing frameworks and create mitigation recommendations. Develop responsible AI evaluation methods and safety assessment protocols.
+## 🛠️ Hands-On Labs
 
-**4. Custom Benchmark Creator and Domain-Specific Evaluation**
-Design and implement custom benchmarks for specific use cases and requirements. Create domain-specific evaluation metrics and develop evaluation frameworks for specialized tasks. Build tools for benchmark creation and validation across different domains. 
+1.  **Run a Standard Benchmark**: Use the EleutherAI Eval Harness to evaluate a model of your choice on a benchmark like MMLU or HellaSwag.
+2.  **LLM-as-a-Judge**: Create a simple "LLM-as-a-judge" script that uses a powerful LLM to compare and score the outputs of two different models on a set of prompts.
+3.  **Bias and Toxicity Testing**: Use a library like `detoxify` or a benchmark like RealToxicityPrompts to measure the toxicity of a model's outputs.
+
+---
+
+## 🧠 Further Reading
+
+- **[Hendrycks et al. (2020), "Measuring Massive Multitask Language Understanding"](https://arxiv.org/abs/2009.03300)**: The paper introducing the MMLU benchmark.
+- **[Zheng et al. (2023), "Judging LLM-as-a-judge with MT-Bench and Chatbot Arena"](https://arxiv.org/abs/2306.05685)**: A key paper on the LLM-as-a-judge methodology.
+- **[EleutherAI Language Model Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness)**: The leading open-source framework for evaluating LLMs. 

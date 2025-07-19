@@ -1,64 +1,64 @@
 ---
-layout: default
-title: Inference Optimization
-parent: Course
+title: "Inference Optimization"
 nav_order: 14
+parent: "Part III: Advanced Topics & Specialization"
+grand_parent: "LLMs: From Foundation to Production"
+description: "A deep dive into the techniques used to make LLM inference faster and more efficient, covering FlashAttention, KV Caching, speculative decoding, and serving frameworks like vLLM."
+keywords: "Inference Optimization, FlashAttention, KV Cache, PagedAttention, vLLM, TensorRT-LLM, Speculative Decoding, Continuous Batching"
 ---
 
-# Inference Optimization
+# 14. Inference Optimization
+{: .no_toc }
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Model deployment
+**Difficulty:** Advanced | **Prerequisites:** Model Deployment
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Flash Attention and Memory Optimization**
-  - Flash Attention Implementation
-  - Memory-Efficient Attention Mechanisms
-  - Attention Optimization Techniques
-- **KV Cache Implementation and Management**
-  - Key-Value Cache Strategies
-  - Multi-Query Attention (MQA)
-  - Grouped-Query Attention (GQA)
-- **Test-Time Preference Optimization (TPO)**
-  - Inference-Time Alignment
-  - Dynamic Preference Adjustment
-  - Real-Time Optimization
-- **Compression Methods to Enhance LLM Performance**
-  - Model Pruning and Sparsity
-  - Dynamic Quantization
-  - Activation Compression
-- **Speculative Decoding and Parallel Sampling**
-  - Draft Model Verification
-  - Parallel Token Generation
-  - Multi-Model Coordination
-- **Dynamic and Continuous Batching**
-  - Adaptive Batch Sizing
-  - Request Scheduling
-  - Throughput Optimization
-- **Multi-GPU and Multi-Node Inference**
-  - Distributed Inference
-  - Model Parallelism
-  - Pipeline Parallelism
-- **PagedAttention and Advanced Memory Management**
-  - Memory Pool Management
-  - Attention Memory Optimization
-  - Resource Allocation
+Getting a model to run is one thing; getting it to run *fast* is another. This chapter is all about inference optimization—the collection of software and algorithmic tricks used to maximize throughput (tokens per second) and minimize latency when serving a Large Language Model.
 
-## Skills & Tools
-- **Frameworks:** vLLM, TensorRT-LLM, DeepSpeed-Inference, Text Generation Inference
-- **Concepts:** Flash Attention, KV Cache, Speculative Decoding, PagedAttention
-- **Tools:** Triton, TensorRT, CUDA optimization, OpenAI Triton
-- **Modern Techniques:** Continuous batching, Multi-query attention, Speculative execution
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. High-Throughput Inference Server with Advanced Batching**
-Build optimized inference servers using vLLM with continuous batching and PagedAttention. Optimize throughput using advanced memory management and achieve target latency requirements for production systems. Implement multi-GPU and multi-node inference scaling.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>KV Caching</h4>
+    <p>The fundamental optimization for autoregressive decoding, where the keys and values of past tokens are cached to avoid redundant computation.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>FlashAttention</h4>
+    <p>A memory-aware attention algorithm that avoids writing the large attention matrix to HBM, resulting in significant speedups, especially for long sequences.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>PagedAttention</h4>
+    <p>An algorithm inspired by virtual memory and paging that allows for more efficient management of the KV Cache, reducing memory waste.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Continuous Batching</h4>
+    <p>A serving strategy that processes incoming requests continuously instead of in static batches, dramatically increasing total throughput.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Speculative Decoding</h4>
+    <p>Using a small, fast "draft" model to generate several tokens in parallel, which are then verified by the larger, more powerful model, speeding up decoding.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Inference Servers</h4>
+    <p>Specialized serving frameworks like vLLM and TensorRT-LLM that implement many of these optimizations out-of-the-box.</p>
+  </div>
+</div>
 
-**2. Speculative Decoding and Parallel Sampling**
-Implement speculative decoding to accelerate LLM inference using draft models and verifiers. Develop parallel sampling techniques and multi-model coordination systems. Measure speedup gains and quality evaluation across different model combinations.
+---
 
-**3. Flash Attention and Memory Optimization**
-Implement Flash Attention and other memory-efficient attention mechanisms. Optimize KV cache management for long sequences and implement advanced memory optimization techniques. Create comprehensive analysis of memory usage and performance improvements.
+## 🛠️ Hands-On Labs
 
-**4. Multi-Model Serving and Dynamic Batching**
-Build systems that serve multiple models efficiently with dynamic batching capabilities. Implement resource allocation strategies and optimize for different model sizes and requirements. Create comprehensive serving systems with proper load balancing and scaling.
+1.  **Benchmark an Inference Server**: Use a framework like vLLM to host an open-source model and benchmark its throughput and latency with different batching configurations.
+2.  **Implement KV Caching**: (Advanced) Manually implement a simple KV cache in a basic transformer generation loop to understand its impact.
+3.  **Speculative Decoding**: Use a library that supports speculative decoding (like `transformers`) to measure the speedup from using a small draft model to assist a larger one.
+
+---
+
+## 🧠 Further Reading
+
+- **[Dao et al. (2022), "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness"](https://arxiv.org/abs/2205.14135)**: The original FlashAttention paper.
+- **[Kwon et al. (2023), "Efficient Memory Management for Large Language Model Serving with PagedAttention"](https://arxiv.org/abs/2309.06180)**: The paper introducing PagedAttention, which is the key technology behind vLLM.
+- **[The vLLM Project](https://github.com/vllm-project/vllm)**: An open-source library for fast LLM inference and serving.
+- **[Leviathan et al. (2022), "Fast Inference from Transformers via Speculative Decoding"](https://arxiv.org/abs/2211.17192)**: A key paper on speculative decoding from Google DeepMind.

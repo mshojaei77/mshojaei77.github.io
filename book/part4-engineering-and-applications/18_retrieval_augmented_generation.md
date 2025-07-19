@@ -1,72 +1,64 @@
 ---
-layout: default
-title: Retrieval Augmented Generation (RAG)
-parent: Course
+title: "Retrieval Augmented Generation (RAG)"
 nav_order: 18
+parent: "Part IV: Engineering & Applications"
+grand_parent: "LLMs: From Foundation to Production"
+description: "A deep dive into Retrieval Augmented Generation (RAG), the most common LLM application pattern, covering chunking, embeddings, vector databases, and advanced retrieval."
+keywords: "RAG, Retrieval Augmented Generation, Vector Database, Embeddings, Chunking, Semantic Search, Hybrid Search, LangChain, LlamaIndex"
 ---
 
-# Retrieval Augmented Generation (RAG)
+# 18. Retrieval Augmented Generation (RAG)
+{: .no_toc }
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Embeddings, databases
+**Difficulty:** Advanced | **Prerequisites:** Embeddings, Databases
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Ingesting Documents and Data Sources**
-  - Multi-format Document Processing (PDF, DOCX, HTML)
-  - Web Scraping and Data Extraction
-  - Database Integration and API Connections
-  - Real-time Data Ingestion Pipelines
-- **Chunking Strategies for Document Processing**
-  - Fixed-size vs Semantic Chunking
-  - Overlap and Context Preservation
-  - Hierarchical Document Structure
-  - Domain-specific Chunking Strategies
-- **Embedding Models and Vector Representations**
-  - Embedding Model Selection
-  - Fine-tuning for Domain Adaptation
-  - Multilingual and Cross-modal Embeddings
-  - Embedding Quality Assessment
-- **Vector Databases and Storage Solutions**
-  - FAISS, Pinecone, Weaviate, Chroma, Qdrant
-  - Indexing Strategies and Performance
-  - Metadata Filtering and Search
-  - Distributed Vector Storage
-- **RAG Pipeline Building and Architecture**
-  - End-to-end RAG System Design
-  - Query Processing and Enhancement
-  - Retrieval and Generation Integration
-  - Performance Optimization
-- **Advanced Retrieval Strategies**
-  - Hybrid Search (BM25 + Vector)
-  - Dense and Sparse Retrieval
-  - Multi-hop Reasoning
-  - Query Expansion and Reformulation
-- **Graph RAG and Knowledge Graphs**
-  - Knowledge Graph Construction
-  - Graph-based Retrieval
-  - Relationship-aware RAG
-  - Multi-hop Graph Queries
-- **Agentic RAG Systems**
-  - Self-reflective RAG
-  - Multi-step RAG Workflows
-  - Tool-augmented RAG
-  - Autonomous Query Planning
+LLMs are powerful, but their knowledge is frozen in time and they can't access your private data. Retrieval Augmented Generation (RAG) solves this by connecting an LLM to an external knowledge source, allowing it to answer questions and generate text based on information it was never trained on. This is arguably the most important LLM application pattern today.
 
-## Skills & Tools
-- **Frameworks:** LangChain, LlamaIndex, Haystack, Llamaparse
-- **Databases:** Pinecone, Weaviate, Chroma, Qdrant, Neo4j
-- **Concepts:** Hybrid Search, Reranking, Query Expansion, Graph RAG
-- **Modern Techniques:** Agentic RAG, Self-reflective retrieval, Multi-modal RAG
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Production-Ready Enterprise RAG System**
-Build comprehensive RAG pipeline for internal company documents using LlamaIndex. Implement document ingestion from multiple sources (PDFs, web pages, databases), create optimized embeddings, and deploy with proper scaling, caching, and monitoring. Include features for document updates and incremental indexing.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>Ingestion & Chunking</h4>
+    <p>The process of loading documents and breaking them down into smaller, semantically meaningful chunks suitable for embedding.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Embedding & Indexing</h4>
+    <p>Using an embedding model to convert each chunk into a vector, and then storing those vectors in a specialized vector database for efficient search.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Vector Databases</h4>
+    <p>Databases like Pinecone, Weaviate, and Chroma that are optimized for fast similarity search over millions or billions of vectors.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Retrieval</h4>
+    <p>The process of taking a user's query, embedding it, and searching the vector database to find the most relevant chunks of text.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Augmentation & Generation</h4>
+    <p>Taking the retrieved chunks, adding them to the user's prompt as context, and then asking the LLM to generate an answer based on that context.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Advanced Retrieval</h4>
+    <p>Techniques beyond simple vector search, such as hybrid search (combining keyword and semantic), re-ranking, and query transformations.</p>
+  </div>
+</div>
 
-**2. Advanced Hybrid Search with Reranking**
-Enhance RAG systems by combining traditional keyword-based search (BM25) with semantic vector search. Implement query enhancement techniques, reranking algorithms, and evaluation metrics to improve retrieval accuracy. Compare performance across different query types and document collections.
+---
 
-**3. Graph RAG for Complex Knowledge Queries**
-Build Graph RAG system using Neo4j that can handle complex relational queries. Ingest structured data (movies, actors, directors) and implement natural language interfaces for multi-hop reasoning queries. Include features for graph visualization and query explanation.
+## 🛠️ Hands-On Labs
 
-**4. Conversational and Agentic RAG for Multi-Turn Interactions**
-Create agentic RAG system that maintains context across conversation turns and can decompose complex queries into sub-questions. Implement query planning, multi-step reasoning, and result synthesis. Include features for handling follow-up questions and context management. 
+1.  **Build a Basic RAG Pipeline**: Use LangChain or LlamaIndex to build a simple RAG application that can answer questions about a small set of documents.
+2.  **Experiment with Chunking Strategies**: Compare different chunking strategies (e.g., fixed-size vs. semantic) and embedding models to see how they impact retrieval quality.
+3.  **Hybrid Search**: Implement a hybrid search system that combines results from both a keyword-based search (like BM25) and a semantic vector search.
+
+---
+
+## 🧠 Further Reading
+
+- **[Lewis et al. (2020), "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"](https://arxiv.org/abs/2005.11401)**: The original paper that introduced the RAG concept.
+- **[LlamaIndex Documentation](https://docs.llamaindex.ai/en/stable/)**: The documentation for a popular data framework for building RAG applications.
+- **[LangChain "Chat with your data" documentation](https://python.langchain.com/docs/use_cases/question_answering/)**: Tutorials on building RAG applications with LangChain.
+- **["What is a vector database?"](https://www.pinecone.io/learn/vector-database/)**: An introduction to vector databases from Pinecone. 

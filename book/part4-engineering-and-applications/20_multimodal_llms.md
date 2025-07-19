@@ -1,72 +1,64 @@
 ---
-layout: default
-title: Multimodal LLMs
-parent: Course
+title: "Multimodal LLMs"
 nav_order: 20
+parent: "Part IV: Engineering & Applications"
+grand_parent: "LLMs: From Foundation to Production"
+description: "An introduction to Multimodal LLMs that can process more than just text, including models that understand images, audio, and video, such as GPT-4V, LLaVA, and Whisper."
+keywords: "Multimodal, Vision-Language, VLM, GPT-4V, LLaVA, CLIP, Whisper, Text-to-Image, Text-to-Speech"
 ---
 
-# Multimodal LLMs
+# 20. Multimodal LLMs
+{: .no_toc }
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Computer vision, audio processing
+**Difficulty:** Advanced | **Prerequisites:** Computer Vision, Audio Processing
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Working with Multi-Modal LLMs (Text, Audio Input/Output, Images)**
-  - Cross-modal Understanding
-  - Input Modality Processing
-  - Output Generation Across Modalities
-  - Modality Alignment Techniques
-- **Transfer Learning & Pre-trained Models**
-  - Vision-Language Pre-training
-  - Audio-Language Pre-training
-  - Cross-modal Transfer Learning
-  - Fine-tuning Multimodal Models
-- **Multimodal Transformers and Vision-Language Models**
-  - CLIP: Contrastive Language-Image Pre-training
-  - LLaVA: Large Language and Vision Assistant
-  - GPT-4V: Vision-enabled GPT-4
-  - DALL-E and Stable Diffusion
-- **Multimodal Attention and Feature Fusion**
-  - Cross-attention Mechanisms
-  - Feature Fusion Strategies
-  - Modality-specific Encoders
-  - Joint Embedding Spaces
-- **Image Captioning and Visual QA Systems**
-  - Image Description Generation
-  - Visual Question Answering
-  - Scene Understanding
-  - Object Detection and Recognition
-- **Text-to-Image Generation**
-  - Prompt Engineering for Image Generation
-  - Style Transfer and Manipulation
-  - Controllable Generation
-  - Quality Assessment
-- **Audio Processing and Speech Integration**
-  - Speech-to-Text and Text-to-Speech
-  - Audio Understanding
-  - Multimodal Speech Systems
-  - Voice Cloning and Synthesis
-- **Document Understanding and OCR**
-  - Document Layout Analysis
-  - Text Extraction and Recognition
-  - Multimodal Document Processing
-  - Structured Information Extraction
+Language is not the only way we experience the world. This chapter explores multimodal models, a class of LLMs that can process and understand information from multiple modalities at once, including images, audio, and video, leading to a much richer and more capable form of AI.
 
-## Skills & Tools
-- **Models:** CLIP, LLaVA, Whisper, GPT-4V, DALL-E, Stable Diffusion
-- **Libraries:** OpenCV, Pillow, torchaudio, transformers
-- **Concepts:** Cross-modal attention, Feature fusion, Modality alignment
-- **Modern Techniques:** Vision-language understanding, Multimodal reasoning
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Comprehensive Vision-Language Assistant**
-Build multimodal applications that process text, images, and other media types. Implement vision-language understanding for complex visual reasoning tasks using models like LLaVA and GPT-4V. Create Visual Question Answering systems with proper image processing and question answering interfaces.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>Vision-Language Models (VLMs)</h4>
+    <p>Models like GPT-4V and LLaVA that can "see" and reason about images, enabling tasks like visual question answering and image captioning.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Vision Encoders</h4>
+    <p>The components (often a ViT, or Vision Transformer) that process an image and convert it into a sequence of embeddings that the language model can understand.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>CLIP (Contrastive Language-Image Pre-training)</h4>
+    <p>A foundational model from OpenAI that learns to connect text and images by training on a massive dataset of image-caption pairs, enabling powerful zero-shot image classification.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Text-to-Image Generation</h4>
+    <p>Models like DALL-E and Stable Diffusion that take a text prompt and generate a corresponding image, powered by diffusion models.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Speech-to-Text & Text-to-Speech</h4>
+    <p>Models like OpenAI's Whisper (speech-to-text) and Voice Engine (text-to-speech) that bridge the gap between spoken language and text.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Modality Alignment</h4>
+    <p>The challenge of projecting information from different modalities (like text and images) into a shared representation space where they can be compared and processed together.</p>
+  </div>
+</div>
 
-**2. Multimodal Document Analysis and OCR**
-Create document analysis systems that process PDFs, images, and text. Implement OCR capabilities and document understanding systems. Build code screenshot analyzers that convert images to code and handle various media types with appropriate preprocessing.
+---
 
-**3. Text-to-Image Generation and Prompt Engineering**
-Build text-to-image generation systems using Stable Diffusion and other models. Focus on prompt engineering, including negative prompts and parameter tuning. Create image generation interfaces with quality evaluation and optimization systems.
+## 🛠️ Hands-On Labs
 
-**4. Multimodal Agent Systems and E-commerce Applications**
-Create multimodal agents that can interact with different types of content. Build e-commerce chatbots that handle both text and images. Implement cross-modal attention and feature fusion techniques. Handle multimodal conversation flows and optimize for different deployment scenarios. 
+1.  **Visual Question Answering**: Use a VLM like LLaVA to build a simple application that can answer questions about an image you provide.
+2.  **Text-to-Image Generation**: Use the `diffusers` library to generate images from text prompts with a model like Stable Diffusion.
+3.  **Audio Transcription**: Use OpenAI's Whisper API or a local implementation to transcribe a short audio file into text.
+
+---
+
+## 🧠 Further Reading
+
+- **[Radford et al. (2021), "Learning Transferable Visual Models From Natural Language Supervision"](https://arxiv.org/abs/2103.00020)**: The original CLIP paper.
+- **[Liu et al. (2023), "Visual Instruction Tuning"](https://arxiv.org/abs/2304.08485)**: The paper introducing LLaVA, a powerful open-source VLM.
+- **[Rombach et al. (2021), "High-Resolution Image Synthesis with Latent Diffusion Models"](https://arxiv.org/abs/2112.10752)**: The paper that introduced Stable Diffusion.
+- **[The Hugging Face `diffusers` library](https://huggingface.co/docs/diffusers/index)**: A library for working with diffusion models for text-to-image generation. 
