@@ -5,7 +5,7 @@ nav_order: 0
 
 # 👋 Hello, I'm Mohammad Shojaei
 
-### Machine Learning Engineer | LLM Specialist | Production Systems
+### Machine Learning Engineer | LLM Specialist
 
 > Designing & shipping production-grade LLM systems that deliver measurable business impact through RAG, fine-tuning, and inference optimization.
 

@@ -1,60 +1,63 @@
 ---
-layout: default
-title: Preference Alignment (RL Fine-Tuning)
-parent: Course
+title: "Preference Alignment"
 nav_order: 10
+parent: "Part II: Building & Training Models"
+grand_parent: "LLMs: From Foundation to Production"
+description: "An overview of preference alignment techniques used to make LLMs safer, more helpful, and more aligned with human values, covering RLHF, PPO, and DPO."
+keywords: "Preference Alignment, RLHF, Reinforcement Learning, PPO, DPO, KTO, Reward Model, Constitutional AI"
 ---
 
-# Preference Alignment (RL Fine-Tuning)
+# 10. Preference Alignment
+{: .no_toc }
 
-**📈 Difficulty:** Expert | **🎯 Prerequisites:** Reinforcement learning basics
+**Difficulty:** Expert | **Prerequisites:** Reinforcement Learning Basics
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Reinforcement Learning Fundamentals**
-  - Policy Gradient Methods
-  - Actor-Critic Algorithms
-  - Reward Function Design
-- **Deep Reinforcement Learning for LLMs**
-  - Policy Optimization for Language Models
-  - Value Function Estimation
-  - Exploration vs Exploitation
-- **Policy Optimization Methods**
-  - REINFORCE Algorithm
-  - Trust Region Policy Optimization (TRPO)
-  - Proximal Policy Optimization (PPO)
-- **Direct Preference Optimization (DPO) and variants**
-  - DPO Algorithm and Implementation
-  - Kahneman-Tversky Optimization (KTO)
-  - Sequence Likelihood Calibration (SLiC)
-- **Reinforcement Learning from Human Feedback (RLHF)**
-  - Reward Model Training
-  - Human Preference Collection
-  - Policy Training with PPO
-- **Constitutional AI and AI Feedback**
-  - Constitutional Principles
-  - Self-Critique and Revision
-  - AI Feedback Integration
-- **Safety and Alignment Evaluation**
-  - Alignment Metrics
-  - Safety Benchmarks
-  - Robustness Testing
+An SFT model knows how to follow instructions, but it doesn't have a sense of what makes a *good* response. This chapter covers preference alignment, the set of techniques used to fine-tune a model to better match human preferences, making it more helpful, harmless, and reliable.
 
-## Skills & Tools
-- **Frameworks:** TRL (Transformer Reinforcement Learning), Ray RLlib
-- **Concepts:** PPO, DPO, KTO, Constitutional AI, RLHF
-- **Evaluation:** Win rate, Safety benchmarks, Alignment metrics
-- **Modern Techniques:** RLAIF, Constitutional AI, Self-Critique
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Comprehensive Reward Model Training and Evaluation**
-Create robust reward models that accurately capture human preferences across multiple dimensions (helpfulness, harmlessness, honesty). Build preference datasets with careful annotation and implement proper evaluation metrics. Handle alignment tax and maintain model capabilities during preference training.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>Reinforcement Learning from Human Feedback (RLHF)</h4>
+    <p>The classic RLHF pipeline: train a reward model on human preference data, then use that reward model to fine-tune the LLM with a reinforcement learning algorithm like PPO.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Reward Modeling</h4>
+    <p>The process of training a model to predict which of two responses a human would prefer, which serves as the reward function for the RL algorithm.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Proximal Policy Optimization (PPO)</h4>
+    <p>The reinforcement learning algorithm most commonly used in RLHF to update the LLM's policy (its weights) to maximize the score from the reward model.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Direct Preference Optimization (DPO)</h4>
+    <p>A newer, simpler, and more stable method that achieves the goal of RLHF without explicitly training a reward model or using a complex RL algorithm.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>DPO Variants (KTO, IPO)</h4>
+    <p>Recent variations on DPO that modify the objective to improve performance or handle different types of preference data.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Constitutional AI</h4>
+    <p>A technique pioneered by Anthropic where the human feedback is replaced or supplemented by AI feedback, guided by a set of principles or a "constitution."</p>
+  </div>
+</div>
 
-**2. Direct Preference Optimization (DPO) Implementation**
-Implement DPO training to align models with specific preferences like humor, helpfulness, or safety. Create high-quality preference datasets and compare DPO against RLHF approaches. Evaluate alignment quality using both automated and human assessment methods.
+---
 
-**3. Complete RLHF Pipeline with PPO**
-Build a full RLHF pipeline from reward model training to PPO-based alignment. Implement proper hyperparameter tuning, stability monitoring, and evaluation frameworks. Handle training instabilities and maintain model performance across different model sizes.
+## 🛠️ Hands-On Labs
 
-**4. Constitutional AI and Self-Critique Systems**
-Implement Constitutional AI systems that can critique and revise their own responses based on defined principles. Create comprehensive evaluation frameworks for principle-based alignment and develop methods for improving model behavior through AI feedback. 
+1.  **Reward Model Training**: Train a reward model on a public preference dataset (like Anthropic's H&H) to predict which response is more helpful or harmless.
+2.  **Fine-tuning with DPO**: Use the TRL library to fine-tune a model using DPO on a preference dataset, and compare the results to the original SFT model.
+3.  **RLHF with PPO**: (Advanced) Implement the full RLHF pipeline using a pre-trained reward model and PPO to align a model.
+
+---
+
+## 🧠 Further Reading
+
+- **[Ouyang et al. (2022), "Training language models to follow instructions with human feedback"](https://arxiv.org/abs/2203.02155)**: The original InstructGPT paper from OpenAI that popularized the RLHF process.
+- **[Rafailov et al. (2023), "Direct Preference Optimization: Your Language Model is Secretly a Reward Model"](https://arxiv.org/abs/2305.18290)**: The paper that introduced DPO.
+- **[The TRL Library](https://huggingface.co/docs/trl/index)**: The primary Hugging Face library for implementing SFT, RLHF, and DPO. 

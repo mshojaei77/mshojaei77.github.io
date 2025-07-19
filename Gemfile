@@ -1,3 +1,5 @@
+gem "jekyll"
+gem "just-the-docs"
 gem "jekyll-default-layout"
 
 gem "github-pages", group: :jekyll_plugins

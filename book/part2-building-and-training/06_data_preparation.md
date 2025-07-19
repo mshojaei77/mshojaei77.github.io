@@ -1,52 +1,64 @@
 ---
-layout: default
-title: Data Preparation
-parent: Course
+title: "Data Preparation"
 nav_order: 6
+parent: "Part II: Building & Training Models"
+grand_parent: "LLMs: From Foundation to Production"
+description: "Learn the critical process of data preparation for training LLMs, including large-scale collection, cleaning, filtering, deduplication, and quality assessment."
+keywords: "Data Preparation, Data Cleaning, Deduplication, MinHash, LSH, Data Quality, Synthetic Data, PII Redaction"
 ---
 
-# Data Preparation
+# 6. Data Preparation
+{: .no_toc }
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Python, SQL
+**Difficulty:** Intermediate | **Prerequisites:** Python, SQL
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Large-Scale Data Collection and Web Scraping**
-  - Web Scraping with BeautifulSoup and Scrapy
-  - API Integration and Rate Limiting
-  - Distributed Data Collection
-- **Data Cleaning, Filtering, and Deduplication**
-  - Text Normalization and Preprocessing
-  - MinHash and LSH for Deduplication
-  - Quality Filtering and Heuristics
-- **Data Quality Assessment and Contamination Detection**
-  - Test Set Contamination Detection
-  - Data Leakage Prevention
-  - Quality Metrics and Scoring
-- **Synthetic Data Generation and Augmentation**
-  - LLM-Generated Synthetic Data
-  - Data Augmentation Techniques
-  - Quality Control and Validation
-- **Privacy-Preserving Data Processing**
-  - PII Detection and Redaction
-  - Differential Privacy Techniques
-  - Compliance and Governance
+The quality of a language model is a direct reflection of the data it was trained on. This chapter covers the unglamorous but essential work of preparing massive datasets for LLM training, from sourcing and cleaning to ensuring privacy and quality.
 
-## Skills & Tools
-- **Libraries:** Pandas, Dask, PySpark, Beautiful Soup, Scrapy
-- **Concepts:** MinHash, LSH, PII Detection, Data Decontamination
-- **Tools:** Apache Spark, Elasticsearch, DVC, NeMo-Curator
-- **Modern Frameworks:** Distilabel, Semhash, FineWeb
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Comprehensive Web Scraping and Data Collection Pipeline**
-Build robust data collection system using BeautifulSoup and Scrapy for real estate listings. Implement error handling, rate limiting, and data validation. Handle different website structures with quality assessment.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>Data Collection & Sourcing</h4>
+    <p>Techniques for gathering vast amounts of text data from the web, APIs, and other sources.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Cleaning & Filtering</h4>
+    <p>The process of removing noise, boilerplate, and low-quality content from raw data.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Deduplication</h4>
+    <p>Using algorithms like MinHash and LSH to identify and remove near-duplicate documents at scale, which is crucial for training performance.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Data Quality & Contamination</h4>
+    <p>Methods for assessing data quality and detecting if parts of your test set have leaked into your training data.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Synthetic Data Generation</h4>
+    <p>Using other LLMs to generate new training data, a powerful but potentially risky technique.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Privacy & PII</h4>
+    <p>Techniques for detecting and redacting Personally Identifiable Information (PII) to protect user privacy.</p>
+  </div>
+</div>
 
-**2. Advanced Data Deduplication with MinHash and LSH**
-Implement MinHash and LSH algorithms for efficient near-duplicate detection in large text datasets. Optimize for accuracy and performance, comparing against simpler methods. Apply to C4 or Common Crawl datasets.
+---
 
-**3. Privacy-Preserving Data Processing System**
-Create comprehensive PII detection and redaction tool using regex, NER, and ML techniques. Handle sensitive information and implement contamination detection strategies for training datasets.
+## 🛠️ Hands-On Labs
 
-**4. Synthetic Data Generation and Quality Assessment**
-Use LLM APIs to generate high-quality synthetic instruction datasets for specific domains. Implement quality scoring, data augmentation, and validation pipelines. Compare synthetic vs real data effectiveness. 
+1.  **Web Scraping Pipeline**: Build a data collection pipeline using Scrapy and BeautifulSoup to gather text data from a specific domain (e.g., blogs, news sites).
+2.  **Deduplication at Scale**: Implement MinHash and LSH to find and remove near-duplicate documents from a large text corpus like a subset of Common Crawl.
+3.  **PII Redaction Tool**: Create a system that uses regular expressions and Named Entity Recognition (NER) to detect and redact PII from a dataset.
+4.  **Synthetic Dataset Generation**: Use an LLM API to generate a small, high-quality instruction-following dataset for a specific task.
+
+---
+
+## 🧠 Further Reading
+
+- **[Gao et al. (2020), "The Pile: An 800GB Dataset of Diverse Text for Language Modeling"](https://arxiv.org/abs/2101.00027)**: The paper introducing The Pile, with a detailed discussion of data sourcing and cleaning.
+- **[Lee et al. (2021), "Deduplicating Training Data Makes Language Models Better"](https://arxiv.org/abs/2107.06499)**: A key paper demonstrating the importance of deduplication.
+- **[Hugging Face: The `datasets` library](https://huggingface.co/docs/datasets/)**: A fundamental tool for working with large datasets in NLP. 

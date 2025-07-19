@@ -1,49 +1,63 @@
 ---
 title: "Traditional Language Models"
 nav_order: 2
-parent: Course
-layout: default
+parent: "Part I: Foundations"
+grand_parent: "LLMs: From Foundation to Production"
+description: "Explore the evolution of language models before transformers, including N-grams, RNNs, LSTMs, and the foundational sequence-to-sequence architecture with attention."
+keywords: "N-gram, Language Model, RNN, LSTM, GRU, Sequence-to-Sequence, Seq2Seq, Attention Mechanism, Perplexity"
 ---
 
+# 2. Traditional Language Models
+{: .no_toc }
 
-## 2. Traditional Language Models
-![image](https://github.com/user-attachments/assets/f900016c-6fcd-43c4-bbf9-75cb395b7d06)
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Probability, statistics
+**Difficulty:** Intermediate | **Prerequisites:** Probability, Statistics
+{: .fs-6 .fw-300 }
 
-### Key Topics
-- **N-gram Language Models and Smoothing**
-  - Markov Assumption and N-gram Statistics
-  - Laplace, Good-Turing, and Kneser-Ney Smoothing
-  - Perplexity and Language Model Evaluation
-- **Feedforward Neural Language Models**
-  - Distributed Representations
-  - Context Window Limitations
-  - Curse of Dimensionality
-- **Recurrent Neural Networks (RNNs), LSTMs, and GRUs**
-  - Sequence Modeling and Hidden States
-  - Vanishing/Exploding Gradient Problems
-  - Long-Term Dependencies
-- **Sequence-to-Sequence Models**
-  - Encoder-Decoder Architecture
-  - Attention Mechanisms (Bahdanau, Luong)
-  - Beam Search and Decoding Strategies
+Before transformers, a different class of models paved the way for modern NLP. This chapter explores the statistical and recurrent architectures that were once state-of-the-art, providing essential context for why the transformer architecture was such a breakthrough.
 
-### Skills & Tools
-- **Libraries:** Scikit-learn, PyTorch/TensorFlow RNN modules
-- **Concepts:** Sequence Modeling, Attention Mechanisms, Beam Search
-- **Evaluation:** Perplexity, BLEU Score, ROUGE
-- **Understanding:** Why these models led to transformers
+---
 
-### 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Complete N-Gram Language Model with Advanced Smoothing**
-Build character-level and word-level N-gram models from text corpus. Implement multiple smoothing techniques and compare effectiveness. Generate text and evaluate using perplexity and other metrics.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>N-gram Language Models</h4>
+    <p>Statistical models that predict the next word based on the previous N words, introducing concepts like smoothing and perplexity.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Feedforward Neural LMs</h4>
+    <p>The first attempts to use neural networks for language, which introduced distributed representations but suffered from fixed context windows.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Recurrent Neural Networks (RNNs)</h4>
+    <p>Architectures designed for sequences, introducing the idea of a hidden state to maintain memory of past elements.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>LSTMs & GRUs</h4>
+    <p>Advanced RNN variants that use gating mechanisms to solve the vanishing/exploding gradient problem and capture long-term dependencies.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Sequence-to-Sequence (Seq2Seq)</h4>
+    <p>The encoder-decoder framework that became the standard for tasks like machine translation, combining RNNs to map input sequences to output sequences.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Attention Mechanisms</h4>
+    <p>The key innovation that allowed Seq2Seq models to selectively focus on relevant parts of the input, overcoming the bottleneck of a single context vector.</p>
+  </div>
+</div>
 
-**2. RNN Architecture Comparison**
-Implement RNN, LSTM, and GRU from scratch in PyTorch. Demonstrate solutions to vanishing gradient problem and compare performance. Include initialization, gradient clipping, and regularization.
+---
 
-**3. Seq2Seq with Attention Implementation**
-Build complete sequence-to-sequence model for translation or summarization. Implement attention mechanisms and beam search. Evaluate using BLEU scores and analyze attention patterns.
+## 🛠️ Hands-On Labs
 
-**4. Limitations Analysis and Evolution Study**
-Create comprehensive analysis of traditional model limitations. Demonstrate why transformers were needed and how they solve specific problems. Include computational complexity comparisons.
+1.  **N-Gram Model with Smoothing**: Implement a word-level N-gram model from scratch, applying various smoothing techniques to handle unseen n-grams and evaluating with perplexity.
+2.  **RNN Architecture Comparison**: Build and train an RNN, LSTM, and GRU on a sentiment analysis task, comparing their ability to handle sequences of varying lengths and avoid vanishing gradients.
+3.  **Seq2Seq with Attention**: Create a character-level machine translation model using an RNN-based Seq2Seq architecture with Bahdanau-style attention, and visualize the attention weights.
+
+---
+
+## 🧠 Further Reading
+
+- **[Jurafsky & Martin, "Speech and Language Processing"](https://web.stanford.edu/~jurafsky/slp3/)**: The definitive textbook chapters on N-gram models and RNNs.
+- **[Colah's Blog: "Understanding LSTM Networks"](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)**: A classic, highly-cited explanation of LSTMs.
+- **[Bahdanau et al. (2014), "Neural Machine Translation by Jointly Learning to Align and Translate"](https://arxiv.org/abs/1409.0473)**: The original paper introducing the attention mechanism in NLP.

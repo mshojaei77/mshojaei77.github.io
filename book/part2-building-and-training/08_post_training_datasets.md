@@ -1,52 +1,63 @@
 ---
-layout: default
-title: Post-Training Datasets (for Fine-Tuning)
-parent: Course
+title: "Post-Training Datasets"
 nav_order: 8
+parent: "Part II: Building & Training Models"
+grand_parent: "LLMs: From Foundation to Production"
+description: "A look into the creation of datasets for post-training phases like supervised fine-tuning and preference alignment, covering instruction tuning, preference pairs, and synthetic data."
+keywords: "Instruction Tuning, Post-Training, Supervised Fine-Tuning, Preference Data, RLHF, DPO, Synthetic Data, Alpaca, ShareGPT"
 ---
 
-# Post-Training Datasets (for Fine-Tuning)
+# 8. Post-Training Datasets
+{: .no_toc }
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Data preparation
+**Difficulty:** Intermediate | **Prerequisites:** Data Preparation
+{: .fs-6 .fw-300 }
 
-## Key Topics
-- **Instruction Dataset Creation and Curation**
-  - High-Quality Instruction-Response Pairs
-  - Domain-Specific Dataset Creation
-  - Multi-Turn Conversation Datasets
-- **Chat Templates and Conversation Formatting**
-  - Hugging Face Chat Templates
-  - System Prompts and Message Formatting
-  - Special Token Handling
-- **Synthetic Data Generation for Post-Training**
-  - LLM-Generated Instruction Data
-  - Quality Control and Filtering
-  - Data Augmentation Techniques
-- **Quality Control and Filtering Strategies**
-  - Automated Quality Scoring
-  - Bias Detection and Mitigation
-  - Response Quality Assessment
-- **Multi-turn Conversation Datasets**
-  - Conversation Flow Design
-  - Context Management
-  - Turn-Taking Optimization
+A pre-trained model knows a lot about language, but it doesn't know how to follow instructions or have a conversation. This chapter focuses on creating the specialized datasets used in post-training to teach the model to be a helpful assistant, covering both instruction-following and preference data.
 
-## Skills & Tools
-- **Libraries:** Hugging Face Datasets, Alpaca, ShareGPT, Distilabel
-- **Concepts:** Instruction Following, Chat Templates, Response Quality
-- **Tools:** Data annotation platforms, Quality scoring systems
-- **Modern Frameworks:** LIMA, Orca, Vicuna, UltraChat
+---
 
-## 🔬 Hands-On Labs
+## 📚 Core Concepts
 
-**1. Custom Chat Template for Role-Playing and Complex Conversations**
-Design and implement custom Hugging Face chat templates for specialized applications like role-playing models. Handle system prompts, user messages, bot messages, and special tokens for actions or internal thoughts. Create templates supporting multi-turn conversations with proper context management.
+<div class="concept-grid">
+  <div class="concept-grid-item">
+    <h4>Instruction-Following Datasets</h4>
+    <p>Datasets composed of `(instruction, response)` pairs that teach a model how to follow commands and answer questions. (e.g., Alpaca, Dolly)</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Preference Datasets</h4>
+    <p>Datasets of prompts with multiple responses ranked by human preference (e.g., `(prompt, chosen_response, rejected_response)`), used for alignment.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Synthetic Data Generation</h4>
+    <p>Using a powerful "teacher" model (like GPT-4) to generate vast quantities of instruction or preference data to train a smaller "student" model.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Data Quality & Curation</h4>
+    <p>The critical importance of quality over quantity in post-training datasets, and methods for filtering and curating them.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Chat Templates</h4>
+    <p>The specific formatting rules a model expects for conversational data, including roles (system, user, assistant) and special tokens.</p>
+  </div>
+  <div class="concept-grid-item">
+    <h4>Multi-turn Conversations</h4>
+    <p>Creating datasets that represent coherent, multi-turn dialogues, which are more complex than single instruction-response pairs.</p>
+  </div>
+</div>
 
-**2. High-Quality Instruction Dataset Creation Pipeline**
-Build comprehensive pipeline for creating instruction datasets for specific tasks. Manually curate high-quality examples and use them to prompt LLMs to generate larger datasets. Implement quality filters, data annotation best practices, and validation systems to ensure dataset integrity.
+---
 
-**3. Synthetic Conversation Generator for Training**
-Create advanced synthetic conversation generator producing diverse, high-quality training conversations. Implement quality control mechanisms, conversation flow validation, and domain-specific conversation patterns. Compare synthetic data effectiveness against real conversation data.
+## 🛠️ Hands-On Labs
 
-**4. Dataset Quality Assessment and Optimization System**
-Develop comprehensive system for evaluating instruction dataset quality across multiple dimensions. Implement automated quality scoring, bias detection, and optimization techniques. Create tools for dataset composition analysis and capability-specific optimization. 
+1.  **Instruction Dataset Creation**: Manually write 20 high-quality instruction-response pairs for a specific domain, then use those as examples to prompt an LLM to generate 100 more.
+2.  **Explore Public Datasets**: Download and analyze a popular instruction-following dataset like Alpaca or a preference dataset like the Anthropic Helpful & Harmless dataset.
+3.  **Chat Template Implementation**: Create a Hugging Face chat template for a custom conversational format and use it to format a dialogue correctly.
+
+---
+
+## 🧠 Further Reading
+
+- **[Taori et al. (2023), "Alpaca: A Strong, Replicable Instruction-Following Model"](https://crfm.stanford.edu/2023/03/13/alpaca.html)**: The blog post that kicked off the wave of open-source instruction-tuned models.
+- **[Bai et al. (2022), "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback"](https://arxiv.org/abs/2204.05862)**: The paper from Anthropic detailing their data collection process for RLHF.
+- **[The `distilabel` library](https://github.com/argilla-io/distilabel)**: A modern framework for generating synthetic datasets using LLMs. 
