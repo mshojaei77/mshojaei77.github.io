@@ -331,7 +331,6 @@ For a practical, hands-on next step, we highly recommend Andrej Karpathy's class
 4.  **Optimizer Showdown**: Benchmark different optimizers (SGD, Adam, AdamW) and learning rate schedulers on a small image dataset like CIFAR-10.
 
 ---
-
 ## 🧠 Further Reading
 
 - **[3Blue1Brown: "But what is a neural network?"](https://www.youtube.com/watch?v=aircAruvnKk)**: An intuitive, visual introduction to the core concepts.

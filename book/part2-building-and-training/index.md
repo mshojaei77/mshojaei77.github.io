@@ -10,9 +10,3 @@ keywords: "Data Preparation, Pre-Training, Supervised Fine-Tuning, Preference Al
 # Part II: Building & Training
 
 This part covers building, training, and fine-tuning large language models including data preparation, pre-training, and preference alignment.
-
-1. [Data Preparation](06_data_preparation.html)
-2. [Pre-Training Large Language Models](07_pre_training_large_language_models.html)
-3. [Post-Training Datasets](08_post_training_datasets.html)
-4. [Supervised Fine-Tuning](09_supervised_fine_tuning.html)
-5. [Preference Alignment](10_preference_alignment.html)
