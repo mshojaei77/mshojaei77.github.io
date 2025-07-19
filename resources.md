@@ -122,7 +122,7 @@
 - [Lena Voita - Word Embeddings](https://lena-voita.github.io/nlp_course/word_embeddings.html)
 
 **Hands-On Implementations:**
-- [Interactive Word2Vec Tutorial](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)
+- [Interactive Word2Vec Tutorials](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)
 - [Word2vec from Scratch](https://jaketae.github.io/study/word2vec/)
 - [Training Sentence Transformers](https://huggingface.co/blog/train-sentence-transformers)
 - [Sentence Transformers](https://www.sbert.net/)
@@ -202,7 +202,7 @@
 **Visual Explanations:**
 - [The Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)
 - [The Annotated Transformer](http://nlp.seas.harvard.edu/2018/04/03/attention.html)
-- [Transformer (Google AI Blog)](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)
+- [Transformer (Google AI Tutorials)](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)
 - [Visual Intro to Transformers](https://www.youtube.com/watch?v=wjZofJX0v4M)
 - [LLM Visualization](https://bbycroft.net/llm)
 - [nanoGPT](https://www.youtube.com/watch?v=kCc8FmEb1nY)
@@ -231,8 +231,8 @@
 - [Layer Normalization](https://arxiv.org/pdf/1607.06450.pdf)
 
 **Implementation Tutorials:**
-- [PyTorch Transformer Tutorial](https://pytorch.org/tutorials/beginner/transformer_tutorial.html)
-- [TensorFlow Transformer Tutorial](https://www.tensorflow.org/tutorials/text/transformer)
+- [PyTorch Transformer Tutorials](https://pytorch.org/tutorials/beginner/transformer_tutorial.html)
+- [TensorFlow Transformer Tutorials](https://www.tensorflow.org/tutorials/text/transformer)
 
 **Textbook Resources:**
 - [Jurafsky and Martin Chapter 9](https://web.stanford.edu/~jurafsky/slp3/9.pdf)
@@ -638,7 +638,7 @@
 - [LMQL Overview](https://lmql.ai/docs/language/overview.html)
 - [Streamlit - Build LLM App](https://docs.streamlit.io/knowledge-base/tutorials/build-conversational-apps)
 - [HF LLM Inference Container](https://huggingface.co/blog/sagemaker-huggingface-llm)
-- [Philschmid Blog](https://www.philschmid.de/)
+- [Philschmid Tutorials](https://www.philschmid.de/)
 - [SkyPilot](https://skypilot.readthedocs.io/en/latest/)
 - [LLMOps: Building Real-World Applications With Large Language Models](https://www.comet.com/site/llm-course/)
 - [Evaluating and Debugging Generative AI](https://www.deeplearning.ai/short-courses/evaluating-debugging-generative-ai/)
@@ -706,7 +706,7 @@
 - [LangChain Memory Types](https://python.langchain.com/docs/how_to/chatbots_memory/)
 - [RAG Pipeline Metrics](https://docs.ragas.io/en/stable/concepts/metrics/index.html)
 - [LangChain Query Construction](https://blog.langchain.dev/query-construction/)
-- [LangChain SQL Tutorial](https://python.langchain.com/docs/tutorials/sql_qa/)
+- [LangChain SQL Tutorials](https://python.langchain.com/docs/tutorials/sql_qa/)
 - [Applying OpenAI's RAG](https://blog.langchain.dev/applying-openai-rag/)
 - [DSPy in 8 Steps](https://dspy-docs.vercel.app/docs/building-blocks/solving_your_task)
 - [Improve ChatGPT with Knowledge Graphs](https://mlabonne.github.io/blog/posts/Article_Improve_ChatGPT_with_Knowledge_Graphs.html)

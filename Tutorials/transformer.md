@@ -1,7 +1,7 @@
 ---
 title: "The Transformer"
 nav_order: 3
-parent: Blog
+parent: Tutorials
 layout: default
 ---
 

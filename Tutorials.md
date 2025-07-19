@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Blog
+title: Tutorials
 nav_order: 7
 has_children: true
 ---

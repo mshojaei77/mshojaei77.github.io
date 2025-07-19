@@ -1,7 +1,7 @@
 ---
 title: "Tokenization"
 nav_order: 6
-parent: Blog
+parent: Tutorials
 layout: default
 ---
 # Tokenization in Large Language Models

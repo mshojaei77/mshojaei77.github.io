@@ -1,7 +1,7 @@
 ---
 title: "Intro to LLMs"
 nav_order: 1
-parent: Blog
+parent: Tutorials
 layout: default
 ---
 

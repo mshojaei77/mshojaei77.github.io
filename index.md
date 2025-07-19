@@ -1,7 +1,7 @@
----
+
 title: "Home"
 nav_order: 0
----
+
 # 👋 Hello, I'm Mohammad Shojaei
 
 ### Machine Learning Engineer | LLM Specialist | Production Systems
@@ -12,7 +12,7 @@ nav_order: 0
 
 [📧 Email](mailto:shojaei.dev@gmail.com) • [💼 LinkedIn](https://www.linkedin.com/in/mshojaei77) • [🐙 GitHub](https://github.com/mshojaei77) • [🤗 Hugging Face](https://huggingface.co/mshojaei77)
 
----
+
 
 ## 🚀 What I Do
 
@@ -25,29 +25,16 @@ I design, develop, and deploy **LLM-powered products** from RAG systems to multi
 - 🏥 **70% EEG artifact detection** accuracy using 1D-CNN & Transformer hybrids in healthcare
 - 🤗 **100K+ downloads** across 12 Persian LLMs and 21 datasets on Hugging Face
 
----
-
-## 🌟 Open Source & Projects
-
-| Project | Description | Impact |
-|---------|-------------|---------|
-| **ReActMCP** | Reactive agent framework for real-time web search | [140⭐](https://github.com/mshojaei77/ReActMCP) |
-| **Ollama-Desktop & RAG** | Local GUI & FAISS-powered RAG toolkit | [60⭐](https://github.com/mshojaei77/ollama-desktop) |
-| **Persian LLM Suite** | Fine-tuned Gemma-3 & Phi-3 models + tokenizers | [100K+ downloads](https://huggingface.co/mshojaei77) |
-
----
-
 ## 🎓 Learn With Me
 
 Master LLMs through my **comprehensive learning resources** built from production experience:
 
 - 🗺️ [Complete LLM Roadmap](roadmap.md) - End-to-end learning path
-- ⚡ [Quick Reference Guide](mini-roadmap.md) - Essential concepts
 - ❓ [Interview Preparation](interview.md) - 400+ technical questions
 
 *(Trusted by 20K+ practitioners worldwide)*
 
----
+
 
 ## 🤝 Let's Connect
 
@@ -61,13 +48,11 @@ I'm **actively seeking ML Engineer roles** with **visa sponsorship** focusing on
 
 [📧 shojaei.dev@gmail.com](mailto:shojaei.dev@gmail.com) • [💼 LinkedIn](https://www.linkedin.com/in/mshojaei77)
 
----
+
 
 ### Full Background
 
 Explore my complete technical profile, experience, and achievements: [Resume & Portfolio →](about.md)
-
----
 
 <p align="center"><em>Transforming AI research into production systems that drive business value.</em></p>
 

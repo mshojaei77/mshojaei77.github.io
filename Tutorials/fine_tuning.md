@@ -1,7 +1,7 @@
 ---
 title: "Fine-Tuning Large Language Models"
 nav_order: 50
-parent: Blog
+parent: Tutorials
 layout: default
 ---
 
