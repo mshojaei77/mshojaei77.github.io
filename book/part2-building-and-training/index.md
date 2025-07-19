@@ -3,13 +3,13 @@ title: "Part II: Building & Training"
 nav_order: 2
 parent: "LLMs: From Foundation to Production"
 has_children: true
-description: "Part II focuses on building, training, and fine-tuning large language models, covering data preparation, pre-training, supervised fine-tuning, and preference alignment."
+description: "Part II covers building, training, and fine-tuning large language models including data preparation, pre-training, and preference alignment."
 keywords: "Data Preparation, Pre-Training, Supervised Fine-Tuning, Preference Alignment, RLHF, DPO, Model Training"
 ---
 
 # Part II: Building & Training
 
-This part focuses on building, training, and fine-tuning large language models, covering data preparation, pre-training, supervised fine-tuning, and preference alignment.
+This part covers building, training, and fine-tuning large language models including data preparation, pre-training, and preference alignment.
 
 1. [Data Preparation](06_data_preparation.html)
 2. [Pre-Training Large Language Models](07_pre_training_large_language_models.html)

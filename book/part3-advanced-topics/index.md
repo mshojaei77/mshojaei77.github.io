@@ -3,13 +3,13 @@ title: "Part III: Advanced Topics"
 nav_order: 3
 parent: "LLMs: From Foundation to Production"
 has_children: true
-description: "Part III explores advanced, research-grade topics including model evaluation, reasoning, quantization, inference optimization, and novel architecture variants."
-keywords: "Model Evaluation, Reasoning, Quantization, Inference Optimization, Mixture of Experts, MoE, LLM Security"
+description: "Part III covers advanced techniques including model evaluation, reasoning, quantization, inference optimization, and architecture variants."
+keywords: "Model Evaluation, Reasoning, Quantization, Inference Optimization, Mixture of Experts, MoE, Architecture Variants"
 ---
 
 # Part III: Advanced Topics
 
-This part explores advanced, research-grade topics including model evaluation, reasoning, quantization, inference optimization, and novel architecture variants.
+This part covers advanced techniques including model evaluation, reasoning, quantization, inference optimization, and architecture variants.
 
 1. [Model Evaluation](11_model_evaluation.html)
 2. [Reasoning](12_reasoning.html)

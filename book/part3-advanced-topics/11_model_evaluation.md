@@ -13,11 +13,11 @@ keywords: "Model Evaluation, Benchmarks, MMLU, GSM8K, HumanEval, LLM-as-a-Judge,
 **Difficulty:** Intermediate | **Prerequisites:** Statistics, Model Training
 {: .fs-6 .fw-300 }
 
-How do we know if one model is "better" than another? This chapter tackles the complex and evolving field of LLM evaluation. We'll explore standardized benchmarks for measuring capabilities, the emerging practice of using LLMs to judge other LLMs, and the critical importance of testing for safety and bias.
+This chapter addresses the complex and evolving field of LLM evaluation. We explore standardized benchmarks for measuring capabilities, the emerging practice of using LLMs to judge other LLMs, and the critical importance of testing for safety and bias.
 
 ---
 
-## 📚 Core Concepts
+## Core Concepts
 
 <div class="concept-grid">
   <div class="concept-grid-item">
@@ -48,7 +48,7 @@ How do we know if one model is "better" than another? This chapter tackles the c
 
 ---
 
-## 🛠️ Hands-On Labs
+## Practical Exercises
 
 1.  **Run a Standard Benchmark**: Use the EleutherAI Eval Harness to evaluate a model of your choice on a benchmark like MMLU or HellaSwag.
 2.  **LLM-as-a-Judge**: Create a simple "LLM-as-a-judge" script that uses a powerful LLM to compare and score the outputs of two different models on a set of prompts.
@@ -56,7 +56,7 @@ How do we know if one model is "better" than another? This chapter tackles the c
 
 ---
 
-## 🧠 Further Reading
+## Further Reading
 
 - **[Hendrycks et al. (2020), "Measuring Massive Multitask Language Understanding"](https://arxiv.org/abs/2009.03300)**: The paper introducing the MMLU benchmark.
 - **[Zheng et al. (2023), "Judging LLM-as-a-judge with MT-Bench and Chatbot Arena"](https://arxiv.org/abs/2306.05685)**: A key paper on the LLM-as-a-judge methodology.
