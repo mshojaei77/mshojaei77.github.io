@@ -114,29 +114,12 @@ LoRA, QLoRA, PEFT, instruction tuning, domain adaptation, model merging
 - **[The LoRA Cookbook: Fine-Tuning Large Language Models for Everyone](https://medium.com/@mshojaei77/the-lora-cookbook-fine-tuning-large-language-models-for-everyone-a1234567890a)**
 
 #### 💻 Interactive Notebooks:
-- **[🟠 Fine-tune Mistral-7b with QLoRA](https://colab.research.google.com/drive/1o_w0KastmEJNVwT5GoqMCciH-18ca5WS?usp=sharing)**
-- **[🟠 LazyMergekit](https://colab.research.google.com/drive/1obulZ1ROXHjYLn6PPZJwRR6GzgQogxxb?usp=sharing)**
-- **[🟠 LazyAxolotl](https://colab.research.google.com/drive/1TsDKNo2riwVmU55gjuBgB1AXVtRRfRHW?usp=sharing)**
-- **[🟠 AutoQuant](https://colab.research.google.com/drive/1b6nqC7UZVt8bx4MksX7s656GXPM-eWw4?usp=sharing)**
-- **[🟠 Model Family Tree](https://colab.research.google.com/drive/1s2eQlolcI1VGgDhqWIANfkfKvcKrMyNr?usp=sharing)**
-- **[🟠 ZeroSpace](https://colab.research.google.com/drive/1LcVUW5wsJTO2NGmozjji5CkC--646LgC)**
-- **[🟠 AutoAbliteration](https://colab.research.google.com/drive/1RmLv-pCMBBsQGXQIM8yF-OdCNyoylUR1?usp=sharing)**
-- **[🟠 AutoDedup](https://colab.research.google.com/drive/1o1nzwXWAa8kdkEJljbJFW1VuI-3VZLUn?usp=sharing)**
-- **[🟠 Fine-tune LLMs with Axolotl (Colab)](https://colab.research.google.com/drive/134SeMeoVCT0Sh-iRHlJ6wb_JBApspbkN?usp=sharing)**
-- **[🟠 OpenAI GPT-4o Fine-tuning (Colab)](https://colab.research.google.com/drive/12ZRobn4GHPHLWuefJ4JYoX3TEhwXBM-T?usp=sharing)**
-- **[🟠 GRPO Fine-tune (Colab)](https://colab.research.google.com/drive/155cGUY1kLOtb7b0ycHdW7cZbaK3na856?usp=sharing)**
-- **[🟠 Llama 1B GRPO Training (Colab)](https://colab.research.google.com/drive/15o_Grw4PGnVNj03uAaB2Juctil_ADy_g?usp=sharing)**
-- **[🟠 Qwen GRPO Training (Colab)](https://colab.research.google.com/drive/18HV_LDfIEq5NUApKpduVGdLxTGaEmNDK?usp=sharing)**
-- **[🟠 Mergekit (Colab)](https://colab.research.google.com/drive/19k6DRX3h2_s1J7VwQl3fJKx-q5jrd7a_?usp=sharing)**
-- **[🟠 Merge Parameters (Colab)](https://colab.research.google.com/drive/1tPIPqKL_pUrxTst-7X59-EyXVCK-z6Rm?usp=sharing)**
 - **[🟠 Gemma SFT (Colab)](https://colab.research.google.com/drive/1fF4iPcBDoq4W-8z1eq53dA4VcZcXqF_W?usp=sharing)**
 - **[🟠 Gemma3 4B (Colab)](https://colab.research.google.com/drive/1AbHtKyeyuZSZBEwrAbgfTyc4Fee7smQB?usp=sharing)**
 - **[🟠 Gemma3 4B Persian (Colab)](https://colab.research.google.com/drive/1ENgkVdgO9AOtBRFq0Vykctgazpk2wvcL?usp=sharing)**
 - **[🟠 Gemma3 4B Persian v2 (Colab)](https://colab.research.google.com/drive/1fiSXbawfI-EMvntaV81ORDnjKDKZhzAl?usp=sharing)**
 - **[🟠 Persian Gemma3 4B (Colab)](https://colab.research.google.com/drive/1gSeiaY5NcL51q0CZCbDCsPXt2DDhPFaS?usp=sharing)**
-- **[🟠 Qwen2.5 7B Alpaca (Colab)](https://colab.research.google.com/drive/1GRl5QMsQL56pB4O49jnPr_KA0uxam02E?usp=sharing)**
 - **[🟠 SFT (Supervised Fine-Tuning) (Colab)](https://colab.research.google.com/drive/1tdPUEUQb97HkNObhQD8YsJ1zy4sGAPjU?usp=sharing)**
-- **[🟠 GGUF Maker (Colab)](https://colab.research.google.com/drive/1gw4QwKABzwJgVzs91_lEUW5R0y_GFz52?usp=sharing)**
 
 ### 10. Preference Alignment
 RLHF, DPO, reward modeling, Constitutional AI, safety evaluation
@@ -260,7 +243,7 @@ Model versioning, CI/CD pipelines, monitoring, deployment strategies, cost optim
 
 ### 🎵 Persian Audio Datasets:
 - **[persian_tts_merged](https://huggingface.co/mshojaei77/persian_tts_merged)** - Persian TTS dataset with 82.2k records **(60 downloads)**
-- **[farsi_asr_merged](https://huggingface.co/mshojaei77/farsi_asr_merged)** - Persian ASR dataset **(12 downloads, Private)**
+- **[farsi_asr_merged](https://huggingface.co/mshojaei77/farsi_asr_merged)** - Persian ASR dataset **(Private)**
 
 ## 🌐 Multi-Language & Specialized Datasets
 
@@ -301,24 +284,7 @@ Model versioning, CI/CD pipelines, monitoring, deployment strategies, cost optim
 
 ### 📚 Educational Resources:
 - **[LLMs-Journey](https://github.com/mshojaei77/LLMs-Journey)** - Progress tracking with code, projects, and notes
-- **[ML-Journey](https://github.com/mshojaei77/ML-Journey)** - Machine Learning journey with hands-on projects
 - **[Python-Course](https://github.com/mshojaei77/Python-Course)** - Teaching materials from Kazerun University course
-
-
-
----
-
-# 📊 Impact & Metrics
-
-| **Platform** | **Metric** | **Value** |
-|-------------|------------|-----------|
-| 🤗 Hugging Face | Model Downloads | 1.8K+ |
-| 🤗 Hugging Face | Dataset Downloads | 500+ |
-| 🐙 GitHub | Total Stars | 600+ |
-| 📄 Medium | Article Views | 100K+ |
-| 🟠 Colab | Notebook Runs | 10K+ |
-| 👥 GitHub | Followers | 184 |
-| 🤗 Hugging Face | Followers | 52 |
 
 ---
 

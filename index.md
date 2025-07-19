@@ -56,3 +56,5 @@ Explore my complete technical profile, experience, and achievements: [Resume & P
 
 <p align="center"><em>Transforming AI research into production systems that drive business value.</em></p>
 
+<iframe src="https://mshojaei77.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
+
