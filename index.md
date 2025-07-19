@@ -30,7 +30,8 @@ I design, develop, and deploy **LLM-powered products** from RAG systems to multi
 
 Master LLMs through my **comprehensive learning resources** built from production experience:
 
-- 🗺️ [Complete LLM Roadmap](roadmap.md) - End-to-end learning path
+- 📖 [LLMs: From Foundations to Production](book/) - Complete interactive book
+- 🗺️ [Learning Roadmap](roadmap.md) - High-level overview & guidance
 - ❓ [Interview Preparation](interview.md) - 400+ technical questions
 
 *(Trusted by 20K+ practitioners worldwide)*
@@ -56,6 +57,4 @@ I'm **actively seeking ML Engineer roles** with **visa sponsorship** focusing on
 Explore my complete technical profile, experience, and achievements: [Resume & Portfolio →](about.md)
 
 <p align="center"><em>Transforming AI research into production systems that drive business value.</em></p>
-
-<iframe src="https://mshojaei77.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
 

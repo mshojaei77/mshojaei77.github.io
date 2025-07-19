@@ -50,7 +50,7 @@ Word2Vec, GloVe, BERT, contextual embeddings, semantic search, multimodal embedd
 - **[Sentence Embedding Techniques](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)**
 
 #### 💻 Interactive Notebooks:
-- **[🟠 Interactive Word2Vec Tutorials](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)**
+- **[🟠 Interactive Word2Vec Posts](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)**
 - **[🟠 Embedding Techniques (Colab)](https://colab.research.google.com/drive/1EsafsnpONd7VI2hlTRJ0PYjrTmvSTA8x?usp=sharing)**
 - **[🟠 Pre-trained Embeddings (Colab)](https://colab.research.google.com/drive/1pPB-7ZIzyJ88SR83DqGUZKLHj4y4TAHy?usp=sharing)**
 - **[🟠 Traditional Word Embedding (Colab)](https://colab.research.google.com/drive/1ufvWaTDL0lK2tyTwdRBnXouHIMjBiKBC?usp=sharing)**

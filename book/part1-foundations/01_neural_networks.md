@@ -1,7 +1,8 @@
 ---
-title: "Neural Networks"
+title: "Chapter 1: Neural Networks Foundations for LLMs"
 nav_order: 1
-parent: Course
+parent: "Part 1: The Foundations"
+grand_parent: "LLMs: From Foundations to Production"
 layout: default
 ---
 
@@ -36,8 +37,8 @@ layout: default
 
 **📚 Learning Resources:**
 - **Cornell CS4780 slides – "The Perceptron Algorithm"** Derives update rule and geometric intuition. ([PDF](https://www.cs.cornell.edu/courses/cs4780/2023fa/slides/Perceptron_no_animation.pdf))
-- **Pablo Insente blog** Bridges single-layer perceptron ➜ MLP with NumPy + PyTorch code. ([Tutorials](https://pabloinsente.github.io/the-multilayer-perceptron))
-- **Technion CS236605 Tutorials 3** Hands-on back-prop for MLPs with PyTorch. ([Notebook](https://vistalab-technion.github.io/cs236605/tutorials/tutorial_03/))
+- **Pablo Insente blog** Bridges single-layer perceptron ➜ MLP with NumPy + PyTorch code. ([Posts](https://pabloinsente.github.io/the-multilayer-perceptron))
+- **Technion CS236605 Posts 3** Hands-on back-prop for MLPs with PyTorch. ([Notebook](https://vistalab-technion.github.io/cs236605/tutorials/tutorial_03/))
 
 #### **Network Structure Design**
 - Layer Sizing Considerations
@@ -66,7 +67,7 @@ layout: default
 
 **📚 Learning Resources:**
 - **3Blue1Brown – "Back-propagation, Intuitively"** Gradient flow without messy indices. ([YouTube](https://www.youtube.com/watch?pp=0gcJCfwAo7VqN5tD&v=Ilg3gGewQ5U))
-- **Colah's blog** Breaks chain-rule math into tiny graph transforms. ([Tutorials](https://colah.github.io/posts/2015-08-Backprop/))
+- **Colah's blog** Breaks chain-rule math into tiny graph transforms. ([Posts](https://colah.github.io/posts/2015-08-Backprop/))
 - **PyTorch AutoGrad Guide** Practical autodiff for modern frameworks. ([Docs](https://pytorch.org/docs/stable/autograd.html))
 
 #### **Loss Functions**
@@ -87,7 +88,7 @@ layout: default
 
 **📚 Learning Resources:**
 - **Keras EarlyStopping** Canonical pattern for validation monitoring. ([Docs](https://keras.io/api/callbacks/early_stopping/))
-- **Karpathy – "A Recipe for Training Neural Networks"** Battle-tested checklist for training. ([Tutorials](https://karpathy.github.io/2019/04/25/recipe/))
+- **Karpathy – "A Recipe for Training Neural Networks"** Battle-tested checklist for training. ([Posts](https://karpathy.github.io/2019/04/25/recipe/))
 
 #### **Optimization Algorithms**
 - Stochastic Gradient Descent (SGD)
@@ -96,7 +97,7 @@ layout: default
 - Gradient Clipping and Normalization
 
 **📚 Learning Resources:**
-- **Ruder 2016 – "Overview of Gradient Descent Optimization"** Comprehensive survey of SGD variants. ([Tutorials](https://www.ruder.io/optimizing-gradient-descent/))
+- **Ruder 2016 – "Overview of Gradient Descent Optimization"** Comprehensive survey of SGD variants. ([Posts](https://www.ruder.io/optimizing-gradient-descent/))
 - **Adam Paper** Kingma & Ba 2014 original ICLR paper. ([arXiv](https://arxiv.org/abs/1412.6980))
 - **AdamW Paper** Loshchilov & Hutter 2017 - decoupled weight decay. ([arXiv](https://arxiv.org/abs/1711.05101))
 - **PyTorch Scheduler Docs** StepLR, CosineAnnealingLR implementations. ([Docs](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.LRScheduler.html))
@@ -112,7 +113,7 @@ layout: default
 **📚 Learning Resources:**
 - **Dropout Paper** Srivastava et al. 2014 original technique. ([arXiv](https://arxiv.org/abs/1207.0580))
 - **Batch Normalization** Ioffe & Szegedy 2015 - crucial for modern training. ([arXiv](https://arxiv.org/abs/1502.03167))
-- **TensorFlow Data Augmentation Tutorials** On-the-fly transforms for images. ([TensorFlow](https://www.tensorflow.org/tutorials/images/data_augmentation))
+- **TensorFlow Data Augmentation Posts** On-the-fly transforms for images. ([TensorFlow](https://www.tensorflow.org/tutorials/images/data_augmentation))
 - **Torchvision v2 Transforms** Unified API for multi-modal augmentation. ([PyTorch](https://docs.pytorch.org/vision/main/transforms.html))
 
 

@@ -55,7 +55,7 @@
 - [3Blue1Brown - But What is a Neural Network?](https://www.youtube.com/watch?v=aircAruvnKk)
 - [Deep Learning Crash Course](https://www.youtube.com/watch?v=VyWAvY2CF9c)
 - [Fast.ai - Practical Deep Learning](https://course.fast.ai/)
-- [Patrick Loeber - PyTorch Tutorials](https://www.youtube.com/playlist?list=PLqnslRFeH2UrcDBWF5mfPGpqQDSta6VK4)
+- [Patrick Loeber - PyTorch Posts](https://www.youtube.com/playlist?list=PLqnslRFeH2UrcDBWF5mfPGpqQDSta6VK4)
 - [Deep Learning Book](https://www.deeplearningbook.org/)
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
 - [Introduction to Deep Learning](https://mitpress.mit.edu/books/introduction-deep-learning)
@@ -78,7 +78,7 @@
 
 ### Tokenization
 
-**Core Concepts & Tutorials:**
+**Core Concepts & Posts:**
 - [Introduction to Tokenization: A Theoretical Perspective](https://medium.com/@mshojaei77/introduction-to-tokenization-a-theoretical-perspective-b1cc22fe98c5)
 - [Understanding BPE Tokenization](https://medium.com/@mshojaei77/understanding-bpe-tokenization-a-hands-on-tutorial-80570314b12f)
 - [Fast Tokenizers: How Rust is Turbocharging NLP](https://medium.com/@mshojaei77/fast-tokenizers-how-rust-is-turbocharging-nlp-dd12a1d13fa9)
@@ -112,7 +112,7 @@
 
 ### Embeddings
 
-**Core Concepts & Tutorials:**
+**Core Concepts & Posts:**
 - [Word Embeddings Deep Dive](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)
 - [Contextual Embedding Guide](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)
 - [Sentence Embedding Techniques](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)
@@ -122,7 +122,7 @@
 - [Lena Voita - Word Embeddings](https://lena-voita.github.io/nlp_course/word_embeddings.html)
 
 **Hands-On Implementations:**
-- [Interactive Word2Vec Tutorials](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)
+- [Interactive Word2Vec Posts](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)
 - [Word2vec from Scratch](https://jaketae.github.io/study/word2vec/)
 - [Training Sentence Transformers](https://huggingface.co/blog/train-sentence-transformers)
 - [Sentence Transformers](https://www.sbert.net/)
@@ -202,7 +202,7 @@
 **Visual Explanations:**
 - [The Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)
 - [The Annotated Transformer](http://nlp.seas.harvard.edu/2018/04/03/attention.html)
-- [Transformer (Google AI Tutorials)](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)
+- [Transformer (Google AI Posts)](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)
 - [Visual Intro to Transformers](https://www.youtube.com/watch?v=wjZofJX0v4M)
 - [LLM Visualization](https://bbycroft.net/llm)
 - [nanoGPT](https://www.youtube.com/watch?v=kCc8FmEb1nY)
@@ -230,9 +230,9 @@
 - [Understanding Layer Normalization](https://arxiv.org/abs/1607.06450)
 - [Layer Normalization](https://arxiv.org/pdf/1607.06450.pdf)
 
-**Implementation Tutorials:**
-- [PyTorch Transformer Tutorials](https://pytorch.org/tutorials/beginner/transformer_tutorial.html)
-- [TensorFlow Transformer Tutorials](https://www.tensorflow.org/tutorials/text/transformer)
+**Implementation Posts:**
+- [PyTorch Transformer Posts](https://pytorch.org/tutorials/beginner/transformer_tutorial.html)
+- [TensorFlow Transformer Posts](https://www.tensorflow.org/tutorials/text/transformer)
 
 **Textbook Resources:**
 - [Jurafsky and Martin Chapter 9](https://web.stanford.edu/~jurafsky/slp3/9.pdf)
@@ -338,7 +338,7 @@
 **Implementation Examples:**
 - [Alpaca Fine-tuning](https://github.com/tatsu-lab/stanford_alpaca)
 
-**Tutorials:**
+**Posts:**
 - [Fine-tune Llama 3.1 with Unsloth](https://mlabonne.github.io/blog/posts/2024-07-29_Finetune_Llama31.html)
 - [Fine-tune Llama 3 with ORPO](https://mlabonne.github.io/blog/posts/2024-04-19_Fine_tune_Llama_3_with_ORPO.html)
 - [Fine-tune Mistral-7b with DPO](https://mlabonne.github.io/blog/posts/Fine_tune_Mistral_7b_with_DPO.html)
@@ -638,7 +638,7 @@
 - [LMQL Overview](https://lmql.ai/docs/language/overview.html)
 - [Streamlit - Build LLM App](https://docs.streamlit.io/knowledge-base/tutorials/build-conversational-apps)
 - [HF LLM Inference Container](https://huggingface.co/blog/sagemaker-huggingface-llm)
-- [Philschmid Tutorials](https://www.philschmid.de/)
+- [Philschmid Posts](https://www.philschmid.de/)
 - [SkyPilot](https://skypilot.readthedocs.io/en/latest/)
 - [LLMOps: Building Real-World Applications With Large Language Models](https://www.comet.com/site/llm-course/)
 - [Evaluating and Debugging Generative AI](https://www.deeplearning.ai/short-courses/evaluating-debugging-generative-ai/)
@@ -706,7 +706,7 @@
 - [LangChain Memory Types](https://python.langchain.com/docs/how_to/chatbots_memory/)
 - [RAG Pipeline Metrics](https://docs.ragas.io/en/stable/concepts/metrics/index.html)
 - [LangChain Query Construction](https://blog.langchain.dev/query-construction/)
-- [LangChain SQL Tutorials](https://python.langchain.com/docs/tutorials/sql_qa/)
+- [LangChain SQL Posts](https://python.langchain.com/docs/tutorials/sql_qa/)
 - [Applying OpenAI's RAG](https://blog.langchain.dev/applying-openai-rag/)
 - [DSPy in 8 Steps](https://dspy-docs.vercel.app/docs/building-blocks/solving_your_task)
 - [Improve ChatGPT with Knowledge Graphs](https://mlabonne.github.io/blog/posts/Article_Improve_ChatGPT_with_Knowledge_Graphs.html)

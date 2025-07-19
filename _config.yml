@@ -23,3 +23,9 @@ aux_links_new_tab: true
 
 # Enable navigation
 nav_external_links: true
+
+# Collections for book structure
+collections:
+  book:
+    output: true
+    permalink: /:collection/:path/
