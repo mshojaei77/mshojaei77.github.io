@@ -92,7 +92,8 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Footer content is now in _includes/footer_custom.html
+# Footer content
+footer_content: "Copyright &copy; 2022 Mohammad Shojaei. Distributed under <a href=\"https://opensource.org/licenses/MIT\">MIT License</a>."
 
 # Callouts configuration
 callouts_level: quiet
