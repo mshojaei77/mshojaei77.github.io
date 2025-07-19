@@ -1,10 +1,10 @@
 ---
-title: "Neural Networks"
-nav_order: 1
-parent: Course
 layout: default
+title: "Neural Networks"
+parent: Course
+nav_order: 1
+has_children: true
 ---
-
 
 ## 1. Neural Networks Foundations for LLMs
 ![image](https://github.com/user-attachments/assets/9c70c637-ffcb-4787-a20c-1ea5e4c5ba5e)
