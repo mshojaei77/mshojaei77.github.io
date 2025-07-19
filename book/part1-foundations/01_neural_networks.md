@@ -22,17 +22,7 @@ Before diving into the math, let's start with a simple analogy. Imagine you're t
 
 A neural network learns in a conceptually similar way. It's a system of simple, interconnected computational "neurons" that work together to find patterns. We show it thousands of pictures of cats (and non-cats), and with each example, it slightly adjusts the connections between its neurons. A connection that helps correctly identify a cat gets stronger, while a connection that leads to a wrong guess gets weaker. After enough training, the network has "learned" a complex set of features that, together, define a cat.
 
-```mermaid
-graph LR
-    A["Cat Images<br/>🐱🐱🐱"] --> B["Neural Network<br/>🧠"]
-    B --> C["Cat Features<br/>👁️ ears<br/>😸 whiskers<br/>🐾 patterns"]
-    C --> D["Classification<br/>✅ Cat<br/>❌ Not Cat"]
-    
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style C fill:#e8f5e8
-    style D fill:#fff3e0
-```
+<img width="800" height="520" alt="image" src="https://github.com/user-attachments/assets/74406fb8-3475-4b33-bb1d-4e4ffc7b3442" />
 
 At its core, a neural network is a powerful and flexible pattern-finding machine. It's a mathematical function that can, in theory, approximate *any* continuous function. This is known as the **Universal Approximation Theorem**, and it's why neural networks are such a powerful tool for a vast range of problems.
 
@@ -49,24 +39,7 @@ A single neuron is the atomic unit of a neural network. It's a simple calculator
 3.  **Adds a Bias**: A **bias** term is added to the sum. This is like a tunable offset that allows the neuron to shift its output, giving it more flexibility.
 4.  **Applies an Activation Function**: The result is passed through a non-linear **activation function**. This is a critical step that allows the network to learn complex, non-linear patterns. Without it, the entire network would just be a simple linear equation.
 
-```mermaid
-graph LR
-    X1["x₁"] --> W1["w₁"]
-    X2["x₂"] --> W2["w₂"]
-    X3["x₃"] --> W3["w₃"]
-    
-    W1 --> SUM["Σ(wᵢxᵢ) + b"]
-    W2 --> SUM
-    W3 --> SUM
-    
-    B["bias (b)"] --> SUM
-    SUM --> ACT["σ(z)"]
-    ACT --> OUT["output (a)"]
-    
-    style SUM fill:#e3f2fd
-    style ACT fill:#f3e5f5
-    style OUT fill:#e8f5e8
-```
+<img width="2022" height="1038" alt="image" src="https://github.com/user-attachments/assets/1cc17c3c-d8b7-40e0-94d5-dd3dca68ab8b" />
 
 Mathematically, the output (`a`) of a single neuron is:
 
@@ -85,15 +58,8 @@ Activation functions are the secret sauce. They introduce non-linearity, allowin
 *   **Tanh (Hyperbolic Tangent)**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`. Similar to sigmoid but squashes values to a range between -1 and 1. It's zero-centered, which can be helpful.
 *   **GELU (Gaussian Error Linear Unit)**: A smoother, more sophisticated function that has become popular in transformer models.
 
-> **📊 Image Placeholder**: *Activation Functions Comparison*
-> 
-> Create a 2x2 grid plot showing:
-> - Top left: ReLU function (sharp corner at 0, linear for x > 0)
-> - Top right: Sigmoid function (S-shaped curve, output 0-1)
-> - Bottom left: Tanh function (S-shaped curve, output -1 to 1)
-> - Bottom right: GELU function (smooth ReLU-like curve)
-> 
-> X-axis: input values (-5 to 5), Y-axis: function output values
+<img width="1209" height="624" alt="image" src="https://github.com/user-attachments/assets/36bdc0ee-e3e0-4d88-a9cf-2404a1972e9b" />
+
 
 ### Layers: Stacking Neurons for Abstract Representations
 
@@ -103,64 +69,8 @@ A single neuron isn't very powerful. The magic happens when we organize them int
 *   **Hidden Layers**: These are the workhorses. Each layer receives input from the previous layer and produces an output for the next. As data passes through the hidden layers, the network learns to identify increasingly abstract features. The first layer might learn to detect simple edges, the next might combine edges to find shapes like eyes and ears, and a deeper layer might combine those to identify a cat's face.
 *   **Output Layer**: The final layer that produces the network's prediction (e.g., the probability that the image contains a cat).
 
-```mermaid
-graph LR
-    subgraph "Input Layer"
-        I1["x₁"]
-        I2["x₂"]
-        I3["x₃"]
-        I4["x₄"]
-    end
-    
-    subgraph "Hidden Layer 1"
-        H1["h₁⁽¹⁾"]
-        H2["h₂⁽¹⁾"]
-        H3["h₃⁽¹⁾"]
-    end
-    
-    subgraph "Hidden Layer 2"
-        H4["h₁⁽²⁾"]
-        H5["h₂⁽²⁾"]
-    end
-    
-    subgraph "Output Layer"
-        O1["ŷ"]
-    end
-    
-    I1 --> H1
-    I1 --> H2
-    I1 --> H3
-    I2 --> H1
-    I2 --> H2
-    I2 --> H3
-    I3 --> H1
-    I3 --> H2
-    I3 --> H3
-    I4 --> H1
-    I4 --> H2
-    I4 --> H3
-    
-    H1 --> H4
-    H1 --> H5
-    H2 --> H4
-    H2 --> H5
-    H3 --> H4
-    H3 --> H5
-    
-    H4 --> O1
-    H5 --> O1
-    
-    style I1 fill:#e3f2fd
-    style I2 fill:#e3f2fd
-    style I3 fill:#e3f2fd
-    style I4 fill:#e3f2fd
-    style H1 fill:#f3e5f5
-    style H2 fill:#f3e5f5
-    style H3 fill:#f3e5f5
-    style H4 fill:#f3e5f5
-    style H5 fill:#f3e5f5
-    style O1 fill:#e8f5e8
-```
+<img width="600" height="313" alt="image" src="https://github.com/user-attachments/assets/56b25b68-27cb-4170-9561-4dddd7e621ea" />
+
 
 The computation for an entire layer can be written efficiently using matrix multiplication:
 
@@ -172,22 +82,7 @@ This equation describes how the activations of one layer (`h^(ℓ-1)`) are trans
 
 "Training" a network means finding the optimal values for all its weights and biases to solve a specific task. This is achieved through an iterative process called the **training loop**.
 
-```mermaid
-graph TD
-    A["1. Forward Propagation<br/>Feed input through network"] --> B["2. Loss Calculation<br/>Compare prediction vs target"]
-    B --> C["3. Backward Propagation<br/>Calculate gradients using chain rule"]
-    C --> D["4. Parameter Update<br/>Adjust weights and biases"]
-    D --> E["Convergence Check<br/>Loss acceptable?"]
-    E -->|No| A
-    E -->|Yes| F["Training Complete"]
-    
-    style A fill:#e3f2fd
-    style B fill:#ffebee
-    style C fill:#f3e5f5
-    style D fill:#e8f5e8
-    style E fill:#fff3e0
-    style F fill:#e0f2f1
-```
+<img width="1886" height="2124" alt="image" src="https://github.com/user-attachments/assets/ed386731-541a-4ce6-92e3-edf545c21caa" />
 
 1.  **Forward Propagation**: We feed the input data into the network and let it flow through the layers to generate a prediction.
 2.  **Loss Calculation**: We compare the network's prediction to the true target using a **loss function**. This function outputs a single number (the "loss" or "error") that tells us how wrong the network was.
@@ -213,36 +108,13 @@ The optimizer's job is to update the parameters based on the gradients computed 
 
 The **learning rate** is a crucial hyperparameter that controls the step size of each update. Too large, and the optimizer might overshoot the optimal solution. Too small, and training will be painfully slow. **Learning rate scheduling**, where the learning rate is adjusted over the course of training, is a common technique to achieve better results.
 
-```mermaid
-graph LR
-    A["Current Weights"] --> B["Gradient Calculation<br/>∇L(w)"]
-    B --> C["Optimizer<br/>(SGD/Adam/AdamW)"]
-    C --> D["Weight Update<br/>w = w - η∇L(w)"]
-    D --> E["Updated Weights"]
-    
-    LR["Learning Rate (η)"] --> C
-    
-    style A fill:#e3f2fd
-    style B fill:#f3e5f5
-    style C fill:#fff3e0
-    style D fill:#e8f5e8
-    style E fill:#e0f2f1
-```
+<img width="3897" height="567" alt="image" src="https://github.com/user-attachments/assets/e8d188bb-f0cf-422c-ba96-2f8592986e28" />
 
 ## Building Robust Models: Regularization and Best Practices
 
 A powerful network can have millions of parameters. This gives it the capacity to learn complex patterns, but also to "cheat" by simply memorizing the training data. This is called **overfitting**. A model that has overfit performs well on data it has seen but fails to generalize to new, unseen data. **Regularization** techniques are designed to combat this.
 
-> **📈 Image Placeholder**: *Overfitting vs. Good Generalization*
-> 
-> Create a learning curves plot showing:
-> - X-axis: Training epochs/iterations
-> - Y-axis: Loss/Error
-> - Two scenarios side by side:
->   - Left: Overfitting (training loss decreases, validation loss increases after some point)
->   - Right: Good generalization (both training and validation loss decrease together)
-> - Use different colors for training vs validation curves
-> - Add annotations pointing out the divergence point in overfitting scenario
+<img width="387" height="256" alt="image" src="https://github.com/user-attachments/assets/0b25c93c-0e0b-49d4-a655-1c0e3f1199e7" />
 
 ### Common Regularization Techniques
 
@@ -250,28 +122,8 @@ A powerful network can have millions of parameters. This gives it the capacity t
 *   **Dropout**: During training, randomly sets a fraction of neuron activations to zero at each update step. This forces the network to learn redundant representations and prevents neurons from co-adapting too much.
 *   **Batch Normalization**: Normalizes the inputs to each layer to have a mean of zero and a standard deviation of one. This stabilizes training, allows for higher learning rates, and provides a slight regularization effect.
 *   **Early Stopping**: Monitor the model's performance on a separate validation set during training and stop when performance stops improving.
-
-```mermaid
-graph TD
-    A["Neural Network Training"] --> B["Regularization Techniques"]
-    B --> C["L1/L2 Regularization<br/>Penalty on weight magnitude"]
-    B --> D["Dropout<br/>Random neuron deactivation"]
-    B --> E["Batch Normalization<br/>Normalize layer inputs"]
-    B --> F["Early Stopping<br/>Stop when validation performance plateaus"]
-    
-    C --> G["Prevents Overfitting"]
-    D --> G
-    E --> G
-    F --> G
-    
-    style A fill:#e3f2fd
-    style B fill:#f3e5f5
-    style C fill:#fff3e0
-    style D fill:#fff3e0
-    style E fill:#fff3e0
-    style F fill:#fff3e0
-    style G fill:#e8f5e8
-```
+  
+<img width="4857" height="1125" alt="image" src="https://github.com/user-attachments/assets/0d6d1bcf-bf88-4f08-95b4-814f1150fa4b" />
 
 ### The Importance of Initialization
 
@@ -286,42 +138,8 @@ While all networks are built from neurons and layers, their topology—how they 
 *   **Recurrent Neural Networks (RNNs)**: Designed for sequential data like text or time series. They have connections that loop back on themselves, giving them a form of "memory" to process inputs in context.
 *   **Residual Networks (ResNets)**: A key innovation that uses "skip connections" to allow gradients to bypass layers. This makes it possible to train extremely deep networks without suffering from the vanishing gradient problem.
 
-```mermaid
-graph TD
-    subgraph "Feedforward Network"
-        FF1["Input"] --> FF2["Hidden 1"]
-        FF2 --> FF3["Hidden 2"]
-        FF3 --> FF4["Output"]
-    end
-    
-    subgraph "CNN Architecture"
-        CNN1["Image"] --> CNN2["Conv Layer"]
-        CNN2 --> CNN3["Pooling"]
-        CNN3 --> CNN4["Conv Layer"]
-        CNN4 --> CNN5["Fully Connected"]
-    end
-    
-    subgraph "RNN Architecture"
-        RNN1["Input t-1"] --> RNN2["Hidden State"]
-        RNN3["Input t"] --> RNN2
-        RNN2 --> RNN4["Output t"]
-        RNN2 --> RNN5["Hidden State t+1"]
-    end
-    
-    subgraph "ResNet Block"
-        RES1["Input"] --> RES2["Conv Layer"]
-        RES2 --> RES3["Conv Layer"]
-        RES1 --> RES4["Skip Connection"]
-        RES3 --> RES5["Add"]
-        RES4 --> RES5
-        RES5 --> RES6["Output"]
-    end
-    
-    style FF1 fill:#e3f2fd
-    style CNN1 fill:#f3e5f5
-    style RNN1 fill:#fff3e0
-    style RES1 fill:#e8f5e8
-```
+<img width="792" height="430" alt="image" src="https://github.com/user-attachments/assets/de185435-7d48-4054-a08b-04f39ec39916" />
+
 
 ## Common Training Challenges
 
@@ -331,14 +149,7 @@ Training neural networks is part art, part science. Here are some common dragons
 *   **Dead Neurons**: ReLU neurons can get stuck in a state where they only output zero. Using variants like Leaky ReLU can help.
 *   **Hyperparameter Tuning**: Finding the right architecture, learning rate, and regularization strength can be a long process of trial and error.
 
-> **📊 Image Placeholder**: *Gradient Flow Problems*
-> 
-> Create a visualization showing:
-> - Top: Normal gradient flow through network layers (consistent gradient magnitudes)
-> - Middle: Vanishing gradients (gradients getting exponentially smaller in deeper layers)
-> - Bottom: Exploding gradients (gradients getting exponentially larger)
-> - Use color intensity or arrow thickness to represent gradient magnitude
-> - Show layer depth on x-axis, gradient magnitude on y-axis
+<img width="1920" height="1124" alt="image" src="https://github.com/user-attachments/assets/7737a32a-55a1-43fd-b122-a70de555c2d6" />
 
 ## Conclusion
 
