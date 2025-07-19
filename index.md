@@ -30,8 +30,7 @@ I design, develop, and deploy **LLM-powered products** from RAG systems to multi
 
 Master LLMs through my **comprehensive learning resources** built from production experience:
 
-- 📖 [LLMs: From Foundations to Production](book/) - Complete interactive book
-- 🗺️ [Learning Roadmap](roadmap.md) - High-level overview & guidance
+- 🗺️ [Complete LLM Roadmap](roadmap.md) - End-to-end learning path
 - ❓ [Interview Preparation](interview.md) - 400+ technical questions
 
 *(Trusted by 20K+ practitioners worldwide)*
