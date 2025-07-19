@@ -82,7 +82,8 @@ This equation describes how the activations of one layer (`h^(ℓ-1)`) are trans
 
 "Training" a network means finding the optimal values for all its weights and biases to solve a specific task. This is achieved through an iterative process called the **training loop**.
 
-<img width="1886" height="2124" alt="image" src="https://github.com/user-attachments/assets/ed386731-541a-4ce6-92e3-edf545c21caa" />
+<img width="4025" height="1545" alt="image" src="https://github.com/user-attachments/assets/18cac33e-31af-4bf2-8eda-a1ebfe54f870" />
+
 
 1.  **Forward Propagation**: We feed the input data into the network and let it flow through the layers to generate a prediction.
 2.  **Loss Calculation**: We compare the network's prediction to the true target using a **loss function**. This function outputs a single number (the "loss" or "error") that tells us how wrong the network was.
