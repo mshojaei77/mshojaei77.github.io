@@ -1,8 +1,8 @@
 ---
-title: "Neural Networks"
+title: "Chapter 1: Neural Networks"
 nav_order: 1
-parent: Course
-layout: default
+parent: "Part I: Foundations"
+grand_parent: "LLMs: From Foundation to Production"
 ---
 
 

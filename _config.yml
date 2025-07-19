@@ -16,10 +16,32 @@ favicon_ico: "/assets/img/favicon.ico"
 
 # Aux links for the upper right navigation
 aux_links:
-  "GitHub":
+  "📚 Read Book":
+    - "/book/"
+  "🐙 GitHub":
     - "https://github.com/mshojaei77"
 
-aux_links_new_tab: true
+aux_links_new_tab: false
 
 # Enable navigation
 nav_external_links: true
+
+# Book-specific settings
+nav_sort: case_insensitive
+heading_anchors: true
+
+# Enable back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Footer content
+footer_content: "Copyright &copy; 2024 Mohammad Shojaei. Distributed under <a href=\"https://opensource.org/licenses/MIT\">MIT License</a>."
+
+# Enable last modified date
+last_edit_timestamp: true
+last_edit_time_format: "%b %e %Y at %I:%M %p"
+
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub"
+gh_edit_repository: "https://github.com/mshojaei77/mshojaei77.github.io"
+gh_edit_branch: "main"
