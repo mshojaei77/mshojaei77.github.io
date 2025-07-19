@@ -33,14 +33,11 @@ Use this guide to assess candidates at different experience levels or to prepare
 - How is Word2Vec trained from scratch?
 
 ## 3. Neural Networks Fundamentals
-- What is a hyperparameter, and why is it important?
 - What is overfitting, and how can it be mitigated in LLMs?
 - What is the derivative of the ReLU function, and why is it significant?
-- What preprocessing steps are crucial when dealing with input data for LLMs?
-- How do hyperparameters affect the performance of LLMs?
 - What is the role of initialization schemes in deep learning?
 - How does the chain rule apply to gradient descent in LLMs?
-- How do transformers address the vanishing gradient problem?
+
 
 ## 4. Traditional Language Models
 - What is the difference between Predictive/Discriminative AI and Generative AI?
@@ -75,6 +72,7 @@ Use this guide to assess candidates at different experience levels or to prepare
 - How does dropout work mathematically and why is it effective?
 - How do you compute gradients through the attention mechanism?
 - Compare and contrast different LLM architectures, such as GPT-3 and LaMDA.
+- How do transformers address the vanishing gradient problem?
 
 ## 6. Data Preparation
 - What is chunking, and why is it important for LLM pipelines?

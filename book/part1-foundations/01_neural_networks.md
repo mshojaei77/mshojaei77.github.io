@@ -3,8 +3,8 @@ title: "Neural Networks"
 nav_order: 1
 parent: "Part I: Foundations"
 grand_parent: "LLMs: From Foundation to Production"
-description: "An intuitive introduction to neural networks, building from the core concepts of neurons and layers to the dynamics of training, optimization, and architectural patterns that are foundational to Large Language Models."
-keywords: "Neural Networks, Deep Learning, Perceptron, MLP, Backpropagation, Gradient Descent, Adam Optimizer, Regularization"
+description: "An intuitive, deep dive into neural networks, from the humble neuron to the complex dynamics of training, optimization, and the architectural patterns that power Large Language Models."
+keywords: "Neural Networks, Deep Learning, Perceptron, Backpropagation, Gradient Descent, ReLU, Overfitting, Initialization, Chain Rule, Adam Optimizer"
 ---
 
 # Chapter 1: Neural Networks
@@ -12,34 +12,34 @@ keywords: "Neural Networks, Deep Learning, Perceptron, MLP, Backpropagation, Gra
 **Difficulty:** Intermediate | **Prerequisites:** Calculus, Linear Algebra
 {: .fs-6 .fw-300 }
 
-Welcome to the engine room of modern AI. Neural networks are the computational heart of technologies that feel like magic, from self-driving cars to the large language models that can write poetry and code. This chapter peels back the curtain, revealing the elegant mathematical principles that allow these systems to learn from data and perform complex tasks. We'll build a solid foundation, starting with intuition and progressively adding the technical layers needed to understand the advanced architectures discussed later in this book.
+Welcome to the engine room of modern AI, the ghost in the machine. Neural networks are the computational heart of technologies that feel like magic, from cars that drive themselves to language models that can write poetry, code, and suspiciously convincing excuses for being late. This chapter peels back the curtain, revealing the elegant mathematical principles that allow these systems to learn from data. We'll start with intuition and build up, layer by layer, until the advanced architectures in the rest of this book feel like old friends.
 
 ---
 
 ## An Intuitive Introduction to Neural Networks
 
-Before diving into the math, let's start with a simple analogy. Imagine you're trying to teach a machine to recognize a picture of a cat. You, as a human, do this instantly. You've seen thousands of cats and your brain has learned to identify "cat-like" features: pointy ears, whiskers, fur, specific eye shapes.
+Before we wade into the math, let's start with an analogy. Imagine you're trying to teach a very sophisticated toaster to recognize a picture of a cat. You, a human, do this instantly. Your brain, having seen thousands of cats, has learned to identify "cat-like" features: pointy ears, whiskers, an air of superiority.
 
-A neural network learns in a conceptually similar way. It's a system of simple, interconnected computational "neurons" that work together to find patterns. We show it thousands of pictures of cats (and non-cats), and with each example, it slightly adjusts the connections between its neurons. A connection that helps correctly identify a cat gets stronger, while a connection that leads to a wrong guess gets weaker. After enough training, the network has "learned" a complex set of features that, together, define a cat.
+A neural network learns in a conceptually similar way. It's a system of simple, interconnected "neurons" that work together to find patterns. We show it a million pictures of cats (and dogs, and hot dogs, and things that are definitely not cats), and with each example, it slightly adjusts the connections between its neurons. A connection that helps correctly identify a cat gets stronger; a connection that leads to a wrong guess gets weaker. After enough training, the network has "learned" a complex, hierarchical set of features that, together, scream "CAT!"
 
 <img width="800" height="520" alt="Neural network learning process flowchart showing cat images being processed through a neural network to extract features like ears, whiskers, and patterns, leading to cat classification" src="https://github.com/user-attachments/assets/74406fb8-3475-4b33-bb1d-4e4ffc7b3442" />
 
 **Figure 1.1:** Neural Network Learning Process. The conceptual flow of how a neural network learns to recognize cats by processing training images, extracting hierarchical features, and making classification decisions.
 
-At its core, a neural network is a powerful and flexible pattern-finding machine. It's a mathematical function that can, in theory, approximate *any* continuous function. This is known as the **Universal Approximation Theorem**, and it's why neural networks are such a powerful tool for a vast range of problems.
+At its core, a neural network is a powerful and ridiculously flexible pattern-finding machine. It's a mathematical chameleon that can, in theory, approximate *any* continuous function. This is known as the **Universal Approximation Theorem**, and it's the reason neural nets are the go-to tool for a mind-boggling range of problems.
 
 ## The Core Components: From Neurons to Networks
 
-A network's power comes from combining simple parts into a complex, hierarchical system. Let's break down these fundamental building blocks.
+A network's power comes not from complexity in its parts, but from combining simple parts into a complex, hierarchical system. Let's break down these LEGO bricks of intelligence.
 
-### The Neuron: The Basic Computational Unit
+### The Neuron: The Humble Decision-Maker
 
-A single neuron is the atomic unit of a neural network. It's a simple calculator that performs a few key steps:
+A single neuron is the basic computational unit of the network. Think of it as a tiny, focused decision-maker. It does a few simple things:
 
-1.  **Receives Inputs**: It takes in one or more numerical inputs.
-2.  **Computes a Weighted Sum**: Each input is multiplied by a **weight**, which signifies the input's importance. The neuron sums up all these weighted inputs.
-3.  **Adds a Bias**: A **bias** term is added to the sum. This is like a tunable offset that allows the neuron to shift its output, giving it more flexibility.
-4.  **Applies an Activation Function**: The result is passed through a non-linear **activation function**. This is a critical step that allows the network to learn complex, non-linear patterns. Without it, the entire network would just be a simple linear equation.
+1.  **Receives Inputs**: It takes in one or more numbers.
+2.  **Computes a Weighted Sum**: Each input is multiplied by a **weight**, which represents its importance. A neuron learning to spot a cat's eye might assign a high weight to the input representing a dark, circular shape. The neuron then sums these weighted inputs.
+3.  **Adds a Bias**: A **bias** is added to this sum. It's a tunable knob that lets the neuron shift its output, giving it more flexibility to decide when it should "fire."
+4.  **Applies an Activation Function**: The result is passed through a non-linear **activation function**. This is the secret sauce. Without this step, the entire network, no matter how deep, would just be a glorified linear equation, incapable of learning the beautifully complex patterns of the real world.
 
 <img width="2022" height="1038" alt="Detailed diagram of a single neuron showing inputs x1, x2, x3 with weights w1, w2, w3, bias term b, weighted sum computation, activation function sigma, and final output a" src="https://github.com/user-attachments/assets/1cc17c3c-d8b7-40e0-94d5-dd3dca68ab8b" />
 
@@ -51,73 +51,87 @@ Mathematically, the output (`a`) of a single neuron is:
 
 Where `xᵢ` are the inputs, `wᵢ` are the weights, `b` is the bias, and `σ` (sigma) is the activation function.
 
-### Activation Functions: Introducing Non-linearity
+### Activation Functions: The Source of Superpowers
 
-Activation functions are the secret sauce. They introduce non-linearity, allowing networks to model relationships that aren't just straight lines.
+Activation functions introduce non-linearity, allowing networks to model relationships that aren't just straight lines. They decide how much of a signal gets passed on, acting as a gatekeeper for information flow.
 
 **Common Activation Functions:**
 
-*   **ReLU (Rectified Linear Unit)**: `f(x) = max(0, x)`. The de-facto standard. It's simple and efficient but can sometimes "die" (stop outputting anything but zero).
-*   **Sigmoid**: `f(x) = 1 / (1 + e⁻ˣ)`. Squashes values to a range between 0 and 1. Useful for outputs that represent probabilities, but it has a tendency to cause "vanishing gradients," a problem we'll discuss later.
-*   **Tanh (Hyperbolic Tangent)**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`. Similar to sigmoid but squashes values to a range between -1 and 1. It's zero-centered, which can be helpful.
-*   **GELU (Gaussian Error Linear Unit)**: A smoother, more sophisticated function that has become popular in transformer models.
+*   **ReLU (Rectified Linear Unit)**: `f(x) = max(0, x)`. The undisputed champion and de-facto standard. It's computationally cheap and brutally effective.
+*   **Sigmoid**: `f(x) = 1 / (1 + e⁻ˣ)`. The "squasher-in-chief." It squashes any value into a range between 0 and 1, which is perfect for outputs that represent probabilities. However, it's notorious for causing the "vanishing gradient" problem in deep networks.
+*   **Tanh (Hyperbolic Tangent)**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`. Sigmoid's cousin, but it squashes values to a range between -1 and 1. Being zero-centered often helps learning.
+*   **GELU (Gaussian Error Linear Unit)**: A smoother, more sophisticated version of ReLU that has become the darling of modern transformer models.
 
 <img width="1209" height="624" alt="Four-panel comparison plot showing activation functions: ReLU with sharp corner at zero, S-shaped Sigmoid curve from 0 to 1, S-shaped Tanh curve from -1 to 1, and smooth GELU curve similar to ReLU" src="https://github.com/user-attachments/assets/36bdc0ee-e3e0-4d88-a9cf-2404a1972e9b" />
 
 **Figure 1.3:** Common Activation Functions. Comparison of four widely-used activation functions: ReLU (top-left), Sigmoid (top-right), Tanh (bottom-left), and GELU (bottom-right), each showing their characteristic output ranges and shapes.
 
+#### A Deeper Look: The ReLU Derivative
+The derivative of the ReLU function is startlingly simple: it's **1** for any positive input and **0** for any negative input. (At x=0, it's technically undefined, but in practice, we assign it a derivative of 0).
+
+**Why is this significant?**
+This simplicity is both a blessing and a curse.
+1.  **The Blessing:** For positive inputs, the gradient is a constant 1. During backpropagation, this means the gradient flows through the neuron unchanged, combating the **vanishing gradient problem** that plagues functions like Sigmoid in deep networks. It's a superhighway for learning signals.
+2.  **The Curse:** For negative inputs, the gradient is 0. This means if a neuron's input is negative, it doesn't contribute to the gradient calculation at all. If a neuron gets stuck in a state where it only receives negative inputs, its weights will never be updated again. This is the infamous **"dying ReLU" problem**, where parts of your network can become permanently inactive.
 
 ### Layers: Stacking Neurons for Abstract Representations
 
-A single neuron isn't very powerful. The magic happens when we organize them into **layers**.
+A single neuron is a simpleton. The real magic happens when we organize them into **layers**, like sections in an orchestra.
 
-*   **Input Layer**: This isn't really a computational layer. It just holds the raw input data (e.g., the pixel values of an image).
-*   **Hidden Layers**: These are the workhorses. Each layer receives input from the previous layer and produces an output for the next. As data passes through the hidden layers, the network learns to identify increasingly abstract features. The first layer might learn to detect simple edges, the next might combine edges to find shapes like eyes and ears, and a deeper layer might combine those to identify a cat's face.
-*   **Output Layer**: The final layer that produces the network's prediction (e.g., the probability that the image contains a cat).
+*   **Input Layer**: This isn't a real computational layer. It's the reception desk, simply holding the raw input data (e.g., the pixel values of an image).
+*   **Hidden Layers**: These are the workhorses. If a neuron is a musician, a layer is an entire orchestra section. The first hidden layer might be the percussion, detecting basic edges and textures. The next might be the strings, combining those edges into shapes like eyes and ears. A deeper layer, the brass section, might combine those shapes to identify a whole cat face. Each layer learns increasingly abstract and complex features.
+*   **Output Layer**: The final layer, the conductor, which produces the network's prediction (e.g., a number between 0 and 1 representing the probability that the image contains a cat).
 
 <img width="600" height="313" alt="Multi-layer neural network diagram showing input layer with 4 nodes, two hidden layers with 3 and 2 nodes respectively, and single output node, with all connections between layers illustrated" src="https://github.com/user-attachments/assets/56b25b68-27cb-4170-9561-4dddd7e621ea" />
 
 **Figure 1.4:** Multi-Layer Neural Network Architecture. A fully connected feedforward network with input layer (4 neurons), two hidden layers (3 and 2 neurons), and output layer (1 neuron), showing how information flows from inputs to prediction.
 
 
-The computation for an entire layer can be written efficiently using matrix multiplication:
+The computation for an entire layer can be written efficiently using the language of linear algebra:
 
 **h^(ℓ) = σ(W^(ℓ) × h^(ℓ-1) + b^(ℓ))**
 
-This equation describes how the activations of one layer (`h^(ℓ-1)`) are transformed into the activations of the next layer (`h^(ℓ)`) using a weight matrix (`W^(ℓ)`) and a bias vector (`b^(ℓ)`).
+This elegant equation describes how the activations of one layer (`h^(ℓ-1)`) are transformed into the activations of the next (`h^(ℓ)`) using a weight matrix (`W^(ℓ)`) and a bias vector (`b^(ℓ)`).
 
 ## How Neural Networks Learn: The Training Loop
 
-"Training" a network means finding the optimal values for all its weights and biases to solve a specific task. This is achieved through an iterative process called the **training loop**.
+"Training" a network means finding the best set of values for all its weights and biases. This isn't a one-shot deal; it's an iterative process of refinement called the **training loop**.
 
 <img width="4025" height="1545" alt="Training loop flowchart showing four steps: forward propagation feeding input through network, loss calculation comparing prediction vs target, backward propagation calculating gradients, parameter update adjusting weights, with convergence check determining if process continues or completes" src="https://github.com/user-attachments/assets/18cac33e-31af-4bf2-8eda-a1ebfe54f870" />
 
 **Figure 1.5:** Neural Network Training Loop. The iterative four-step process of training: (1) Forward propagation, (2) Loss calculation, (3) Backward propagation (backpropagation), and (4) Parameter update, repeated until convergence.
 
 
-1.  **Forward Propagation**: We feed the input data into the network and let it flow through the layers to generate a prediction.
-2.  **Loss Calculation**: We compare the network's prediction to the true target using a **loss function**. This function outputs a single number (the "loss" or "error") that tells us how wrong the network was.
-3.  **Backward Propagation (Backpropagation)**: This is the core of learning. Using calculus (specifically, the chain rule), the algorithm calculates the gradient of the loss with respect to every single weight and bias in the network. The gradient tells us the direction and magnitude to change each parameter to reduce the error.
-4.  **Parameter Update**: An **optimizer** uses these gradients to update the weights and biases, nudging them in the right direction.
+1.  **Forward Propagation**: We feed input data into the network. It flows through the layers, each performing its calculation, until the final layer spits out a prediction.
+2.  **Loss Calculation**: We compare the network's prediction to the actual, true target using a **loss function**. This function outputs a single number—the "loss"—that brutally quantifies how wrong the network was.
+3.  **Backward Propagation (Backpropagation)**: This is the heart of learning. Here, we use calculus to play a giant game of "pass the blame."
+4.  **Parameter Update**: An **optimizer** takes the gradients and uses them to update every weight and bias, nudging them in the direction that should reduce the error.
 
-This four-step process is repeated thousands or millions of times, with batches of data, until the network's predictions are accurate enough.
+This four-step dance is repeated thousands or millions of times, with batches of data, until the network's predictions are consistently accurate.
+
+#### Backpropagation and the Chain Rule: The Gossip Chain of Blame
+Backpropagation is where the learning happens, and it runs on a mathematical engine called the **chain rule**. Imagine the network makes a bad guess. The loss function tells us *how* wrong, but not *why*. We need to figure out which of the millions of weights are most responsible for the error.
+
+The chain rule lets us do this efficiently. It starts at the end, calculating how much the final layer contributed to the error. It then takes this "blame signal" and passes it back to the previous layer, using the chain rule to determine that layer's share of the blame, and so on. This continues, layer by layer, all the way to the start. It’s like a gossip chain in reverse, where the final rumor (the error) is traced back to its originators (the weights).
+
+Each weight in the network receives a precise, calculated nudge based on its individual contribution to the total error. For incredibly deep models like LLMs, this backward pass of distributed blame is the only feasible way to train them.
 
 ### Loss Functions: Quantifying Error
 
 The choice of loss function is tailored to the task:
 
-*   **Mean Squared Error (MSE)**: Used for regression tasks where the output is a continuous value (e.g., predicting a house price).
-*   **Cross-Entropy Loss**: The standard for classification tasks. It measures the dissimilarity between the predicted probabilities and the true class labels.
+*   **Mean Squared Error (MSE)**: The go-to for regression tasks where the output is a continuous value (e.g., predicting the price of a vintage computer).
+*   **Cross-Entropy Loss**: The standard for classification. It measures the dissimilarity between the predicted probabilities and the true, one-hot encoded labels.
 
 ### Optimization Algorithms: Steering the Learning Process
 
-The optimizer's job is to update the parameters based on the gradients computed during backpropagation.
+The optimizer is the chauffeur for our learning process. It uses the gradients to decide how to update the parameters.
 
-*   **Stochastic Gradient Descent (SGD)**: The simplest optimizer. It updates parameters using the gradient from a single example or a small batch. It can be slow and noisy.
-*   **Adam (Adaptive Moment Estimation)**: The go-to optimizer for most deep learning tasks. It adapts the learning rate for each parameter individually and uses momentum (an accumulation of past gradients) to speed up convergence.
-*   **AdamW**: An improved version of Adam that handles weight decay (a regularization technique) more effectively, often preferred for training transformers.
+*   **Stochastic Gradient Descent (SGD)**: The classic, slightly-tipsy guide. It updates parameters based on the gradient from a small batch of data. It gets the job done, but it can be slow and meander towards the solution.
+*   **Adam (Adaptive Moment Estimation)**: The sophisticated, self-correcting GPS. It's the default choice for most deep learning tasks. Adam adapts the learning rate for each parameter individually and uses momentum (an accumulation of past gradients) to accelerate the journey.
+*   **AdamW**: An improved version of Adam that decouples weight decay (a regularization technique) from the main optimization step, which often leads to better generalization, especially in transformers.
 
-The **learning rate** is a crucial hyperparameter that controls the step size of each update. Too large, and the optimizer might overshoot the optimal solution. Too small, and training will be painfully slow. **Learning rate scheduling**, where the learning rate is adjusted over the course of training, is a common technique to achieve better results.
+The **learning rate** is a critical hyperparameter that controls how big of a step the optimizer takes. Too large, and it might leap right over the optimal solution. Too small, and training will take an eternity. **Learning rate scheduling**, which adjusts the learning rate during training, is a key technique for peak performance.
 
 <img width="3897" height="567" alt="Optimization process diagram showing current weights flowing to gradient calculation, then to optimizer (SGD/Adam/AdamW) with learning rate input, then to weight update using formula w = w - η∇L(w), resulting in updated weights" src="https://github.com/user-attachments/assets/e8d188bb-f0cf-422c-ba96-2f8592986e28" />
 
@@ -125,26 +139,33 @@ The **learning rate** is a crucial hyperparameter that controls the step size of
 
 ## Building Robust Models: Regularization and Best Practices
 
-A powerful network can have millions of parameters. This gives it the capacity to learn complex patterns, but also to "cheat" by simply memorizing the training data. This is called **overfitting**. A model that has overfit performs well on data it has seen but fails to generalize to new, unseen data. **Regularization** techniques are designed to combat this.
+A network with millions of parameters has a scary capacity to "cheat" by simply memorizing the training data. This is called **overfitting**.
+
+### Overfitting: When Your Model is a Cheating Student
+An overfit model is like a student who memorizes the exact answers to a practice test but completely fails the real exam because they never learned the underlying concepts. The model performs brilliantly on data it has seen before but falls apart when shown new, unseen data. It has learned the *noise* and quirks of the training set, not the general *signal* you want it to capture.
 
 <img width="387" height="256" alt="Learning curves comparison showing two scenarios: left panel displays overfitting with training loss decreasing while validation loss increases after initial decline; right panel shows good generalization with both training and validation losses decreasing together" src="https://github.com/user-attachments/assets/0b25c93c-0e0b-49d4-a655-1c0e3f1199e7" />
 
 **Figure 1.7:** Overfitting vs. Good Generalization. Learning curves illustrating the difference between overfitting (left) where validation loss diverges from training loss, and proper generalization (right) where both losses decrease in tandem.
 
-### Common Regularization Techniques
+### Mitigating Overfitting, Especially in LLMs
+How do we force our models to be honest students? We use **regularization**.
 
-*   **L1 and L2 Regularization**: Adds a penalty to the loss function based on the size of the weights. This discourages the network from relying on any single connection too heavily.
-*   **Dropout**: During training, randomly sets a fraction of neuron activations to zero at each update step. This forces the network to learn redundant representations and prevents neurons from co-adapting too much.
-*   **Batch Normalization**: Normalizes the inputs to each layer to have a mean of zero and a standard deviation of one. This stabilizes training, allows for higher learning rates, and provides a slight regularization effect.
-*   **Early Stopping**: Monitor the model's performance on a separate validation set during training and stop when performance stops improving.
+*   **Get More Data**: This is the most powerful defense. A model, even an LLM, finds it much harder to memorize the entire internet than to memorize a small, clean dataset.
+*   **Dropout**: The most popular regularization technique for large networks. During training, it randomly and temporarily deactivates a fraction of neurons at each update step. This is like forcing students in a study group to learn without relying on the one genius who knows all the answers. It forces the network to learn more robust, redundant representations.
+*   **Weight Decay (L1/L2 Regularization)**: Adds a penalty to the loss function based on the size of the weights. This discourages the model from putting too much faith in any single connection, promoting a more distributed "opinion."
+*   **Batch Normalization**: Normalizes the inputs to each layer. This stabilizes training and can act as a slight regularizer.
+*   **Early Stopping**: We monitor the model's performance on a separate validation set. The moment the validation performance stops improving, we stop training. This prevents the model from "cramming" on the training data past the point of true learning.
   
 <img width="4857" height="1125" alt="Regularization techniques taxonomy diagram showing neural network training branching into four main regularization methods: L1/L2 regularization with weight magnitude penalties, Dropout with random neuron deactivation, Batch Normalization for layer input normalization, and Early Stopping for validation-based training termination, all converging to prevent overfitting" src="https://github.com/user-attachments/assets/0d6d1bcf-bf88-4f08-95b4-814f1150fa4b" />
 
 **Figure 1.8:** Regularization Techniques Taxonomy. Overview of four primary regularization methods used to prevent overfitting: L1/L2 regularization, Dropout, Batch Normalization, and Early Stopping, each addressing different aspects of model generalization.
 
-### The Importance of Initialization
+### The Importance of Initialization: Don't Start the Race Facing a Wall
+The role of initialization is to set the network's weights to sensible starting values. This sounds trivial, but it's critically important. Bad initialization is like starting a marathon with your shoes tied together.
 
-Initializing weights correctly is crucial for stable training. Poor initialization can lead to vanishing or exploding gradients. **Xavier/Glorot** and **He initialization** are common schemes designed to maintain signal variance as it propagates through the network.
+*   **The Problem**: If initial weights are too large, the signals passing through the network can rapidly grow into enormous values, causing numerical instability (**exploding gradients**). If they are too small, the signals can shrink into nothingness, and the network fails to learn because the gradient signal is too faint (**vanishing gradients**).
+*   **The Solution**: Smart initialization schemes like **Xavier/Glorot** and **He initialization** are designed to prevent this. They carefully set the initial weights based on the size of the neuron layers, aiming to keep the variance of the signal (a measure of its "spread") consistent as it propagates through the network. This ensures gradients can flow smoothly from the start, allowing learning to begin effectively.
 
 ## A Glimpse at Network Architectures
 
@@ -174,15 +195,16 @@ Training neural networks is part art, part science. Here are some common dragons
 
 ## Conclusion
 
-Neural networks are not magic; they are elegant mathematical systems built on a few core principles. This chapter has provided a map of the foundational concepts:
+Neural networks are not black magic; they are elegant mathematical systems built from a few core, surprisingly simple principles. This chapter has armed you with the foundational concepts:
 
--   Networks are built from simple, interconnected **neurons** organized in **layers**.
--   **Non-linear activation functions** are what give networks their power to learn complex patterns.
--   Learning is an iterative process of **forward propagation**, **loss calculation**, **backpropagation**, and **parameter updates** driven by an optimizer.
--   **Regularization** is crucial to prevent **overfitting** and ensure the model generalizes to new data.
--   Different **architectures** (CNNs, RNNs) are specialized for different types of data.
+-   Networks are built from simple **neurons** organized into **layers**.
+-   **Non-linear activation functions** are the secret sauce that gives networks their power.
+-   Learning is an iterative dance of **forward propagation**, **loss calculation**, **backpropagation**, and **parameter updates**.
+-   **The Chain Rule** is the engine of backpropagation, distributing blame for errors.
+-   **Regularization** is the discipline that prevents **overfitting** and forces generalization.
+-   **Initialization** sets the stage for effective learning.
 
-Understanding these fundamentals is the launchpad for the rest of this book. With this foundation, you are ready to explore the transformer architectures that power modern large language models.
+With this foundation, you are ready to tackle the transformer architectures that power modern large language models. The dragons may still be there, but now you know their names.
 
 ---
 
