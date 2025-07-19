@@ -5,6 +5,35 @@ description: "A comprehensive tutorial for mastering Large Language Models (LLMs
 remote_theme: just-the-docs/just-the-docs
 color_scheme: light
 
+# SEO and Social Media Optimization
+url: "https://mshojaei77.github.io" # your site's URL
+baseurl: "" # subpath of your site
+
+# Enhanced meta tags for SEO
+author: "Mohammad Shojaei"
+twitter:
+  username: realshojaei # Add your Twitter handle
+  card: summary_large_image
+
+# Social media sharing
+social:
+  name: Mohammad Shojaei
+  links:
+    - https://github.com/mshojaei77
+    - https://linkedin.com/in/mshojaei77
+    - https://twitter.com/realshojaei # Add if you have Twitter
+
+# Enhanced SEO tags
+tags: ["machine learning", "LLM", "AI", "deep learning", "transformers", "neural networks", "NLP", "artificial intelligence", "production ML", "MLOps"]
+keywords: "LLM tutorial, Large Language Models, Transformer architecture, Machine Learning, AI development, Production ML, Deep Learning book"
+
+# Google Analytics 4 (Add your measurement ID)
+google_analytics: G-XXXXXXXXXX # Replace with your actual GA4 measurement ID
+
+# Site verification (add these after setting up)
+google_site_verification: "" # Google Search Console
+bing_site_verification: "" # Bing Webmaster Tools
+
 # Site logo and branding
 logo: "/assets/img/logo.png"
 favicon_ico: "/assets/img/favicon.ico"
@@ -59,6 +88,9 @@ collections:
 # Plugins
 plugins:
   - jekyll-include-cache
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
 
 # Footer content
 footer_content: "Copyright &copy; 2024 Mohammad Shojaei. Distributed under <a href=\"https://opensource.org/licenses/MIT\">MIT License</a>."

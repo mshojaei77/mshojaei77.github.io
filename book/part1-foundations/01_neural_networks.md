@@ -1,8 +1,17 @@
 ---
-title: "Chapter 1: Neural Networks"
+title: "Chapter 1: Neural Networks Foundations for LLMs"
 nav_order: 1
 parent: "Part I: Foundations"
 grand_parent: "LLMs: From Foundation to Production"
+description: "Master neural network fundamentals for LLMs. Learn perceptrons, MLPs, backpropagation, and network architecture design with hands-on implementations and mathematical foundations."
+keywords: "neural networks, perceptron, MLP, backpropagation, LLM foundations, deep learning, artificial neurons, feedforward networks"
+author: "Mohammad Shojaei"
+date: 2024-01-01
+chapter: 1
+part: "foundations"
+difficulty: "intermediate"
+prerequisites: ["calculus", "linear algebra"]
+reading_time: "45 minutes"
 ---
 
 

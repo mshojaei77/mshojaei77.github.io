@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://mshojaei77.github.io/sitemap.xml
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Block access to admin areas if any
+Disallow: /admin/
+Disallow: /.git/
+
+# Crawl delay (optional, be respectful)
+Crawl-delay: 1 

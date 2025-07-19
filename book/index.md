@@ -3,6 +3,11 @@ title: "LLMs: From Foundation to Production"
 nav_order: 1
 has_children: true
 permalink: /book/
+description: "Complete guide to Large Language Models (LLMs) from mathematical foundations to production deployment. Learn transformers, fine-tuning, RAG, and MLOps with hands-on code examples."
+keywords: "LLM tutorial, Large Language Models, Transformer, Machine Learning, AI book, Deep Learning, Production ML, Fine-tuning, RAG"
+image: "/assets/img/book-cover.png"
+author: "Mohammad Shojaei"
+date: 2024-01-01
 ---
 
 # LLMs: From Foundation to Production
