@@ -1,5 +1,5 @@
 ---
-title: "Part III: Advanced Topics"
+title: "Part III: Advanced Topics & Specialization"
 nav_order: 3
 parent: "LLMs: From Foundation to Production"
 has_children: true
@@ -7,7 +7,7 @@ description: "Part III covers advanced techniques including model evaluation, re
 keywords: "Model Evaluation, Reasoning, Quantization, Inference Optimization, Mixture of Experts, MoE, Architecture Variants"
 ---
 
-# Part III: Advanced Topics
+# Part III: Advanced Topics & Specialization
 
 This part covers advanced techniques including model evaluation, reasoning, quantization, inference optimization, and architecture variants.
 
