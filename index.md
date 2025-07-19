@@ -1,9 +1,8 @@
 ---
 title: "Mohammad Shojaei - LLM Engineer | Author of LLMs: From Foundation to Production"
 nav_order: 0
-description: "Machine Learning Engineer specializing in Large Language Models. Author of the comprehensive book 'LLMs: From Foundation to Production' with 22 chapters covering neural networks to production deployment."
+description: "Machine Learning Engineer specializing in Large Language Models. Author of the
 keywords: "Mohammad Shojaei, LLM Engineer, Machine Learning Engineer, Large Language Models, AI Engineer, LLM book, Transformer architecture, Production ML"
-image: "/assets/img/profile-card.png"
 author: "Mohammad Shojaei"
 ---
 
