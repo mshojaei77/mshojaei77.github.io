@@ -72,6 +72,8 @@ Activation functions are the secret sauce that gives neural networks their "supe
 
 *   **GELU (Gaussian Error Linear Unit)**: `GELU(x)=xΦ(x)` .A smoother, more sophisticated version of ReLU that became the darling of early modern transformer models like **BERT**, **GPT-2**, and **GPT-3**. It provides a smoother curve than the sharp corner of ReLU, which can help with training stability and performance. It's a prime example of how the search for better activation functions continues to drive progress.
 *   **Gated Linear Unit (GLU) Variants (e.g., SwiGLU, GeGLU)**: The current state-of-the-art in most top-performing LLMs. Instead of applying a simple function, GLU variants use a **gating mechanism** where the input is split, with one part dynamically controlling the information flow of the other. This gives the network more expressive power. Variants like **SwiGLU** (used in LLaMA, Qwen, and DeepSeek) and **GeGLU** (used in Gemma) have demonstrated superior performance and training stability in the feed-forward layers of transformer architectures.
+*   
+<img width="1152" height="898" alt="image" src="https://github.com/user-attachments/assets/7a278ef6-218f-4c28-8feb-c84e6f0e7767" />
 
 ---
 
