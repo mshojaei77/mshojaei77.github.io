@@ -60,14 +60,17 @@ Activation functions are the secret sauce that gives neural networks their "supe
 **Common Activation Functions:**
 
 *   **ReLU (Rectified Linear Unit)**: `f(x) = max(0, x)`. The modern default and undisputed champion for most applications. Its rule is simple: if the input is positive, it passes it through unchanged; if it's negative, it outputs zero. This makes it computationally cheap and brutally effective. Its near-linearity helps gradients flow strongly during backpropagation, but it's not without a flaw: it can lead to "dead neurons" if a neuron's input is always negative, causing it to get stuck on zero and stop learning.
+
 *   **Leaky ReLU**: A simple but effective fix for the "dead ReLU" problem. Instead of outputting zero for negative inputs, it allows a small, non-zero, negative slope (e.g., `f(x) = 0.01x` for `x < 0`). This tiny gradient ensures that the neuron can never fully "die" and can recover if it gets stuck with negative inputs.
+
 *   **Sigmoid**: `f(x) = 1 / (1 + e⁻ˣ)`. The classic "squasher-in-chief." It takes any value and squashes it into a range between 0 and 1. This makes it ideal for the output layer in binary classification tasks where the output represents a probability. However, it's notorious for causing the **vanishing gradient problem**. For large positive or negative inputs, the function becomes very flat ("saturates"), making the gradient near-zero. In deep networks, this can effectively stop learning in its tracks, which is why it's now rarely used in hidden layers.
+
 *   **Tanh (Hyperbolic Tangent)**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`. Sigmoid's zero-centered cousin. It squashes values to a range between -1 and 1. This zero-centricity often helps learning by making the optimization process a bit easier compared to Sigmoid. However, like Sigmoid, it also saturates at its extremes and can suffer from the vanishing gradient problem.
+
 *   **GELU (Gaussian Error Linear Unit)**: A smoother, more sophisticated version of ReLU that has become the darling of modern transformer models like GPT and BERT. It provides a smoother curve than the sharp corner of ReLU, which can help with training stability and performance. It's a prime example of how the search for better activation functions continues to drive progress.
 
-<img width="1209" height="624" alt="Four-panel comparison plot showing activation functions: ReLU with sharp corner at zero, S-shaped Sigmoid curve from 0 to 1, S-shaped Tanh curve from -1 to 1, and smooth GELU curve similar to ReLU" src="https://github.com/user-attachments/assets/36bdc0ee-e3e0-4d88-a9cf-2404a1972e9b" />
-
-**Figure 1.3:** Common Activation Functions. Comparison of four widely-used activation functions: ReLU (top-left), Sigmoid (top-right), Tanh (bottom-left), and GELU (bottom-right), each showing their characteristic output ranges and shapes.
+<img width="1002" height="715" alt="image" src="https://github.com/user-attachments/assets/78954e17-5fce-41a1-8a10-adb9e1588bfb" />
+**Figure 1.3:** Common Activation Functions. Comparison of four widely-used activation functions: ReLU, Sigmoid, Tanh, and GELU, each showing their characteristic output ranges and shapes.
 
 #### A Deeper Look: The ReLU Derivative
 The derivative of the ReLU function is startlingly simple: it's **1** for any positive input and **0** for any negative input. (At x=0, it's technically undefined, but in practice, we assign it a derivative of 0).
