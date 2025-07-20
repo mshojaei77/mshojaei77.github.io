@@ -63,19 +63,62 @@ Activation functions are the secret sauce that gives neural networks their "supe
 *   **Leaky ReLU**: A simple but effective fix for the "dead ReLU" problem. Instead of outputting zero for negative inputs, it allows a small, non-zero, negative slope (e.g., `f(x) = 0.01x` for `x < 0`). This tiny gradient ensures that the neuron can never fully "die" and can recover if it gets stuck with negative inputs.
 *   **Sigmoid**: `f(x) = 1 / (1 + e⁻ˣ)`. The classic "squasher-in-chief." It takes any value and squashes it into a range between 0 and 1. This makes it ideal for the output layer in binary classification tasks where the output represents a probability. However, it's notorious for causing the **vanishing gradient problem**. For large positive or negative inputs, the function becomes very flat ("saturates"), making the gradient near-zero. In deep networks, this can effectively stop learning in its tracks, which is why it's now rarely used in hidden layers.
 *   **Tanh (Hyperbolic Tangent)**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`. Sigmoid's zero-centered cousin. It squashes values to a range between -1 and 1. This zero-centricity often helps learning by making the optimization process a bit easier compared to Sigmoid. However, like Sigmoid, it also saturates at its extremes and can suffer from the vanishing gradient problem.
-*   **GELU (Gaussian Error Linear Unit)**: A smoother, more sophisticated version of ReLU that has become the darling of modern transformer models like GPT and BERT. It provides a smoother curve than the sharp corner of ReLU, which can help with training stability and performance. It's a prime example of how the search for better activation functions continues to drive progress.
+*   **GELU (Gaussian Error Linear Unit)**: A smoother, more sophisticated version of ReLU that became the darling of early modern transformer models like **BERT**, **GPT-2**, and **GPT-3**. It provides a smoother curve than the sharp corner of ReLU, which can help with training stability and performance. It's a prime example of how the search for better activation functions continues to drive progress.
+*   **Gated Linear Unit (GLU) Variants (e.g., SwiGLU, GeGLU)**: The current state-of-the-art in most top-performing LLMs. Instead of applying a simple function, GLU variants use a **gating mechanism** where the input is split, with one part dynamically controlling the information flow of the other. This gives the network more expressive power. Variants like **SwiGLU** (used in LLaMA, Qwen, and DeepSeek) and **GeGLU** (used in Gemma) have demonstrated superior performance and training stability in the feed-forward layers of transformer architectures.
 
-<img width="1209" height="624" alt="Four-panel comparison plot showing activation functions: ReLU with sharp corner at zero, S-shaped Sigmoid curve from 0 to 1, S-shaped Tanh curve from -1 to 1, and smooth GELU curve similar to ReLU" src="https://github.com/user-attachments/assets/36bdc0ee-e3e0-4d88-a9cf-2404a1972e9b" />
+---
 
-**Figure 1.3:** Common Activation Functions. Comparison of four widely-used activation functions: ReLU (top-left), Sigmoid (top-right), Tanh (bottom-left), and GELU (bottom-right), each showing their characteristic output ranges and shapes.
+#### A Deeper Look: Modern Activation Functions in LLMs
 
-#### A Deeper Look: The ReLU Derivative
-The derivative of the ReLU function is startlingly simple: it's **1** for any positive input and **0** for any negative input. (At x=0, it's technically undefined, but in practice, we assign it a derivative of 0).
+While ReLU was a major leap forward, the frontier of deep learning, especially in LLMs, has moved toward smoother and more dynamic activation functions. Let's explore the intuition and mechanics behind GELU and the gated variants that power today's state-of-the-art models.
 
-**Why is this significant?**
-This simplicity is both a blessing and a curse.
-1.  **The Blessing:** For positive inputs, the gradient is a constant 1. During backpropagation, this means the gradient flows through the neuron unchanged, combating the **vanishing gradient problem** that plagues functions like Sigmoid in deep networks. It's a superhighway for learning signals.
-2.  **The Curse:** For negative inputs, the gradient is 0. This means if a neuron's input is negative, it doesn't contribute to the gradient calculation at all. If a neuron gets stuck in a state where it only receives negative inputs, its weights will never be updated again. This is the infamous **"dying ReLU" problem**, where parts of your network can become permanently inactive.
+##### GELU: The Smooth Probabilistic Gate
+
+The Gaussian Error Linear Unit (GELU) was a foundational step beyond ReLU, offering a smoother, more probabilistic approach to activation.
+
+**Formula:**
+\[ \text{GELU}(x) = x \cdot \Phi(x) \]
+Where \( \Phi(x) \) is the Cumulative Distribution Function (CDF) of a standard Gaussian (normal) distribution.
+
+**Intuition:**
+Instead of the hard, "all-or-nothing" gate of ReLU, GELU gates its input `x` based on its value. In essence, it smoothly scales the input by how likely it is to be greater than other values under a Gaussian distribution.
+
+-   For large positive values of `x`, \( \Phi(x) \) is close to 1, so `GELU(x) ≈ x`.
+-   For large negative values of `x`, \( \Phi(x) \) is close to 0, so `GELU(x) ≈ 0`.
+-   Crucially, the transition around `x=0` is smooth, not a sharp "kink" like ReLU.
+
+This smoothness avoids the "dead ReLU" problem. Because GELU's curve is never perfectly flat, it always provides a gradient, allowing neurons to recover and continue learning. This property helped it deliver better performance and stability in early transformer models.
+
+##### The Gating Idea: SwiGLU and GeGLU
+
+More recent LLMs have pushed this idea further by employing **Gated Linear Units (GLU)**. The core idea is to create a dynamic, learned gate. Instead of having a single fixed function, the network learns to control the flow of information.
+
+A standard GLU splits a linear projection into two parts and uses one part to gate the other, typically with a sigmoid function:
+\[ \text{GLU}(x) = (xW + b) \otimes \sigma(xV + c) \]
+Here, the output of the sigmoid acts as a filter, deciding how much of the first signal `(xW + b)` gets through. The `⊗` symbol represents element-wise multiplication.
+
+Modern LLMs refine this by replacing the sigmoid with more powerful activation functions.
+
+**SwiGLU**
+This variant, used in models like LLaMA and Qwen, replaces the sigmoid gate with the **Swish** function.
+
+**Formula:**
+\[ \text{SwiGLU}(x) = \text{Swish}_{\beta}(xW + b) \otimes (xV + c) \]
+Where `Swish` itself is defined as \( \text{Swish}_{\beta}(z) = z \cdot \sigma(\beta z) \).
+
+**Intuition:**
+SwiGLU combines the learned gating of GLU with the benefits of Swish—a smooth function that can pass small negative values, allowing for richer gradient flow. This combination has been shown to boost performance and training stability in transformers.
+
+**GeGLU**
+This variant, used in Google's Gemma models, swaps the gate for GELU.
+
+**Formula:**
+\[ \text{GeGLU}(x) = \text{GELU}(xW + b) \otimes (xV + c) \]
+
+**Intuition:**
+GeGLU marries the learned gating mechanism of GLU with the smooth, probabilistic properties of GELU. It creates a powerful combination where the network learns to control a signal that has already been smoothly activated.
+
+The trend is clear: modern architectures favor activation functions that are not only non-linear but also dynamic and data-dependent. Gated units provide an extra layer of learned control, allowing the network to modulate its own internal signals with much greater flexibility than their predecessors.
 
 ### Layers: Stacking Neurons for Abstract Representations
 
