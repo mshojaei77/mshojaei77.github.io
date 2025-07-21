@@ -78,6 +78,8 @@ Rate yourself honestly 1-5 (1=Never used, 5=Expert). **Don't be discouraged by l
 
 # Part 1: The Foundations 🔍
 
+<img width="1026" height="443" alt="image" src="https://github.com/user-attachments/assets/3abad5b8-23b8-4388-baf1-c5e28efec422" />
+
 **🎯 Focus:** Core ML concepts, neural networks, traditional models, tokenization, embeddings, transformers  
 **📈 Difficulty:** Beginner to Intermediate  
 **🎓 Outcome:** Solid foundation in ML/NLP fundamentals and transformer architecture
@@ -149,6 +151,8 @@ Rate yourself honestly 1-5 (1=Never used, 5=Expert). **Don't be discouraged by l
 
 # Part 2: Building & Training Models 🧬
 
+<img width="1020" height="450" alt="image" src="https://github.com/user-attachments/assets/f2fc0e54-d150-4610-ba52-b0e8bd4ea4f5" />
+
 **🎯 Focus:** Data preparation, pre-training, fine-tuning, preference alignment  
 **📈 Difficulty:** Intermediate to Advanced  
 **🎓 Outcome:** Ability to train and fine-tune language models from scratch
@@ -219,6 +223,8 @@ Rate yourself honestly 1-5 (1=Never used, 5=Expert). **Don't be discouraged by l
 ---
 
 # Part 3: Advanced Topics & Specialization ⚙️
+
+<img width="1019" height="419" alt="image" src="https://github.com/user-attachments/assets/866d3789-96ed-4ae6-8140-8edb0b828048" />
 
 **🎯 Focus:** Evaluation, reasoning, optimization, architectures, enhancement  
 **📈 Difficulty:** Expert/Research Level  
@@ -301,6 +307,8 @@ Rate yourself honestly 1-5 (1=Never used, 5=Expert). **Don't be discouraged by l
 ---
 
 # Part 4: Engineering & Applications 🚀
+
+<img width="1024" height="446" alt="image" src="https://github.com/user-attachments/assets/1d7ee1a8-3981-478f-9ba6-1a5143ff98ec" />
 
 **🎯 Focus:** Production deployment, RAG, agents, multimodal, security, ops  
 **📈 Difficulty:** Intermediate to Advanced  
