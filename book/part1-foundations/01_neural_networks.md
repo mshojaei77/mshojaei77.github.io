@@ -105,7 +105,7 @@ Activation functions are the secret sauce that gives neural networks their "supe
 
 ---
 
-#### Advanced Activation Functions in LLMs
+### Advanced Activation Functions in LLMs
 
 While ReLU was a major leap forward, the frontier of deep learning, especially in LLMs, has moved toward smoother and more dynamic activation functions. Let's explore the intuition and mechanics behind GELU and the gated variants that power today's state-of-the-art models.
 
@@ -113,49 +113,54 @@ While ReLU was a major leap forward, the frontier of deep learning, especially i
 
 The Gaussian Error Linear Unit (GELU) was a foundational step beyond ReLU, offering a smoother, more probabilistic approach to activation.
 
-**Formula:**
-\[ \text{GELU}(x) = x \cdot \Phi(x) \]
-Where \( \Phi(x) \) is the Cumulative Distribution Function (CDF) of a standard Gaussian (normal) distribution.
+**How it works:**
+GELU takes an input `x` and multiplies it by the probability that a random variable from a standard normal distribution is less than `x`. In simpler terms, it gates the input based on how "typical" that value is under a bell curve.
 
-**Intuition:**
-Instead of the hard, "all-or-nothing" gate of ReLU, GELU gates its input `x` based on its value. In essence, it smoothly scales the input by how likely it is to be greater than other values under a Gaussian distribution.
+**The key insight:**
+Instead of the hard, "all-or-nothing" gate of ReLU, GELU gates its input `x` based on its value. Think of it this way: if you have a high positive value, it's very likely to be "above average," so GELU lets most of it through. If you have a very negative value, it's unlikely to be important, so GELU blocks most of it. But here's the magic—the transition is smooth, not a sharp cut-off.
 
--   For large positive values of `x`, \( \Phi(x) \) is close to 1, so `GELU(x) ≈ x`.
--   For large negative values of `x`, \( \Phi(x) \) is close to 0, so `GELU(x) ≈ 0`.
--   Crucially, the transition around `x=0` is smooth, not a sharp "kink" like ReLU.
+- For large positive values of `x`, GELU outputs something very close to `x` (almost no blocking)
+- For large negative values of `x`, GELU outputs something very close to 0 (heavy blocking)  
+- For values around 0, there's a smooth transition that avoids the "dead neuron" problem of ReLU
 
-This smoothness avoids the "dead ReLU" problem. Because GELU's curve is never perfectly flat, it always provides a gradient, allowing neurons to recover and continue learning. This property helped it deliver better performance and stability in early transformer models.
+This smoothness means GELU always provides a gradient for learning, allowing neurons to recover and continue improving. This property helped it deliver better performance and stability in early transformer models like BERT and GPT-2.
 
 ##### Gated Linear Unit Variants (SwiGLU, GeGLU)
 
-More recent LLMs have pushed this idea further by employing **Gated Linear Units (GLU)**. The core idea is to create a dynamic, learned gate. Instead of having a single fixed function, the network learns to control the flow of information.
+More recent LLMs have pushed this idea further by employing **Gated Linear Units (GLU)**. The core idea is brilliant: instead of having a single fixed function decide what gets through, let the network learn to control the flow of information dynamically.
 
-A standard GLU splits a linear projection into two parts and uses one part to gate the other, typically with a sigmoid function:
-\[ \text{GLU}(x) = (xW + b) \otimes \sigma(xV + c) \]
-Here, the output of the sigmoid acts as a filter, deciding how much of the first signal `(xW + b)` gets through. The `⊗` symbol represents element-wise multiplication.
+Think of it like having two security guards at a door. The first guard processes the information, and the second guard decides how much of that processed information should be allowed through. This "gating mechanism" gives the network much more control and expressiveness.
 
-Modern LLMs refine this by replacing the sigmoid with more powerful activation functions.
+A standard GLU works like this:
+1. Take your input and split it into two pathways
+2. Process one pathway normally 
+3. Process the other pathway with a sigmoid function (which outputs values between 0 and 1)
+4. Multiply the results together—the sigmoid output acts as a "gate" controlling how much of the first signal gets through
+
+Modern LLMs have refined this by replacing the simple sigmoid gate with more powerful activation functions.
 
 **SwiGLU**
-This variant, used in models like LLaMA and Qwen, replaces the sigmoid gate with the **Swish** function.
+This variant, used in models like LLaMA, Qwen, and DeepSeek, replaces the sigmoid gate with the **Swish** function (which is just input times sigmoid of input).
 
-**Formula:**
-\[ \text{SwiGLU}(x) = \text{Swish}_{\beta}(xW + b) \otimes (xV + c) \]
-Where `Swish` itself is defined as \( \text{Swish}_{\beta}(z) = z \cdot \sigma(\beta z) \).
+**How it works:**
+SwiGLU creates two pathways from your input. One pathway gets processed with Swish activation, and the other stays linear. Then it multiplies them together. The Swish-activated pathway acts as a learned gate that can pass small negative values and has smoother gradients than a simple sigmoid.
 
-**Intuition:**
-SwiGLU combines the learned gating of GLU with the benefits of Swish—a smooth function that can pass small negative values, allowing for richer gradient flow. This combination has been shown to boost performance and training stability in transformers.
+**Why it's powerful:**
+SwiGLU combines the learned gating of GLU with the benefits of Swish—a smooth function that can pass small negative values, allowing for richer gradient flow. This combination has been shown to boost performance and training stability in transformers, which is why it's become the go-to choice for many state-of-the-art models.
 
 **GeGLU**
-This variant, used in Google's Gemma models, swaps the gate for GELU.
+This variant, used in Google's Gemma models, swaps the gate for GELU instead of Swish.
 
-**Formula:**
-\[ \text{GeGLU}(x) = \text{GELU}(xW + b) \otimes (xV + c) \]
+**How it works:**
+GeGLU creates the same two-pathway structure, but uses GELU activation on the gating pathway instead of Swish. One pathway gets GELU activation, the other stays linear, then they're multiplied together.
 
-**Intuition:**
-GeGLU marries the learned gating mechanism of GLU with the smooth, probabilistic properties of GELU. It creates a powerful combination where the network learns to control a signal that has already been smoothly activated.
+**Why it's effective:**
+GeGLU marries the learned gating mechanism of GLU with the smooth, probabilistic properties of GELU. It creates a powerful combination where the network learns to control a signal that has already been smoothly activated using GELU's bell-curve-inspired approach.
 
-The trend is clear: modern architectures favor activation functions that are not only non-linear but also dynamic and data-dependent. Gated units provide an extra layer of learned control, allowing the network to modulate its own internal signals with much greater flexibility than their predecessors.
+**The bigger picture:**
+The trend is clear: modern architectures favor activation functions that are not only non-linear but also dynamic and data-dependent. Gated units provide an extra layer of learned control, allowing the network to modulate its own internal signals with much greater flexibility than their predecessors. Instead of having a fixed rule like "block all negative values," these gated functions let the network learn context-dependent rules like "in this situation, let through 80% of this signal, but in that situation, let through only 20%."
+
+This adaptability is part of what makes modern LLMs so capable—they're not just applying fixed transformations to data, but learning to dynamically control their own information processing based on context.
 
 ---
 
