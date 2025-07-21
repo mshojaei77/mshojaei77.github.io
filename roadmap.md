@@ -37,6 +37,23 @@ This roadmap is structured as a clear progression from foundational concepts to 
 - Skip to Part 2 or your area of interest
 - Use Part 1 as reference material
 
+**🔧 LLM Engineering & AI App Development Path** (Focus on practical applications)
+- **Target:** Build production-ready LLM applications, RAG systems, and AI agents
+- **Prerequisites:** Python programming, basic API knowledge, web development basics
+- **Core Focus:** Jump to Part 4 (Engineering & Applications) with selective Part 1 foundations
+- **Learning Path:**
+  1. **Quick Foundation (2-3 weeks):** Tokenization → Embeddings → Basic Transformer concepts
+  2. **Core Engineering (6-10 weeks):** 
+     - Running LLMs & Building Applications
+     - Retrieval Augmented Generation (RAG)
+     - Tool Use & AI Agents
+  3. **Advanced Applications (4-6 weeks):**
+     - Multimodal LLMs
+     - Securing LLMs & Responsible AI  
+     - LLMOps
+- **Outcome:** Ship production LLM apps, RAG chatbots, and autonomous agents
+- **Career Path:** LLM Engineer, AI Application Developer, AI Product Engineer
+
 ### Essential Skills Self-Assessment
 
 Rate yourself honestly 1-5 (1=Never used, 5=Expert). **Don't be discouraged by low scores!**
@@ -58,21 +75,6 @@ Rate yourself honestly 1-5 (1=Never used, 5=Expert). **Don't be discouraged by l
 **Machine Learning** *(We'll teach you!)*
 - [ ] **ML Fundamentals (Optional)**: Any prior exposure helpful but not required
 - [ ] **Deep Learning (Optional)**: Neural networks (we start from scratch)
-
-> **🎉 Remember:** Everyone starts somewhere! This roadmap is designed to teach you what you need to know.
-
-### 🛠️ Development Environment Setup
-
-**Essential Tools:**
-- **Python 3.9+** with virtual environments
-- **CUDA-capable GPU** (RTX 3080+ recommended) or cloud access
-- **Docker** for containerization
-- **Jupyter Lab** for interactive development
-- **VSCode** with Python, Jupyter extensions
-
-**Package Management:**
-- **uv** for fast Python package management: `uv pip install -r requirements.txt`
-- **Docker** for reproducible environments
 
 ---
 
