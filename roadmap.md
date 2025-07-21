@@ -6,14 +6,14 @@ This roadmap is structured as a clear progression from foundational concepts to 
 <img width="1042" height="472" alt="image" src="https://github.com/user-attachments/assets/dfae8c47-d3aa-4ecd-a574-f98ee446b81f" />
 
 
-| Part | Focus | Key Skills | Time Estimate |
-|------|-------|------------|---------------|
-| **🔍 Part 1: The Foundations** | Core ML concepts, neural networks, traditional models, tokenization, embeddings, transformers | Python/PyTorch, ML/NLP theory, transformer architecture | 8-12 weeks |
-| **🧬 Part 2: Building & Training Models** | Data preparation, pre-training, fine-tuning, preference alignment | Deep learning theory, distributed training, experimental design | 10-16 weeks |
-| **⚙️ Part 3: Advanced Topics & Specialization** | Evaluation, reasoning, optimization, architectures, enhancement | Research methodology, model optimization, architecture design | 12-20 weeks |
-| **🚀 Part 4: Engineering & Applications** | Production deployment, RAG, agents, multimodal, security, ops | Inference, Agents, RAG, LangChain/LlamaIndex, LLMOps | 8-14 weeks |
+| Part | Key Topics | Time Estimate |
+|------|------------|---------------|
+| **🔍 Part 1: The Foundations** | Neural Networks, Transformers, Tokenization, Embeddings, Attention Mechanisms | 12-20 weeks |
+| **🧬 Part 2: Building & Training Models** | Data Preparation, Pre-training, Fine-tuning, RLHF, Preference Alignment | 16-28 weeks |
+| **⚙️ Part 3: Advanced Topics & Specialization** | Model Evaluation, Reasoning, Quantization, Inference Optimization, Architectures | 20-36 weeks |
+| **🚀 Part 4: Engineering & Applications** | Production Deployment, RAG, Agents, Multimodal, Security, LLMOps | 12-24 weeks |
 
-**💡 Total Time Commitment:** 6-12 months (depending on prior experience and time investment)
+**💡 Total Time Commitment:** 12-24 months (depending on prior experience and time investment)
 
 ---
 
