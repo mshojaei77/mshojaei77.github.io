@@ -66,10 +66,12 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Calculus, linear algebra
 
 **Key Topics:**
-- Neuron structure, activation functions (ReLU, Sigmoid, GELU, SwiGLU), and network layers
-- Learning process: gradient descent, backpropagation, cost functions, and training loops
-- Practical considerations: overfitting, regularization, weight initialization, optimization algorithms (Adam)
-- Network architectures: feedforward, CNNs, RNNs, ResNets and training challenges
+- Neural network fundamentals: neurons, synapses, activation functions (ReLU, Sigmoid, Tanh, Swish, GELU), network layers
+- Learning algorithms: backpropagation, gradient descent, cost functions, cross-entropy, MSE, automatic differentiation
+- Optimization techniques: SGD, Adam, AdamW, RMSprop, learning rate scheduling, momentum, weight decay
+- Regularization strategies: L1/L2 regularization, dropout, batch normalization, layer normalization, early stopping
+- Weight initialization: Xavier, He initialization, vanishing/exploding gradients, mixed precision training (FP16, BF16)
+- Network architectures: feedforward, CNNs, RNNs, ResNets, hyperparameter tuning, AutoML, gradient clipping
 
 
 ## 2. [Traditional Language Models](book/part1-foundations/02_traditional_language_models.md)
@@ -77,48 +79,48 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Probability, statistics
 
 **Key Topics:**
-- N-gram language models: statistical models, smoothing, and perplexity
-- Feedforward neural language models and their limitations
-- Recurrent Neural Networks (RNNs) for sequence modeling
-- LSTMs & GRUs: gating mechanisms for long-term dependencies
-- Sequence-to-Sequence (Seq2Seq) architecture
-- Attention mechanisms: the precursor to transformers
+- N-gram models: statistical language modeling, smoothing techniques (Laplace, Good-Turing, Kneser-Ney), perplexity evaluation
+- Feedforward neural networks: early neural language models, fixed context windows, distributed representations
+- Recurrent architectures: RNNs, LSTM, GRU, bidirectional RNNs, multilayer RNNs, sequence modeling challenges
+- Sequence-to-sequence models: encoder-decoder architecture, machine translation, text summarization, beam search
+- Attention mechanisms: the breakthrough innovation leading to transformers, alignment, context vectors
+- Applications: text generation, sentiment analysis, character-level vs word-level modeling, time series prediction
 
 ## 3. [Tokenization](book/part1-foundations/03_tokenization.md)
 ![image](https://github.com/user-attachments/assets/bf96e231-c41b-47de-b109-aa7af4e1bdb4)
 **📈 Difficulty:** Beginner | **🎯 Prerequisites:** Python basics
 
 **Key Topics:**
-- Token fundamentals: character vs. word vs. subword tokenization
-- Normalization & pre-tokenization preprocessing
-- Byte-Pair Encoding (BPE): algorithm and implementation
-- WordPiece and SentencePiece: variants and language-agnostic approaches
-- Modern tokenizer libraries: Hugging Face tokenizers, tiktoken
-- Handling out-of-vocabulary (OOV) problems
+- Tokenization fundamentals: tokens, character vs word vs subword approaches, vocabulary management, context window optimization
+- Preprocessing: normalization, pre-tokenization, text preprocessing, special characters, emojis, code snippets handling
+- Subword algorithms: Byte-Pair Encoding (BPE), WordPiece, Unigram model, SentencePiece framework, byte-level BPE
+- Advanced techniques: multilingual tokenization, visual tokenization, tokenizer transplantation (TokenAdapt), domain adaptation
+- Implementation: encoding/decoding, vocabulary size optimization, tokenization efficiency, OOV handling
+- Modern tools: Hugging Face Tokenizers, tiktoken, GPT-4/Llama/BERT tokenization, legal/medical terminology processing
 
 ## 4. [Embeddings](book/part1-foundations/04_embeddings.md)
 ![image](https://github.com/user-attachments/assets/eac0881a-2655-484f-ba56-9c9cc2b09619)
 **📈 Difficulty:** Beginner-Intermediate | **🎯 Prerequisites:** Linear algebra, Python
 
 **Key Topics:**
-- Static embeddings: Word2Vec, GloVe, FastText algorithms
-- Vector arithmetic: semantic analogies and relationships
-- Contextual embeddings from transformer models
-- Sentence embeddings: aggregation techniques
-- Vector similarity metrics: cosine similarity, dot product, Euclidean distance
-- Semantic search applications and use cases
+- Static embeddings: Word2Vec architecture, GloVe embeddings, FastText, traditional vector representations
+- Contextual embeddings: BERT, RoBERTa, transformer-based embeddings, context-dependent representations
+- Multimodal embeddings: CLIP, ALIGN, cross-modal search, joint text-image embeddings, vision-language alignment
+- Vector operations: semantic analogies, vector arithmetic, similarity metrics (cosine, euclidean, dot product)
+- Applications: semantic search, dense retrieval, sparse retrieval, text similarity, recommendation systems
+- Domain adaptation: fine-tuning embeddings, financial sentiment, e-commerce search, arXiv papers, specialized domains
 
 ## 5. [The Transformer Architecture](book/part1-foundations/05_transformer_architecture.md)
 ![image](https://github.com/user-attachments/assets/3dad10b8-ae87-4a7a-90c6-dadb810da6ab)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Neural networks, linear algebra
 
 **Key Topics:**
-- Encoder-decoder stack: architecture overview and variants
-- Self-attention mechanism: the core innovation
-- Query, Key, and Value matrices: attention computation
-- Multi-head attention: parallel processing and diverse representations
-- Positional encodings: injecting sequence order information
-- Feed-forward networks, residual connections, and layer normalization
+- Architecture fundamentals: encoder-decoder stack, decoder-only variants, layer normalization, residual connections
+- Attention mechanisms: self-attention, multi-head attention, scaled dot-product attention, cross-attention, causal attention
+- Core components: Query/Key/Value matrices, attention patterns, attention weights, attention visualization
+- Positional encoding: sinusoidal encodings, learned encodings, RoPE (Rotary Position Embedding), ALiBi
+- Advanced attention: Flash Attention, multi-query attention (MQA), grouped-query attention (GQA), KV cache
+- Text generation: nucleus sampling, top-k sampling, beam search, masked attention, mini-GPT implementation
 
 ---
 
@@ -135,60 +137,60 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Python, SQL
 
 **Key Topics:**
-- Data collection & sourcing: web scraping, APIs, and data aggregation
-- Cleaning & filtering: noise removal and quality assessment
-- Deduplication algorithms: MinHash, LSH for large-scale duplicate detection
-- Data quality & contamination: test set leakage prevention
-- Synthetic data generation: using LLMs to create training data
-- Privacy & PII: detecting and redacting personally identifiable information
+- Data collection: web scraping, APIs, data aggregation, Beautiful Soup, Scrapy, Common Crawl, C4 dataset
+- Data processing: cleaning, filtering, quality assessment, contamination detection, error handling, rate limiting
+- Deduplication: MinHash, Locality-Sensitive Hashing (LSH), incremental indexing, data structures optimization
+- Quality control: data validation, quality scoring, TinyStories dataset, real estate data, annotation guidelines
+- Privacy protection: PII detection, named entity recognition (NER), personally identifiable information handling
+- Advanced techniques: synthetic data generation, data augmentation, machine learning quality assessment, data pipelines
 
 ## 7. [Pre-Training Large Language Models](book/part2-building-and-training/07_pre_training_large_language_models.md)
 ![image](https://github.com/user-attachments/assets/a39abc0a-84c4-4014-a84f-c06baf54280e)
 **📈 Difficulty:** Expert | **🎯 Prerequisites:** Transformers, distributed systems
 
 **Key Topics:**
-- Pre-training objectives: Causal Language Modeling (CLM) and self-supervised learning
-- Scaling laws: relationships between compute, data, model size, and performance
-- Data parallelism: distributing training across multiple GPUs
-- Model & tensor parallelism: splitting large models across devices
-- ZeRO optimizer: memory optimization for distributed training
-- Mixed-precision training: FP16/BF16 for efficiency without accuracy loss
+- Training objectives: Causal Language Modeling (CLM), Masked Language Modeling (MLM), Prefix LM, unsupervised pre-training
+- Distributed training: data parallelism, model parallelism, pipeline parallelism, multi-node training, Slurm, Kubernetes
+- Optimization: ZeRO optimization, gradient checkpointing, mixed precision, DeepSpeed, FairScale, Megatron-LM, Colossal-AI
+- Scaling & efficiency: scaling laws, curriculum learning, data scheduling, compute optimization, training throughput
+- Infrastructure: checkpoint management, loss monitoring, training instabilities, recovery mechanisms, hardware configurations
+- Advanced techniques: mathematical reasoning training, convergence speed optimization, memory usage optimization
 
 ## 8. [Post-Training Datasets (for Fine-Tuning)](book/part2-building-and-training/08_post_training_datasets.md)
 ![image](https://github.com/user-attachments/assets/60996b60-99e6-46db-98c8-205fd2f57393)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Data preparation
 
 **Key Topics:**
-- Instruction-following datasets: (instruction, response) pairs for task adaptation
-- Preference datasets: human preference rankings for alignment training
-- Synthetic data generation: using teacher models to create training data
-- Data quality & curation: filtering and improving dataset quality
-- Chat templates: formatting conversational data with roles and special tokens
-- Multi-turn conversations: creating coherent dialogue datasets
+- Dataset formats: instruction datasets, Alpaca format, ShareGPT format, chat templates, conversation formatting
+- Data creation: synthetic data generation, quality control, filtering strategies, data annotation, validation systems
+- Conversation design: multi-turn conversations, system prompts, user/bot messages, special tokens, role-playing models
+- Quality assurance: quality scoring, dataset composition, capability-specific optimization, response quality evaluation
+- Advanced features: internal thoughts, conversation flow, domain-specific patterns, context management, conversation history
+- Curation techniques: annotation guidelines, dataset integrity, bias detection, data curation, quality benchmarks
 
 ## 9. [Supervised Fine-Tuning (SFT)](book/part2-building-and-training/09_supervised_fine_tuning.md)
 ![image](https://github.com/user-attachments/assets/9c3c00b6-6372-498b-a84b-36b08f66196c)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Pre-training basics
 
 **Key Topics:**
-- Full fine-tuning vs. Parameter-Efficient Fine-Tuning (PEFT) trade-offs
-- Low-Rank Adaptation (LoRA): efficient fine-tuning with trainable matrices
-- QLoRA: combining LoRA with 4-bit quantization for consumer hardware
-- Instruction tuning: teaching models to follow commands and instructions
-- Domain adaptation: specializing models for specific fields (medical, legal, code)
-- Model merging: combining capabilities from multiple fine-tuned models
+- Fine-tuning approaches: full fine-tuning vs Parameter-Efficient Fine-Tuning (PEFT), resource optimization
+- Advanced PEFT: LoRA (Low-Rank Adaptation), QLoRA, adapters, 4-bit quantization, consumer GPU constraints
+- Specialized training: instruction tuning, chat model training, domain adaptation, continual learning, CodeLlama
+- Model composition: model merging, SLERP, TIES-Merging, DARE, multi-task models, specialized model integration
+- Memory optimization: gradient checkpointing, FSDP (Fully Sharded Data Parallel), memory-efficient training
+- Applications: code generation, task-specific models, catastrophic forgetting prevention, performance retention
 
 ## 10. [Preference Alignment (RL Fine-Tuning)](book/part2-building-and-training/10_preference_alignment.md)
 ![image](https://github.com/user-attachments/assets/eea2348b-4819-44b1-9477-9bfdeff1a037)
 **📈 Difficulty:** Expert | **🎯 Prerequisites:** Reinforcement learning basics
 
 **Key Topics:**
-- Reinforcement Learning from Human Feedback (RLHF): classic three-stage pipeline
-- Reward modeling: training models to predict human preferences
-- Proximal Policy Optimization (PPO): RL algorithm for policy optimization
-- Direct Preference Optimization (DPO): simpler alternative to RLHF
-- DPO variants: KTO, IPO for different preference data types
-- Constitutional AI: using AI feedback guided by principles and constitutions
+- RL fundamentals: reinforcement learning basics, deep RL, policy optimization, Proximal Policy Optimization (PPO)
+- RLHF pipeline: Reinforcement Learning from Human Feedback, reward model training, human preferences, three-stage process
+- Alternative methods: Direct Preference Optimization (DPO), rejection sampling, KTO (Kahneman-Tversky Optimization)
+- Safety & alignment: helpfulness, harmlessness, honesty, Constitutional AI, AI feedback, principle-based alignment
+- Evaluation: safety evaluation, alignment evaluation, preference datasets, win rate, safety benchmarks, alignment tax
+- Advanced techniques: automated assessment, human assessment, self-critique systems, response revision, defined principles
 
 
 ---
@@ -206,72 +208,72 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Statistics, model training
 
 **Key Topics:**
-- Academic benchmarks: MMLU, GSM8K, HumanEval for standardized capability testing
-- Human evaluation: gold standard with head-to-head comparisons (Chatbot Arena)
-- LLM-as-a-Judge: automated evaluation using powerful models like GPT-4
-- Bias and safety testing: RealToxicityPrompts and specialized benchmarks
-- Fairness assessment: equitable performance across demographic groups
-- Evaluation frameworks: EleutherAI Eval Harness and standardized tools
+- Benchmark suites: MMLU, GSM8K, HumanEval, BigBench, standardized benchmarks, academic evaluation protocols
+- Human evaluation: crowdsourcing, human judgment, Chatbot Arena, head-to-head comparisons, annotation guidelines
+- Automated evaluation: LLM-as-judge, model comparison, automated assessment, quality metrics, statistical analysis
+- Safety & fairness: bias testing, safety testing, toxicity detection, BOLD dataset, RealToxicityPrompts, fairness frameworks
+- Performance metrics: accuracy, F1 score, BLEU, ROUGE, win rate, comparative evaluation, quality assessment
+- Evaluation infrastructure: evaluation frameworks, custom benchmarks, domain-specific evaluation, validation systems
 
 ## 12. [Reasoning](book/part3-advanced-topics/12_reasoning.md)
 ![image](https://github.com/user-attachments/assets/2b34f5c2-033a-4b75-8c15-fd6c2155a7da)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Prompt engineering
 
 **Key Topics:**
-- Chain-of-Thought (CoT): step-by-step reasoning prompting techniques
-- Tree-of-Thoughts (ToT): exploring multiple reasoning paths simultaneously
-- ReAct framework: combining reasoning with tool use and action
-- Process vs. outcome supervision: rewarding reasoning process quality
-- Self-correction & self-consistency: model self-evaluation and verification
-- Process Reward Models (PRMs): evaluating individual reasoning steps
+- Advanced reasoning: System 2 thinking, Chain-of-Thought (CoT), tree-of-thoughts, advanced prompting techniques
+- RL for reasoning: process reward models (PRM), step-level rewards, STEP-RLHF, Group Relative Policy Optimization (GRPO)
+- Self-improvement: self-reflection, self-consistency loops, deliberation budgets, test-time compute scaling
+- Architecture patterns: planner-worker architecture, plan-work-solve decoupling, Monte Carlo Tree Search (MCTS)
+- Training approaches: synthetic reasoning data, bootstrapped self-training, curriculum training, multi-stage training
+- Applications: mathematical reasoning, code generation, logical reasoning, multi-hop queries, problem decomposition
 
 ## 13. [Quantization](book/part3-advanced-topics/13_quantization.md)
 ![image](https://github.com/user-attachments/assets/82b857f5-12de-45bb-8306-8ba6eb7b4656)
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Model optimization
 
 **Key Topics:**
-- Quantization fundamentals: precision reduction and size/accuracy trade-offs
-- Post-Training Quantization (PTQ): quantizing fully trained models
-- Quantization-Aware Training (QAT): simulating quantization during training
-- GPTQ & AWQ: advanced algorithms for GPT-style model quantization
-- GGUF format and llama.cpp: efficient quantized model runtime
-- BitsAndBytes: 4-bit/8-bit quantization library integration
+- Quantization theory: precision reduction, quantization fundamentals, size vs accuracy trade-offs, calibration techniques
+- Methods: Post-Training Quantization (PTQ), Quantization-Aware Training (QAT), integer quantization, sparsity
+- Advanced algorithms: GPTQ, AWQ, SmoothQuant, ZeroQuant, INT4/INT8 quantization, hardware-specific optimization
+- Deployment formats: GGUF format, llama.cpp implementation, mobile deployment, edge deployment, consumer GPU support
+- Performance optimization: memory optimization, inference acceleration, model compression, resource-constrained environments
+- Quality assessment: quantization quality evaluation, performance trade-offs, ONNX, TensorRT integration
 
 ## 14. [Inference Optimization](book/part3-advanced-topics/14_inference_optimization.md)
 ![image](https://github.com/user-attachments/assets/a674bf9a-b7ed-48e8-9911-4bca9b8d69a3)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Model deployment
 
 **Key Topics:**
-- KV caching: fundamental optimization for autoregressive decoding
-- FlashAttention: memory-aware attention for long sequence efficiency
-- PagedAttention: virtual memory-inspired KV cache management
-- Continuous batching: dynamic request processing for throughput optimization
-- Speculative decoding: using draft models for parallel token generation
-- Inference servers: vLLM, TensorRT-LLM for production serving
+- Memory optimization: Flash Attention, KV cache implementation, KV cache management, advanced memory management
+- Performance techniques: speculative decoding, parallel sampling, draft models, verifiers, speedup optimization
+- Batching strategies: dynamic batching, continuous batching, multi-GPU inference, multi-node inference, load balancing
+- Production serving: vLLM, TensorRT-LLM, DeepSpeed-Inference, Triton, high-throughput inference servers
+- Advanced methods: test-time preference optimization (TPO), compression methods, resource allocation, scaling
+- Hardware optimization: CUDA optimization, latency optimization, memory-efficient attention, long sequence processing
 
 ## 15. [Model Architecture Variants](book/part3-advanced-topics/15_model_architecture_variants.md)
 ![image](https://github.com/user-attachments/assets/34befded-227a-4229-bd2b-d9d4345e0b80)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Transformer architecture
 
 **Key Topics:**
-- Mixture of Experts (MoE): sparse models with routing mechanisms
-- Sparse vs. dense models: parameter efficiency and computational trade-offs
-- State Space Models (SSMs): linear-time sequence processing
-- Mamba & selective SSMs: combining RNN efficiency with transformer power
-- RWKV: parallelizable training with efficient RNN-style inference
-- Long-context architectures: sliding window attention and positional encoding variants
+- Sparse architectures: Mixture of Experts (MoE), expert networks, gating networks, load balancing, sparse vs dense trade-offs
+- State space models: Mamba architecture, RWKV, selective state space, linear-time sequence processing
+- Long context: sliding window attention, Longformer, BigBird, long document processing, interpolation/extrapolation
+- Hybrid architectures: GraphFormers, graph-based LLMs, novel architectures, convolution-attention hybrids
+- Efficiency innovations: memory optimization, computation efficiency, architecture search frameworks, performance benchmarks
+- Advanced variants: hybrid components, architecture variants, efficient architecture search, specialized processing units
 
 ## 16. [Model Enhancement](book/part3-advanced-topics/16_model_enhancement.md)
 ![image](https://github.com/user-attachments/assets/5916e535-c227-474b-830a-6ceb0816f0c4)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Model training, optimization
 
 **Key Topics:**
-- Context window extension: Position Interpolation and YaRN techniques
-- Model merging: combining capabilities from multiple specialized models
-- TIES-Merging & DARE: advanced weight conflict resolution methods
-- Knowledge distillation: training smaller student models from larger teachers
-- Continual learning: preventing catastrophic forgetting during updates
-- Self-improvement: models learning from their own outputs and self-critique
+- Context extension: YaRN (Yet another RoPE extensioN), position interpolation, long-text data, information recall
+- Model composition: model merging, ensembling, TIES-Merging, DARE, model degradation recovery, unified systems
+- Knowledge transfer: knowledge distillation, teacher-student training, model compression, mobile deployment optimization
+- Continual learning: adaptation, continual learning, catastrophic forgetting prevention, meta-learning approaches
+- Self-improvement: self-improvement, user feedback integration, interactions, ongoing enhancement, performance improvement
+- Advanced techniques: ensembling systems, specialized model integration, compressed model deployment, recovery strategies
 
 ---
 
@@ -288,78 +290,78 @@ Before starting, complete this self-assessment. Rate yourself 1-5 (1=Beginner, 5
 **📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Web development, APIs
 
 **Key Topics:**
-- LLM API usage: OpenAI, Anthropic integration with rate limits and cost management
-- Prompt engineering: designing effective prompts for desired behaviors
-- Structured outputs: JSON mode and function calling for machine-readable responses
-- Chatbot memory: conversation history management and summarization techniques
-- Application frameworks: FastAPI backends, LangChain workflows, LlamaIndex orchestration
-- Containerization: Docker packaging for portable and scalable deployment
+- API integration: LLM APIs, OpenAI/Anthropic integration, rate limiting, authentication, cost management, concurrent users
+- Application development: memory-enabled chatbots, interactive demos, production servers, serving LLMs, REST APIs
+- Prompt engineering: structured outputs, JSON mode, function calling, prompt management, conversational interfaces
+- Deployment: local deployment, open-source models, streaming responses, real-time applications, test-time autoscaling
+- Frameworks: FastAPI, Flask, Streamlit, Gradio, WebSockets, application architecture, scalability optimization
+- Infrastructure: containerization, Docker, Kubernetes, load balancing, resource management, monitoring, multi-modal support
 
 ## 18. [Retrieval Augmented Generation (RAG)](book/part4-engineering-and-applications/18_retrieval_augmented_generation.md)
 ![image](https://github.com/user-attachments/assets/2f3388a5-aa33-49a4-80b4-84cd5c38b68c)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Embeddings, databases
 
 **Key Topics:**
-- Ingestion & chunking: document processing and semantic segmentation
-- Embedding & indexing: vector conversion and storage optimization
-- Vector databases: Pinecone, Weaviate, Chroma for efficient similarity search
-- Retrieval strategies: query embedding and relevant chunk identification
-- Augmentation & generation: context injection and LLM response synthesis
-- Advanced retrieval: hybrid search, re-ranking, and query transformations
+- Document processing: ingestion, data sources, chunking strategies, document processing, PDFs, web pages, databases
+- Vector operations: embedding models, vector representations, vector databases (Pinecone, Weaviate, Chroma), storage solutions
+- Retrieval methods: retrieval implementation, BM25, semantic search, hybrid search, reranking algorithms, query enhancement
+- Advanced RAG: Graph RAG, knowledge graphs, knowledge graph construction, Intelligent Document Processing (IDP)
+- Conversational RAG: multi-turn conversational RAG, agentic RAG, query planning, multi-step reasoning, context management
+- Infrastructure: scaling, caching, monitoring, incremental indexing, document updates, evaluation metrics, retrieval accuracy
 
 ## 19. [Tool Use & AI Agents](book/part4-engineering-and-applications/19_tool_use_ai_agents.md)
 ![image](https://github.com/user-attachments/assets/a5448477-bb1e-43cb-98a3-09a00c0f17ac)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Function calling, planning
 
 **Key Topics:**
-- Tool use & function calling: external API access and real-time information
-- Agent systems: LLM-powered reasoning engines for goal-oriented tasks
-- ReAct framework: iterative "Reason, Act, Observe" loops
-- Planning & task decomposition: breaking complex goals into manageable steps
-- Multi-agent systems: specialized agent collaboration and coordination
-- Agent frameworks: LangGraph, AutoGen, CrewAI for complex workflows
+- Function calling: tool usage, function calling APIs, external tool integration, real-time information access
+- Agent architecture: agent implementation, planning systems, reasoning, autonomous task execution, safety and control
+- Frameworks: ReAct, LangGraph, AutoGen, CrewAI, planning, tool use, multi-agent orchestration and coordination
+- Specialized agents: financial market analysis, programming assistant, research assistant, smart home devices, workflow automation
+- Advanced features: inter-agent communication, task coordination, error handling, iterative refinement, multi-step problem solving
+- Production concerns: safety constraints, human oversight, approval workflows, validation, ambiguous command handling
 
 ## 20. [Multimodal LLMs](book/part4-engineering-and-applications/20_multimodal_llms.md)
 ![image](https://github.com/user-attachments/assets/76d57fea-5bd1-476b-affd-eb259969a84f)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Computer vision, audio processing
 
 **Key Topics:**
-- Vision-Language Models (VLMs): GPT-4V, LLaVA for visual understanding and reasoning
-- Vision encoders: Vision Transformer (ViT) for image-to-embedding conversion
-- CLIP model: contrastive learning for text-image alignment and zero-shot classification
-- Text-to-image generation: DALL-E, Stable Diffusion with diffusion models
-- Speech processing: Whisper (STT) and Voice Engine (TTS) for audio-text conversion
-- Modality alignment: projecting different data types into shared representation spaces
+- Vision-language models: CLIP, LLaVA, GPT-4V, multimodal transformers, joint image-text representations
+- Multimodal input: text input, audio input, images, transfer learning, pre-trained models, feature fusion
+- Vision processing: image captioning, Visual Question Answering (VQA), visual reasoning, document understanding, OCR
+- Audio integration: audio processing, speech integration, torchaudio, Whisper, cross-modal attention
+- Generation: text-to-image generation, Stable Diffusion, prompt engineering, negative prompts, parameter tuning
+- Applications: multimodal chatbots, multimodal agents, document analysis, code screenshot analysis, e-commerce chatbots
 
 ## 21. [Securing LLMs & Responsible AI](book/part4-engineering-and-applications/21_securing_llms_responsible_ai.md)
 ![image](https://github.com/user-attachments/assets/e638866a-313f-4ea8-9b52-3330168b74d8)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Security fundamentals, ethical AI
 
 **Key Topics:**
-- OWASP Top 10 for LLMs: critical security risks for LLM applications
-- Prompt injection & jailbreaking: bypassing safety filters with crafted prompts
-- Data poisoning: malicious training data introduction and backdoor attacks
-- Model theft & extraction: protecting proprietary models and training data
-- Bias, fairness, and transparency: preventing harmful stereotypes and ensuring accountability
-- Red teaming: proactive vulnerability testing and adversarial evaluation
+- Security framework: OWASP LLM Top 10, attack vectors, vulnerability assessment, security controls, defensive layers
+- Attack methods: prompt injection attacks, jailbreaking techniques, data leaking, training data poisoning, backdoor attacks
+- Defense strategies: prompt injection defense, jailbreak mitigation, input sanitization, output filtering, guardrail systems
+- Privacy protection: personal information masking, reconstruction methods, differential privacy, federated learning
+- Responsible AI: fairness, bias detection, bias mitigation strategies, AI governance, compliance (GDPR, CCPA)
+- Security testing: red teaming frameworks, attack simulation, security validation, content moderation, safety controls
 
 ## 22. [Large Language Model Operations (LLMOps)](book/part4-engineering-and-applications/22_large_language_model_operations.md)
 ![image](https://github.com/user-attachments/assets/15de93dc-e984-4786-831a-2592a1ed9d4b)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** DevOps, MLOps, cloud platforms
 
 **Key Topics:**
-- Model lifecycle management: versioning, registry, and deployment pipeline automation
-- CI/CD for LLMs: automated testing, validation, and safe deployment strategies
-- Monitoring & observability: performance tracking, drift detection, and usage analytics
-- Containerization & orchestration: Docker packaging and Kubernetes scaling
-- Cost management: tracking expenses, auto-scaling, and resource optimization
-- Experiment management & A/B testing: controlled experiments and data-driven decisions
+- Model management: model versioning, model registry (MLflow), Hugging Face Hub integration, model card creation, version control
+- CI/CD pipelines: automated testing, GitHub Actions, deployment processes, automated workflows, dependency management
+- Infrastructure: Docker, OpenShift, containerization, Kubernetes, Terraform, Apache Spark, LLM inference optimization
+- Monitoring: LLM observability tools, Prometheus, Grafana, custom metrics, real-time dashboards, alerting systems
+- Experimentation: A/B testing frameworks, experimentation platforms, statistical analysis, model comparison, prompt optimization
+- Cost optimization: cost tracking, resource allocation, automatic scaling, demand-based scaling, performance metrics analysis
 
 ---
 
 **📞 Get Involved:**
 - **Contribute:** Submit improvements via GitHub issues/PRs
-- **Discuss:** (Join our learning community discussions)[https://t.me/AI_LLMs]
+- **Discuss:** [Join our learning community discussions](https://t.me/AI_LLMs)
 - **Share:** Help others discover this roadmap
 - **Feedback:** Your learning experience helps improve the content
 
