@@ -42,19 +42,19 @@ A hands-on roadmap to master LLM development from neural networks to production 
 ### Prerequisites
 
 **Programming & Development**
-- **Python**: [Python basics tutorial](https://www.python.org/about/gettingstarted/) | [Automate the Boring Stuff](https://automatetheboringstuff.com/)
-- **Git & Version Control**: [GitHub's Git tutorial](https://try.github.io/) | [Pro Git book](https://git-scm.com/book)
-- **Command Line**: [The Missing Semester](https://missing.csail.mit.edu/) | [Command Line Crash Course](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line)
+- **Python**: [Python basics tutorial](https://www.python.org/about/gettingstarted/) - [Automate the Boring Stuff](https://automatetheboringstuff.com/)
+- **Git & Version Control**: [GitHub's Git tutorial](https://try.github.io/) - [Pro Git book](https://git-scm.com/book)
+- **Command Line**: [The Missing Semester](https://missing.csail.mit.edu/) - [Command Line Crash Course](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line)
 - **SQL & Databases**: [SQLBolt interactive lessons](https://sqlbolt.com/) (optional)
 
 **Mathematics**
 - **Linear Algebra**: [3Blue1Brown Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
-- **Basic Statistics**: [StatQuest with Josh Starmer](https://www.youtube.com/@statquest) | [Khan Academy Statistics](https://www.khanacademy.org/math/statistics-probability)
+- **Basic Statistics**: [StatQuest with Josh Starmer](https://www.youtube.com/@statquest) - [Khan Academy Statistics](https://www.khanacademy.org/math/statistics-probability)
 - **Calculus**: [MIT Single Variable Calculus](https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/) (optional)
 
 **Machine Learning**
-- **ML Fundamentals**: [CS229 Stanford](https://cs229.stanford.edu/) | [Andrew Ng's ML Course](https://www.coursera.org/learn/machine-learning) (optional)
-- **Deep Learning**: [Dive into Deep Learning](https://d2l.ai/) | [fast.ai course](https://course.fast.ai/) (optional)
+- **ML Fundamentals**: [CS229 Stanford](https://cs229.stanford.edu/) - [Andrew Ng's ML Course](https://www.coursera.org/learn/machine-learning) (optional)
+- **Deep Learning**: [Dive into Deep Learning](https://d2l.ai/) - [fast.ai course](https://course.fast.ai/) (optional)
 
 ---
 
