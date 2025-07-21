@@ -109,7 +109,7 @@ Activation functions are the secret sauce that gives neural networks their "supe
 
 While ReLU was a major leap forward, the frontier of deep learning, especially in LLMs, has moved toward smoother and more dynamic activation functions. Let's explore the intuition and mechanics behind GELU and the gated variants that power today's state-of-the-art models.
 
-#### Gaussian Error Linear Unit (GELU)
+#### **Gaussian Error Linear Unit (GELU)**
 
 The Gaussian Error Linear Unit (GELU) was a foundational step beyond ReLU, offering a smoother, more probabilistic approach to activation.
 
@@ -127,7 +127,7 @@ Instead of the hard, "all-or-nothing" gate of ReLU, GELU gates its input `x` bas
 
 This smoothness means GELU always provides a gradient for learning, allowing neurons to recover and continue improving. This property helped it deliver better performance and stability in early transformer models like BERT and GPT-2.
 
-#### The GLU Revolution: Gated Linear Units
+#### **The GLU Revolution: Gated Linear Units**
 
 The real game-changer in modern LLMs came with **Gated Linear Units (GLU)**, introduced by Dauphin et al. in 2016. The core idea is brilliant: instead of having a single fixed function decide what gets through, let the network learn to control the flow of information dynamically.
 
@@ -143,7 +143,7 @@ A standard GLU works like this:
 
 In simplified terms, the formula is `output = sigmoid(x*W_gate + b_gate) * (x*W_linear + b_linear)`. The mathematical magic happens because this creates a **linear gradient path** (through the ungated branch) while maintaining nonlinearity (through the gated branch). This design helps mitigate the vanishing gradient problem that plagued earlier deep networks.
 
-#### SwiGLU: The Transformer Champion
+#### **SwiGLU: The Transformer Champion**
 
 **SwiGLU** (Sigmoid-Weighted Linear Unit) emerged as the crown jewel of gated activations, becoming the default choice for many state-of-the-art LLMs including Meta's LLaMA, Alibaba's Qwen, and DeepSeek models.
 
@@ -164,14 +164,14 @@ The proof is in the pudding. When Noam Shazeer tested GLU variants in 2020, SwiG
 **The trade-off:**
 SwiGLU does require one extra matrix multiplication compared to simple activations (three weight matrices instead of two), but modern models compensate by slightly reducing the hidden layer size to keep the parameter count roughly constant. The extra computation is a small price for the substantial performance gains.
 
-##### GeGLU and Other GLU Variants
+#### **GeGLU and Other GLU Variants**
 
 **GeGLU** takes the GLU concept but swaps the Swish gate for GELU activation. Used in Google's Gemma models, it creates the same two-pathway structure but applies GELU's probabilistic smoothness to the gating mechanism.
 
 **Why it's effective:**
 GeGLU marries the learned gating mechanism of GLU with GELU's bell-curve-inspired approach. In Shazeer's experiments, GeGLU actually achieved the best perplexity at 1.942, slightly edging out SwiGLU's 1.944. This shows that the specific choice of gating function matters, but the gating mechanism itself is the big win. Other variants like **ReGLU** (which uses a ReLU gate) also exist, highlighting the flexibility of the GLU framework.
 
-#### The Bigger Picture: Intelligence Through Dynamic Control
+#### **The Bigger Picture: Intelligence Through Dynamic Control**
 
 The evolution from ReLU to GELU to GLU variants represents a fundamental shift in how we think about neural network computation. We've moved from simple, fixed decision rules ("block all negative values") to sophisticated, context-dependent control mechanisms.
 
