@@ -101,7 +101,7 @@ Activation functions are the secret sauce that gives neural networks their "supe
 
 *   **Gated Linear Unit (GLU) Variants (e.g., SwiGLU, GeGLU)**: The current state-of-the-art in most top-performing LLMs (2020s). Instead of applying a simple function, GLU variants use a **gating mechanism** where the input is split, with one part dynamically controlling the information flow of the other. This gives the network more expressive power. Variants like **SwiGLU** (used in LLaMA, Qwen, and DeepSeek) and **GeGLU** (used in Gemma) have demonstrated superior performance and training stability in the feed-forward layers of transformer architectures.
 
-<img width="1152" height="898" alt="image" src="https://github.com/user-attachments/assets/7a278ef6-218f-4c28-8feb-c84e6f0e7767" />
+
 
 ---
 
@@ -112,6 +112,8 @@ While ReLU was a major leap forward, the frontier of deep learning, especially i
 ##### Gaussian Error Linear Unit (GELU)
 
 The Gaussian Error Linear Unit (GELU) was a foundational step beyond ReLU, offering a smoother, more probabilistic approach to activation.
+
+<img width="948" height="710" alt="image" src="https://github.com/user-attachments/assets/019ed520-6efb-4ff0-bc29-8904f36b8821" />
 
 **How it works:**
 GELU takes an input `x` and multiplies it by the probability that a random variable from a standard normal distribution is less than `x`. In simpler terms, it gates the input based on how "typical" that value is under a bell curve.
@@ -128,6 +130,8 @@ This smoothness means GELU always provides a gradient for learning, allowing neu
 ##### Gated Linear Unit Variants (SwiGLU, GeGLU)
 
 More recent LLMs have pushed this idea further by employing **Gated Linear Units (GLU)**. The core idea is brilliant: instead of having a single fixed function decide what gets through, let the network learn to control the flow of information dynamically.
+
+<img width="1152" height="898" alt="image" src="https://github.com/user-attachments/assets/7a278ef6-218f-4c28-8feb-c84e6f0e7767" />
 
 Think of it like having two security guards at a door. The first guard processes the information, and the second guard decides how much of that processed information should be allowed through. This "gating mechanism" gives the network much more control and expressiveness.
 
