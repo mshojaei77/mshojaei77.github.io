@@ -6,7 +6,7 @@ This comprehensive learning roadmap is designed to provide practical, hands-on e
 
 This roadmap is structured as a clear progression from foundational concepts to advanced applications. You'll master core principles, build and train models, specialize in advanced topics, and deploy production systems.
 
-![image](https://github.com/user-attachments/assets/ddd877d4-791f-4e20-89ce-748e0db839a0)
+<img width="1044" height="507" alt="image" src="https://github.com/user-attachments/assets/9bb5f7c6-d5b5-462f-b9b4-9480557ff7e1" />
 
 | Part | Focus | Key Skills | Time Estimate |
 |------|-------|------------|---------------|
