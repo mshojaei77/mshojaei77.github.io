@@ -117,3 +117,4 @@ kramdown:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - /labs

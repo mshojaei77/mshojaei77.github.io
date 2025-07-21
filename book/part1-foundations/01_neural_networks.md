@@ -109,7 +109,7 @@ Activation functions are the secret sauce that gives neural networks their "supe
 
 While ReLU was a major leap forward, the frontier of deep learning, especially in LLMs, has moved toward smoother and more dynamic activation functions. Let's explore the intuition and mechanics behind GELU and the gated variants that power today's state-of-the-art models.
 
-##### Gaussian Error Linear Unit (GELU)
+#### Gaussian Error Linear Unit (GELU)
 
 The Gaussian Error Linear Unit (GELU) was a foundational step beyond ReLU, offering a smoother, more probabilistic approach to activation.
 
@@ -125,42 +125,61 @@ Instead of the hard, "all-or-nothing" gate of ReLU, GELU gates its input `x` bas
 
 This smoothness means GELU always provides a gradient for learning, allowing neurons to recover and continue improving. This property helped it deliver better performance and stability in early transformer models like BERT and GPT-2.
 
-##### Gated Linear Unit Variants (SwiGLU, GeGLU)
+#### The GLU Revolution: Gated Linear Units
 
-More recent LLMs have pushed this idea further by employing **Gated Linear Units (GLU)**. The core idea is brilliant: instead of having a single fixed function decide what gets through, let the network learn to control the flow of information dynamically.
+The real game-changer in modern LLMs came with **Gated Linear Units (GLU)**, introduced by Dauphin et al. in 2016. The core idea is brilliant: instead of having a single fixed function decide what gets through, let the network learn to control the flow of information dynamically.
 
 Think of it like having two security guards at a door. The first guard processes the information, and the second guard decides how much of that processed information should be allowed through. This "gating mechanism" gives the network much more control and expressiveness.
 
 A standard GLU works like this:
-1. Take your input and split it into two pathways
-2. Process one pathway normally 
-3. Process the other pathway with a sigmoid function (which outputs values between 0 and 1)
-4. Multiply the results together—the sigmoid output acts as a "gate" controlling how much of the first signal gets through
+1. Take your input and split it into two pathways using two different linear projections
+2. Process one pathway with a sigmoid function (which outputs values between 0 and 1)  
+3. Keep the other pathway linear
+4. Multiply the results together—the sigmoid output acts as a "gate" controlling how much of the linear signal gets through
 
-Modern LLMs have refined this by replacing the simple sigmoid gate with more powerful activation functions.
+The mathematical magic happens because this creates a **linear gradient path** (through the ungated branch) while maintaining nonlinearity (through the gated branch). This design helps mitigate the vanishing gradient problem that plagued earlier deep networks.
 
-**SwiGLU**
-This variant, used in models like LLaMA, Qwen, and DeepSeek, replaces the sigmoid gate with the **Swish** function (which is just input times sigmoid of input).
+#### SwiGLU: The Transformer Champion
 
-**How it works:**
-SwiGLU creates two pathways from your input. One pathway gets processed with Swish activation, and the other stays linear. Then it multiplies them together. The Swish-activated pathway acts as a learned gate that can pass small negative values and has smoother gradients than a simple sigmoid.
-
-**Why it's powerful:**
-SwiGLU combines the learned gating of GLU with the benefits of Swish—a smooth function that can pass small negative values, allowing for richer gradient flow. This combination has been shown to boost performance and training stability in transformers, which is why it's become the go-to choice for many state-of-the-art models.
-
-**GeGLU**
-This variant, used in Google's Gemma models, swaps the gate for GELU instead of Swish.
+**SwiGLU** (Sigmoid-Weighted Linear Unit) emerged as the crown jewel of gated activations, becoming the default choice for many state-of-the-art LLMs including Meta's LLaMA, Alibaba's Qwen, and DeepSeek models.
 
 **How it works:**
-GeGLU creates the same two-pathway structure, but uses GELU activation on the gating pathway instead of Swish. One pathway gets GELU activation, the other stays linear, then they're multiplied together.
+SwiGLU replaces the simple sigmoid gate in GLU with the **Swish** activation function (also known as SiLU). Remember, Swish is just input times sigmoid of input—it's smoother than sigmoid and can pass small negative values. The formula becomes: take your input, create two projections, apply Swish to one pathway, keep the other linear, then multiply them together.
+
+**Why it dominates:**
+The magic of SwiGLU lies in combining the best of both worlds: the learned gating mechanism of GLU with the smooth, non-monotonic properties of Swish. This creates several advantages:
+
+- **Richer gradient flow**: The smooth Swish curve provides better gradients than the saturating sigmoid
+- **No dead neurons**: Unlike ReLU, small negative values can still contribute through the smooth gating
+- **Dynamic feature selection**: The network learns context-dependent rules for information flow
+- **Linear gradient paths**: The ungated branch provides a highway for gradients to flow through deep networks
+
+**Real-world impact:**
+The proof is in the pudding. When Noam Shazeer tested GLU variants in 2020, SwiGLU achieved a validation perplexity of 1.944 compared to 1.997 for ReLU and 1.983 for GELU—a significant improvement that translates to noticeably better language modeling. Google's PaLM team explicitly noted that SwiGLU "significantly increases quality" compared to traditional activations, which is why they adopted it. Meta's LLaMA team made the same choice, stating they "replaced ReLU with SwiGLU to improve performance."
+
+**The trade-off:**
+SwiGLU does require one extra matrix multiplication compared to simple activations (three weight matrices instead of two), but modern models compensate by slightly reducing the hidden layer size to keep the parameter count roughly constant. The extra computation is a small price for the substantial performance gains.
+
+##### GeGLU: Google's Alternative
+
+**GeGLU** takes the GLU concept but swaps the Swish gate for GELU activation. Used in Google's Gemma models, it creates the same two-pathway structure but applies GELU's probabilistic smoothness to the gating mechanism.
 
 **Why it's effective:**
-GeGLU marries the learned gating mechanism of GLU with the smooth, probabilistic properties of GELU. It creates a powerful combination where the network learns to control a signal that has already been smoothly activated using GELU's bell-curve-inspired approach.
+GeGLU marries the learned gating mechanism of GLU with GELU's bell-curve-inspired approach. In Shazeer's experiments, GeGLU actually achieved the best perplexity at 1.942, slightly edging out SwiGLU. This shows that the specific choice between Swish and GELU in the gate can be model and task-dependent, but both dramatically outperform traditional activations.
 
-**The bigger picture:**
-The trend is clear: modern architectures favor activation functions that are not only non-linear but also dynamic and data-dependent. Gated units provide an extra layer of learned control, allowing the network to modulate its own internal signals with much greater flexibility than their predecessors. Instead of having a fixed rule like "block all negative values," these gated functions let the network learn context-dependent rules like "in this situation, let through 80% of this signal, but in that situation, let through only 20%."
+#### The Bigger Picture: Intelligence Through Dynamic Control
 
-This adaptability is part of what makes modern LLMs so capable—they're not just applying fixed transformations to data, but learning to dynamically control their own information processing based on context.
+The evolution from ReLU to GELU to GLU variants represents a fundamental shift in how we think about neural network computation. We've moved from simple, fixed decision rules ("block all negative values") to sophisticated, context-dependent control mechanisms.
+
+Modern LLMs don't just transform data—they learn to dynamically modulate their own information processing. A SwiGLU gate might learn rules like:
+- "In this context, amplify 90% of this signal"
+- "For this input pattern, dampen the signal to 20%"
+- "When processing dialogue, gate differently than when processing code"
+
+This adaptability is part of what makes modern LLMs so capable. They're not just pattern matchers; they're systems that learn to control their own cognition based on context. The gated activations provide the neural equivalent of attention—the ability to dynamically decide what information deserves focus.
+
+**Looking forward:**
+The trend is clear: the future belongs to activation functions that are smooth, dynamic, and learnable. As models continue to scale, we're likely to see even more sophisticated gating mechanisms that give networks finer-grained control over their internal information processing. The humble activation function has evolved from a simple nonlinearity to a sophisticated control system—and this evolution is far from over.
 
 ---
 
