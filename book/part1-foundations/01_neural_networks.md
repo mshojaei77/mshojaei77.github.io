@@ -141,14 +141,14 @@ A standard GLU works like this:
 3. Keep the other pathway linear
 4. Multiply the results together—the sigmoid output acts as a "gate" controlling how much of the linear signal gets through
 
-The mathematical magic happens because this creates a **linear gradient path** (through the ungated branch) while maintaining nonlinearity (through the gated branch). This design helps mitigate the vanishing gradient problem that plagued earlier deep networks.
+In simplified terms, the formula is `output = sigmoid(x*W_gate + b_gate) * (x*W_linear + b_linear)`. The mathematical magic happens because this creates a **linear gradient path** (through the ungated branch) while maintaining nonlinearity (through the gated branch). This design helps mitigate the vanishing gradient problem that plagued earlier deep networks.
 
 #### SwiGLU: The Transformer Champion
 
 **SwiGLU** (Sigmoid-Weighted Linear Unit) emerged as the crown jewel of gated activations, becoming the default choice for many state-of-the-art LLMs including Meta's LLaMA, Alibaba's Qwen, and DeepSeek models.
 
 **How it works:**
-SwiGLU replaces the simple sigmoid gate in GLU with the **Swish** activation function (also known as SiLU). Remember, Swish is just input times sigmoid of input—it's smoother than sigmoid and can pass small negative values. The formula becomes: take your input, create two projections, apply Swish to one pathway, keep the other linear, then multiply them together.
+SwiGLU replaces the simple sigmoid gate in GLU with the **Swish** activation function (also known as SiLU). Remember, Swish is just input times sigmoid of input—it's smoother than sigmoid and can pass small negative values. The formula simply swaps the sigmoid gate for a Swish function: `SwiGLU(x) = Swish(x*W_gate + b_gate) * (x*W_linear + b_linear)`.
 
 **Why it dominates:**
 The magic of SwiGLU lies in combining the best of both worlds: the learned gating mechanism of GLU with the smooth, non-monotonic properties of Swish. This creates several advantages:
@@ -159,17 +159,17 @@ The magic of SwiGLU lies in combining the best of both worlds: the learned gatin
 - **Linear gradient paths**: The ungated branch provides a highway for gradients to flow through deep networks
 
 **Real-world impact:**
-The proof is in the pudding. When Noam Shazeer tested GLU variants in 2020, SwiGLU achieved a validation perplexity of 1.944 compared to 1.997 for ReLU and 1.983 for GELU—a significant improvement that translates to noticeably better language modeling. Google's PaLM team explicitly noted that SwiGLU "significantly increases quality" compared to traditional activations, which is why they adopted it. Meta's LLaMA team made the same choice, stating they "replaced ReLU with SwiGLU to improve performance."
+The proof is in the pudding. When Noam Shazeer tested GLU variants in 2020, SwiGLU achieved a validation perplexity of 1.944 compared to 1.997 for a standard ReLU activation—a significant improvement that translates to noticeably better language modeling. Google's PaLM team explicitly noted that SwiGLU "significantly increases quality" compared to traditional activations, which is why they adopted it. Meta's LLaMA team made the same choice, stating they "replaced ReLU with SwiGLU to improve performance."
 
 **The trade-off:**
 SwiGLU does require one extra matrix multiplication compared to simple activations (three weight matrices instead of two), but modern models compensate by slightly reducing the hidden layer size to keep the parameter count roughly constant. The extra computation is a small price for the substantial performance gains.
 
-##### GeGLU: Google's Alternative
+##### GeGLU and Other GLU Variants
 
 **GeGLU** takes the GLU concept but swaps the Swish gate for GELU activation. Used in Google's Gemma models, it creates the same two-pathway structure but applies GELU's probabilistic smoothness to the gating mechanism.
 
 **Why it's effective:**
-GeGLU marries the learned gating mechanism of GLU with GELU's bell-curve-inspired approach. In Shazeer's experiments, GeGLU actually achieved the best perplexity at 1.942, slightly edging out SwiGLU. This shows that the specific choice between Swish and GELU in the gate can be model and task-dependent, but both dramatically outperform traditional activations.
+GeGLU marries the learned gating mechanism of GLU with GELU's bell-curve-inspired approach. In Shazeer's experiments, GeGLU actually achieved the best perplexity at 1.942, slightly edging out SwiGLU's 1.944. This shows that the specific choice of gating function matters, but the gating mechanism itself is the big win. Other variants like **ReGLU** (which uses a ReLU gate) also exist, highlighting the flexibility of the GLU framework.
 
 #### The Bigger Picture: Intelligence Through Dynamic Control
 
