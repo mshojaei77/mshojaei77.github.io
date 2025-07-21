@@ -23,36 +23,23 @@ This roadmap is structured as a clear progression from foundational concepts to 
 
 ### 🎯 Choose Your Starting Path
 
-**🌱 Complete Beginner Path** (No prior ML experience)
-- Start with online courses: [CS50's Introduction to AI](https://cs50.harvard.edu/ai/2024/) or [Andrew Ng's ML Course](https://www.coursera.org/learn/machine-learning)
-- Learn Python basics: [Python.org tutorial](https://docs.python.org/3/tutorial/) or [Automate the Boring Stuff](https://automatetheboringstuff.com/)
-- **Minimum to start:** Basic Python knowledge (variables, functions, classes)
+**🌱 Complete Beginner** (No ML experience)
+- Learn Python basics first: [Python.org tutorial](https://docs.python.org/3/tutorial/)
+- Take [CS50's AI](https://cs50.harvard.edu/ai/2024/) or [Andrew Ng's ML Course](https://www.coursera.org/learn/machine-learning)
+- Start with Part 1
 
-**🚀 Quick Start Path** (Some programming experience)
-- Review Python basics if needed
-- Jump to Part 1: Neural Networks Foundations
-- **Minimum to start:** Comfortable with Python programming
+**🚀 Quick Start** (Some programming)
+- Review Python if needed
+- Jump to Part 1: Neural Networks
 
-**⚡ Advanced Path** (ML/AI experience)
-- Skip to Part 2 or your area of interest
-- Use Part 1 as reference material
+**⚡ Advanced** (ML/AI experience)
+- Skip to Part 2 or area of interest
+- Use Part 1 as reference
 
-**🔧 LLM Engineering & AI App Development Path** (Focus on practical applications)
-- **Target:** Build production-ready LLM applications, RAG systems, and AI agents
-- **Prerequisites:** Python programming, basic API knowledge, web development basics
-- **Core Focus:** Jump to Part 4 (Engineering & Applications) with selective Part 1 foundations
-- **Learning Path:**
-  1. **Quick Foundation (2-3 weeks):** Tokenization → Embeddings → Basic Transformer concepts
-  2. **Core Engineering (6-10 weeks):** 
-     - Running LLMs & Building Applications
-     - Retrieval Augmented Generation (RAG)
-     - Tool Use & AI Agents
-  3. **Advanced Applications (4-6 weeks):**
-     - Multimodal LLMs
-     - Securing LLMs & Responsible AI  
-     - LLMOps
-- **Outcome:** Ship production LLM apps, RAG chatbots, and autonomous agents
-- **Career Path:** LLM Engineer, AI Application Developer, AI Product Engineer
+**🔧 LLM Engineering** (Build apps fast)
+- Prerequisites: Python, basic APIs
+- Path: Part 1 (Tokenization, Embeddings, Transformers) → Part 4 (RAG, Agents, LLMOps)
+- Outcome: Production LLM apps and agents
 
 ### Essential Skills Self-Assessment
 
