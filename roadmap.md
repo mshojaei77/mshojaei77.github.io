@@ -1,9 +1,11 @@
 # LLM development Roadmap
 
 This comprehensive learning roadmap is designed to provide practical, hands-on experience with LLM development and deployment. Each section combines theoretical concepts with practical implementations, real-world examples, and coding exercises to build expertise progressively.
+
 This roadmap is structured as a clear progression from foundational concepts to advanced applications. You'll master core principles, build and train models, specialize in advanced topics, and deploy production systems.
 
-<img width="1042" height="472" alt="image" src="https://github.com/user-attachments/assets/dfae8c47-d3aa-4ecd-a574-f98ee446b81f" />
+<img width="1037" height="418" alt="image" src="https://github.com/user-attachments/assets/ceb1e3a3-06c7-46f1-87a3-304b8cab20a6" />
+
 
 
 | Part | Key Topics | Time Estimate |
