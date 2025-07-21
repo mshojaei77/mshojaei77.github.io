@@ -1,8 +1,6 @@
 # LLM development Roadmap
 
-This comprehensive learning roadmap is designed to provide practical, hands-on experience with LLM development and deployment. Each section combines theoretical concepts with practical implementations, real-world examples, and coding exercises to build expertise progressively.
-
-This roadmap is structured as a clear progression from foundational concepts to advanced applications. You'll master core principles, build and train models, specialize in advanced topics, and deploy production systems.
+A hands-on roadmap to master LLM development from neural networks to production deployment. Build, train, and deploy language models with practical implementations and real-world examples.
 
 <img width="1037" height="418" alt="image" src="https://github.com/user-attachments/assets/ceb1e3a3-06c7-46f1-87a3-304b8cab20a6" />
 
@@ -19,7 +17,7 @@ This roadmap is structured as a clear progression from foundational concepts to 
 
 ---
 
-## 📋 Prerequisites & Getting Started
+## 📋 Getting Started
 
 ### 🎯 Choose Your Starting Path
 
@@ -41,27 +39,22 @@ This roadmap is structured as a clear progression from foundational concepts to 
 - Path: Part 1 (Tokenization, Embeddings, Transformers) → Part 4 (RAG, Agents, LLMOps)
 - Outcome: Production LLM apps and agents
 
-### Essential Skills Self-Assessment
+### Prerequisites
 
-Rate yourself honestly 1-5 (1=Never used, 5=Expert). **Don't be discouraged by low scores!**
+**Programming & Development**
+- **Python**: [Python basics tutorial](https://www.python.org/about/gettingstarted/) | [Automate the Boring Stuff](https://automatetheboringstuff.com/)
+- **Git & Version Control**: [GitHub's Git tutorial](https://try.github.io/) | [Pro Git book](https://git-scm.com/book)
+- **Command Line**: [The Missing Semester](https://missing.csail.mit.edu/) | [Command Line Crash Course](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line)
+- **SQL & Databases**: [SQLBolt interactive lessons](https://sqlbolt.com/) (optional)
 
-**Programming & Development** *(Can be learned alongside)*
-- [ ] **Python (2/5 minimum)**: Variables, functions, basic classes
-  - *If < 2/5: Complete [Python basics tutorial](https://www.python.org/about/gettingstarted/) first*
-- [ ] **Git & Version Control (1/5 minimum)**: Basic git commands
-  - *If < 1/5: Try [GitHub's Git tutorial](https://try.github.io/)*
-- [ ] **Command Line (1/5 minimum)**: Navigate files, run programs
-- [ ] **SQL & Databases (Optional)**: Basic queries
+**Mathematics**
+- **Linear Algebra**: [3Blue1Brown Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
+- **Basic Statistics**: [StatQuest with Josh Starmer](https://www.youtube.com/@statquest) | [Khan Academy Statistics](https://www.khanacademy.org/math/statistics-probability)
+- **Calculus**: [MIT Single Variable Calculus](https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/) (optional)
 
-**Mathematics** *(Don't worry - we'll explain as we go!)*
-- [ ] **Linear Algebra (2/5 helpful)**: Matrix operations, vectors
-  - *If < 2/5: [3Blue1Brown Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)*
-- [ ] **Basic Statistics (2/5 helpful)**: Mean, variance, probability
-- [ ] **Calculus (Optional)**: Derivatives (we'll explain when needed)
-
-**Machine Learning** *(We'll teach you!)*
-- [ ] **ML Fundamentals (Optional)**: Any prior exposure helpful but not required
-- [ ] **Deep Learning (Optional)**: Neural networks (we start from scratch)
+**Machine Learning**
+- **ML Fundamentals**: [CS229 Stanford](https://cs229.stanford.edu/) | [Andrew Ng's ML Course](https://www.coursera.org/learn/machine-learning) (optional)
+- **Deep Learning**: [Dive into Deep Learning](https://d2l.ai/) | [fast.ai course](https://course.fast.ai/) (optional)
 
 ---
 
