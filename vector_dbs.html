@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Database Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for table headers */
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <!-- Header Section -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-2">Vector Database Showdown</h1>
+            <p class="text-lg text-cyan-400">A Comparative Guide to Leading Vector Databases</p>
+        </div>
+
+        <!-- Table Container with horizontal scroll on small screens -->
+        <div class="overflow-x-auto bg-gray-800 rounded-2xl shadow-2xl shadow-cyan-500/10">
+            <table class="min-w-full text-sm sm:text-base divide-y divide-gray-700">
+                <thead class="bg-gray-900/70 backdrop-blur-sm">
+                    <tr>
+                        <th scope="col" class="py-4 px-6 text-left text-xs font-bold text-cyan-300 uppercase tracking-wider">Database</th>
+                        <th scope="col" class="py-4 px-6 text-left text-xs font-bold text-cyan-300 uppercase tracking-wider">License & Hosting</th>
+                        <th scope="col" class="py-4 px-6 text-left text-xs font-bold text-cyan-300 uppercase tracking-wider">Scale & Performance</th>
+                        <th scope="col" class="py-4 px-6 text-left text-xs font-bold text-cyan-300 uppercase tracking-wider">Filtering & Search</th>
+                        <th scope="col" class="py-4 px-6 text-left text-xs font-bold text-cyan-300 uppercase tracking-wider">Ecosystem & Tooling</th>
+                        <th scope="col" class="py-4 px-6 text-left text-xs font-bold text-cyan-300 uppercase tracking-wider">Strengths</th>
+                        <th scope="col" class="py-4 px-6 text-left text-xs font-bold text-cyan-300 uppercase tracking-wider">Caveats</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    <!-- Qdrant -->
+                    <tr class="hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Qdrant</td>
+                        <td class="py-4 px-6">Apache-2, Self-host & Cloud</td>
+                        <td class="py-4 px-6">⚡️ &lt;3ms p50 (1M vec)<br/>💾 Quantization cuts RAM ~30x</td>
+                        <td class="py-4 px-6">Payload-aware filters<br/>Multi-vector per doc</td>
+                        <td class="py-4 px-6">HTTP & gRPC APIs<br/>LangChain/LlamaIndex</td>
+                        <td class="py-4 px-6 text-green-400">✅ High RPS<br/>✅ Multi-vector out-of-box</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Newer managed cloud<br/>⚠️ Fewer enterprise RBAC</td>
+                    </tr>
+                    <!-- Milvus -->
+                    <tr class="bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Milvus</td>
+                        <td class="py-4 px-6">Apache-2 & Zilliz Cloud</td>
+                        <td class="py-4 px-6">📈 Billions of vectors<br/>🖥️ CPU/GPU HNSW, IVF-PQ</td>
+                        <td class="py-4 px-6">Hybrid sparse + dense<br/>Boolean filters</td>
+                        <td class="py-4 px-6">Dozens of RAG tutorials</td>
+                        <td class="py-4 px-6 text-green-400">✅ Mature scaling<br/>✅ Laptop → Cluster</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ On-prem ops complexity<br/>⚠️ Cloud vendor lock-in</td>
+                    </tr>
+                    <!-- Weaviate -->
+                    <tr class="hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Weaviate</td>
+                        <td class="py-4 px-6">Apache-2, Self-host & Serverless</td>
+                        <td class="py-4 px-6">Go core; auto-sharding<br/>Scales to billions</td>
+                        <td class="py-4 px-6">BM25 + vector "hybrid"<br/>Metadata & geo filters</td>
+                        <td class="py-4 px-6">GraphQL & REST APIs<br/>Agents SDK, RAG e-book</td>
+                        <td class="py-4 px-6 text-green-400">✅ Turn-key vectorization<br/>✅ Multi-tenant RBAC, SOC 2</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Higher write latencies at scale</td>
+                    </tr>
+                    <!-- Faiss -->
+                    <tr class="bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Faiss</td>
+                        <td class="py-4 px-6">BSD-2 (Library, not DB)</td>
+                        <td class="py-4 px-6">🚀 Fastest raw ANN on GPU</td>
+                        <td class="py-4 px-6">None; must build custom</td>
+                        <td class="py-4 px-6">Python/C++ wrappers<br/>Underpins many DBs</td>
+                        <td class="py-4 px-6 text-green-400">✅ Ultimate algorithm control<br/>✅ No network hop</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ No persistence/auth<br/>⚠️ You build the server</td>
+                    </tr>
+                    <!-- Chroma -->
+                    <tr class="hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Chroma</td>
+                        <td class="py-4 px-6">Apache-2, Local & Cloud</td>
+                        <td class="py-4 px-6">Single-node (~100M vec)<br/>~20ms p50 (100k vec)</td>
+                        <td class="py-4 px-6">Metadata & full-text<br/>Multimodal support</td>
+                        <td class="py-4 px-6">3-line Python API<br/>Built into LangChain</td>
+                        <td class="py-4 px-6 text-green-400">✅ Easiest local prototyping<br/>✅ "Works out-of-the-box"</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Single-node today<br/>⚠️ Distributed in preview</td>
+                    </tr>
+                    <!-- Pinecone -->
+                    <tr class="bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Pinecone</td>
+                        <td class="py-4 px-6">Proprietary; Managed Serverless</td>
+                        <td class="py-4 px-6">12B vectors GA<br/>O(10 ms) low-latency reads</td>
+                        <td class="py-4 px-6">High-recall metadata filters</td>
+                        <td class="py-4 px-6">Batteries-included docs<br/>Dashboard & RAG primers</td>
+                        <td class="py-4 px-6 text-green-400">✅ Zero-ops, autoscaling<br/>✅ Cross-region replication</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Usage-based cost<br/>⚠️ Closed-source, no self-host</td>
+                    </tr>
+                    <!-- pgvector -->
+                    <tr class="hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">pgvector</td>
+                        <td class="py-4 px-6">PostgreSQL License</td>
+                        <td class="py-4 px-6">Tens of millions<br/>Inherits ACID, PITR</td>
+                        <td class="py-4 px-6">SQL WHERE clauses<br/>Joins with GIS/JSONB</td>
+                        <td class="py-4 px-6">Works via any Postgres driver</td>
+                        <td class="py-4 px-6 text-green-400">✅ Keep vectors with relational data<br/>✅ Simplicity</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Table bloat under writes<br/>⚠️ IVFFlat tuning required</td>
+                    </tr>
+                    <!-- LanceDB -->
+                    <tr class="bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">LanceDB</td>
+                        <td class="py-4 px-6">Apache-2, Local & Cloud</td>
+                        <td class="py-4 px-6">Columnar "Lance" format<br/>Sub-ms lookups</td>
+                        <td class="py-4 px-6">SQL-like filters<br/>ANN & brute-force</td>
+                        <td class="py-4 px-6">Python/TypeScript SDKs<br/>Graph-RAG template</td>
+                        <td class="py-4 px-6 text-green-400">✅ Multimodal Lakehouse vision<br/>✅ Search → EDA → Training</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Younger community<br/>⚠️ Fewer 3rd-party integrations</td>
+                    </tr>
+                    <!-- Vespa -->
+                    <tr class="hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Vespa</td>
+                        <td class="py-4 px-6">Apache-2 & Vespa Cloud</td>
+                        <td class="py-4 px-6">Proven at Yahoo/Perplexity<br/>&lt;100ms at K QPS</td>
+                        <td class="py-4 px-6">Native BM25 + dense<br/>Tensor ranking</td>
+                        <td class="py-4 px-6">YQL, REST & gRPC<br/>LangChain/LlamaIndex</td>
+                        <td class="py-4 px-6 text-green-400">✅ Unified ranking (text, tensor)<br/>✅ Real-time in-cluster inference</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Steep ops footprint (Java)<br/>⚠️ Learning curve for config</td>
+                    </tr>
+                    <!-- Vald -->
+                    <tr class="bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Vald</td>
+                        <td class="py-4 px-6">Apache-2 (Helm charts)</td>
+                        <td class="py-4 px-6">NGT index; auto-index<br/>Scales to billions on K8s</td>
+                        <td class="py-4 px-6">gRPC hooks for custom filters</td>
+                        <td class="py-4 px-6">Go/Java/Python/Node SDKs<br/>Grafana dashboards</td>
+                        <td class="py-4 px-6 text-green-400">✅ Kubernetes-first<br/>✅ Auto-scaling, backups</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Smaller community<br/>⚠️ Limited hybrid search</td>
+                    </tr>
+                    <!-- Elasticsearch -->
+                    <tr class="hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Elasticsearch</td>
+                        <td class="py-4 px-6">Elastic License & Cloud</td>
+                        <td class="py-4 px-6">Lucene 9.9 HNSW<br/>Sub-10ms p50 (10M vec)</td>
+                        <td class="py-4 px-6">BM25 + vector hybrid<br/>Rich bool/geo filters</td>
+                        <td class="py-4 px-6">Huge ecosystem; ESQL<br/>Kibana, LangChain plugin</td>
+                        <td class="py-4 px-6 text-green-400">✅ "All-in-one" solution<br/>✅ Mature RBAC & observability</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ SSPL-like license<br/>⚠️ Can be resource-heavy</td>
+                    </tr>
+                    <!-- Redis -->
+                    <tr class="bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
+                        <td class="py-4 px-6 font-bold text-white whitespace-nowrap">Redis</td>
+                        <td class="py-4 px-6">BSD-3 OSS & Enterprise</td>
+                        <td class="py-4 px-6">In-memory KNN<br/>62% higher QPS than peers</td>
+                        <td class="py-4 px-6">RediSearch KNN<br/>Mix with JSON/full-text</td>
+                        <td class="py-4 px-6">Clients in all languages<br/>LangChain, llama-cpp</td>
+                        <td class="py-4 px-6 text-green-400">✅ Lowest latency (μs–ms)<br/>✅ Ideal for real-time RAG</td>
+                        <td class="py-4 px-6 text-amber-400">⚠️ Memory-bound (unless Flash)<br/>⚠️ Some features Enterprise-only</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="text-center mt-8">
+            <p class="text-md text-gray-400 italic">Feel free to benchmark with your own embeddings and workload to pick the best fit!</p>
+        </div>
+    </div>
+
+</body>
+</html>
