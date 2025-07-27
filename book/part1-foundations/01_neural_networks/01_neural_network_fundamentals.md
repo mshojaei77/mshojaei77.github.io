@@ -27,7 +27,7 @@ A neural network learns cat recognition the same way a dedicated intern might: b
 
 After enough training, something magical happens: the network has learned a complex, hierarchical set of features that "add up" to "cat-ness." Early layers might detect edges and textures. Middle layers combine these into shapes like "pointy triangular things" and "curved whiskers." Deep layers synthesize these into "definitely a cat" or "probably not a cat."
 
-<img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3298984b-c983-41e8-909d-859001d9f621" />
+<img width="800" height="450" alt="image" src="https://arjun-kava.github.io/dog-cat-3fea3d1cf02c617d77b4b6bf9449ed55.gif" />
 
 **Figure 1.1:** The conceptual flow of how a neural network learns to recognize cats by processing training images, extracting hierarchical features, and making classification decisions.
 
