@@ -29,8 +29,6 @@ After enough training, something magical happens: the network has learned a comp
 
 <img width="800" height="450" alt="image" src="https://arjun-kava.github.io/dog-cat-3fea3d1cf02c617d77b4b6bf9449ed55.gif" />
 
-**Figure 1.1:** The conceptual flow of how a neural network learns to recognize cats by processing training images, extracting hierarchical features, and making classification decisions.
-
 Here's the kicker: this same fundamental process works for language translation, medical diagnosis, game playing, and countless other "intelligent" tasks. Neural networks are essentially **pattern-finding machines** that can, in theory, approximate *any* continuous function. This is called the **Universal Approximation Theorem**, and it's the reason why neural networks are the Swiss Army knife of AI.
 
 **Quick Prediction Exercise:** Before we dive deeper, think about this: If a network can learn cat recognition from examples, what other tasks do you think it could tackle? Write down 2-3 ideas—we'll revisit this at the end of the chapter.
@@ -43,6 +41,8 @@ Here's the kicker: this same fundamental process works for language translation,
 A network's power doesn't come from complexity in its parts, but from combining simple parts into a complex, hierarchical system. Think of neurons as the LEGO bricks of intelligence—individually simple, collectively powerful.
 
 At its heart, a neuron is conceptually simple: it's a **container that holds a number**, typically between 0 and 1. This number is called the neuron's **activation**. An activation of 0 means the neuron is "off," and an activation of 1 means it's "fully on." It's not a thinking unit on its own; its activation is determined entirely by the inputs it receives.
+
+<img width="800" height="450" alt="image" src="https://miro.medium.com/v2/resize:fit:2000/1*gMJz6v4nQNXXxbDgYuynGg.gif" />
 
 Here's how the magic happens in four simple steps:
 
@@ -58,8 +58,6 @@ Here's how the magic happens in four simple steps:
 
 <img width="2022" height="1038" alt="Detailed diagram of a single neuron showing inputs x1, x2, x3 with weights w1, w2, w3, bias term b, weighted sum computation, activation function sigma, and final output a" src="https://github.com/user-attachments/assets/1cc17c3c-d8b7-40e0-94d5-dd3dca68ab8b" />
 
-**Figure 1.2:** Anatomy of a Single Neuron. The computational flow within a neuron: inputs (x₁, x₂, x₃) are multiplied by weights (w₁, w₂, w₃), summed with bias (b), and passed through activation function σ to produce output (a).
-
 Mathematically, this looks elegantly simple:
 
 **a = σ(Σᵢ wᵢ × xᵢ + b)**
@@ -68,7 +66,8 @@ Where `a` is the output, `xᵢ` are the inputs, `wᵢ` are the weights, `b` is t
 
 **💡 Micro-Quiz:** Before moving on, test your understanding:
 - If a neuron has weights [0.8, 0.2, 0.1] for inputs [1.0, 0.5, 0.3] and bias 0.1, what's the weighted sum before applying the activation function?
-- *Answer: (0.8×1.0) + (0.2×0.5) + (0.1×0.3) + 0.1 = 0.8 + 0.1 + 0.03 + 0.1 = 1.03*
+
+
 
 ## Network Architecture: Layers and Connections
 
@@ -86,10 +85,8 @@ A single neuron is like a talented but limited musician—it can play one note w
     The beautiful insight is that each layer builds on the insights of the previous one, creating a hierarchy of increasingly sophisticated features.
 
 *   **Output Layer**: The conductor of our orchestra, producing the network's final prediction. For a digit classifier (recognizing numbers 0-9), this layer has 10 neurons. Each neuron's activation represents the network's confidence that the input image shows that specific digit.
-
-<img width="600" height="313" alt="Multi-layer neural network diagram showing input layer with 4 nodes, two hidden layers with 3 and 2 nodes respectively, and single output node, with all connections between layers illustrated" src="https://github.com/user-attachments/assets/56b25b68-27cb-4170-9561-4dddd7e621ea" />
-
-**Figure 1.3:** Multi-Layer Neural Network Architecture. A fully connected feedforward network with input layer (4 neurons), two hidden layers (3 and 2 neurons), and output layer (1 neuron), showing how information flows from inputs to prediction.
+  
+<img width="800" height="450" alt="image" src="https://miro.medium.com/v2/1*pO5X2c28F1ysJhwnmPsy3Q.gif" />
 
 ### The Elegant Mathematics Behind Layers
 
