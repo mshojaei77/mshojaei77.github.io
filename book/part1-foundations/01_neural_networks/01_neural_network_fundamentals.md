@@ -267,7 +267,7 @@ This ensures the largest term in the exponent is 0, preventing overflow while ke
 
 ## State-of-the-Art: Gated Activation Functions in LLMs
 
-*   **Gated Linear Unit (GLU) Variants (e.g., SwiGLU, GeGLU)**: The current state-of-the-art in most top-performing LLMs (2020s). Instead of applying a simple function, GLU variants use a **gating mechanism** where the input is split, with one part dynamically controlling the information flow of the other. This gives the network more expressive power. Variants like **SwiGLU** (used in LLaMA, Qwen, and DeepSeek) and **GeGLU** (used in Gemma) have demonstrated superior performance and training stability in the feed-forward layers of transformer architectures.
+*   **Gated Linear Unit (GLU) Variants (e.g., SwiGLU, GeGLU)**: The current state-of-the-art in most top-performing LLMs. Instead of applying a simple function, GLU variants use a **gating mechanism** where the input is split, with one part dynamically controlling the information flow of the other. This gives the network more expressive power. Variants like **SwiGLU** (used in LLaMA, Qwen, and DeepSeek) and **GeGLU** (used in Gemma) have demonstrated superior performance and training stability in the feed-forward layers of transformer architectures.
 <img width="680" height="110" alt="image" src="https://github.com/user-attachments/assets/f5d2c235-7514-421d-8430-f77ae3ef9098" />
 
 ### Gaussian Error Linear Unit (GELU) in Detail
