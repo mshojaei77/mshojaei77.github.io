@@ -39,28 +39,34 @@ Results-driven Machine Learning Engineer with over two years of experience desig
 - Built automated evaluation pipelines to measure RAG performance, content accuracy, and student engagement metrics.
 
 **Real-Estate Startup**, Remote – Moscow, RU
-*Generative AI Engineer (Contract)*, May 2024 – Present
+*Generative AI Engineer (Contract)*, May 2025 – Present
 - Fine-tuned a multilingual LLM using LoRA with domain-specific datasets, achieving 90% accuracy in handling over 50,000 monthly queries.
 - Integrated Speech-to-Text/Text-to-Speech microservices via FastAPI to enable 24/7 automated client interaction.
 - Developed a comprehensive evaluation framework to measure coherence, relevance, and safety, maintaining over 85% performance across all KPIs.
 - Reduced safety incidents to less than 1% through systematic prompt engineering and content filtering.
 
 **Alpha Neuroscience Co.**, Remote – Tehran, IR
-*Machine Learning Engineer*, May 2023 – April 2024
+*Machine Learning Engineer*, May 2023 – April 2025
 - Developed an EEG artifact detection system using 1D-CNN and Transformer architectures, achieving a 70% improvement in accuracy.
 - Built and deployed a PyQt5 desktop application to over 200 medical technicians, reducing per-patient review time by 15 minutes.
 - Implemented a RAG-powered clinical assistant that decreased clinician query response time by 50% and improved diagnostic precision by 18 percentage points.
 - Collaborated with medical professionals to validate model outputs and ensure clinical compliance.
 
+**Kerman Motor**, Bam, Kerman Province, Iran – On-site
+*Generative AI Consultant (Seasonal)*, December 2023 – January 2024
+- Conducted technical workshops on implementing LLMs in industrial settings.
+- Mentored development teams on RAG implementation and prompt engineering best practices.
+- Developed proof-of-concept applications demonstrating practical AI applications.
+
 *Previous Role:* Freelance AI & Generative AI Consultant (October 2023 – January 2025)
 
 ---
 
-## Open-Source Contributions & Leadership
+## Open-Source Contributions 
 - **Hugging Face Impact:** Published 12 Persian LLMs and 21 datasets, accumulating over 100,000 downloads.
 - **ReActMCP (140 ⭐):** Developed a reactive agent framework enabling real-time web search capabilities.
 - **Ollama-Desktop & Ollama-RAG (60 ⭐):** Created a local GUI and FAISS-powered RAG toolkit for offline LLM deployment.
-- **Community Leadership:** Delivered technical workshops on LLM implementation and was recognized as a Hugging Face Community Leader.
+- **Community Leadership:** Delivered technical workshops on LLM implementation and was recognized as a Community Leader.
 
 ---
 

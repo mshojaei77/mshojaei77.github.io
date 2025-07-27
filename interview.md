@@ -2,17 +2,6 @@
 
 This comprehensive guide contains LLM interview questions organized by role level and technical depth. Each section progresses from foundational concepts to advanced implementation challenges, with questions sorted from simple to hard within each topic area.
 
-**Structure:**
-- **Part 1: LLM Intern** - Foundation building, basic concepts, and entry-level understanding
-- **Part 2: LLM Scientist** - Research-grade development, novel architectures, and theoretical advances  
-- **Part 3: LLM Engineer** - Production systems, deployment, optimization, and security
-
-Use this guide to assess candidates at different experience levels or to prepare for LLM-focused technical interviews.
-
----
-
-# Part 1: LLM Intern 📘
-*Foundation building, transformer implementation, data preparation*
 
 ## 1. Tokenization
 - What is a token in a language model?
@@ -82,11 +71,6 @@ Use this guide to assess candidates at different experience levels or to prepare
 - How do you digitize and chunk complex documents (e.g., annual reports)?
 - How do you handle graphs and charts in document processing?
 - How do you build a production-grade document processing and indexing pipeline?
-
----
-
-# Part 2: LLM Scientist ⚙️
-*Research-grade model development, novel architectures, theoretical advances*
 
 ## 7. Pre-Training
 - What are common pre-training objectives for LLMs and how do they work?
@@ -181,11 +165,6 @@ Use this guide to assess candidates at different experience levels or to prepare
 - How do you assess the factual accuracy of LLM outputs?
 - What are the challenges with automated evaluation of creative text generation?
 - How would you design human evaluation protocols for LLMs?
-
----
-
-# Part 3: LLM Engineer 🚀
-*Production systems, RAG, agents, deployment, ops & security*
 
 ## 14. Quantization & Model Compression
 - What is model quantization, and how does it reduce memory usage and inference cost?
@@ -303,10 +282,6 @@ Use this guide to assess candidates at different experience levels or to prepare
 - What are the considerations for LLM model compliance and auditing?
 - Design a system for fine-tuning LLMs with user data
 - Design a system for multi-tenant LLM serving
-
----
-
-# Advanced Topics & Specialized Areas
 
 ## Prompt Engineering & In-Context Learning
 - What are types of prompt engineering?
