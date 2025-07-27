@@ -7,7 +7,7 @@ grand_parent: "Part I: Foundations"
 
 # Neural Network Fundamentals
 
-## Neural Networks Overview
+## Introduction to Neural Networks
 
 Before we wade into the math, let's start with an analogy. Imagine you're trying to teach a very sophisticated toaster to recognize a picture of a cat. You, a human, do this instantly. Your brain, having seen thousands of cats, has learned to identify "cat-like" features: pointy ears, whiskers, an air of superiority.
 
@@ -19,20 +19,9 @@ A neural network learns in a conceptually similar way. It's a system of simple, 
 
 At its core, a neural network is a powerful and ridiculously flexible pattern-finding machine. It's a mathematical chameleon that can, in theory, approximate *any* continuous function. This is known as the **Universal Approximation Theorem**, and it's the reason neural nets are the go-to tool for a mind-boggling range of problems.
 
----
-
-### Further Reading
--   Hornik, K., Stinchcombe, M., & White, H. (1989). "Multilayer feedforward networks are universal approximators." *Neural Networks*.
-
-### Online Resources
--   **[3Blue1Brown Neural Network Series](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi)**: An outstanding visual and intuitive introduction.
--   **[The Deep Learning Book](https://www.deeplearningbook.org/)**: The definitive, comprehensive textbook on the subject.
-
-## Core Components
+## The Building Blocks: Neurons
 
 A network's power comes not from complexity in its parts, but from combining simple parts into a complex, hierarchical system. Let's break down these LEGO bricks of intelligence.
-
-### Neurons
 
 At its heart, a neuron is conceptually simple: it's a **container that holds a number**, typically between 0 and 1. This number is called the neuron's **activation**. An activation of 0 means the neuron is "off," and an activation of 1 means it's "fully on." It's not a thinking unit on its own; its activation is determined entirely by the inputs it receives.
 
@@ -53,7 +42,25 @@ Mathematically, the output (`a`) of a single neuron is:
 
 Where `xᵢ` are the inputs, `wᵢ` are the weights, `b` is the bias, and `σ` (sigma) is the activation function.
 
-### Activation Functions
+## Network Architecture: Layers and Connections
+
+A single neuron is a simpleton. The real magic happens when we organize them into **layers**, like sections in an orchestra.
+
+*   **Input Layer**: This isn't a real computational layer. It's the reception desk, simply holding the raw input data. For example, in a classic digit recognition task using 28x28 pixel images, the input layer would have 784 neurons (28 × 28 = 784), where each neuron's activation is the brightness value of a single pixel.
+*   **Hidden Layers**: These are the workhorses. If a neuron is a musician, a layer is an entire orchestra section. The first hidden layer might be the percussion, detecting basic edges and textures. The next might be the strings, combining those edges into shapes like eyes and ears. A deeper layer, the brass section, might combine those shapes to identify a whole cat face. The conceptual hope is that the network learns a layered abstraction of features.
+*   **Output Layer**: The final layer, the conductor, which produces the network's prediction. For a digit recognizer that classifies numbers 0-9, this layer would have 10 neurons, where the activation of each represents the network's confidence that the image is that specific digit.
+
+<img width="600" height="313" alt="Multi-layer neural network diagram showing input layer with 4 nodes, two hidden layers with 3 and 2 nodes respectively, and single output node, with all connections between layers illustrated" src="https://github.com/user-attachments/assets/56b25b68-27cb-4170-9561-4dddd7e621ea" />
+
+**Figure 1.3:** Multi-Layer Neural Network Architecture. A fully connected feedforward network with input layer (4 neurons), two hidden layers (3 and 2 neurons), and output layer (1 neuron), showing how information flows from inputs to prediction.
+
+The computation for an entire layer can be written efficiently using the language of linear algebra:
+
+**h^(ℓ) = σ(W^(ℓ) × h^(ℓ-1) + b^(ℓ))**
+
+This elegant equation describes how the activations of one layer (`h^(ℓ-1)`) are transformed into the activations of the next (`h^(ℓ)`) using a weight matrix (`W^(ℓ)`) and a bias vector (`b^(ℓ)`).
+
+## The Secret Sauce: Activation Functions
 
 Activation functions are the secret sauce that gives neural networks their "superpowers." Without them, a deep network, no matter how many layers it has, would behave like a single, simple linear model, severely limiting its ability to learn complex patterns. These functions introduce essential **non-linearity**, allowing the network to model relationships that aren't just straight lines. They act as a gatekeeper for information flow, deciding how much of a signal from a neuron gets passed on to the next layer. This is why they are often called "squashing functions"—they take a wide range of input values and compress them into a defined output range, a crucial step for controlling the signal and enabling learning through backpropagation.
 
@@ -61,9 +68,13 @@ Activation functions are the secret sauce that gives neural networks their "supe
 
 <img width="988" height="714" alt="image" src="https://github.com/user-attachments/assets/a758a5a1-5bfd-4cc5-8517-ceac96c2aae9" />
 
+### Classic Activation Functions
+
 *   **Sigmoid**: `f(x) = 1 / (1 + e⁻ˣ)`. The classic "squasher-in-chief" and one of the earliest activation functions (1980s-1990s). It takes any value and squashes it into a range between 0 and 1. This makes it ideal for the output layer in binary classification tasks where the output represents a probability. However, it's notorious for causing the **vanishing gradient problem**. For large positive or negative inputs, the function becomes very flat ("saturates"), making the gradient near-zero. In deep networks, this can effectively stop learning in its tracks, which is why it's now rarely used in hidden layers.
 
 *   **Tanh (Hyperbolic Tangent)**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`. Sigmoid's zero-centered cousin, also from the early era of neural networks (1990s). It squashes values to a range between -1 and 1. This zero-centricity often helps learning by making the optimization process a bit easier compared to Sigmoid. However, like Sigmoid, it also saturates at its extremes and can suffer from the vanishing gradient problem.
+
+### Modern Activation Functions
 
 *   **ReLU (Rectified Linear Unit)**: `f(x) = max(0, x)`. Introduced around 2000 and became the modern default and undisputed champion for most applications by 2010-2012. Its rule is simple: if the input is positive, it passes it through unchanged; if it's negative, it outputs zero. This makes it computationally cheap and brutally effective. Its near-linearity helps gradients flow strongly during backpropagation, but it's not without a flaw: it can lead to "dead neurons" if a neuron's input is always negative, causing it to get stuck on zero and stop learning.
 
@@ -73,8 +84,7 @@ Activation functions are the secret sauce that gives neural networks their "supe
 
 *   **SiLU (Sigmoid Linear Unit)**: `SiLU(x) = x · σ(x)` where `σ(x)` is the sigmoid function. Also known as **Swish**, introduced in 2017 through neural architecture search. SiLU is a self-gated activation function that multiplies the input by a value between 0 and 1, determined by the sigmoid of the input. This creates a smooth, non-monotonic curve that handles both positive and negative inputs gracefully. Unlike ReLU's hard cutoff at zero, SiLU allows small negative values to pass through (scaled down by the sigmoid), preventing the "dying ReLU" problem. Its smoothness enables better gradient flow in deep networks, making it particularly effective in modern architectures like **GPT-4o**, **YOLOv7**, and **EfficientNet**. The self-gating mechanism gives the network more flexibility in deciding how much of each signal to pass through, often leading to improved performance in both computer vision and natural language processing tasks.
 
-*   **Gated Linear Unit (GLU) Variants (e.g., SwiGLU, GeGLU)**: The current state-of-the-art in most top-performing LLMs (2020s). Instead of applying a simple function, GLU variants use a **gating mechanism** where the input is split, with one part dynamically controlling the information flow of the other. This gives the network more expressive power. Variants like **SwiGLU** (used in LLaMA, Qwen, and DeepSeek) and **GeGLU** (used in Gemma) have demonstrated superior performance and training stability in the feed-forward layers of transformer architectures.
-<img width="680" height="110" alt="image" src="https://github.com/user-attachments/assets/f5d2c235-7514-421d-8430-f77ae3ef9098" />
+### Output Layer Activation Functions
 
 *   **Softmax**: `f(x)ᵢ = e^(xᵢ) / Σⱼ e^(xⱼ)`. Unlike the other activation functions that operate on a single neuron's output, Softmax is special. It's an **output layer activation function** designed for **multi-class classification** tasks. It takes a vector of raw scores (logits) from the final layer and transforms them into a probability distribution. Each output value is between 0 and 1, and all the output values sum up to 1. This gives you the network's confidence for each class. For example, in a digit classifier, if the output is `[0.05, 0.1, 0.7, 0.15, ...]`, the network is 70% confident the image is a '2'.
 
@@ -89,11 +99,12 @@ This simple shift ensures that the largest term in the exponent is 0, so `e⁰ =
 
 *   **Log-Softmax**: `f(x)ᵢ = log(e^(xᵢ) / Σⱼ e^(xⱼ)) = xᵢ - log(Σⱼ e^(xⱼ))`. Instead of calculating Softmax and then taking the logarithm, which is inefficient and numerically unstable, **Log-Softmax** computes it directly. It is often used in combination with **Negative Log-Likelihood (NLL) loss**. The combination of Log-Softmax and NLL loss is mathematically equivalent to using a Softmax activation with Cross-Entropy Loss, but it's computationally more efficient and numerically more stable, which is why it's a common pattern in deep learning libraries.
 
-### Advanced Activation Functions in LLMs
+## State-of-the-Art: Gated Activation Functions in LLMs
 
-While ReLU was a major leap forward, the frontier of deep learning, especially in LLMs, has moved toward smoother and more dynamic activation functions. Let's explore the intuition and mechanics behind GELU and the gated variants that power today's state-of-the-art models.
+*   **Gated Linear Unit (GLU) Variants (e.g., SwiGLU, GeGLU)**: The current state-of-the-art in most top-performing LLMs (2020s). Instead of applying a simple function, GLU variants use a **gating mechanism** where the input is split, with one part dynamically controlling the information flow of the other. This gives the network more expressive power. Variants like **SwiGLU** (used in LLaMA, Qwen, and DeepSeek) and **GeGLU** (used in Gemma) have demonstrated superior performance and training stability in the feed-forward layers of transformer architectures.
+<img width="680" height="110" alt="image" src="https://github.com/user-attachments/assets/f5d2c235-7514-421d-8430-f77ae3ef9098" />
 
-#### **Gaussian Error Linear Unit (GELU)**
+### Gaussian Error Linear Unit (GELU) in Detail
 
 The Gaussian Error Linear Unit (GELU) was a foundational step beyond ReLU, offering a smoother, more probabilistic approach to activation.
 
@@ -111,7 +122,7 @@ Instead of the hard, "all-or-nothing" gate of ReLU, GELU gates its input `x` bas
 
 This smoothness means GELU always provides a gradient for learning, allowing neurons to recover and continue improving. This property helped it deliver better performance and stability in early transformer models like BERT and GPT-2.
 
-#### **The GLU Revolution: Gated Linear Units**
+### The GLU Revolution: Gated Linear Units
 
 The real game-changer in modern LLMs came with **Gated Linear Units (GLU)**, introduced by Dauphin et al. in 2016. The core idea is brilliant: instead of having a single fixed function decide what gets through, let the network learn to control the flow of information dynamically.
 
@@ -127,7 +138,7 @@ A standard GLU works like this:
 
 In simplified terms, the formula is `output = sigmoid(x*W_gate + b_gate) * (x*W_linear + b_linear)`. The mathematical magic happens because this creates a **linear gradient path** (through the ungated branch) while maintaining nonlinearity (through the gated branch). This design helps mitigate the vanishing gradient problem that plagued earlier deep networks.
 
-#### **SwiGLU: The Transformer Champion**
+### SwiGLU: The Transformer Champion
 
 **SwiGLU** (Sigmoid-Weighted Linear Unit) emerged as the crown jewel of gated activations, becoming the default choice for many state-of-the-art LLMs including Meta's LLaMA, Alibaba's Qwen, and DeepSeek models.
 
@@ -148,14 +159,14 @@ The proof is in the pudding. When Noam Shazeer tested GLU variants in 2020, SwiG
 **The trade-off:**
 SwiGLU does require one extra matrix multiplication compared to simple activations (three weight matrices instead of two), but modern models compensate by slightly reducing the hidden layer size to keep the parameter count roughly constant. The extra computation is a small price for the substantial performance gains.
 
-#### **GeGLU and Other GLU Variants**
+### GeGLU and Other GLU Variants
 
 **GeGLU** takes the GLU concept but swaps the Swish gate for GELU activation. Used in Google's Gemma models, it creates the same two-pathway structure but applies GELU's probabilistic smoothness to the gating mechanism.
 
 **Why it's effective:**
 GeGLU marries the learned gating mechanism of GLU with GELU's bell-curve-inspired approach. In Shazeer's experiments, GeGLU actually achieved the best perplexity at 1.942, slightly edging out SwiGLU's 1.944. This shows that the specific choice of gating function matters, but the gating mechanism itself is the big win. Other variants like **ReGLU** (which uses a ReLU gate) also exist, highlighting the flexibility of the GLU framework.
 
-#### **The Bigger Picture: Intelligence Through Dynamic Control**
+## The Evolution of Neural Network Intelligence
 
 The evolution from ReLU to GELU to GLU variants represents a fundamental shift in how we think about neural network computation. We've moved from simple, fixed decision rules ("block all negative values") to sophisticated, context-dependent control mechanisms.
 
@@ -169,21 +180,11 @@ This adaptability is part of what makes modern LLMs so capable. They're not just
 **Looking forward:**
 The trend is clear: the future belongs to activation functions that are smooth, dynamic, and learnable. As models continue to scale, we're likely to see even more sophisticated gating mechanisms that give networks finer-grained control over their internal information processing. The humble activation function has evolved from a simple nonlinearity to a sophisticated control system—and this evolution is far from over.
 
-### Network Layers
+## Key Papers
 
-A single neuron is a simpleton. The real magic happens when we organize them into **layers**, like sections in an orchestra.
-
-*   **Input Layer**: This isn't a real computational layer. It's the reception desk, simply holding the raw input data. For example, in a classic digit recognition task using 28x28 pixel images, the input layer would have 784 neurons (28 × 28 = 784), where each neuron's activation is the brightness value of a single pixel.
-*   **Hidden Layers**: These are the workhorses. If a neuron is a musician, a layer is an entire orchestra section. The first hidden layer might be the percussion, detecting basic edges and textures. The next might be the strings, combining those edges into shapes like eyes and ears. A deeper layer, the brass section, might combine those shapes to identify a whole cat face. The conceptual hope is that the network learns a layered abstraction of features.
-*   **Output Layer**: The final layer, the conductor, which produces the network's prediction. For a digit recognizer that classifies numbers 0-9, this layer would have 10 neurons, where the activation of each represents the network's confidence that the image is that specific digit.
-
-<img width="600" height="313" alt="Multi-layer neural network diagram showing input layer with 4 nodes, two hidden layers with 3 and 2 nodes respectively, and single output node, with all connections between layers illustrated" src="https://github.com/user-attachments/assets/56b25b68-27cb-4170-9561-4dddd7e621ea" />
-
-**Figure 1.4:** Multi-Layer Neural Network Architecture. A fully connected feedforward network with input layer (4 neurons), two hidden layers (3 and 2 neurons), and output layer (1 neuron), showing how information flows from inputs to prediction.
-
-
-The computation for an entire layer can be written efficiently using the language of linear algebra:
-
-**h^(ℓ) = σ(W^(ℓ) × h^(ℓ-1) + b^(ℓ))**
-
-This elegant equation describes how the activations of one layer (`h^(ℓ-1)`) are transformed into the activations of the next (`h^(ℓ)`) using a weight matrix (`W^(ℓ)`) and a bias vector (`b^(ℓ)`). 
+-   Hendrycks, D., & Gimpel, K. (2016). ["Gaussian Error Linear Units (GELUs)"](https://arxiv.org/abs/1606.08415). The default non-linearity in BERT, GPT models, PaLM, and Llama-3.
+-   Shazeer, N. (2020). ["GLU Variants Improve Transformer"](https://arxiv.org/pdf/2002.05202). Introduced SwiGLU and GeGLU, now standard in Llama-2/3 and PaLM-2, reducing feed-forward FLOPs by 25-30%.
+-   Augustine, J. (2024). ["A Survey on Universal Approximation Theorems"](https://arxiv.org/html/2407.12895v1). A comprehensive survey unifying UAT proofs for CNNs, ResNets, and DeepONets.
+-   Mühlbacher, G., & Scheiber, E. (2024). ["An Elementary Proof of a Universal Approximation Theorem"](https://arxiv.org/abs/2406.10002). A pedagogical three-layer proof requiring only undergraduate-level analysis.
+-   Nguyen, A., & Raff, E. (2018). ["Adversarial Attacks, Regression & Numerical Stability"](https://arxiv.org/pdf/1812.02885). Explains the log-sum-exp trick and its connection to both stability and adversarial robustness.
+-   Kowsari, K., et al. (2019). ["Text Classification Algorithms: A Survey"](https://arxiv.org/pdf/1904.08067). A comprehensive review of softmax layers and loss functions for multi-class classification problems.
