@@ -27,13 +27,16 @@ A neural network learns cat recognition the same way a dedicated intern might: b
 
 After enough training, something magical happens: the network has learned a complex, hierarchical set of features that "add up" to "cat-ness." Early layers might detect edges and textures. Middle layers combine these into shapes like "pointy triangular things" and "curved whiskers." Deep layers synthesize these into "definitely a cat" or "probably not a cat."
 
-<img width="800" height="520" alt="Neural network learning process flowchart showing cat images being processed through a neural network to extract features like ears, whiskers, and patterns, leading to cat classification" src="https://github.com/user-attachments/assets/74406fb8-3475-4b33-bb1d-4e4ffc7b3442" />
+<img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/3298984b-c983-41e8-909d-859001d9f621" />
 
-**Figure 1.1:** Neural Network Learning Process. The conceptual flow of how a neural network learns to recognize cats by processing training images, extracting hierarchical features, and making classification decisions.
+**Figure 1.1:** The conceptual flow of how a neural network learns to recognize cats by processing training images, extracting hierarchical features, and making classification decisions.
 
 Here's the kicker: this same fundamental process works for language translation, medical diagnosis, game playing, and countless other "intelligent" tasks. Neural networks are essentially **pattern-finding machines** that can, in theory, approximate *any* continuous function. This is called the **Universal Approximation Theorem**, and it's the reason why neural networks are the Swiss Army knife of AI.
 
 **Quick Prediction Exercise:** Before we dive deeper, think about this: If a network can learn cat recognition from examples, what other tasks do you think it could tackle? Write down 2-3 ideas—we'll revisit this at the end of the chapter.
+
+
+
 
 ## The Building Blocks: Neurons (Simpler Than You Think)
 
@@ -113,7 +116,6 @@ Activation functions add curves, bends, and sophisticated decision boundaries th
 <img width="988" height="714" alt="image" src="https://github.com/user-attachments/assets/a758a5a1-5bfd-4cc5-8517-ceac96c2aae9" />
 
 ### The Evolution of Activation Functions: From Simple to Sophisticated
-
 Let's journey through the evolution of activation functions, from the early days to cutting-edge 2025 research.
 
 ## Classic Activation Functions (The Foundation Era: 1980s-2000s)
