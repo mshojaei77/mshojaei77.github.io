@@ -207,41 +207,7 @@ SwiGLU emerged as the crown jewel, becoming the default choice for state-of-the-
 
 <img width="1152" height="898" alt="image" src="https://github.com/user-attachments/assets/7a278ef6-218f-4c28-8feb-c84e6f0e7767" />
 
-## Cutting-Edge 2025: The Next Generation
-
-### GoLU: Leveraging Asymmetry for Enhanced Learning
-
-**Function**: `GoLU(x) = x · Gompertz(x)` where `Gompertz(x) = e^(-e^(-x))`
-
-**The Latest Breakthrough**: Introduced in early 2025, the **Gompertz Linear Unit (GoLU)** represents the newest evolution in activation functions. It leverages the right-skewed asymmetry of the Gompertz function to reduce variance in the latent space more effectively than GELU and Swish.
-
-**Why GoLU Matters**:
-- **Asymmetric advantage**: The right-skewed curve handles positive and negative inputs differently, potentially better matching natural data distributions
-- **Variance reduction**: More effective at reducing latent space variance compared to symmetric functions
-- **Robust gradient flow**: Maintains strong gradients while providing smooth activation
-- **Versatile performance**: Shows superior results across image classification, language modeling, semantic segmentation, object detection, and even diffusion models
-
-**Early Results**: Extensive experiments across diverse tasks show GoLU consistently outperforming both GELU and Swish, establishing it as a robust alternative for next-generation neural architectures.
-
-### Masked GLU (MGLU): Memory-Efficient Gating
-
-**Innovation**: 2025 research introduced **Masked GLU variants** that maintain the expressive power of GLU while significantly improving memory efficiency and computational speed.
-
-**Key Breakthrough**: Instead of using separate weight matrices for gate and value streams (which doubles memory reads), MGLU uses learned binary masks on a single shared weight matrix, achieving up to **47% memory efficiency** improvements and **34% speed increases** over standard GLUs.
-
-### Gated Attention: The Convergence
-
-**Latest Development**: 2025 has seen the emergence of **GLU Attention mechanisms** that bring gating directly into attention layers, introducing non-linearity into attention values while maintaining zero additional parameters and negligible computational costs.
-
-**📊 Quick Challenge**: Based on what you've learned, if you were designing an activation function for a new type of neural network that needed to:
-1. Handle both positive and negative inputs smoothly
-2. Avoid the vanishing gradient problem  
-3. Provide dynamic control over information flow
-4. Be computationally efficient
-
-Which combination of the principles we've discussed would you use? (Hint: Think about what makes the modern functions successful!)
-
-*Take a moment to think about this—we'll connect it to practical applications in the next section.*
+**SwiGLU Design Challenge**: If you had to explain to a friend why SwiGLU works better than ReLU for modern LLMs, what two key advantages would you highlight? 
 
 ### Output Layer Activation Functions: The Final Decision Makers
 
