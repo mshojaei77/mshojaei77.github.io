@@ -209,6 +209,8 @@ SwiGLU emerged as the crown jewel, becoming the default choice for state-of-the-
 
 **SwiGLU Design Challenge**: If you had to explain to a friend why SwiGLU works better than ReLU for modern LLMs, what two key advantages would you highlight? 
 
+---
+
 ### Output Layer Activation Functions: The Final Decision Makers
 
 While hidden layer activations transform features, output layer activations make final decisions. These specialized functions convert raw network outputs into interpretable results.
