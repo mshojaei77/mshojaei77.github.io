@@ -110,8 +110,6 @@ Imagine trying to draw a cat using only straight lines. You might get something 
 
 Activation functions add curves, bends, and sophisticated decision boundaries that let networks model the beautiful complexity of real-world patterns.
 
-<img width="988" height="714" alt="image" src="https://github.com/user-attachments/assets/a758a5a1-5bfd-4cc5-8517-ceac96c2aae9" />
-
 ### The Evolution of Activation Functions: From Simple to Sophisticated
 Let's journey through the evolution of activation functions, from the early days to cutting-edge 2025 research.
 
@@ -123,6 +121,8 @@ Let's journey through the evolution of activation functions, from the early days
 
 Sigmoid was the pioneer—the first activation function to gain widespread use (1980s-1990s). It squashes any input into a neat range between 0 and 1, making it perfect for representing probabilities. 
 
+<img width="485" height="323" alt="image" src="https://github.com/user-attachments/assets/8e64d96e-65ea-4949-b169-e22f26b2f3d4" />
+
 **The Good**: Clean output range, smooth curve, historically important for binary classification.
 
 **The Problem**: The dreaded **vanishing gradient problem**. For very large or small inputs, sigmoid becomes nearly flat, making gradients vanishingly small. In deep networks, this essentially stops learning in its tracks—like trying to hear a whisper after it's passed through dozens of people in a game of telephone.
@@ -131,6 +131,8 @@ Sigmoid was the pioneer—the first activation function to gain widespread use (
 
 **Function**: `f(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)`
 
+<img width="1200" height="661" alt="image" src="https://github.com/user-attachments/assets/03466b9b-3413-4454-b93e-721888731f1f" />
+
 Tanh (1990s) is sigmoid's zero-centered cousin, squashing values to a range between -1 and 1. The zero-centering helps with optimization, but it still suffers from the vanishing gradient problem.
 
 ## The ReLU Revolution (Early 2000s-2010s)
@@ -138,6 +140,8 @@ Tanh (1990s) is sigmoid's zero-centered cousin, squashing values to a range betw
 ### ReLU: The Game Changer
 
 **Function**: `f(x) = max(0, x)`
+
+<img width="846" height="554" alt="image" src="https://github.com/user-attachments/assets/4b2dd1c4-2744-4047-b24d-2b795178472d" />
 
 Introduced around 2000 and becoming the default by 2010-2012, ReLU was revolutionary in its simplicity. The rule is brutally simple: if the input is positive, pass it through unchanged; if it's negative, output zero.
 
@@ -150,6 +154,8 @@ Introduced around 2000 and becoming the default by 2010-2012, ReLU was revolutio
 
 ### Leaky ReLU: The Simple Fix
 
+<img width="850" height="297" alt="image" src="https://github.com/user-attachments/assets/b8403843-0b72-498e-a5cb-8cb3326d5fc9" />
+
 Instead of completely zeroing out negative inputs, Leaky ReLU allows a small, non-zero slope (typically 0.01) for negative values. This tiny modification ensures neurons can never fully "die" and can recover from getting stuck.
 
 ## The Modern Era (2010s): Smooth and Smart
@@ -160,13 +166,16 @@ Instead of completely zeroing out negative inputs, Leaky ReLU allows a small, no
 
 Introduced in 2016, GELU became the darling of transformer models like **BERT**, **GPT-2**, and **GPT-3**. Instead of the hard cutoff of ReLU, GELU provides a smooth, probabilistic approach.
 
+<img width="1400" height="1164" alt="image" src="https://github.com/user-attachments/assets/9b09917e-927f-4e27-a729-332365d93eed" />
+
 **The Insight**: GELU weights inputs by their probability under a standard Gaussian distribution. If you have a high positive value, it's very likely to be "above average," so GELU lets most of it through. For very negative values, they're unlikely to be important, so GELU blocks most of them. The transition is smooth, avoiding the "dead neuron" problem.
 
-<img width="948" height="710" alt="image" src="https://github.com/user-attachments/assets/019ed520-6efb-4ff0-bc29-8904f36b8821" />
 
 ### SiLU/Swish: The Self-Gated Wonder
 
 **Function**: `SiLU(x) = x · σ(x)` where σ(x) is the sigmoid function
+
+<img width="1400" height="926" alt="image" src="https://github.com/user-attachments/assets/b1cba79e-2dc7-4a91-a460-92ba77461647" />
 
 Also known as **Swish**, introduced in 2017 through neural architecture search. SiLU multiplies the input by a value between 0 and 1, determined by the sigmoid of the input. This creates a smooth, non-monotonic curve that handles both positive and negative inputs gracefully.
 
