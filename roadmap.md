@@ -508,7 +508,7 @@ text-to-image generation, Stable Diffusion, prompt engineering, negative prompts
 ### Applications
 multimodal chatbots, multimodal agents, document analysis, code screenshot analysis, e-commerce chatbots
 
-## 21. Securing LLMs & Responsible AI
+## 21. Securing LLMs & Responsible AI (Optional)
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Security fundamentals, ethical AI
 
 ### Security Framework
