@@ -317,6 +317,8 @@ The field is evolving rapidly, but these fundamentals remain constant. Master th
 
 ### Hands-on Projects
 
+- **Color detection neural network**: Build a tiny network that learns to classify colors from RGB values! This delightful project starts with just three input neurons (red, green, blue) and teaches you how neural networks can learn simple patterns. You'll create your own dataset of colors, watch the network learn to distinguish "warm" vs "cool" colors, and even predict the closest named color for any RGB combination. It's like teaching a computer to be an artist's assistant!
+
 - **Digit recognition with MNIST dataset**: The perfect starter project! This classic dataset of handwritten digits lets you build your first neural network with immediate visual feedback. You'll experience the full ML workflow from data loading to model evaluation while working with a manageable 28×28 pixel image format.
 
 - **Simple image classification**: Take the next step by classifying everyday objects using datasets like CIFAR-10. This project introduces you to convolutional neural networks (CNNs) and helps you understand how computers "see" images through layers of feature extraction.
