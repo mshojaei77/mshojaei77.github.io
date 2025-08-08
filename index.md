@@ -29,5 +29,7 @@ I design, develop, and deploy **LLM-powered products** from RAG systems to multi
 
 Explore my complete technical profile, experience, and achievements: [Resume & Portfolio →](about.html)
 
-<p align="center"><em>Transforming AI research into production systems that drive business value.</em></p>
+---
+
+<p align="center"><em>"The true measure of AI lies not in its theoretical potential, but in its ability to transform research into real-world value."</em><br>- Mohammad Shojaei</p>
 
