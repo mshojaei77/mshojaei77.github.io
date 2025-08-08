@@ -92,7 +92,7 @@ plugins:
   - jekyll-seo-tag
 
 # Footer content
-footer_content: "Copyright &copy; 2022 Mohammad Shojaei. Distributed under <a href=\"https://opensource.org/licenses/MIT\">MIT License</a>."
+footer_content: "Copyright &copy; 2025 Mohammad Shojaei. All rights reserved. You may copy and distribute this work, but please note that it may contain other authors' works which must be properly cited. Any redistribution must maintain appropriate attributions and citations."
 
 # Callouts configuration
 callouts_level: quiet
