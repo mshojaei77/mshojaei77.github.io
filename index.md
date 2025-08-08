@@ -13,32 +13,6 @@ nav_order: 0
 
 [📧 Email](mailto:shojaei.dev@gmail.com) • [💼 LinkedIn](https://www.linkedin.com/in/mshojaei77) • [🐙 GitHub](https://github.com/mshojaei77) • [🤗 Hugging Face](https://huggingface.co/mshojaei77)
 
----
-
-## 📖 **NEW: LLMs From Foundation to Production**
-
-<div class="book-announcement" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin: 30px 0; text-align: center;">
-  <h3 style="margin: 0 0 15px 0; color: white;">🚀 My Comprehensive LLM Book is Live!</h3>
-  <p style="margin: 0 0 20px 0; font-size: 1.1em;">A complete guide from neural network foundations to production deployment</p>
-  <a href="/book/" style="background: white; color: #667eea; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block;">📚 Start Reading →</a>
-</div>
-
-**What's Inside:**
-- 🔍 **Part I: Foundations** - Neural networks, transformers, embeddings
-- 🧬 **Part II: Building Models** - Pre-training, fine-tuning, alignment  
-- ⚙️ **Part III: Advanced Topics** - Evaluation, reasoning, optimization
-- 🚀 **Part IV: Production** - RAG, agents, multimodal, LLMOps
-
-**Features:**
-- ✅ **22 comprehensive chapters** with hands-on code
-- ✅ **Progressive difficulty** from beginner to expert
-- ✅ **Production-focused** with real-world examples
-- ✅ **Open source** and continuously updated
-- ✅ **Interactive demos** and Jupyter notebooks
-
-*Trusted by 20K+ practitioners worldwide • Updated weekly*
-
----
 
 ## 🚀 What I Do
 
@@ -59,20 +33,6 @@ Beyond the comprehensive book, explore these focused resources:
 - ❓ [Interview Preparation](interview.html) - 400+ technical questions
 - 🛠️ [Projects Portfolio](projects.html) - Real-world implementations
 - 📚 [Curated Resources](resources.html) - Best papers, tools, and tutorials
-
----
-
-## 🤝 Let's Connect
-
-I'm **actively seeking ML Engineer roles** with **visa sponsorship** focusing on LLM systems, RAG architectures, and production AI. Ready to contribute to ambitious AI products from research to deployment.
-
-**Current Focus Areas:**
-- Large Language Model development & fine-tuning
-- RAG system architecture & optimization  
-- Inference acceleration & cost reduction
-- MLOps & production deployment
-
-[📧 shojaei.dev@gmail.com](mailto:shojaei.dev@gmail.com) • [💼 LinkedIn](https://www.linkedin.com/in/mshojaei77)
 
 ### Full Background
 
