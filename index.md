@@ -31,5 +31,5 @@ Explore my complete technical profile, experience, and achievements: [Resume & P
 
 ---
 
-<p align="center"><em>"The true measure of AI lies not in its theoretical potential, but in its ability to transform research into real-world value."</em><br>- Mohammad Shojaei</p>
+<p align="center"><em>The true measure of AI lies not in its theoretical potential or academic achievements, but in its ability to transform research into real-world value - even if that means challenging traditional academic paradigms and embracing practical solutions over theoretical elegance.</em></p>
 
