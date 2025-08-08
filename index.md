@@ -25,15 +25,6 @@ I design, develop, and deploy **LLM-powered products** from RAG systems to multi
 - 🏥 **70% EEG artifact detection** accuracy using 1D-CNN & Transformer hybrids in healthcare
 - 🤗 **100K+ downloads** across 12 Persian LLMs and 21 datasets on Hugging Face
 
-## 🎓 Additional Learning Resources
-
-Beyond the comprehensive book, explore these focused resources:
-
-- 🗺️ [Complete LLM Roadmap](roadmap.html) - Step-by-step learning path
-- ❓ [Interview Preparation](interview.html) - 400+ technical questions
-- 🛠️ [Projects Portfolio](projects.html) - Real-world implementations
-- 📚 [Curated Resources](resources.html) - Best papers, tools, and tutorials
-
 ### Full Background
 
 Explore my complete technical profile, experience, and achievements: [Resume & Portfolio →](about.html)
