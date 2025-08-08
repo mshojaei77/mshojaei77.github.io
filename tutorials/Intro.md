@@ -19,13 +19,13 @@ Large Language Models (LLMs) represent a revolutionary advancement in artificial
 - Real-world applications and limitations
 - Future directions and challenges
 
-### Learning Materials
+### My Notes
 - **[📄 Medium Article: Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)**
   - *A beginner-friendly introduction to language models and their basic principles*
 
-### Additional Resources
-[![Research Paper](https://badgen.net/badge/Paper/LLMs%20Overview/purple)](https://arxiv.org/pdf/2307.06435)
-[![Video](https://badgen.net/badge/Video/LLMs%20Explained%20Briefly/red)](https://www.youtube.com/watch?v=LPZh9BOjkQs)
-[![Video](https://badgen.net/badge/Video/Deep%20Dive%20into%20LLMs/red)](https://www.youtube.com/watch?v=7xTGNNLPyMI)
-[![Research Paper](https://badgen.net/badge/Paper/LLMs%20Survey/purple)](https://arxiv.org/abs/2402.06196)
-[![Video](https://badgen.net/badge/Video/Intro%20to%20LLMs/red)](https://www.youtube.com/watch?v=zjkBMFhNj_g)
+### Top Resources
+- [LLMs Overview (Research Paper)](https://arxiv.org/pdf/2307.06435)
+- [LLMs Explained Briefly (Video)](https://www.youtube.com/watch?v=LPZh9BOjkQs)
+- [Deep Dive into LLMs (Video)](https://www.youtube.com/watch?v=7xTGNNLPyMI)
+- [LLMs Survey (Research Paper)](https://arxiv.org/abs/2402.06196)
+- [Intro to LLMs (Video)](https://www.youtube.com/watch?v=zjkBMFhNj_g)

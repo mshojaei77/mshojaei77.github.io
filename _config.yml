@@ -29,6 +29,8 @@ keywords: "LLM tutorial, Large Language Models, Transformer architecture, Machin
 
 # Google Analytics 4 (Add your measurement ID)
 google_analytics: G-XXXXXXXXXX # Replace with your actual GA4 measurement ID
+ga_tracking: G-XXXXXXXXXX # Just the Docs format
+ga_tracking_anonymize_ip: true
 
 # Site verification (add these after setting up)
 google_site_verification: "" # Google Search Console
