@@ -1,7 +1,7 @@
 ---
 title: "Data Preparation for LLMs: Cleaning Guide"
 nav_order: 7
-parent: Posts
+parent: Tutorials
 layout: default
 ---
 

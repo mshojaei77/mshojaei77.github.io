@@ -1,7 +1,7 @@
 ---
 title: "Tokenization Tutorial: Text to Tokens for LLMs"
 nav_order: 3
-parent: Posts
+parent: Tutorials
 layout: default
 ---
 

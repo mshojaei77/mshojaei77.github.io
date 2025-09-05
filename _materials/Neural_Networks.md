@@ -1,7 +1,7 @@
 ---
 title: "Neural Networks Tutorial: Foundations for LLMs"
 nav_order: 2
-parent: tutorials
+parent: Tutorials
 layout: default
 ---
 

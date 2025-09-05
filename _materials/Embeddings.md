@@ -1,7 +1,7 @@
 ---
 title: "Embeddings Tutorial: Word Vectors for LLMs"
 nav_order: 5
-parent: Posts
+parent: Tutorials
 layout: default
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Transformers Tutorial: Attention Revolution for LLMs"
 nav_order: 6
-parent: Posts
+parent: Tutorials
 layout: default
 ---
 

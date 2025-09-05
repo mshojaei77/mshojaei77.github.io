@@ -1,7 +1,7 @@
 ---
 title: "Traditional Language Models Tutorial: Pre-Transformers Era"
 nav_order: 4
-parent: Posts
+parent: Tutorials
 layout: default
 ---
 

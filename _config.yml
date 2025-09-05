@@ -83,6 +83,12 @@ collections:
   chapters:
     output: true
     permalink: /:collection/:name/
+  materials:
+    output: true
+    permalink: /:collection/:name/
+  tutorials:
+    output: true
+    permalink: /:collection/:name/
 
 # Plugins
 plugins:
