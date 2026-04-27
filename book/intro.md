@@ -1,4 +1,4 @@
-# Introduction: Welcome to the Real World of Generative AI
+**Introduction: Welcome to the Real World of Generative AI**
 
 If you rewind a few years, "AI Engineering" was often just a fancy term for writing API calls to OpenAI. You would send a string of text, get a string of text back, and wrap it in a basic web UI. 
 
