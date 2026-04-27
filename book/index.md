@@ -1,5 +1,5 @@
 ---
-title: "LLM Engineering Handbook"
+title: "LLM Engineering In Action"
 nav_order: 1
 has_children: true
 permalink: /book/
@@ -9,7 +9,7 @@ author: "Mohammad Shojaei"
 date: 2025-01-01
 ---
 
-# LLM Engineering Handbook
+# LLM Engineering In Action
 
 ## [Introduction](intro.md)
 
@@ -80,7 +80,8 @@ This work is licensed under the [MIT License](https://opensource.org/licenses/MI
 **Citation:**
 ```bibtex
 @book{shojaei2024llms,
-  title={LLM Engineering Handbook},
+  title={LLM Engineering In Action
+},
   author={Mohammad Shojaei},
   year={2025},
   url={https://mshojaei77.github.io/book/}
