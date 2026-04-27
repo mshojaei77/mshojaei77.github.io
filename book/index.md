@@ -13,7 +13,7 @@ date: 2025-01-01
 
 <img width="1024" height="1536" alt="book_cover" src="https://github.com/user-attachments/assets/974f19a6-132f-434b-bf7b-f5fc9826ff0d" />
 
-## [Introduction](intro.md)
+- [Introduction](intro.md)
 
 ## Part I: Foundations
 - [Chapter 1: What LLM Engineers Actually Build](ch1.md)
