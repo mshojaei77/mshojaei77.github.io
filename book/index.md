@@ -1,15 +1,15 @@
 ---
-title: "LLMs: From Foundation to Production"
+title: "LLM Engineering Handbook"
 nav_order: 1
 has_children: true
 permalink: /book/
-description: "A comprehensive guide to Large Language Models from mathematical foundations to production deployment."
+description: "A comprehensive guide to Large Language Models for production."
 keywords: "LLM, Large Language Models, Transformer Architecture, Fine-Tuning, RAG, LLMOps, Deep Learning"
 author: "Mohammad Shojaei"
 date: 2025-01-01
 ---
 
-# LLMs: From Foundation to Production
+# LLM Engineering Handbook
 
 ## [Introduction](intro.md)
 
@@ -80,7 +80,7 @@ This work is licensed under the [MIT License](https://opensource.org/licenses/MI
 **Citation:**
 ```bibtex
 @book{shojaei2024llms,
-  title={LLMs: From Foundation to Production},
+  title={LLM Engineering Handbook},
   author={Mohammad Shojaei},
   year={2025},
   url={https://mshojaei77.github.io/book/}
