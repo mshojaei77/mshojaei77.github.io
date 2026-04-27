@@ -51,25 +51,29 @@ A hands-on roadmap to master LLM development from neural networks to production 
 **🎯 Learning Objectives:** Build essential knowledge through hands-on implementation, starting with neural network fundamentals, understanding the evolution from traditional language models to transformers, and mastering tokenization, embeddings, and the transformer architecture.
 
 ## 1. Neural Networks Foundations for LLMs
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Calculus, linear algebra
+**📈 Difficulty:** Beginner-Intermediate | **🎯 Prerequisites:** Basic calculus, linear algebra, Python programming
 
-### Neural Network Fundamentals
-neurons, synapses, activation functions (ReLU, Sigmoid, Tanh, Swish, GELU), network layers
+### Core Building Blocks
+- Neurons and perceptrons: Basic unit (weighted sum + bias)
+- Layers and feed-forward networks: Input → hidden → output; MLPs as the core computation in transformer blocks
+- Activation functions: ReLU (primary), GELU/Swish (common in modern LLMs like GPT/BERT for better gradients), Sigmoid/Tanh (historical)
 
-### Learning Algorithms
-backpropagation, gradient descent, cost functions, cross-entropy, MSE, automatic differentiation
+### Training Fundamentals
+- Forward pass and prediction
+- Loss functions: Cross-entropy (essential for language modeling/next-token prediction)
+- Backpropagation: Chain rule for gradient computation
+- Gradient descent variants: SGD, Adam/AdamW (default optimizers in LLM training)
 
-### Optimization Techniques
-SGD, Adam, AdamW, RMSprop, learning rate scheduling, momentum, weight decay
+### Optimization and Stability
+- Vanishing/exploding gradients: Why they occur and mitigation
+- Weight initialization: Xavier/He (critical for deep networks)
+- Regularization: Dropout (widely used in transformers), L2 weight decay
+- Normalization techniques: Layer Normalization (core in transformers), Batch Norm (context)
 
-### Regularization Strategies
-L1/L2 regularization, dropout, batch normalization, layer normalization, early stopping
-
-### Weight Initialization
-Xavier, He initialization, vanishing/exploding gradients, mixed precision training (FP16, BF16)
-
-### Network Architectures
-feedforward, CNNs, RNNs, ResNets, hyperparameter tuning, AutoML, gradient clipping
+### Key Architectural Elements (LLM-Relevant)
+- Residual connections: Skip connections to enable deeper training
+- Mixed precision training: FP16/BF16 for efficiency in large models
+- Hyperparameter tuning basics: Learning rate, batch size impacts
 
 
 ## 2. Traditional Language Models
