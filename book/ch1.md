@@ -19,7 +19,7 @@ This process is called **autoregressive generation**, and it is effectively the 
 4. It feeds this new, slightly longer text back into itself.
 
 5. It predicts the *next* word.
-<img width="517" height="235" alt="image" src="https://github.com/user-attachments/assets/1d0372ea-f7d8-4c06-98a0-da62ac1b83e6" />
+<img width="3454" height="1157" alt="image" src="https://github.com/user-attachments/assets/d920f657-d57e-42e9-a4f3-f2d80e49504c" />
 
 **Engineering Takeaway:** Because generation is autoregressive, it is inherently **sequential**. Each token requires a full forward pass through the model. This is the fundamental latency bottleneck in AI inference. Generating 1,000 words takes significantly longer than generating 10 words, regardless of how fast your CPU or internet connection is, because the model literally cannot predict the 10th word until the 9th word has been generated.
 
