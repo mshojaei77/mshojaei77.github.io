@@ -25,7 +25,7 @@ date: 2025-01-01
     *   How autoregressive Transformers actually work.
     *   Understanding Tokenization (BPE, Subwords).
     *   The mechanics of the Context Window and Attention.
-*   **Chapter 2: The Open-Weight Ecosystem & APIs**
+*   [Chapter 2: Choosing Models in a Moving Market](ch2.md)
     *   Navigating Hugging Face and finding the right models.
     *   Integrating commercial APIs (OpenAI, Anthropic, Gemini).
     *   Understanding Benchmarks (MMLU, HumanEval) and Model Comparison.

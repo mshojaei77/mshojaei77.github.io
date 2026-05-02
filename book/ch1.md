@@ -8,8 +8,6 @@ If you are building a weekend side project, this mental model is fine. But if yo
 This chapter demystifies the "magic." We are skipping the calculus and the academic history. Instead, we are looking under the hood to understand the exact lifecycle of a prompt—from text, to numbers, through the neural network, and back to text—and what that means for your architecture.
 
 ---
-
-## 1.1 The Core Mechanism: Autoregressive Next-Token Prediction
 ## 1.1 The Core Mechanism: Autoregressive Next-Token Prediction
 
 Move away from the idea that an LLM "thinks" about a problem and then writes an essay. An LLM is, at its core, a massive statistical engine designed to do one single thing: **predict the next piece of text based on the previous text**.
