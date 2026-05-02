@@ -29,11 +29,11 @@ date: 2025-01-01
     *   Navigating Hugging Face and finding the right models.
     *   Integrating commercial APIs (OpenAI, Anthropic, Gemini).
     *   Understanding Benchmarks (MMLU, HumanEval) and Model Comparison.
-*   **Chapter 3: Building Your First Chatbot**
+*   [Chapter 3: Building Your First Chatbot](ch3.md)
     *   Connecting to APIs, handling streaming responses, and managing message arrays.
     *   *Enterprise Upgrade*: Wrapping the chatbot in a scalable **FastAPI** backend, handling rate-limiting, and calculating API costs.
-*   **💼 Part 1 Capstone Project: "The AI SaaS Backend"**
-    *   *Freelance Brief (Upwork)*: "Need a Python backend developer to build a scalable FastAPI service that wraps the OpenAI/Anthropic APIs, streams responses to a Next.js frontend, and implements Redis rate-limiting."
+*   *   **💼 Part 1 Capstone Project: "AI Outline-to-Draft Generator"**
+    *   *Freelance Brief (Upwork)*: "Build a minimal AI ghostwriting MVP. The user enters a text outline or writing prompt, the app sends it to an LLM provider API such as OpenAI, and the system returns a clean draft. The user can preview the generated text and download it as a file. No advanced editing, no RAG, no agents, no database-heavy architecture, and no complex UI are required."
 
 ---
 
