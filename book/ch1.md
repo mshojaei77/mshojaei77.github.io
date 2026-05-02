@@ -122,7 +122,7 @@ To visualize how a Decoder-only model works in production, here is the exact lif
 4.  **Transformer Blocks:** The vectors pass through dozens of identical "layers." Here, the **Attention Mechanism** calculates how much each word relates to previous words, dynamically updating the context. 
 5.  **Output Logits:** The final layer spits out **Logits**- raw, un-normalized numerical scores for every single possible next token in the vocabulary. The token with the highest score is the word the LLM outputs.
 
-<img width="818" height="218" alt="image" src="https://github.com/user-attachments/assets/9f26edc1-2def-4a10-9c04-9d912802914b" />
+<img width="818" height="218" alt="image" src="https://github.com/user-attachments/assets/9fec574e-cd9b-4a14-b4b2-2cb3ec444bd3" />
 
 ---
 
