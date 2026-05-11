@@ -1,11 +1,11 @@
 **Chapter 3: Building Your First Chatbot**
 
 ### **Chapter Introduction: The Engineering Premise**
-*   **The Problem:** Many beginners assume that when they send a prompt to an LLM, the model automatically "remembers" the conversation. The reality is that in the message-array pattern used in this chapter, each request should be treated as stateless. Unless your app explicitly sends prior conversation state, the model will have zero memory of what was said seconds prior. Furthermore, waiting for a long response to generate creates a freezing, unresponsive user experience (UX).
-*   **The Reality:** A chatbot is not a magic brain; it is essentially a `while` loop that continuously packages a growing transcript of text and sends it to the API or model provider. Treating the model like a conversational black box leads to skyrocketing token costs, failed API requests, and unhandled network errors.
-*   **The Goal:** By the end of this chapter, you will understand how to build a clean, production-minded prototype of a ChatGPT-like interface in pure Python. You will implement short-term conversation memory, secure your API keys, stream text back to the screen chunk-by-chunk to reduce perceived latency, and implement basic token tracking with optional cost estimation.
+*   **The misunderstanding:** A lot of beginners assume the model somehow "remembers" the conversation on its own. In the message-array pattern used in this chapter, that is not how it works. Every request is effectively stateless. If your app does not resend the earlier conversation, the model has no idea what was said a few seconds ago. On top of that, if you wait for a long answer to finish before showing anything, the app feels frozen.
+*   **What is really happening:** A chatbot is not a magical conversational brain. It is a loop that keeps packaging the conversation history and sending it to a model provider. If you treat the model as a black box, costs climb fast, requests start failing, and network issues turn into broken UX.
+*   **What you will build:** By the end of this chapter, you will have a clean, production-minded Python prototype of a ChatGPT-style CLI. You will add short-term conversation memory, keep API keys out of your source code, stream responses as they are generated, and track basic token usage with optional cost estimates.
 
-Before opening the full project, make sure you understand:
+Before opening the full project, make sure you are comfortable with:
 1. a single API call,
 2. a message array,
 3. a Python `while` loop,
@@ -16,97 +16,82 @@ Before opening the full project, make sure you understand:
 > The complete, runnable project for this chapter, implemented as a single-file CLI chatbot (`chatbot.py`), is available in the book repository:  
 > `https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-03-chatbot`  
 >
-> Full code changes faster than concepts. This book teaches the core engineering mechanics; the repository holds the runnable implementation. In the chapter below, we show only the important snippets so you can understand each moving part.
+> Code evolves faster than prose. This chapter focuses on the underlying mechanics; the repository contains the runnable version. In the pages below, we keep only the snippets that matter so you can see how each part works.
 
 ---
 
 ### **A Note on APIs: Chat Completions vs. Responses**
 
-Before we write code, we need to clear up one source of confusion: modern LLM providers often expose more than one API for generating text. In OpenAI's ecosystem, two important interfaces are the **Chat Completions API** and the newer **Responses API**.
+Before we write any code, we need to clear up a common source of confusion: modern LLM platforms often offer more than one way to generate text. In OpenAI's ecosystem, two important interfaces are the **Chat Completions API** and the newer **Responses API**.
 
-The **Responses API** is OpenAI's newer recommended API for new projects. It is designed as a unified interface for text generation, multimodal input, reasoning models, built-in tools, and more agent-like workflows. OpenAI describes it as an evolution of Chat Completions and recommends it for new projects, while still continuing to support Chat Completions.
+The **Responses API** is OpenAI's newer recommended interface for greenfield work. It is designed to handle text generation, multimodal input, reasoning models, built-in tools, and more agent-like workflows through one API. OpenAI presents it as the evolution of Chat Completions and recommends it for new projects, while still supporting Chat Completions.
 
-So why does this chapter still teach the **message-array pattern** used by Chat Completions?
+So why does this chapter still teach the **message-array pattern** from Chat Completions?
 
-Because our goal in this chapter is not to build an agent, use web search, call tools, process files, or manage complex multimodal workflows. Our goal is to learn the universal mechanics of a basic chatbot:
+Because this chapter is not about agents, tool use, web search, file handling, or multimodal orchestration. It is about learning the core loop behind a basic chatbot:
 
 ```text
 messages -> model call -> streamed answer -> save assistant reply -> repeat
 ```
 
-The Chat Completions style makes that loop very easy to see. It uses a simple list of messages with roles such as `system`, `user`, and `assistant`. Many providers and routing gateways also support OpenAI-compatible chat-completion-style APIs, so this pattern remains useful when you are learning provider portability. OpenAI's migration guide notes that Chat Completions uses an array of messages, while Responses uses a more general system of typed Items that can represent messages, function calls, tool outputs, and other actions.
+The Chat Completions style makes that loop easy to see. It uses a plain list of messages with roles like `system`, `user`, and `assistant`. Many providers and routing layers also expose OpenAI-compatible chat-completion-style APIs, so this pattern is still useful when you want portability across vendors. OpenAI's migration guide makes the distinction clear: Chat Completions works with an array of messages, while Responses uses a more general structure of typed Items that can represent messages, tool calls, function outputs, and other actions.
 
-An **OpenAI-compatible provider** is a service that accepts the same request shape as the OpenAI SDK or OpenAI REST API, even if the request is actually served by another company or routing layer. In practice, that means your code can often stay the same while you change only configuration such as:
+An **OpenAI-compatible provider** is a service that accepts the same request shape as the OpenAI SDK or REST API, even if another company is actually serving the request. In practice, that often means your code stays the same and only your configuration changes:
 
 ```text
 OPENAI_BASE_URL=https://openrouter.ai/api/v1
 OPENAI_MODEL=openai/gpt-5-nano
 ```
 
-This chapter uses **OpenRouter** as the concrete example. The Python code still calls `client.chat.completions.create(...)`, but the traffic is sent to OpenRouter's OpenAI-compatible endpoint instead of OpenAI's default API host.
+This chapter uses **OpenRouter** as the concrete example. The Python code still calls `client.chat.completions.create(...)`, but the request is routed to OpenRouter's OpenAI-compatible endpoint instead of OpenAI's default host.
 
-The key difference for this chapter is **state management**. With Chat Completions, conversation state must be managed manually: your Python app stores the message history and sends the relevant history again on every request. The Responses API can instead chain responses using features such as stored state or previous response IDs, which is powerful for more advanced applications.
+For this chapter, the important difference is **state management**. With Chat Completions, you manage the conversation state yourself: your Python app stores the message history and resends the relevant part of that history on every turn. The Responses API can chain responses using features like stored state or previous response IDs, which becomes useful in more advanced applications.
 
-For beginners, manual state is a feature, not a weakness. It forces you to understand what a chatbot really is: an application that manages conversation history, controls token growth, streams model output, and decides what context the model sees. Those skills remain valuable even if you later migrate to the Responses API, because the underlying engineering questions do not disappear.
+For a beginner, manual state is a strength, not a drawback. It forces you to see what a chatbot actually is: an application that manages context, controls token growth, streams output, and decides what the model is allowed to see. Those skills still matter even if you later move to the Responses API, because the engineering trade-offs do not go away.
 
-In this chapter, we will use the message-array pattern because it is simple, visible, and widely compatible. Later chapters will cover the more advanced reasons you might choose Responses-style APIs: structured outputs, tool calling, agents, file search, web search, and richer state management.
+In this chapter, we use the message-array pattern because it is simple, visible, and widely supported. Later chapters will cover the cases where a Responses-style API makes more sense: structured outputs, tool calling, agents, file search, web search, and richer state management.
 
 > **Practical rule:**
-> Use the message-array pattern to learn the fundamentals. Use the Responses API when you need modern OpenAI-native features such as built-in tools, richer reasoning support, multimodal workflows, or stateful response chains.
+> Use the message-array pattern to learn the fundamentals. Use the Responses API when you need OpenAI-native features such as built-in tools, richer reasoning support, multimodal workflows, or stateful response chains.
 
 ---
 
 ### **3.1 The Core Concept: The Message Array and the Loop**
-*   **Mental Model:** Think of a chatbot like reading an entire theatrical script to an actor, asking them to improvise the very next line, writing that line down at the bottom of the script, and then reading the entire script to them again for the next turn.
-*   **Simple Theory:** To achieve this, your Python app maintains a list of dictionaries called the **Message Array**. Each dictionary contains a `role` and `content`.
-    *   `developer` (or `system`): The app-level instruction (e.g., "You are a helpful assistant"). *Note: In OpenAI's newer reasoning-model APIs, the official role for instructions is now called `developer`. Older models and many OpenAI-compatible providers usually expect `system`. We will use `system` in this chapter for broad compatibility.*
-    *   `user`: The human's input.
-    *   `assistant`: The model's response.
+*   **A useful mental model:** Imagine handing an actor the full script of a scene, asking for the next line, writing that line at the end of the script, and then reading the whole updated script back to them for the next turn.
+*   **How it works in practice:** Your Python app keeps a list of dictionaries called the **message array**. Each dictionary has a `role` and some `content`.
+    *   `developer` (or `system`): The app-level instruction, such as "You are a helpful assistant." *Note: In OpenAI's newer reasoning-model APIs, the official instruction role is now `developer`. Older models, and many OpenAI-compatible providers, still expect `system`. We use `system` in this chapter for broad compatibility.*
+    *   `user`: The human message.
+    *   `assistant`: The model's reply.
 
-    When a user types a prompt, you append it to the list. You send the entire list to the API. The API returns an `assistant` message. You append that response to the list, and repeat.
-    
+    Every time the user types something, you append it to the list. Then you send the full list to the API. The API returns an `assistant` message. You append that reply, then repeat the loop.
+
 *   **Suggested Diagram:**
-    ```text
-    +--------------+
-    | CLI terminal |
-    +------+-------+
-           | user prompt
-           v
-    +------------------+
-    | messages list    |
-    | system/user/AI   |
-    +------+-----------+
-           | API request
-           v
-    +------------------+
-    | LLM Provider API |
-    +------+-----------+
-           | streamed text
-           v
-    +--------------------------+
-    | streamed terminal output |
-    +--------------------------+
+    ```mermaid
+    flowchart TD
+        A[CLI terminal] -->|User prompt| B[Messages list<br/>system / user / assistant]
+        B -->|API request| C[LLM Provider API]
+        C -->|Streamed text| D[Terminal output]
     ```
 
 ---
 
 ### **3.2 Engineering Realities: Bottlenecks & Trade-offs**
-*   **Latency Impact:** Generating a 500-word response can take 10+ seconds. If your app waits for the entire generation to finish before updating the UI, the user will think the app crashed. We solve this bottleneck by enabling **streaming** (`stream=True`). This forces the API to return chunks of text using Server-Sent Events (SSE) the moment they are generated, drastically improving Time-to-First-Token (TTFT).
-*   **Context-Window and Token-Budget Constraints:** Because you are resending the entire conversation history with every new message, you will eventually hit the model's context-window limit. If you exceed this limit, the API may return an error or fail the request.
-*   **Cost Drivers:** API providers charge you for every token processed. If you have 10 messages in your history, you are paying to process the 1st message for the 10th time. Long conversations inherently cost more per turn than short conversations.
+*   **Latency matters:** A 500-word answer can easily take 10 or more seconds to generate. If the interface stays blank until the full response is ready, users will assume the app has stalled. That is why we use **streaming** (`stream=True`). It lets the API send text chunks immediately with Server-Sent Events (SSE), which dramatically improves time-to-first-token.
+*   **Context windows are finite:** Because you resend the conversation history every turn, the prompt keeps getting larger. Eventually you will hit the model's context limit. When that happens, the request may fail or the provider may reject it.
+*   **Long chats cost more:** Providers bill by token count. If your history contains ten messages, then by the tenth turn you have paid to process the first message ten separate times. The longer the conversation, the more expensive each new turn becomes.
 
 ---
 
 ### **3.3 Hands-on Implementation: The Core Snippets**
 
-To build our chatbot, we use plain **Python** in the terminal. That keeps the architecture minimal and forces us to understand the actual chatbot loop before adding any web framework.
+We will build this chatbot in plain **Python** and run it in the terminal. That keeps the architecture simple and makes the chatbot loop impossible to miss before we bring in a web framework.
 
-Here are the five core engineering mechanics you must understand to make it work.
+There are five mechanics you need to understand.
 
 #### 1. Secure Secret Management
-Never hardcode your API key directly in Python files, notebooks, or frontend code. Secrets should live outside the codebase and be loaded at runtime. In this chapter, we use the `python-dotenv` library to read credentials from a local `.env` file, and that file must be listed in `.gitignore` so it never gets committed by accident.
+Never hardcode your API key in a Python file, notebook, or frontend app. Secrets should live outside the codebase and be loaded at runtime. In this chapter, we use `python-dotenv` to read values from a local `.env` file, and that file must be listed in `.gitignore` so it never gets committed by mistake.
 
-*Tip:* A professional repository usually includes a `.env.example` file. It documents which environment variables are required without exposing any real credentials. Commit `.env.example`; never commit `.env`. If you are using an OpenAI-compatible provider such as OpenRouter, document the `OPENAI_BASE_URL` and provider-specific model name there as well.
+*Tip:* A professional project usually includes a `.env.example` file. It shows which environment variables are required without exposing real credentials. Commit `.env.example`; never commit `.env`. If you are using an OpenAI-compatible provider such as OpenRouter, include `OPENAI_BASE_URL` and the provider-specific model name there as well.
 
 ```text
 # .env.example
@@ -127,7 +112,7 @@ OPENAI_MODEL = os.getenv("OPENAI_MODEL")
 ```
 
 #### 2. Managing Conversation State
-In a CLI chatbot, there is no browser session and no framework-managed state object. Instead, we keep the conversation in a normal Python list and reuse that list inside a `while True` loop. As long as the process keeps running, the conversation history remains in memory.
+In a CLI chatbot, there is no browser session and no framework-managed state object. We simply keep the conversation in a normal Python list and reuse it inside a `while True` loop. As long as the process stays alive, the message history stays in memory.
 
 ```python
 messages = [
@@ -143,11 +128,11 @@ while True:
 ```
 
 #### 3. The Stateless API Call
-Once we have the array, we pass it to the provider. We set an output token limit to prevent unbounded, expensive generations, and we enable `stream=True`.
+Once the array is ready, we send it to the provider. We set an output token limit to prevent runaway generations, and we enable `stream=True`.
 
-*Note: Different APIs may call this setting `max_tokens`, `max_completion_tokens`, or `max_output_tokens`; always check the provider docs.*
+*Note: Different APIs name this setting differently. You may see `max_tokens`, `max_completion_tokens`, or `max_output_tokens`, so always confirm in the provider docs.*
 
-Crucially, **streaming APIs do not return token usage by default**. You must explicitly pass `stream_options={"include_usage": True}` to force the API to send a final metadata chunk containing your token costs.
+One subtle point matters here: **streaming APIs do not usually return token usage unless you ask for it**. Passing `stream_options={"include_usage": True}` tells the API to send a final metadata chunk with usage information.
 
 ```python
 stream = client.chat.completions.create(
@@ -161,9 +146,9 @@ stream = client.chat.completions.create(
 ```
 
 #### 4. Streaming Chunk-by-Chunk
-Streaming does not return text one perfect word at a time; it returns *chunks* or *deltas*. In a CLI app, we print each chunk directly to the terminal while simultaneously tracking input and output tokens.
+Streaming does not deliver one perfect word at a time. It sends *chunks* or *deltas*. In a CLI app, we print each chunk as it arrives while also tracking token usage.
 
-The SDK returns chunks where `chunk.choices[0].delta.content` contains the text. When `include_usage` is `True`, the very last chunk will usually have an empty `choices` array but a populated `usage` object. Usage data from streaming is best-effort; if the stream is interrupted before the final chunk arrives, token usage may be missing.
+In the SDK, `chunk.choices[0].delta.content` contains the text. When `include_usage` is enabled, the final chunk often has an empty `choices` array but a populated `usage` object. That usage data is best-effort: if the stream is interrupted before the last chunk arrives, the usage block may never show up.
 
 ```python
 reply_parts = []
@@ -185,10 +170,10 @@ print()
 assistant_reply = "".join(reply_parts)
 ```
 
-Because we accumulate the streamed chunks into `reply_parts`, we still end the turn with one final assistant string that can be appended back into `messages`.
+Because we collect the streamed chunks into `reply_parts`, we still end up with one complete assistant string that can be stored in `messages`.
 
 #### 5. Appending the Final Reply Back to History
-The model does not remember what it said unless you save that answer yourself. After streaming is complete, append the final assistant reply to the same message array so the next API call includes the latest turn.
+The model will not remember what it just said unless you save that answer yourself. Once streaming finishes, append the final assistant reply to the same message array so the next request includes the latest turn.
 
 ```python
 messages.append({"role": "assistant", "content": assistant_reply})
@@ -198,7 +183,7 @@ messages.append({"role": "assistant", "content": assistant_reply})
 
 ### **3.4 Advanced Patterns & Specialized Use Cases**
 
-*   **Context Management (Trimming History):** As users chat, the `messages` list grows indefinitely. You must manually trim the list before sending it to the API to prevent context errors and cost spikes.
+*   **Context management (trimming history):** As users keep chatting, the `messages` list grows forever unless you control it. Before each request, trim the history to avoid blowing past the context window or paying for unnecessary tokens.
     ```python
     def trim_messages(messages, max_messages=12):
         system = messages[:1]
@@ -207,7 +192,7 @@ messages.append({"role": "assistant", "content": assistant_reply})
         return system + recent
     ```
 
-*   **Cost Awareness Tracking:** API tokens dictate your bill. Providers charge different rates for input (prompt) tokens and output (completion) tokens. You can estimate session costs locally using the data collected during the stream:
+*   **Basic cost awareness:** Tokens determine the bill. Providers usually charge one rate for input tokens and another for output tokens. With the usage data captured from the stream, you can estimate cost locally:
     ```python
     def estimate_cost(input_tokens, output_tokens, input_price, output_price):
         input_cost = (input_tokens / 1_000_000) * input_price
@@ -215,54 +200,54 @@ messages.append({"role": "assistant", "content": assistant_reply})
         return input_cost + output_cost
     ```
 
-*   **Edge Cases & Error Handling:**
-    *   *Network Timeouts & Outages:* If the provider goes down, the API call will fail unless you handle the exception. Wrap the API call in a `try...except` block. Do not expose raw stack traces to the user.
-    *   *Rate Limit Error (HTTP 429):* If users spam the chat, the provider will temporarily block you. In production, you will need exponential backoff.
-    *   *Session Memory is Not Permanent:* A CLI chatbot only keeps memory in RAM while the Python process is alive. If the user exits the program or the process crashes, the conversation disappears. We will tackle permanent database memory in later chapters.
-    *   *CLI Control Commands:* In a terminal app, commands such as `/clear`, `/stats`, and `/exit` are a practical replacement for buttons and UI widgets.
+*   **Edge cases and error handling:**
+    *   *Network timeouts and outages:* If the provider is unavailable, the request will fail unless you handle the exception. Wrap the API call in `try...except`, and do not dump raw stack traces on users.
+    *   *Rate limiting (HTTP 429):* If requests come too quickly, the provider will temporarily throttle you. In production, you usually handle this with exponential backoff.
+    *   *Session memory is temporary:* A CLI chatbot keeps memory in RAM only while the Python process is running. If the user exits or the process crashes, the conversation is gone. Later chapters will cover persistent memory with a database.
+    *   *CLI control commands:* In a terminal app, commands like `/clear`, `/stats`, and `/exit` are the practical equivalent of buttons.
 
 ---
 
 ### **3.5 The Decision Matrix / Artifact**
 
-*   **Selection Table: Modern Chat APIs**
-    *Note: OpenAI recommends the newer "Responses API" for new projects requiring seamless multi-turn interactions. However, the "Chat Completions API" using the message array above remains widely supported and is still the most familiar cross-provider pattern.*
+*   **Selection table: modern chat APIs**
+    *Note: OpenAI recommends the newer Responses API for new projects that need smoother multi-turn interactions. Even so, the Chat Completions message-array pattern remains widely supported and is still the clearest cross-provider starting point.*
 
     | Approach | When to use it | When to avoid it |
     | :--- | :--- | :--- |
-    | **Message Array (Chat Completions)** | Best for simple apps, standard text generation, and easier swapping through compatible APIs or gateways. | Complex agentic workflows with multiple stateful tools. |
-    | **Blocking API (No Stream)** | Best for offline backend tasks, JSON extraction, and evaluating data silently. | User-facing chat interfaces. |
-    | **Streaming API** | Best for interactive tools such as CLI chatbots, desktop apps, and web chat interfaces where fast feedback matters. | Background tasks where UI updates are irrelevant. |
+    | **Message Array (Chat Completions)** | Simple chat apps, standard text generation, and projects where cross-provider compatibility matters. | Complex agentic systems with multiple tools and richer state handling. |
+    | **Blocking API (No Stream)** | Offline backend jobs, JSON extraction, or evaluation tasks where nobody is waiting on a UI. | User-facing chat interfaces. |
+    | **Streaming API** | Interactive experiences such as CLI chatbots, desktop apps, and web chat UIs where responsiveness matters. | Background work where live updates provide no value. |
 
-*   **OpenAI-Compatible Provider Notes:** Services like **OpenRouter** let you keep the OpenAI SDK and the same `chat.completions.create(...)` call while routing traffic through a different endpoint. The usual migration is configuration-level, not architecture-level: set `OPENAI_BASE_URL=https://openrouter.ai/api/v1` and choose a provider-style model ID such as `openai/gpt-5-nano`. That said, compatibility is rarely perfect. Always test streaming behavior, usage reporting, supported parameters, and role handling before deploying.
+*   **Notes on OpenAI-compatible providers:** Services like **OpenRouter** let you keep the OpenAI SDK and the same `chat.completions.create(...)` call while routing traffic to another endpoint. In many cases, that is a configuration change rather than an architectural rewrite: set `OPENAI_BASE_URL=https://openrouter.ai/api/v1` and choose a provider-style model ID like `openai/gpt-5-nano`. That said, "compatible" rarely means "identical." Always test streaming behavior, usage reporting, supported parameters, and role handling before you ship.
 
-*   **Engineering Checklist:**
-    *   [ ] Are API keys stored strictly in a `.env` file or secrets manager?
-    *   [ ] Is `.env` included in `.gitignore`?
-    *   [ ] Is there a `.env.example` file committed to the repository?
-    *   [ ] Is there a mechanism like a `/clear` command to manage the context window?
-    *   [ ] Is the `system` prompt positioned consistently at the top of the message list?
-    *   [ ] Is an output token limit such as `max_tokens` set to prevent unbounded generation?
+*   **Engineering checklist:**
+    *   [ ] Are API keys stored only in a `.env` file or a proper secrets manager?
+    *   [ ] Is `.env` listed in `.gitignore`?
+    *   [ ] Is there a committed `.env.example` file?
+    *   [ ] Do you have a mechanism such as `/clear` to manage context growth?
+    *   [ ] Is the `system` prompt consistently placed at the top of the message list?
+    *   [ ] Is an output limit such as `max_tokens` set to prevent unbounded generation?
     *   [ ] Have you verified that your OpenAI-compatible provider handles streaming and usage metadata the way your code expects?
 
 ---
 
 ### **3.6 Final Project Files**
 
-Instead of printing the full application here, open the **Chapter 3 folder** in the book's GitHub repository.
+Instead of printing the entire application here, open the **Chapter 3 folder** in the book's GitHub repository.
 
-Your goal is to run the app locally and study how the snippets we just covered fit together in one file. Pay special attention to these five mechanics:
-1. How `chatbot.py` safely loads the API key.
+As you run the app locally, focus on how the snippets from this chapter fit together in one file:
+1. How `chatbot.py` loads the API key safely.
 2. How `OPENAI_BASE_URL` and `OPENAI_MODEL` redirect the same SDK to an OpenAI-compatible provider.
 3. How the `while True` loop keeps the message array alive in memory.
-4. How the streaming loop isolates text chunks from the final usage metadata.
-5. How the final assistant reply is appended back into `messages`.
+4. How the streaming loop separates text chunks from the final usage metadata.
+5. How the final assistant reply gets appended back into `messages`.
 
 ---
 
 ### **Chapter Summary & Transition**
-*   **Recap:** You have successfully learned the architecture of a chatbot. You learned that chatbots are autoregressive loops that rely on developers to explicitly manage and pass short-term memory. You mitigated latency by streaming server-sent events, captured separated input and output token usage for basic cost awareness, and secured your infrastructure by pulling credentials from the environment.
-*   **What's Next:** Right now, your chatbot is generic. If you ask it to act like a highly specific domain expert, or ask it to format an output as strict JSON for a database, it will likely fail or hallucinate. In **Chapter 4**, we will explore the engineering science behind prompt engineering, context engineering, and forcing the LLM to return structured outputs.
+*   **Recap:** You now understand the basic architecture of a chatbot. It is an autoregressive loop in which the developer is responsible for storing and resending short-term memory. You reduced perceived latency with streaming, captured input and output token usage for basic cost awareness, and handled credentials in a safer way by loading them from the environment.
+*   **What comes next:** Right now, the chatbot is still generic. If you ask it to behave like a narrow domain expert, or to produce strict JSON for another system, it will often drift or hallucinate. In **Chapter 4**, we will look at prompt engineering, context engineering, and techniques for getting more structured outputs.
 
 ---
 
