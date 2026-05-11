@@ -58,7 +58,7 @@ In this chapter, we use the message-array pattern because it is simple, visible,
 
     Every time the user types something, you append it to the list. Then you send the full list to the API. The API returns an `assistant` message. You append that reply, then repeat the loop.
 
-<img width="840" height="1680" alt="image" src="https://github.com/user-attachments/assets/2e0917d3-c8f6-4b93-8b70-1ca6bcf7a4e5" />
+<img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/2e0917d3-c8f6-4b93-8b70-1ca6bcf7a4e5" />
 
 
 ---
