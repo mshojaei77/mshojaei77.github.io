@@ -12,11 +12,10 @@ Before opening the full project, make sure you are comfortable with:
 4. streaming chunks,
 5. appending the final assistant reply back to history.
 
-> **Code Repository**  
-> The complete, runnable project for this chapter, implemented as a single-file CLI chatbot (`chatbot.py`), is available in the book repository:  
-> `https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-03-chatbot`  
->
-> Code evolves faster than prose. This chapter focuses on the underlying mechanics; the repository contains the runnable version. In the pages below, we keep only the snippets that matter so you can see how each part works.
+**Code Repository**  
+The complete, runnable project for this chapter, implemented as a single-file CLI chatbot (`chatbot.py`), is available in the book repository:  
+(github.com/mshojaei77/llm-engineering-in-action/chapter-03-chatbot)[https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-03-chatbot]
+Code evolves faster than prose. This chapter focuses on the underlying mechanics; the repository contains the runnable version. In the pages below, we keep only the snippets that matter so you can see how each part works.
 
 ---
 
