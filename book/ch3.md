@@ -14,7 +14,7 @@ Before opening the full project, make sure you are comfortable with:
 
 **Code Repository**  
 The complete, runnable project for this chapter, implemented as a single-file CLI chatbot (`chatbot.py`), is available in the book repository:  
-(github.com/mshojaei77/llm-engineering-in-action/chapter-03-chatbot)[https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-03-chatbot]
+[github.com/mshojaei77/llm-engineering-in-action/chapter-03-chatbot](https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-03-chatbot)
 Code evolves faster than prose. This chapter focuses on the underlying mechanics; the repository contains the runnable version. In the pages below, we keep only the snippets that matter so you can see how each part works.
 
 ---
@@ -64,13 +64,8 @@ In this chapter, we use the message-array pattern because it is simple, visible,
 
     Every time the user types something, you append it to the list. Then you send the full list to the API. The API returns an `assistant` message. You append that reply, then repeat the loop.
 
-*   **Suggested Diagram:**
-    ```mermaid
-    flowchart TD
-        A[CLI terminal] -->|User prompt| B[Messages list<br/>system / user / assistant]
-        B -->|API request| C[LLM Provider API]
-        C -->|Streamed text| D[Terminal output]
-    ```
+<img width="840" height="1680" alt="image" src="https://github.com/user-attachments/assets/2e0917d3-c8f6-4b93-8b70-1ca6bcf7a4e5" />
+
 
 ---
 
