@@ -1,6 +1,12 @@
-**Chapter 2: Choosing Models in a Moving Market**
+# Chapter 2: Choosing Models in a Moving Market
 
-## 2.1 Why Model Choice is a Moving Target
+Large-Language Model (LLM) engineering is a logistics problem as much as it is a research problem. A few years ago, choosing a model was simple: you bought access to the smartest proprietary API you could afford, and you built your app around it. Today, that approach is a recipe for legacy debt.
+
+Each generation of models brings better accuracy, longer context windows, new modalities, and entirely different pricing structures. A model that looked state-of-the-art last quarter may be deprecated next quarter. For instance, OpenAI’s deprecations page explicitly notes that "legacy" models are removed when improved versions become available, forcing engineers to migrate.
+
+To work in this environment, an engineer must learn to evaluate models continuously rather than picking a winner once. Two forces drive this churn: capabilities change and economics change.
+
+**The Engineering Takeaway:** Model selection is part of the build-measure-learn cycle. You will choose a starting model, monitor its performance and cost, and be ready to switch.
 
 Large-Language Model (LLM) engineering is a logistics problem as much as it is a research problem. A few years ago, choosing a model was simple: you bought access to the smartest proprietary API you could afford, and you built your app around it. Today, that approach is a recipe for legacy debt.
 
@@ -13,9 +19,7 @@ To work in this environment, an engineer must learn to evaluate models continuou
 
 > **The Engineering Takeaway:** Model selection is part of the build-measure-learn cycle. You will choose a starting model, monitor its performance and cost, and be ready to switch.
 
-***
-
-## 2.2 Roles, Not Names
+## Roles, Not Names
 
 A common beginner mistake is assuming an AI application is powered by a single massive intelligence. Production systems rarely rely on a single model. Instead, they orchestrate multiple models performing different roles.
 
@@ -34,9 +38,7 @@ This reflects a general architectural pattern: **use the right model for the job
 
 By splitting tasks across specialized models, you optimize both latency and cost.
 
-***
-
-## 2.3 Buy, Rent, or Host: The Access Strategy Decision
+## Buy, Rent, or Host: The Access Strategy Decision
 
 Before choosing *which* specific model to use, decide *how* you will access intelligence. Three strategies dominate the enterprise landscape:
 
@@ -54,9 +56,7 @@ Before choosing *which* specific model to use, decide *how* you will access inte
 
 *(Note: We will discuss the mechanics of local self-hosting in Chapter 11 and enterprise serving optimization in Chapter 14).*
 
-***
-
-## 2.4 Proprietary APIs: Managed Intelligence
+## Proprietary APIs: Managed Intelligence
 
 Using a proprietary API means you are buying a managed intelligence product. Providers bundle the model with features that fundamentally shape your backend architecture.
 
@@ -68,9 +68,7 @@ When evaluating providers, check for these critical capabilities:
 - **Batch APIs:** For asynchronous processing, providers offer Batch endpoints. Submitting a `.jsonl` file to OpenAI’s batch API provides a 50% discount and higher rate limits, with jobs processed within 24 hours.
 - **Data Controls (ZDR):** Enterprise customers must know if prompts are stored. OpenAI retains content for up to 30 days for abuse monitoring unless **Zero Data Retention (ZDR)** is approved. Anthropic offers similar ZDR policies where data is not stored after the response is generated.
 
-***
-
-## 2.5 Fast Models vs. Reasoning Models
+## Fast Models vs. Reasoning Models
 
 Not all models are built for the same speed-quality trade-off. Today, the most crucial distinction is between **Fast models** (throughput-optimized) and **Reasoning models** (deep deliberation).
 
@@ -99,9 +97,7 @@ Based on current freelance listings, the most common LLM projects are RAG chatbo
 
 Tiny architecture note: “fast model” is best for repeatable, high-volume steps; “reasoning model” earns its keep when the project needs multi-step judgment, compliance logic, risk analysis, or tool-using agents. *(Note: We will build RAG systems in Chapters 6 & 7, and agentic workflows in Chapters 9 & 10).*
 
-***
-
-## 2.6 Hugging Face and Open-Weight Discovery
+## Hugging Face and Open-Weight Discovery
 
 When an engineer steps away from proprietary APIs, their first stop is the Hugging Face Hub. Engineers visit the Hub not just to download models, but to perform legal and technical due diligence using the **Model Card**.
 
@@ -134,9 +130,7 @@ Finally, vendors often use "open" marketing while imposing strong restrictions. 
 
 Some models require you to explicitly request access from the author, sharing your contact information. For enterprise work, gating means you cannot assume your CI/CD pipelines or all team members can download the weights anonymously.
 
-***
-
-## 2.7 Serverless Open-Weight Inference
+## Serverless Open-Weight Inference
 
 Serverless inference allows you to run open-weight models on-demand without managing GPUs. Providers like Together AI, Fireworks AI, and Groq expose endpoints compatible with OpenAI’s SDK.
 
@@ -154,9 +148,7 @@ Together AI, for example, emphasizes high performance (claiming up to 2.75x fast
 - **Changing Catalog:** The provider may remove a model from their servers.
 - **Privacy:** Data still passes through the provider’s servers.
 
-***
-
-## 2.8 API Gateways and Model Routers
+## API Gateways and Model Routers
 
 When building multi-model systems, hardcoding a single provider is dangerous. You need a routing layer using libraries like **LiteLLM** or services like **OpenRouter**.
 
@@ -167,9 +159,7 @@ A model router acts as an insurance policy. It can:
 - Route by cost or latency (e.g., send sensitive prompts to a local private model, and trivial prompts to a cheap API).
 - Enforce budget limits across your engineering team.
 
-***
-
-## 2.9 Rate Limits and Reliability
+## Rate Limits and Reliability
 
 A model is only as good as the service hosting it. Hitting API limits results in immediate application failure. Evaluate these factors before choosing a provider:
 
@@ -181,9 +171,7 @@ A model is only as good as the service hosting it. Hitting API limits results in
 | **Region**                 | Is the model available in our specific cloud region?           |
 | **Fallback**               | What happens when the provider is down?                        |
 
-***
-
-## 2.10 Tokenomics and Cost per Successful Task
+## Tokenomics and Cost per Successful Task
 
 LLM billing is incredibly granular. Providers separate input, output, cached, reasoning, and batch tokens. Rather than memorizing numbers, compute costs by this high-level formula:
 
@@ -201,9 +189,7 @@ Monthly Cost = number_of_requests × (
 **The Golden Rule of AI Economics:** A cheap model that frequently fails, times out, or hallucinates is *not* cheap.
 You must measure the **Cost per Successful Task** (`total_model_cost / successful_tasks`). An expensive model that succeeds on the first try is often cheaper than a budget model that requires three retries to produce valid JSON.
 
-***
-
-## 2.11 Privacy, Data Retention, and Residency
+## Privacy, Data Retention, and Residency
 
 Privacy compliance dictates provider choice for enterprises. You must know where your data goes. Ask these questions:
 
@@ -212,9 +198,7 @@ Privacy compliance dictates provider choice for enterprises. You must know where
 3. **Region / Residency:** Can you specify where data is processed? (For instance, Google Vertex AI allows region selection for generative models, which is critical for EU GDPR laws).
 4. **Support Access:** Can provider support engineers read your prompts when debugging?
 
-***
-
-## 2.12 Benchmark Literacy: Maps, Not Territory
+## Benchmark Literacy: Maps, Not Territory
 
 Evaluating models requires an understanding of benchmarks, but benchmarks are not a leaderboard game. They measure specific tasks and may not reflect your workload.
 
@@ -226,9 +210,7 @@ Evaluating models requires an understanding of benchmarks, but benchmarks are no
   *Warning:* These arenas reveal which models humans prefer in casual chat, but humans suffer from "verbosity bias" voting for longer, confident answers even if they are factually flawed.
 - **LLM-as-Judge:** Using Larger LLM to grade smaller models is highly scalable, but LLM judges exhibit position bias, verbosity bias, and self-preference. Always calibrate them with human review. *(Note: We will build automated "LLM-as-a-judge" evaluation pipelines in Chapter 15).*
 
-***
-
-## 2.13 Artificial Analysis: A Practical Leaderboard for Choosing Models
+## Artificial Analysis: A Practical Leaderboard for Choosing Models
 
 One useful resource for comparing modern AI models is **[Artificial Analysis](https://artificialanalysis.ai/)**. It is an independent benchmarking website that tracks AI models, API providers, inference speed, pricing, context windows, latency, and model quality across language, image, video, speech, agents, hardware, and open-weight models.
 
@@ -248,9 +230,7 @@ Public feedback around Artificial Analysis is generally positive among AI builde
 
 The best practice is to use Artificial Analysis alongside your own evaluation set. Leaderboards tell you which models are strong in general; your own tests tell you which model is best for your product.
 
-***
-
-## 2.14 Public Benchmarks vs. Private Product Evaluations
+## Public Benchmarks vs. Private Product Evaluations
 
 Public benchmarks help you shortlist models; private evaluations decide deployment.
 
@@ -275,9 +255,7 @@ To confidently deploy a model, you must build a **Golden Dataset**, a curated co
 3. **Run Candidate:** Pass the tasks through the new model you want to test.
 4. **Score:** Use deterministic scripts (e.g., JSON validation) or an LLM-as-a-Judge to compare the candidate's output against the Golden Answers.
 
-***
-
-## 2.15 The Model Selection Decision Matrix
+## The Model Selection Decision Matrix
 
 When you architect your system, use this decision matrix to force your team to articulate their assumptions:
 
@@ -291,16 +269,15 @@ When you architect your system, use this decision matrix to force your team to a
 | **Privacy / License**  | Can this data leave our infrastructure? Is it commercially licensed? |
 | **Migration**          | How easily can we swap this model out if prices rise?                |
 
-***
-
-## 2.16 Model Migration and Drift
+## Model Migration and Drift
 
 Model selection is never final. Providers deprecate models, and behaviors "drift" silently over time (e.g., safety filters tighten, outputs become terser).
 
-Plan for migration on day one by:
+Plan for migration on day one by using versioned endpoints, implementing regression tests and designing fallbacks.
 
-1. **Using Versioned Endpoints:** Specify exact model versions (e.g., `model-v1-0314`) instead of generic aliases (`model-latest`) to prevent sudden backend breakages.
-2. **Implementing Regression Tests:** Never switch models without running your private evaluation suite.
-3. **Designing Fallbacks:** Use your model router to seamlessly switch providers during an outage.
+## Exercise
 
-Now that we know how to discover, evaluate, and navigate the economics of the model ecosystem, it is time to start building. In **Chapter 3**, we will leave the theory behind and write our first production-grade code to integrate these models into a reliable backend application.
+1. Construct a Model Selection Decision Matrix for a customer support chatbot context.
+2. Draft a small golden dataset with 5 interactions mimicking real users to act as your regression suite. 
+
+Now that we know how to discover, evaluate, and navigate the economics of the model ecosystem, it is time to start building in the next chapter.
