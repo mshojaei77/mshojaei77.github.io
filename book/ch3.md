@@ -14,7 +14,7 @@ Before opening the full project, make sure you understand:
 
 > **Code Repository**  
 > The complete, runnable project for this chapter, implemented as a single-file CLI chatbot (`chatbot.py`), is available in the book repository:  
-> `github.com/mshojaei77/llm-engineering-in-action/chapter-03-chatbot`  
+> `https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-03-chatbot`  
 >
 > Full code changes faster than concepts. This book teaches the core engineering mechanics; the repository holds the runnable implementation. In the chapter below, we show only the important snippets so you can understand each moving part.
 
@@ -64,6 +64,7 @@ In this chapter, we will use the message-array pattern because it is simple, vis
     *   `assistant`: The model's response.
 
     When a user types a prompt, you append it to the list. You send the entire list to the API. The API returns an `assistant` message. You append that response to the list, and repeat.
+    
 *   **Suggested Diagram:**
     ```text
     +--------------+

@@ -62,7 +62,7 @@ date: 2025-01-01
     *   Hybrid Search: Combining Vector Search + BM25 using Reciprocal Rank Fusion (RRF).
     *   Reranking: Using Cross-Encoders (Cohere, FlashRank) to sort chunks.
     *   Citations & Freshness: Forcing the LLM to cite exact source pages.
-*   [💼 Part 2 Capstone Project: "Enterprise Document Q&A Bot with Citations"**p2.md)
+*   💼 **Part 2 Capstone Project: "Enterprise Document Q&A Bot with Citations"**
     *   *Context*: Build an internal RAG search engine for 10,000 legal PDFs.
     *   *Skills*: Hybrid search, reranking, citation extraction, and hallucination prevention.
 
