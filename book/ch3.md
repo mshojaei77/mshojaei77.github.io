@@ -1,16 +1,10 @@
 **Chapter 3: Building Your First Chatbot**
 
 ### **Chapter Introduction: The Engineering Premise**
-*   **The misunderstanding:** A lot of beginners assume the model somehow "remembers" the conversation on its own. In the message-array pattern used in this chapter, that is not how it works. Every request is effectively stateless. If your app does not resend the earlier conversation, the model has no idea what was said a few seconds ago. On top of that, if you wait for a long answer to finish before showing anything, the app feels frozen.
-*   **What is really happening:** A chatbot is not a magical conversational brain. It is a loop that keeps packaging the conversation history and sending it to a model provider. If you treat the model as a black box, costs climb fast, requests start failing, and network issues turn into broken UX.
-*   **What you will build:** By the end of this chapter, you will have a clean, production-minded Python prototype of a ChatGPT-style CLI. You will add short-term conversation memory, keep API keys out of your source code, stream responses as they are generated, and track basic token usage with optional cost estimates.
+A lot of beginners assume the model somehow "remembers" the conversation on its own. In the message-array pattern used in this chapter, that is not how it works. Every request is effectively stateless. If your app does not resend the earlier conversation, the model has no idea what was said a few seconds ago. On top of that, if you wait for a long answer to finish before showing anything, the app feels frozen.
+A chatbot is not a magical conversational brain. It is a loop that keeps packaging the conversation history and sending it to a model provider. If you treat the model as a black box, costs climb fast, requests start failing, and network issues turn into broken UX.
+By the end of this chapter, you will have a clean, production-minded Python prototype of a ChatGPT-style CLI. You will add short-term conversation memory, keep API keys out of your source code, stream responses as they are generated, and track basic token usage with optional cost estimates.
 
-Before opening the full project, make sure you are comfortable with:
-1. a single API call,
-2. a message array,
-3. a Python `while` loop,
-4. streaming chunks,
-5. appending the final assistant reply back to history.
 
 **Code Repository**  
 The complete, runnable project for this chapter, implemented as a single-file CLI chatbot (`chatbot.py`), is available in the book repository:  
