@@ -12,7 +12,7 @@ This book is your blueprint for becoming one.
 
 ---
 
-### What an LLM Engineer Actually Does
+## The LLM Engineer Role
 There is a massive misconception about what it means to work in AI today. When people hear "Large Language Models," they picture Ph.D. researchers scribbling calculus on whiteboards and spending $100 million to train trillion-parameter models on server farms. 
 
 That is AI *Research*. That is not AI *Engineering*.
@@ -31,7 +31,7 @@ In short, the modern LLM Engineer is **60% Software Engineer, 20% Data Engineer,
 
 ---
 
-### What This Book Is About
+## The Production AI Mindset
 *LLM Engineering In Action* is an anti-hype, relentlessly practical guide to building production-grade Generative AI applications. 
 
 We are skipping the theoretical fluff. You won't find chapters explaining how to multiply matrices, the history of neural networks, or how to write a Python `for` loop. There are plenty of great academic textbooks for that.
@@ -40,7 +40,28 @@ Instead, this book focuses entirely on **implementation, optimization, and deplo
 
 ---
 
-### Who Should Read This Book
+## The LLM Application Stack
+
+In this book, the application stack progresses in practical layers so you can move from prototype to production with clear boundaries:
+
+1. Foundations and first applications.
+2. Context, retrieval, and grounding.
+3. Tools, state, and agents.
+4. Local models and customization.
+5. Serving, evaluation, and reliability.
+6. Multimodal and domain systems.
+
+Each layer introduces the minimum concepts required to build the next layer without skipping engineering fundamentals.
+
+## Business-to-System Translation
+
+One of the core LLM engineering skills is translating business requests into system requirements. You should be able to convert vague requests like "build an AI assistant" into explicit requirements for context sources, output contracts, latency targets, failure handling, and review paths.
+
+## Reliability, Cost, and Risk
+
+Production AI systems are constrained by reliability, cost, and risk. Reliability means stable behavior under real traffic and edge cases. Cost means controlling token usage, model routing, and infrastructure spend. Risk means handling hallucinations, privacy constraints, and unsafe outputs with explicit guardrails and escalation logic.
+
+## Who Should Read This Book
 This book is designed for:
 *   **Software Engineers (Backend, Full-Stack, or Data)** who want to pivot into AI and start building agentic systems.
 *   **Data Scientists & Analysts** who want to step out of Jupyter Notebooks and learn how to deploy AI models into scalable production environments.
@@ -51,7 +72,7 @@ I assume you already know Python. You should be comfortable writing functions, u
 
 ---
 
-### How You Should Read This Book
+## How to Use This Book
 This book is structured chronologically, from foundations to advanced deployment, mimicking the architecture of a real-world enterprise AI system. 
 
 *   **If you are completely new to LLM development,** read it cover-to-cover. Part 1 sets the foundation of APIs and context windows, which you will need before trying to fine-tune local models in Part 4.
@@ -60,7 +81,7 @@ This book is structured chronologically, from foundations to advanced deployment
 
 ---
 
-### What You Will Accomplish
+## What You Will Accomplish
 By the time you reach the final page of this book, you will no longer be a spectator in the AI revolution. You will be a practitioner. 
 
 Specifically, you will walk away with:

@@ -1,13 +1,12 @@
-# Chapter 1: LLM Foundations (No Math, Just Mechanics)
+# Chapter 1: Text Generation with Large Language Models
 
-For the first year of the Generative AI boom, most developers treated Large Language Models (LLMs) like a magical REST API: you send a string of text, you wait a few seconds, and an intelligent response comes back. 
 For the first year of the Generative AI boom, most developers treated Large Language Models (LLMs) like a magical REST API: you send a string of text, you wait a few seconds, and an intelligent response comes back. 
 
 If you are building a weekend side project, this mental model is fine. But if you are an engineer building production systems, treating an LLM as a black box is a recipe for disaster. If you do not understand the mechanics of how an LLM generates text, you will fail at cost optimization, you will not understand why your system runs out of GPU memory, you will struggle to tune latency down to acceptable levels, and you will be completely incapable of debugging weird model hallucinations. 
 
 This chapter demystifies the "magic." We are skipping the calculus and the academic history. Instead, we are looking under the hood to understand the exact lifecycle of a prompt—from text, to numbers, through the neural network, and back to text—and what that means for your architecture.
 
-## The Core Mechanism: Autoregressive Next-Token Prediction
+## The Generation Loop
 
 Move away from the idea that an LLM "thinks" about a problem and then writes an essay. An LLM is, at its core, a massive statistical engine designed to do one single thing: **predict the next piece of text based on the previous text**.
 
@@ -21,6 +20,8 @@ Here is the step-by-step loop:
 5. It repeats this loop until it generates a special "stop" signal.
 
 To understand how this statistical prediction actually behaves in the real world, we must categorize models into three distinct "flavors" that you will encounter as an engineer: **Base Models**, **Instruct Models**, and **Reasoning Models**.
+
+## Tokens and Subwords
 
 **Base Models (The Raw Engine)**  
 A "Base Model" is an LLM that has only completed its first phase of training (Pre-training). It has read trillions of words from the public internet, books, and code. Its only goal is document continuation.
@@ -53,11 +54,11 @@ Reasoning models solve this by utilizing **Test-Time Compute**. Before outputtin
 
 Again, the core mechanism hasn't changed. The model is still just predicting the next token. But the *purpose* of those tokens is internal scratchpad reasoning, rather than direct communication with the user.
 
-**The Engineering Takeaways**
+## Decoder-Only Transformers
 
 Understanding this autoregressive loop dictates three harsh realities of production engineering. The Autoregressive Bottleneck (Latency) means that because each step of the loop depends on the output of the previous step, text generation is fundamentally sequential. The model is constantly waiting on itself. Furthermore, the Cost of Thinking dictates that reasoning models generate thousands of hidden "thought tokens" before they ever output the first visible word, which can be a massive waste of API budget and introduces severe latency. Choosing the Right Tool is crucial: route simple extraction tasks to fast, cheap Instruct Models, and route complex coding puzzles to reasoning models.
 
-## Tokenization: The Interface Between Text and Numbers
+## Context Windows and Attention
 
 Neural networks do not speak English. They only perform math on numbers. Therefore, before your text ever reaches the LLM, it must pass through a **Tokenizer**.
 
@@ -68,6 +69,8 @@ The "Goldilocks" solution used by all modern LLMs is **Subword Tokenization**, p
 
 BPE works by starting with individual characters and iteratively merging the most frequent pairs of characters into single units. Common words like `"apple"` get a single token ID. Rare words or complex names get split into multiple subword tokens (e.g., `"tokenization"` might become `["token", "ization"]`). As a rule of thumb for English, **1 token ≈ 0.75 words** (or roughly 4 characters).
 
+## Logits and Probabilities
+
 **The "Glitch" in the Matrix**  
 Tokenization explains why LLMs famously struggle with certain basic tasks like counting letters. The LLM does not see the letters; it sees opaque token numbers and is completely blind to individual characters.
 
@@ -77,7 +80,7 @@ Tokenizers also insert invisible "Control Tokens." to help the model distinguish
 **The Engineering Takeaways:**
 Cost is based on tokens, not words. Because of multilingual bloat, languages like Japanese can cost significantly more API credits and run slower than the exact same prompt translated to English. Before sending data to an API, use libraries like OpenAI's `tiktoken` or Hugging Face's `tokenizers` to calculate token consumption.
 
-## The Transformer Architecture (And Why Engineers Must Know It)
+## Decoding Parameters
 
 Before we dive in, let’s address the elephant in the room: *Why should a software engineer care about neural network architecture?* 
 
@@ -99,7 +102,7 @@ To visualize how a Decoder-only model works in production, the text is first cho
 
 <img width="818" height="218" alt="image" src="https://github.com/user-attachments/assets/9fec574e-cd9b-4a14-b4b2-2cb3ec444bd3" />
 
-## Attention Mechanisms
+## Generation Failure Modes
 
 If token embeddings represent *what* a word means, the **Attention Mechanism** represents *context*. 
 
@@ -112,8 +115,6 @@ Through a process called **Self-Attention**, the model dynamically updates the m
 LLMs use **Multi-Head Attention**. Instead of looking at context in just one way, the model splits its attention into multiple "heads." One head might focus on grammar, another on tracking pronouns (figuring out who "he" is referring to), and another on historical facts.
 
 Because we are doing autoregressive generation (predicting the future), the model applies **Causal Masking**. This acts as a blindfold, ensuring that when the model evaluates a token, it can only attend to *past* tokens, completely blocking it from "cheating" by looking at future tokens.
-
-## The Context Window & The KV-Cache
 
 This is the most important section of this chapter for a production engineer.
 
@@ -131,7 +132,7 @@ To solve this, LLM inference engines use a **Key-Value Cache (KV-Cache)**. The m
 The KV-Cache is a massive memory hog. The size of the KV-Cache grows linearly with the length of the prompt *and* the number of users you are serving concurrently. 
 If you are building an AI app and you suddenly get an `Out Of Memory (OOM)` CUDA error on your server, it is rarely the model weights that caused it—it is the KV-Cache expanding until it explodes the GPU's RAM. In Chapter 14, we will learn how to combat this using cutting-edge serving engines like vLLM, PagedAttention, and KV-cache offloading.
 
-## Decoding & Generation: How Engineers Control the Output
+## Hands-On Exercise
 
 After the prompt has passed through the Transformer network, the model outputs **Logits**—a massive array of raw mathematical scores mapping to every single token in its vocabulary. 
 
@@ -153,8 +154,6 @@ How it picks the next word—and how you as an engineer control costs, latency, 
 
 **The Formatting & Latency Parameters**  
 `response_format` forces strict structural generation like specific JSON Schemas. `stream` sets API responses to Server-Sent Events showing responses in real-time, helping reduce perceived latency.
-
-## Exercise
 
 1. Compare Base Models, Instruct Models, and Reasoning Models by writing down your own concise scenario where one would excel but others might be suboptimal or overkill.
 2. Outline a basic prompt generation pipeline taking note of latency and the context window.
