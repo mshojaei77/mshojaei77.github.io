@@ -33,7 +33,6 @@ date: 2025-01-01
 - Logits and Probabilities
 - Decoding Parameters
 - Generation Failure Modes
-- Hands-On Exercise
 
 ## [Chapter 2: Production Model Selection](ch2.md)
 
@@ -44,7 +43,6 @@ date: 2025-01-01
 - Benchmarks and Product Tests
 - Cost, Latency, and Reliability
 - Model Decision Records
-- Hands-On Exercise
 
 ## [Chapter 3: Streaming Chatbot Applications](ch3.md)
 
