@@ -844,7 +844,7 @@ def triage_with_responses_api(customer_message: str) -> TicketTriage:
 </customer_message>"""
 
     response = client.responses.parse(
-        model="gpt-4o-2024-08-06",
+        model="gpt-5-nano",
         input=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_prompt},
@@ -861,7 +861,7 @@ If your project still uses Chat Completions, use the SDK parse helper there too:
 ```python
 def triage_with_chat_completions(customer_message: str) -> TicketTriage:
     completion = client.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+        model="gpt-5-nano",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {
@@ -911,7 +911,7 @@ ticket_schema = {
 }
 
 response = client.responses.create(
-    model="gpt-4o-2024-08-06",
+    model="gpt-5-nano",
     input=[
         {"role": "system", "content": SYSTEM_PROMPT},
         {
