@@ -1,4 +1,4 @@
-# Chapter 2: Production Model Selection
+**Chapter 2: Production Model Selection**
 
 LLM engineering is a logistics problem as much as it is a modeling problem. A few years ago, model selection was relatively simple: pick the strongest proprietary API you could afford and build around it.
 

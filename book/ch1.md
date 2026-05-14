@@ -1,4 +1,4 @@
-# Chapter 1: LLM Text Generation
+**Chapter 1: LLM Text Generation**
 
 For the first year of the generative AI boom, most developers treated large language models (LLMs) like a magical REST API: you send a string of text, wait a few seconds, and an intelligent response comes back.
 

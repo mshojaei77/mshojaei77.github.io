@@ -1,4 +1,4 @@
-# Chapter 3: Building a Streaming LLM Chatbot
+**Chapter 3: Building a Streaming LLM Chatbot**
 
 A lot of beginners assume the model somehow "remembers" the conversation on its own. In the message-array pattern used in this chapter, that is not how it works. Every request is effectively stateless. If your app does not resend the earlier conversation, the model has no idea what was said a few seconds ago. On top of that, if you wait for a long answer to finish before showing anything, the app feels frozen.
 

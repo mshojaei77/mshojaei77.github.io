@@ -1,4 +1,4 @@
-# Chapter 4: Prompting and Structured Outputs
+**Chapter 4: Prompting and Structured Outputs**
 
 Prompt engineering used to sound like a bag of tricks: add a dramatic role, ask the model to "think step by step," or wrap the request in a clever phrase.
 
