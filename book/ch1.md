@@ -272,3 +272,67 @@ Common mitigations include:
 *   Run regression tests before changing prompts, models, retrieval settings, or decoding parameters.
 
 Mastering text generation mechanics is what separates prompt users from LLM engineers. The loop is simple, but every production concern in this book flows from it: tokens drive cost, attention drives context limits, logits drive sampling behavior, decode drives latency, and autoregressive errors drive the need for evaluation and guardrails.
+
+## Chat Playgrounds
+
+A **chat playground** is a web interface for testing LLMs before you write code. It usually lets you choose a model, enter messages, adjust generation settings, attach files or images if the model supports them, and inspect the output. Examples include [Google AI Studio](https://aistudio.google.com/), [OpenRouter Chat](https://openrouter.ai/chat), OpenAI Playground, Anthropic Console, Groq, Together.ai, and Hugging Face chat demos.
+
+Chat playgrounds exist because they shorten the feedback loop. Instead of writing a full app just to compare two prompts or two temperatures, you can run the experiment in a browser, observe the behavior, and then copy the useful settings into code.
+
+Use a playground to test:
+
+*   how the same prompt behaves across models
+*   how `temperature`, `top_p`, and output limits change the response
+*   whether a model follows system instructions
+*   whether a model can handle images, files, or long context
+*   whether the provider exposes useful code export or API examples
+
+Google AI Studio is useful when you want to experiment with Gemini models and multimodal inputs such as text, images, video, or code. OpenRouter Chat is useful when you want to compare many model families from one interface. Provider-specific playgrounds, such as OpenAI Playground or Anthropic Console, are useful when you plan to build directly on that provider's API.
+
+A simple playground workflow:
+
+1. Pick one model.
+2. Paste a short prompt.
+3. Run it once with low randomness.
+4. Run it again with higher randomness.
+5. Change only one setting at a time.
+6. Record the model, settings, prompt, and output.
+7. Move the best configuration into code.
+
+Engineering consequence: playgrounds are excellent for exploration, but they are not production tests. The UI may add hidden defaults, model availability changes, and free tiers can have different limits from paid API usage. Always reproduce important playground findings through the API before shipping.
+
+Common mistakes:
+
+*   Comparing models with different prompts or settings.
+*   Copying playground output into a product without API validation.
+*   Ignoring pricing, rate limits, and data-retention settings.
+*   Pasting secrets, customer data, or private documents into a playground.
+
+## Hands-On Exercise
+
+Use a chat playground to observe text generation behavior before writing code. You can use [Google AI Studio](https://aistudio.google.com/), [OpenRouter Chat](https://openrouter.ai/chat), OpenAI Playground, Anthropic Console, or another playground you have access to.
+
+Requirements:
+
+1. Choose one model in the playground.
+2. Run this prompt:
+
+```text
+Explain why long prompts can make LLM applications slower and more expensive.
+```
+
+3. Run the same prompt three times with different decoding settings:
+   * low randomness: `temperature=0` or as low as your provider supports
+   * moderate randomness: `temperature=0.7`
+   * high randomness: `temperature=1.2`
+4. Keep the output limit small, such as 150 to 250 tokens.
+5. Record the model name, temperature, output length, and any visible latency or token usage.
+6. If the playground supports model comparison, run the same prompt against two different models with the same settings.
+7. Write five short observations:
+   * Which setting was most consistent?
+   * Which setting was most verbose or surprising?
+   * Which output was most useful for a technical user?
+   * Did a higher temperature improve or weaken the answer?
+   * Did two models behave differently under the same prompt?
+
+Expected lesson: playgrounds are fast laboratories for understanding generation. Decoding parameters are product controls; they change cost, latency, repeatability, and failure risk even when the prompt stays the same.

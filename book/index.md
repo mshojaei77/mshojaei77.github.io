@@ -33,6 +33,8 @@ date: 2025-01-01
 - Logits and Probabilities
 - Decoding Parameters
 - Generation Failure Modes
+- Chat Playgrounds
+- Hands-On Exercise
 
 ## [Chapter 2: Production Model Selection](ch2.md)
 
@@ -41,8 +43,10 @@ date: 2025-01-01
 - API, Hosted, and Local Access
 - Capability and Task Fit
 - Benchmarks and Product Tests
+- LLM Leaderboard Pages
 - Cost, Latency, and Reliability
 - Model Decision Records
+- Hands-On Exercise
 
 ## [Chapter 3: Streaming Chatbot Applications](ch3.md)
 

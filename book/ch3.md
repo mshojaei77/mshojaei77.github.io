@@ -442,18 +442,40 @@ As you run the app locally, focus on how the snippets from this chapter fit toge
 
 ## Capstone Project
 
-Build a minimal AI ghostwriting prototype based on this Upwork brief: "The user enters a short text outline in the terminal. The app sends it to an LLM provider API, and the system streams back a clean draft. The user can preview the generated text and continue chatting with the bot to revise it. No advanced editing, no database, and no complex UI are required."
+Build a practical Telegram AI assistant bot. This is the Part 1 capstone because it combines the fundamentals from Chapters 1, 2, and 3: generation behavior, model selection, API configuration, message history, streaming or partial responses, context trimming, and runtime error handling.
+
+Project brief:
+
+```text
+Users message a Telegram bot.
+The bot sends their message and recent conversation history to an LLM provider.
+The model returns a concise assistant reply.
+The bot sends the reply back to Telegram.
+The system handles configuration, context growth, rate limits, and basic errors.
+```
 
 Requirements:
 
-*   Store provider configuration in `.env`.
+*   Store `TELEGRAM_BOT_TOKEN`, `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `OPENAI_MODEL` in `.env`.
 *   Use an OpenAI-compatible chat-completions endpoint through the SDK.
-*   Keep a short message history so the user can ask for revisions.
-*   Stream the draft as it is generated.
-*   Add `/clear`, `/stats`, and `/exit` commands.
+*   Keep separate short message histories per Telegram chat ID.
+*   Add Telegram commands:
+    *   `/start` to introduce the bot.
+    *   `/clear` to reset that chat's message history.
+    *   `/stats` to show message count and basic token or request totals.
 *   Trim old messages before each API call.
 *   Set a maximum output token limit.
-*   Handle missing keys, rate limits, context-length failures, and interrupted streams gracefully.
-*   Print token usage or estimated cost when the provider returns usage metadata.
+*   Use conservative decoding settings for assistant replies, such as low to moderate temperature.
+*   Handle missing keys, Telegram API errors, LLM provider errors, rate limits, and context-length failures gracefully.
+*   Log model name, chat ID, latency, token usage when available, and error type.
+*   Do not store secrets in prompts or logs.
+
+Optional upgrades:
+
+*   Show a "typing..." action while the model is generating.
+*   Add a simple per-user rate limit.
+*   Add a fallback model if the default provider fails.
+*   Persist chat history in SQLite instead of RAM.
+*   Add a `/model` command that prints the current configured model.
 
 Right now, the chatbot is still generic. If you ask it to behave like a narrow domain expert, or to produce strict JSON for another system, it will often drift or hallucinate. In the next chapter, we will look at prompt engineering, context engineering, and techniques for getting more structured outputs.

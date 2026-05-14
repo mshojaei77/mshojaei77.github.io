@@ -220,6 +220,43 @@ A practical private-evaluation workflow is:
 
 Early exploration can include quick "vibe checks" across several models, especially when product requirements are still forming. But vibe checks are not launch criteria. Launch criteria require repeatable tests on your data.
 
+## LLM Leaderboards
+
+An **LLM leaderboard** is a website that compares models using benchmark results and operational measurements. A good leaderboard helps you shortlist models before you spend time integrating them.
+
+[Artificial Analysis](https://artificialanalysis.ai/) is a production-oriented example. It compares models across practical dimensions such as quality, output speed, latency, pricing, context window, and provider availability. Other useful references include human-preference arenas such as LMSYS Chatbot Arena, open-model leaderboards such as Hugging Face's Open LLM Leaderboard, and task-specific benchmarks such as coding or agentic leaderboards.
+
+Leaderboards exist because model marketing is noisy. A model can be strong on reasoning but slow, cheap but weak, fast but expensive through one provider, or impressive in chat but poor at your structured extraction task.
+
+When reading a leaderboard, look for:
+
+*   **Quality or intelligence score:** a broad signal of model capability.
+*   **Output speed:** how many tokens per second the model produces.
+*   **Time to first token:** how quickly the first streamed token appears.
+*   **Price:** input and output cost, usually per million tokens.
+*   **Context window:** how many tokens the model can consider at once.
+*   **Provider:** who serves the model and under what access mode.
+*   **Specialized scores:** coding, agentic, multimodal, voice, or other domain-specific views.
+
+A practical leaderboard workflow:
+
+1. Start with your task: chat, coding, extraction, RAG answer generation, summarization, or tool calling.
+2. Use a production-oriented leaderboard such as Artificial Analysis to shortlist models with acceptable quality, speed, context, and price.
+3. Cross-check a human-preference arena if the task is conversational or writing-heavy.
+4. Cross-check an open-model leaderboard if you are considering open-weight models.
+5. Remove models that fail your privacy, licensing, provider, or operational constraints.
+6. Test the remaining candidates on your own prompts and golden dataset.
+
+Engineering consequence: leaderboards are directional signals, not deployment decisions. They help you avoid bad starting points, but they do not know your users, documents, schemas, latency target, or budget.
+
+Common mistakes:
+
+*   Choosing the top-ranked model without checking cost or latency.
+*   Trusting one leaderboard as the whole truth.
+*   Comparing benchmark scores from different dates or harnesses as if they were identical.
+*   Ignoring provider-specific performance for the same open model.
+*   Skipping your own product tests after leaderboard shortlisting.
+
 ## Cost, Latency, and Reliability
 
 LLM billing is granular. Providers may price input tokens, output tokens, cached tokens, reasoning tokens, image inputs, audio, batch jobs, and premium model tiers differently. Self-hosted systems replace token billing with GPU rental, hardware purchase, utilization, engineering time, monitoring, and operational risk.
@@ -358,3 +395,49 @@ Practical migration defenses include:
 *   Monitoring for quality, latency, cost, and invalid-output drift.
 
 The goal is not to predict the perfect model forever. The goal is to make model choice measurable, documented, and reversible.
+
+## Hands-On Exercise
+
+Use leaderboard pages to create a simple model decision record for a support assistant. You do not need to run a full benchmark yet. The goal is to practice turning public model data into a shortlist, then documenting why the shortlist is not enough.
+
+Scenario:
+
+```text
+You are building a customer-support assistant for a small SaaS product.
+It answers questions from help-center text, classifies support messages,
+and drafts short replies for human agents to review.
+The team has a limited budget and no GPU operations experience.
+Some prompts may contain customer email addresses or account IDs.
+```
+
+Requirements:
+
+1. Open a production-oriented leaderboard such as [artificialanalysis.ai](https://artificialanalysis.ai/).
+2. Choose three candidate models or access modes:
+   * one managed API model
+   * one cheaper or smaller model
+   * one open-weight or hosted open-weight option
+3. For each candidate, record visible leaderboard information:
+   * quality or intelligence score
+   * output speed or latency
+   * input and output price
+   * context window
+   * provider or access mode
+4. Cross-check at least one other source, such as a human-preference arena, an open-model leaderboard, or the model's official model card.
+5. Build a comparison table with these columns:
+   * task fit
+   * expected quality
+   * latency risk
+   * cost risk
+   * privacy risk
+   * operational burden
+   * migration difficulty
+6. Pick a default model and one fallback model.
+7. Write a short model decision record that explains:
+   * why you chose the default
+   * what the leaderboard helped you understand
+   * what the leaderboard could not prove
+   * what you would measure before launch
+   * when you would revisit the decision
+
+Expected lesson: leaderboards are useful for shortlisting, especially when they include cost and latency. They do not replace your own evals on real support questions, private documents, and product constraints.
