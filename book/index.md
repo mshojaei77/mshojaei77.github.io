@@ -62,15 +62,20 @@ date: 2025-01-01
 - Production Prompt Anatomy
 - System Prompt Design
 - Instruction Hierarchy
+- Prompt Security Boundaries
 - Prompt Patterns
+- Prompt Chaining and Review Loops
 - Few-Shot Examples
 - Context Assembly
 - Token Budgeting
+- Prompting for Cost and Latency
 - JSON Schema Outputs
 - Pydantic Validation Contracts
 - Retry and Fallback Logic
 - Prompt Versioning
 - Prompt Debugging
+- Prompt Anti-Patterns
+- Production Prompt Checklist
 - Hands-On Exercise
 
 ## [Chapter 5: Embeddings and Semantic Search](ch5.md)
