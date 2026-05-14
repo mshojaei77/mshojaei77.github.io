@@ -6,7 +6,7 @@ If you are building a weekend side project, that mental model is good enough. If
 
 This chapter demystifies the "magic." We are skipping the calculus and academic history. Instead, we are following the lifecycle of a prompt from text, to tokens, through the neural network, into probabilities, and back to generated text. The goal is not to become a model researcher. The goal is to understand enough mechanics to build better systems.
 
-## The Generation Loop
+## Generation Loop
 
 Move away from the idea that an LLM "thinks" about a problem and then writes an essay. At its core, an LLM is a statistical engine trained to do one thing extremely well: **predict the next token based on the tokens that came before it**.
 
@@ -46,7 +46,7 @@ The same loop powers multiple model behaviors you will encounter in practice:
 
 The loop is the same in all cases. What changes is the distribution the model has learned to produce and the constraints your application puts around the output.
 
-## Tokens and Subwords
+## Tokenization and Subwords
 
 Neural networks do not process raw English. Before text reaches the model, it must be converted into discrete units called **tokens**.
 
@@ -159,7 +159,7 @@ Context management is therefore an architecture problem, not just a prompt-writi
 
 The production skill is not asking, "How large is the model's maximum context window?" It is asking, "What context does this task actually need, and how do I keep it small, current, and verifiable?"
 
-## Logits and Probabilities
+## Logits and Sampling
 
 After the prompt has passed through the Transformer network, the model produces **logits** for the next token. A logit is a raw numerical score for each possible token in the vocabulary.
 
@@ -182,7 +182,7 @@ Engineers sometimes manipulate logits directly. For example, an API may support 
 
 For engineers, the practical takeaway is simple: the model never "knows" the answer in a human sense. It continually assigns probabilities to token continuations and emits one token at a time.
 
-## Decoding Parameters
+## Decoding Controls
 
 Once you have logits and probabilities, you need a policy for selecting the next token. That policy is the **decoding strategy**, and API parameters let you control it.
 

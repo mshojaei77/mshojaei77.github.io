@@ -15,7 +15,7 @@ This chapter moves from ad-hoc prompting to **prompt architecture**: structured 
 
 Boundary note: later chapters go deep on retrieval, RAG, tools, serving, and evaluation. Here we only introduce those ideas when they affect prompt design. Retrieval means fetching relevant text for the model. RAG, or retrieval-augmented generation, means answering with retrieved text added to the prompt. A tool is an application function or API the model may request. An eval is a repeatable test for model behavior.
 
-## System Prompts and User Prompts
+## System and User Prompts
 
 Chapter 3 introduced message roles. This chapter uses them deliberately.
 
@@ -92,7 +92,7 @@ Return JSON matching the provided schema.</code></pre>
 
 XML tags, Markdown headings, and fenced blocks are reasonable delimiters. Some providers and model families respond better to one style than another, so test the exact model you plan to use instead of assuming portability. Delimiters help separate instructions from data, but they are only defense-in-depth; still validate outputs, restrict tool permissions, and avoid putting secrets in prompts.
 
-### Why Add XML-Style Tags to User Prompts?
+### XML-Style Delimiters
 
 XML-style tags are labels around dynamic text, such as `<customer_email>...</customer_email>`. They are not real security boundaries, and the model is not parsing them like a strict XML parser. They are useful because they make the structure of the user prompt obvious.
 
