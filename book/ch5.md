@@ -10,92 +10,43 @@ An **embedding** is a list of numbers that represents meaning. Similar pieces of
 
 The mental model for this chapter is:
 
-```text
-text -> embedding model -> vector -> vector index -> similar chunks
-```
+<img width="1084" height="329" alt="image" src="https://github.com/user-attachments/assets/5aefc53f-869c-4fc6-8887-d2bc2274bfa3" />
 
 That one pipeline powers document search, long-term memory, recommendations, duplicate detection, code search, and many retrieval-heavy product features.
 
+<img width="1091" height="135" alt="image" src="https://github.com/user-attachments/assets/5415555f-dce1-4a0b-a622-d6e372511209" />
+
 Boundary note: this chapter stops at **semantic search**. It teaches how to turn documents into searchable vectors and how to evaluate whether search found the right chunks. Chapter 6 turns those chunks into a complete RAG answer with prompt assembly, citations, missing-evidence behavior, and answer evaluation. Chapter 7 upgrades retrieval with keyword search, hybrid search, reranking, HyDE, and more advanced ranking strategies.
-
-Keep that boundary clear:
-
-```text
-Chapter 5: find relevant chunks
-Chapter 6: use chunks to generate grounded answers
-Chapter 7: improve retrieval with hybrid search and reranking
-```
-
-You will see tools such as LangChain, LlamaIndex, Haystack, and RAGAS in GitHub searches for this topic. They matter, but most of them are orchestration or full-RAG tools. In this chapter, use them only as references for loaders, splitters, or evaluation ideas. The core skill here is smaller: build and measure semantic search before asking an LLM to answer.
 
 ## What are Embeddings?
 
-An embedding is a dense vector, usually hundreds or thousands of numbers long. For example, a sentence might become:
+**Improved version with visible example vectors:**
 
+### What is an Embedding?
+
+An **embedding** is a dense vector, a long list of floating-point numbers (typically 384 to 4,096 dimensions) — that captures the semantic meaning of text, images, or other data.
+
+Here’s a simplified **4-dimensional** example (real embeddings are much longer, but this illustrates the idea clearly):
+
+**"How do I reset my password?"**  
 ```text
-[0.018, -0.044, 0.231, ...]
+[ 0.80,  0.10, -0.30,  0.40 ]
 ```
 
-You do not inspect these numbers by hand. You compare them with other vectors.
-
-If two texts are semantically related, their vectors should be close:
-
+**"I forgot my login credentials."**  
 ```text
-"How do I reset my password?"
-"I forgot my login credentials."
+[ 0.75,  0.15, -0.25,  0.45 ]
 ```
 
-If two texts are unrelated, their vectors should be farther apart:
-
+**"The invoice is overdue."**  
 ```text
-"How do I reset my password?"
-"The invoice is overdue."
+[-0.20,  0.90,  0.60, -0.10 ]
 ```
 
-This is useful because users rarely phrase questions exactly like your documents. Semantic search gives your application a better chance of finding relevant text when wording differs.
-
-There are two broad retrieval signals:
-
-| Signal | What it Matches | Strength | Weakness |
-| :----- | :-------------- | :------- | :------- |
-| **Sparse / keyword** | Exact or near-exact terms, often with BM25. | Great for names, IDs, error codes, exact phrases. | Misses related meaning when words differ. |
-| **Dense / embedding** | Semantic similarity through vectors. | Great for paraphrases and conceptual matches. | Can miss exact constraints, rare terms, and identifiers. |
-
-Do not treat dense search as a replacement for keyword search. Treat it as another signal. Chapter 7 combines both with hybrid retrieval and reranking.
-
-Engineering consequence: embeddings turn search into a model-dependent system. If the embedding model changes, your vectors change. You cannot safely mix vectors from different embedding models in the same index and expect distances to mean the same thing.
-
-Common mistakes:
-
-*   embedding whole documents instead of useful chunks
-*   mixing embedding models in one collection
-*   choosing a model only from a leaderboard
-*   using semantic search for exact IDs, SKUs, filenames, or error codes where keyword search is stronger
-*   assuming the closest vector is always the correct answer
-
-## How Embeddings Work Under the Hood
-
-You do not need to be a model researcher to use embeddings well, but you need enough mechanics to debug them.
-
-Most text embedding pipelines look like this:
-
-```text
-text
--> tokenizer
--> embedding model
--> token-level representations
--> pooling
--> vector
--> optional normalization
-```
-
-**Tokenization** converts text into model tokens, as discussed in Chapter 1. Token limits matter here too. If a document chunk is longer than the embedding model supports, the model or library may truncate it. Silent truncation is a common source of bad retrieval.
-
-**Pooling** combines token-level representations into one vector for the whole text. Common strategies include mean pooling, using a special classification token, or using the last token representation. Most hosted embedding APIs hide this. Many open-source models expose it through libraries such as `sentence-transformers`.
-
-**Dimensionality** is the length of the vector. A 384-dimensional vector has 384 numbers. A 1536-dimensional vector has 1536 numbers. Larger vectors can carry more information, but they cost more memory, storage, bandwidth, and search time.
-
-**Normalization** scales a vector to unit length. If vectors are normalized, cosine similarity and dot product often produce the same ranking. If they are not normalized, dot product is affected by vector length.
+You still don’t interpret these numbers by hand. Instead, you measure how **close** the vectors are using a formula called: **cosine similarity**:
+I calculated cosine similarity using 'NumPy' on the exact 4D vectors shown:
+- **Password reset** ↔ **Forgot credentials**: **0.99** (very similar) ✅
+- **Password reset** ↔ **Invoice overdue**: **-0.28** (unrelated) ❌
 
 The three common distance or similarity choices are:
 
@@ -122,11 +73,23 @@ print(score)
 
 If your vector database says it uses cosine distance, check whether it expects normalized vectors or normalizes internally. Do not guess. Read the database and embedding model documentation.
 
-Some research and advanced systems derive embeddings from decoder-only LLMs by using hidden states, last-token vectors, or averaging token logits. This can work in specialized setups, but it is not the normal starting point for product engineering. Dedicated embedding models are simpler, cheaper, faster, and easier to evaluate.
+---
+**Why this works so well**
 
-**Matryoshka Representation Learning (MRL)** is a training technique that makes embeddings truncatable. A model trained this way can keep useful meaning in the first part of the vector, such as using the first 256 dimensions from a 768-dimensional vector. This can reduce storage and speed up search. The important caveat: do not randomly truncate vectors unless the model was trained or documented for that use. Normal vectors are not guaranteed to degrade gracefully when shortened.
+Modern embedding models (like `text-embedding-3-large`, `voyage-3`, `snowflake-arctic-embed`, etc.) have learned these representations from massive amounts of text. They understand that “reset password” and “forgot login” share the same underlying intent, even though they share almost no exact words.
 
-Engineering consequence: vector choices affect infrastructure. Dimensions, normalization, distance metric, and token limits all become part of your retrieval contract. Record them the same way you record a model version.
+<img width="520" height="400" alt="image" src="https://github.com/user-attachments/assets/bc708855-7743-4780-9b3c-7f472947c12d" />
+
+This is useful because users rarely phrase questions exactly like your documents. Semantic search gives your application a better chance of finding relevant text when wording differs.
+
+There are two broad retrieval signals:
+
+| Signal | What it Matches | Strength | Weakness |
+| :----- | :-------------- | :------- | :------- |
+| **Sparse / keyword** | Exact or near-exact terms, often with BM25. | Great for names, IDs, error codes, exact phrases. | Misses related meaning when words differ. |
+| **Dense / embedding** | Semantic similarity through vectors. | Great for paraphrases and conceptual matches. | Can miss exact constraints, rare terms, and identifiers. |
+
+Do not treat dense search as a replacement for keyword search. Treat it as another signal with another use case.
 
 ## Choosing Embedding Models
 
@@ -146,41 +109,27 @@ The current landscape changes quickly, but the main categories are stable:
 
 | Category | Examples | Good Fit | Tradeoff |
 | :------- | :------- | :------- | :------- |
-| **Hosted general models** | OpenAI `text-embedding-3-small`, `text-embedding-3-large`, Google embedding APIs. | Fast integration, managed scaling, strong baseline quality. | Data leaves your app boundary; provider pricing and versions can change. |
+| **Hosted general models** | OpenAI `text-embedding-3-small`, Google `gemini-embedding-2` | Fast integration, managed scaling, strong baseline quality. | Data leaves your app boundary; provider pricing and versions can change. |
 | **Hosted retrieval-specialized models** | Voyage AI embedding models, Cohere Embed v3. | Search-heavy products, domain-specific retrieval, strong API features. | Another vendor dependency; evaluate on your own data. |
-| **Open and local models** | BGE, E5, `nomic-embed-text`, `mxbai-embed-large`, UAE, Stella, EmbeddingGemma, Qwen Embedding, `sentence-transformers`. | Privacy, cost control, offline use, customization. | You own serving, batching, hardware, and model upgrades. |
+| **Open and local models** | BGE, E5, `nomic-embed-text`, `mxbai-embed-large`, EmbeddingGemma, Qwen Embedding | Privacy, cost control, offline use, customization. | You own serving, batching, hardware, and model upgrades. |
 | **Small local baselines** | `sentence-transformers/all-MiniLM-L6-v2`. | Learning, prototypes, small apps, local demos. | Lower quality on hard or domain-specific retrieval. |
 
 For current model names, dimensions, and API details, check the official docs before implementation: [OpenAI embeddings](https://platform.openai.com/docs/guides/embeddings), [Voyage AI embeddings](https://docs.voyageai.com/docs/embeddings), [Cohere embeddings](https://docs.cohere.com/docs/embeddings), [Google Gemini embeddings](https://ai.google.dev/gemini-api/docs/embeddings), and [Sentence Transformers](https://sbert.net/).
 
 Use leaderboards such as [MTEB](https://huggingface.co/spaces/mteb/leaderboard) for shortlisting, not final decisions. MTEB is useful because it compares embedding models across many tasks. It is not your product, your documents, or your users.
 
-The GitHub ecosystem gives a useful implementation map:
-
-*   `huggingface/sentence-transformers` is the practical default for local embedding experiments.
-*   `embeddings-benchmark/mteb` and `embeddings-benchmark/results` are useful for benchmark code and leaderboard data.
-*   Model pages such as `sentence-transformers/all-MiniLM-L6-v2` are good for quick CPU-friendly baselines.
-*   Repositories and model cards for models like `mxbai-embed-large`, BGE, E5, Stella, EmbeddingGemma, and Qwen Embedding are useful candidates, but they still need your own retrieval eval.
-
-Treat GitHub popularity as a maintenance signal, not a quality metric. A widely used repository is easier to troubleshoot, but it does not prove the model retrieves the right chunks from your documents.
-
-A practical selection workflow:
-
-1. Pick one strong hosted baseline and one local/open baseline.
-2. Build a small evaluation set from your real documents.
-3. Measure retrieval quality with Recall@k and MRR.
-4. Measure latency and indexing cost.
-5. Inspect failures manually.
-6. Choose the simplest model that meets the quality bar.
-
-If you are just learning, start with `sentence-transformers/all-MiniLM-L6-v2` locally or a hosted embedding API. If you are building a production-minded prototype, evaluate at least two models before committing. If you are already operating a production retrieval system, track model version, embedding dimensions, distance metric, normalization, and re-embedding plan.
-
 Practitioners increasingly compare hosted models against local models for privacy and cost control. That does not mean local is always better. Hosted APIs reduce operational work and are often strong baselines. Local models give control, but you own serving, batching, CPU/GPU sizing, upgrades, and evaluation. For many teams, the useful test is not "hosted or local?" It is "which option meets our retrieval quality bar at the lowest total operational cost?"
 
 For local experiments, tools such as Ollama and `sentence-transformers` make it easy to compare candidates. For production-minded evaluation, keep the test fixed: same documents, same chunks, same queries, same vector store, same metric. Change only the embedding model. Otherwise you will not know whether the improvement came from the model or from chunking, filtering, or ranking.
 
+Engineering consequence: embeddings turn search into a model-dependent system. If the embedding model changes, your vectors change. You cannot safely mix vectors from different embedding models in the same index and expect distances to mean the same thing.
+
 Common mistakes:
 
+*   embedding whole documents instead of useful chunks
+*   mixing embedding models in one collection
+*   using semantic search for exact IDs, SKUs, filenames, or error codes where keyword search is stronger
+*   assuming the closest vector is always the correct answer
 *   choosing the model with the highest benchmark score without testing your documents
 *   ignoring multilingual or domain-specific needs
 *   switching models without rebuilding the index
@@ -193,9 +142,7 @@ Embedding a whole document usually works poorly. A long PDF may contain ten unre
 
 Chunking splits documents into smaller pieces before embedding:
 
-```text
-document -> chunks -> embeddings -> search index
-```
+<img width="956" height="179" alt="image" src="https://github.com/user-attachments/assets/8ff176b9-dfa7-435e-af21-64f16beab76c" />
 
 A good chunk is large enough to contain useful context and small enough to stay focused.
 
@@ -247,35 +194,6 @@ Chunking tradeoffs:
 *   **Overlap** prevents boundary loss but increases storage and duplicate retrieval.
 *   **Heading-aware chunks** improve citations and debugging.
 *   **Semantic chunks** can improve quality but are harder to reproduce.
-
-The "lost in the middle" problem also matters. Even if retrieval finds the right text, a long generated prompt can bury it among too many chunks. Retrieval is not just "find ten chunks." It is "find enough evidence, in a format the generator can use."
-
-One production pattern is **parent/child retrieval**:
-
-```text
-small child chunk -> embedded and searched
-larger parent section -> returned for context
-```
-
-The child chunk is small, so search is precise. The parent section is larger, so the answer generator later receives enough context. For example, you might embed 200-token child chunks but return the full heading section or page that contains the match. Chapter 6 uses this pattern when assembling RAG context; in this chapter, the important part is storing the relationship.
-
-```python
-child_metadata = {
-    "source": "refund_policy.md",
-    "parent_id": "refund_policy.md#refund-window",
-    "section": "Refund Window",
-    "chunk_index": 3,
-}
-```
-
-For code search, do not blindly split every 300 tokens. Try to keep functions, classes, docstrings, and comments together. A code chunk that contains half a function is often worse than no chunk at all. For codebases, useful metadata includes file path, symbol name, language, class name, function name, and repository revision.
-
-A simple rule for code:
-
-```text
-Index functions, classes, files, and docstring summaries as coherent units.
-Do not split through the middle of a symbol unless the file is too large.
-```
 
 A practical tuning loop:
 
@@ -333,6 +251,9 @@ vectors = model.encode(
     normalize_embeddings=True,
 )
 ```
+CPU embedding inference can be good enough for small jobs and prototypes. GPU inference helps when you have large corpora, frequent refreshes, or high-volume local embedding. Hosted APIs avoid local serving but introduce provider latency, rate limits, and data-handling questions.
+
+Engineering consequence: embedding is an ingestion workload, not just a model call. Treat it like a data pipeline with retries, idempotent writes, progress tracking, and the ability to resume after failure.
 
 Best practices:
 
@@ -343,33 +264,6 @@ Best practices:
 *   **Use async jobs** for large corpora instead of embedding during user requests.
 *   **Track failures**: rate limits, timeouts, truncation, empty chunks, duplicate IDs.
 *   **Make re-indexing repeatable** so you can rebuild after model or chunking changes.
-
-For higher-volume systems, look at the shape of tools such as high-throughput embedding servers, auto-batching proxies, and Redis-backed embedding caches. You do not need them for the first version, but the pattern matters:
-
-```text
-raw chunks -> queue -> batched embedding worker -> cache -> vector store
-```
-
-That design prevents user-facing requests from waiting on expensive embedding work.
-
-A simple cache key:
-
-```python
-import hashlib
-
-def embedding_cache_key(
-    text: str,
-    model: str,
-    chunker_version: str,
-    dimensions: int | None = None,
-) -> str:
-    payload = f"{model}|{dimensions}|{chunker_version}|{text.strip()}"
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
-```
-
-CPU embedding inference can be good enough for small jobs and prototypes. GPU inference helps when you have large corpora, frequent refreshes, or high-volume local embedding. Hosted APIs avoid local serving but introduce provider latency, rate limits, and data-handling questions.
-
-Engineering consequence: embedding is an ingestion workload, not just a model call. Treat it like a data pipeline with retries, idempotent writes, progress tracking, and the ability to resume after failure.
 
 ## Vector Databases and Storage Options
 
@@ -386,24 +280,13 @@ A practical classification:
 | **Search platforms with vectors** | Elasticsearch, OpenSearch, Azure AI Search, MongoDB Atlas Vector Search. | Teams already using those platforms. | Vector search may be one feature among many; understand limits. |
 | **Specialized storage** | Astra DB, LEANN and other compressed or serverless options. | Specific platform or compression needs. | Evaluate maturity, ecosystem, and operational fit. |
 
-Useful starting references include [Chroma](https://docs.trychroma.com/), [Qdrant](https://qdrant.tech/documentation/), [pgvector](https://github.com/pgvector/pgvector), [FAISS indexes](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes), and [LanceDB](https://lancedb.github.io/lancedb/). Read the official docs for distance metrics and filtering behavior before loading real data.
+Useful starting references include [FAISS indexes](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes), [Chroma](https://docs.trychroma.com/), [Qdrant](https://qdrant.tech/documentation/), [pgvector](https://github.com/pgvector/pgvector),  and [LanceDB](https://lancedb.github.io/lancedb/). Read the official docs for distance metrics and filtering behavior before loading real data.
 
-FAISS deserves a special note. It is not a full product database. It is a high-performance similarity search library. It is excellent when you want local control over ANN index types such as flat, IVF, HNSW, and PQ. It is less convenient when you need multi-tenant permissions, transactional document updates, backups, query APIs, and operational dashboards. Tools such as `autofaiss` can help choose FAISS indexes, but they do not replace understanding your latency, memory, and recall targets.
-
-Common index terms:
-
-*   **Exact search** compares the query with every vector. Simple but expensive at scale.
-*   **ANN** means approximate nearest neighbor. It trades a little accuracy for speed.
-*   **HNSW** builds a graph of nearby vectors. It is a common high-quality ANN default.
-*   **IVF** partitions vectors into clusters before searching.
-*   **PQ** compresses vectors to reduce memory, often with some quality loss.
-*   **Metadata filters** restrict search by fields like tenant, document type, language, source, or permission.
-*   **Namespaces** separate groups of vectors, often by tenant, app, environment, or corpus.
 
 The database decision is mostly operational:
 
 *   If you already run Postgres and your corpus is modest, start with pgvector.
-*   If you want a fast local prototype, use ChromaDB or FAISS.
+*   If you want a fast local prototype, use FAISS.
 *   If you need strong filtering and self-hosting, evaluate Qdrant, Weaviate, or Milvus.
 *   If you want managed vector infrastructure, evaluate Pinecone or a managed cloud search service.
 *   If your organization already standardizes on Elasticsearch, OpenSearch, MongoDB, or Azure AI Search, test their vector features before adding another database.
@@ -423,6 +306,18 @@ update frequency
 backup requirements
 tenant isolation
 ```
+
+Common index terms:
+
+*   **Exact search** compares the query with every vector. Simple but expensive at scale.
+*   **ANN** means approximate nearest neighbor. It trades a little accuracy for speed.
+*   **HNSW** builds a graph of nearby vectors. It is a common high-quality ANN default.
+*   **IVF** partitions vectors into clusters before searching.
+*   **PQ** compresses vectors to reduce memory, often with some quality loss.
+*   **Metadata filters** restrict search by fields like tenant, document type, language, source, or permission.
+*   **Namespaces** separate groups of vectors, often by tenant, app, environment, or corpus.
+
+FAISS deserves a special note. It is not a full product database. It is a high-performance similarity search library. It is excellent when you want local control over ANN index types such as flat, IVF, HNSW, and PQ. It is less convenient when you need multi-tenant permissions, transactional document updates, backups, query APIs, and operational dashboards. 
 
 Common mistakes:
 
