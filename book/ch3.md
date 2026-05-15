@@ -361,7 +361,7 @@ For production systems, context growth management should be observable. Track pr
 
 A chatbot that only works on a perfect network is not production-minded. Basic runtime error handling matters even in a small CLI prototype.
 
-Handle these failure modes explicitly:
+Handle these Failure Scenarios explicitly:
 
 *   **Missing configuration:** Fail fast if `OPENAI_API_KEY`, `OPENAI_BASE_URL`, or `OPENAI_MODEL` is missing.
 *   **Authentication errors:** Show a clear message when the API key is invalid or expired.

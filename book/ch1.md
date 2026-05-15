@@ -224,7 +224,7 @@ Good defaults depend on the task:
 
 Avoid "temperature hacking" as a debugging strategy. If the model is using the wrong facts, changing temperature will not fix retrieval. If the output violates a schema, use structured output and validation. If the system is too slow, reduce context or output length before blaming sampling.
 
-## Generation Failure Modes
+## Generation Failure Scenarios
 
 Text generation fails in predictable ways, and production systems need to anticipate them.
 

@@ -280,44 +280,37 @@ A practical classification:
 | **Search platforms with vectors** | Elasticsearch, OpenSearch, Azure AI Search, MongoDB Atlas Vector Search. | Teams already using those platforms. | Vector search may be one feature among many; understand limits. |
 | **Specialized storage** | Astra DB, LEANN and other compressed or serverless options. | Specific platform or compression needs. | Evaluate maturity, ecosystem, and operational fit. |
 
-Useful starting references include [FAISS indexes](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes), [Chroma](https://docs.trychroma.com/), [Qdrant](https://qdrant.tech/documentation/), [pgvector](https://github.com/pgvector/pgvector),  and [LanceDB](https://lancedb.github.io/lancedb/). Read the official docs for distance metrics and filtering behavior before loading real data.
-
-
+The practical community pattern is boring but correct: vector storage is becoming a commodity for basic use cases. Start with the database that makes your product easier to operate, then migrate only when a specific bottleneck justifies the complexity.
 The database decision is mostly operational:
 
-*   If you already run Postgres and your corpus is modest, start with pgvector.
-*   If you want a fast local prototype, use FAISS.
-*   If you need strong filtering and self-hosting, evaluate Qdrant, Weaviate, or Milvus.
-*   If you want managed vector infrastructure, evaluate Pinecone or a managed cloud search service.
-*   If your organization already standardizes on Elasticsearch, OpenSearch, MongoDB, or Azure AI Search, test their vector features before adding another database.
+*   **If you already rely on PostgreSQL**, `pgvector` keeps the stack simple. Use it until you exceed ~50 million vectors or need sub‑10ms latency at high QPS with heavy filtering.
+*   **If you’re prototyping or building a learning project**, Chroma DB offers the fastest time‑to‑first‑result. Treat it as a temporary index — plan to move to a production‑grade store before launch.
+*   **For most production self‑hosted setups**, Qdrant is the community’s top recommendation. It delivers excellent speed, low memory overhead, and advanced metadata filtering, hitting the sweet spot between performance and operational simplicity.
+*   **At extreme scale (billions of vectors, GPU‑accelerated),** Milvus or its managed counterpart Zilliz dominates. It demands solid DevOps skills but delivers the throughput.
+*   **When hybrid search (keyword BM25 + vector) is a hard requirement**, Weaviate and Elasticsearch/OpenSearch provide native, best‑in‑class support. Choose Weaviate if your data is graph‑like; choose Elasticsearch/OpenSearch if you’re already on the ELK stack.
+*   **Zero‑ops managed services** like Pinecone let you launch quickly, but Reddit experience shows costs spike and filtering limitations hurt at scale. Use it for fast market validation, but keep a migration path open.
+*   **FAISS is not a standalone database.** Use it as a low‑level library for embedded/on‑device search or when you need full control over indexing for research and offline workloads.
+*   **If storage size is the bottleneck**, newer compressed or recomputation‑oriented systems (like LEANN) are workload‑specific choices — treat them as optimisations, not defaults.
 
-The practical community pattern is boring but correct: vector storage is becoming a commodity for basic use cases. Start with the database that makes your product easier to operate. If your application already depends on Postgres, pgvector can keep the stack simple. If filtering and vector-native ergonomics matter more, Qdrant is a strong self-hosted option. If you are prototyping, ChromaDB is fast to start with. If storage is the bottleneck, newer compressed or recomputation-oriented systems such as LEANN are worth evaluating, but treat them as workload-specific choices rather than defaults.
+The typical growth path matches the community’s real journeys: start with Chroma/pgvector → scale with Qdrant/Weaviate → or go managed with Zilliz if the team can’t self‑host.
 
-Do not choose a vector database only from a marketing comparison. Test your workload:
+Do not choose a vector database only from a marketing comparison. Test your own workload:
 
 ```text
-corpus size
-vector dimensions
-metadata filters
-top_k
-query volume
-latency target
-update frequency
-backup requirements
-tenant isolation
+corpus size (vectors)        – <1M? almost any store works; >50M? evaluate Qdrant, Milvus, or tuned pgvector
+vector dimensions            – high-dims increase memory; check compression capabilities
+metadata filters             – pre-filtering performance varies hugely; Qdrant/pgvector/Weaviate excel
+top_k                        – large top_k may expose post-filtering inefficiencies (Pinecone, FAISS)
+query volume (QPS)           – low QPS hides management overhead; high QPS demands dedicated stores
+latency target (p95)         – sub-50ms at scale often rules out Elasticsearch vector-only, favours Qdrant/Milvus
+update frequency             – frequent inserts/deletes hurt rebuild-heavy stores; prefer incremental indexing
+backup & HA requirements     – pgvector inherits Postgres; dedicated stores vary widely
+tenant isolation             – row-level security (pgvector), namespaces (Pinecone), or collections (Qdrant)
 ```
 
-Common index terms:
+Benchmark the top two candidates with your actual data shape, query patterns, and filters. The right answer in production is the one you can operate with confidence, not the one that tops a synthetic benchmark.
 
-*   **Exact search** compares the query with every vector. Simple but expensive at scale.
-*   **ANN** means approximate nearest neighbor. It trades a little accuracy for speed.
-*   **HNSW** builds a graph of nearby vectors. It is a common high-quality ANN default.
-*   **IVF** partitions vectors into clusters before searching.
-*   **PQ** compresses vectors to reduce memory, often with some quality loss.
-*   **Metadata filters** restrict search by fields like tenant, document type, language, source, or permission.
-*   **Namespaces** separate groups of vectors, often by tenant, app, environment, or corpus.
-
-FAISS deserves a special note. It is not a full product database. It is a high-performance similarity search library. It is excellent when you want local control over ANN index types such as flat, IVF, HNSW, and PQ. It is less convenient when you need multi-tenant permissions, transactional document updates, backups, query APIs, and operational dashboards. 
+FAISS deserves a special note. It is not a full product database. It is a high-performance similarity search library. It is excellent when you want local control over index types. It is less convenient when you need multi-tenant permissions, transactional document updates, backups, query APIs, and operational dashboards. 
 
 Common mistakes:
 
@@ -443,47 +436,6 @@ This is a prototype. It proves the search loop works, but it is not production-r
 
 Engineering consequence: semantic search is not one API call. It is a data system. The quality of the search result depends on document parsing, chunking, embedding, metadata, index settings, and query behavior.
 
-## Common Pitfalls and Failure Modes
-
-Embedding search fails in predictable ways.
-
-| Failure | Likely Cause | Fix |
-| :------ | :----------- | :-- |
-| Good document never appears. | Bad chunking, truncation, wrong model, missing metadata filter. | Inspect chunks, test Recall@k, verify token limits. |
-| Results are semantically similar but useless. | Dense search overweights general meaning. | Add keyword search, metadata filters, or reranking. |
-| Exact IDs are missed. | Embeddings are weak for exact symbols. | Use keyword filters or hybrid retrieval. |
-| Top results are duplicates. | Too much overlap or duplicate documents. | Reduce overlap, deduplicate, diversify results. |
-| Retrieval quality slowly degrades. | Embedding drift, stale documents, changed docs not re-indexed. | Track index freshness and model/chunking versions. |
-| Search is too slow. | Large vectors, weak index settings, too many filters, no batching. | Tune index, reduce dimensions, use ANN, cache frequent queries. |
-| Costs surprise you. | Re-embedding too often, large chunks, no cache. | Cache embeddings, batch jobs, refresh incrementally. |
-| Users see unauthorized content. | Missing access-control filters. | Enforce tenant/user permissions before retrieval or inside DB filters. |
-| Short queries retrieve vague chunks. | Query signal is too weak. | Add metadata, use better chunk titles, or defer query expansion/HyDE to Chapters 6 and 7. |
-| Noisy list data dominates results. | Repeated list structure overwhelms meaningful text. | Split lists structurally, add headers, or index summarized child chunks. |
-
-**Embedding drift** means your retrieval behavior changes because the embedding model, preprocessing, chunking, or source documents changed. It can be silent. The app still returns results, but worse ones.
-
-Track these fields with every index:
-
-```text
-embedding_model
-embedding_dimensions
-distance_metric
-normalization
-chunker_version
-source_document_version
-indexed_at
-```
-
-Common debugging process:
-
-1. Print the retrieved chunks.
-2. Check whether the right document was indexed.
-3. Check whether the right text was inside a chunk.
-4. Check whether metadata filters removed it.
-5. Check whether the query wording needs expansion.
-6. Compare dense search with keyword search.
-7. Measure on an eval set instead of one example.
-
 ## Evaluation Metrics for Retrieval
 
 Do not evaluate retrieval by asking, "Did the chatbot answer well?" That mixes retrieval quality with generation quality. Evaluate retrieval first.
@@ -590,6 +542,47 @@ Use the right evaluation tool for the layer you are testing:
 | **RAGAS / DeepEval** | Mostly out of scope here. | Useful in Chapter 6 when evaluating generated RAG answers. |
 | **Vector DB benchmarks** | Estimate speed and memory tradeoffs. | Do not use them as relevance metrics. |
 
+## Common Pitfalls and Failure Scenarios
+
+Embedding search fails in predictable ways.
+
+| Failure | Likely Cause | Fix |
+| :------ | :----------- | :-- |
+| Good document never appears. | Bad chunking, truncation, wrong model, missing metadata filter. | Inspect chunks, test Recall@k, verify token limits. |
+| Results are semantically similar but useless. | Dense search overweights general meaning. | Add keyword search, metadata filters, or reranking. |
+| Exact IDs are missed. | Embeddings are weak for exact symbols. | Use keyword filters or hybrid retrieval. |
+| Top results are duplicates. | Too much overlap or duplicate documents. | Reduce overlap, deduplicate, diversify results. |
+| Retrieval quality slowly degrades. | Embedding drift, stale documents, changed docs not re-indexed. | Track index freshness and model/chunking versions. |
+| Search is too slow. | Large vectors, weak index settings, too many filters, no batching. | Tune index, reduce dimensions, use ANN, cache frequent queries. |
+| Costs surprise you. | Re-embedding too often, large chunks, no cache. | Cache embeddings, batch jobs, refresh incrementally. |
+| Users see unauthorized content. | Missing access-control filters. | Enforce tenant/user permissions before retrieval or inside DB filters. |
+| Short queries retrieve vague chunks. | Query signal is too weak. | Add metadata, use better chunk titles, or defer query expansion/HyDE to Chapters 6 and 7. |
+| Noisy list data dominates results. | Repeated list structure overwhelms meaningful text. | Split lists structurally, add headers, or index summarized child chunks. |
+
+**Embedding drift** means your retrieval behavior changes because the embedding model, preprocessing, chunking, or source documents changed. It can be silent. The app still returns results, but worse ones.
+
+Track these fields with every index:
+
+```text
+embedding_model
+embedding_dimensions
+distance_metric
+normalization
+chunker_version
+source_document_version
+indexed_at
+```
+
+Common debugging process:
+
+1. Print the retrieved chunks.
+2. Check whether the right document was indexed.
+3. Check whether the right text was inside a chunk.
+4. Check whether metadata filters removed it.
+5. Check whether the query wording needs expansion.
+6. Compare dense search with keyword search.
+7. Measure on an eval set instead of one example.
+
 ## Hands-On Exercise
 
 Build a semantic document search engine over your own notes, Markdown files, or PDFs converted to text.
@@ -625,14 +618,6 @@ Expected behavior:
 *   Queries with different wording should retrieve relevant chunks.
 *   Exact terms like product names or file names may still need keyword search.
 *   Evaluation should show at least one measurable change when you adjust chunking or model choice.
-
-Out of scope for this chapter:
-
-*   full RAG answer generation
-*   reranking
-*   hybrid BM25 plus vector search
-*   user authentication and document permissions
-*   production deployment
 
 How you know it works:
 

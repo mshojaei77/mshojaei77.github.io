@@ -32,7 +32,7 @@ date: 2025-01-01
 - Context Windows and Attention
 - Logits and Sampling
 - Decoding Controls
-- Generation Failure Modes
+- Generation Failure Scenarios
 - Chat Playgrounds
 - Hands-On Exercise
 
