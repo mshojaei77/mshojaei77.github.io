@@ -20,7 +20,7 @@ Imagine a digital brain that not only understands human language but crafts poet
 - Key challenges and ethical considerations in LLM development.
 
 ### Why This Matters
-In an era where AI is reshaping industries, understanding LLMs isn't just cool—it's essential. These models power tools that enhance productivity, drive innovation in fields like healthcare and education, and even spark philosophical debates about machine intelligence. Mastering LLM basics could be your ticket to building the next big AI app or simply staying ahead in a tech-driven world. What groundbreaking idea might LLMs inspire in you? Let's explore! 👇
+In an era where AI is reshaping industries, understanding LLMs isn't just cool,it's essential. These models power tools that enhance productivity, drive innovation in fields like healthcare and education, and even spark philosophical debates about machine intelligence. Mastering LLM basics could be your ticket to building the next big AI app or simply staying ahead in a tech-driven world. What groundbreaking idea might LLMs inspire in you? Let's explore! 👇
 
 ### My Notes on LLMs
 - **[📄 Article: Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)**

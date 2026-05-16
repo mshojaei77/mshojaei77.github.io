@@ -71,7 +71,7 @@ Results-driven Machine Learning Engineer with over two years of experience desig
 ---
 
 ## Education
-**Bachelor of Science, Computer Engineering** — University of Bam, *May 2024*
+**Bachelor of Science, Computer Engineering** , University of Bam, *May 2024*
 
 ---
 

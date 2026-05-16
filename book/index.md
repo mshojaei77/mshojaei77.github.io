@@ -82,7 +82,15 @@ date: 2025-01-01
 
 ## [Chapter 5: Embeddings and Semantic Search](ch5.md)
 
-This chapter will turn embeddings from an abstract "meaning as numbers" idea into a practical search layer that every LLM Engineer can use for grounding, memory, recommendation, code search, document search, and retrieval-heavy product features. It will map the embedding model landscape across hosted APIs and open/local models, including OpenAI `text-embedding-3-small` and `text-embedding-3-large`, Voyage AI `voyage-3-large`, Cohere Embed v3, Google Generative AI embeddings, `nomic-embed-text` through Ollama, `mxbai-embed-large`, `UAE-Large-V1`, Stella, EmbeddingGemma, Qwen Embedding, `sentence-transformers`, and `all-MiniLM-L6-v2`, then explain under-the-hood topics such as embedding geometry, cosine similarity versus dot product versus Euclidean distance, normalization to unit length, decoder-only embedding tricks like logit averaging, token limits, dimensionality, pooling, embedding drift, and Matryoshka Representation Learning for truncatable vectors such as 768 to 512 to 256 to 128 dimensions. The chapter will make chunking a first-class engineering skill: fixed-size overlap, recursive and structural splitting, heading-aware sentence splitters in LlamaIndex, semantic chunking, agentic chunking, late chunking, character-based versus token-based splitting, lost-in-the-middle risk, fragmented context, and chunk-size tuning. It will compare vector storage and search options such as ChromaDB, Qdrant, Pinecone, Weaviate, Milvus, pgvector, Elasticsearch, OpenSearch, MongoDB Atlas Vector Search, Supabase vecs, Astra DB, Azure AI Search, FAISS, LEANN, and LanceDB, while covering batching, embedding caches, async generation jobs, GPU versus CPU embedding inference, metadata filters, namespaces, HNSW, IVF, PQ, dimension reduction, refresh workflows, and retrieval evaluation with MTEB, Recall@k, nDCG@k, MRR, latency, cost, freshness, and coverage.
+- What is an Embedding?
+- Practical Chunking Strategies
+- Choosing Embedding Models
+- Embedding Generation Best Practices
+- Vector Databases and Storage Options
+- Basic Semantic Search Implementation
+- Evaluation Metrics for Retrieval
+- Common Pitfalls and Failure Scenarios
+- Hands-On Exercise
 
 ## [Chapter 6: Retrieval-Augmented Generation](ch6.md)
 
