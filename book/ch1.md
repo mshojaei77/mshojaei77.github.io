@@ -182,6 +182,12 @@ Engineers sometimes manipulate logits directly. For example, an API may support 
 
 For engineers, the practical takeaway is simple: the model never "knows" the answer in a human sense. It continually assigns probabilities to token continuations and emits one token at a time.
 
+**Code Repository**  
+The complete runnable lab for this part of the chapter is available in the book repository:  
+[github.com/mshojaei77/llm-engineering-in-action/chapter-01-generation-lab](https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-01-generation-lab)
+
+The lab does not call an LLM API. It prints token pieces for several strings and samples from a tiny set of toy logits at different temperatures. That makes the mechanics visible without adding provider accounts, API keys, cost, or network failures to Chapter 1.
+
 ## Decoding Controls
 
 Once you have logits and probabilities, you need a policy for selecting the next token. That policy is the **decoding strategy**, and API parameters let you control it.

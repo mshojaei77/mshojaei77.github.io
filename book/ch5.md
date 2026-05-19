@@ -18,6 +18,12 @@ That single pipeline powers document search, long-term memory, recommendations, 
 
 *Boundary note:* This chapter stops strictly at semantic search. We will learn how to turn documents into searchable numbers and how to evaluate whether our search found the right text. Chapter 6 will use these search results to build a complete **RAG (Retrieval-Augmented Generation)** system, where the application assembles a prompt and cites sources. Chapter 7 will upgrade retrieval by mixing it with keyword search and advanced ranking strategies.
 
+**Code Repository**  
+The complete runnable companion project for this chapter is available in the book repository:  
+[github.com/mshojaei77/llm-engineering-in-action/chapter-05-semantic-search](https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-05-semantic-search)
+
+The repository contains a local semantic-search workbench with chunking, a persistent FAISS index, evaluation queries, and retrieval metrics. The chapter explains the retrieval mechanics; the repository gives you the runnable local pipeline.
+
 For now, let's look at how software can measure meaning.
 
 ---
@@ -247,6 +253,8 @@ At a massive scale, comparing the query against millions of vectors exactly is t
 
 Vector stores organize data into **collections** (or namespaces) and heavily rely on **metadata filters**. Metadata filtering allows you to restrict a search *before* calculating vector distances (e.g., "Only search vectors where `tenant_id == customer_994`"). 
 
+This is where an important engineering distinction appears: **FAISS is a vector search library, not a full database**. It is excellent at nearest-neighbor search over dense vectors, but it does not natively solve document storage, metadata filtering, multi-tenant access control, deletes, background reindexing, or operational scaling. If you choose FAISS directly, those concerns become your application's responsibility.
+
 Here is how to think about the current landscape:
 
 | Option Type | Examples | Good Fit | Watch For |
@@ -259,10 +267,13 @@ Here is how to think about the current landscape:
 | **Specialized storage** | Astra DB, LEANN. | Highly specific compression or serverless needs. | Evaluate maturity and ecosystem fit. |
 
 The practical community pattern is boring but correct:
-*   **If you are building a prototype**, use ChromaDB for the fastest time-to-first-result.
-*   **If your app already relies on PostgreSQL**, use `pgvector`. It keeps your infrastructure simple.
+*   **If you want the smallest educational baseline**, use FAISS. It exposes the retrieval mechanics directly: vectors go in, nearest neighbors come out.
+*   **If you want offline, embedded, or on-device retrieval**, FAISS is still a strong choice because it is lightweight and fast.
+*   **If your app already relies on PostgreSQL**, use `pgvector`. It keeps your infrastructure simple and gives you metadata and operational tooling in one place.
 *   **If you need a dedicated, highly scalable production system**, Qdrant is currently the community's top recommendation for balancing performance and operational simplicity.
-*   **If you need extreme hybrid search (combining BM25 and Vectors natively)**, look at Weaviate or Elasticsearch.
+*   **If you want a convenience layer around local vector search**, ChromaDB can be useful, but it hides some of the lower-level mechanics that are worth understanding first.
+
+What breaks first with FAISS is usually not search quality. It is **operations**. As the corpus grows, you must think about how to rebuild indexes, keep metadata in sync, apply access-control filters safely, and handle updates without turning your ingestion pipeline into a brittle maintenance job.
 
 Do not choose a vector database solely based on a vendor's marketing benchmark. The right answer in production is the one your team can operate with confidence.
 
@@ -270,21 +281,34 @@ Do not choose a vector database solely based on a vendor's marketing benchmark. 
 
 ## Basic Semantic Search Implementation
 
-Let's assemble the smallest working semantic search loop using the local concepts we just learned: we will chunk text, embed it locally, store it persistently in ChromaDB, and run a query.
+Let's assemble the smallest working semantic search loop using only local components: chunk the text, embed it, store the vectors in FAISS, and query the index.
 
-*Prerequisites: `pip install sentence-transformers chromadb`*
+FAISS is a good teaching tool because it makes the mechanics visible. You explicitly:
+
+1. create vectors
+2. choose a similarity metric
+3. add the vectors to an index
+4. map search results back to your stored text
+
+That is the core of semantic retrieval. Higher-level vector databases automate parts of this, but they do not change the underlying flow.
+
+FAISS is also a good fit for small local systems because it keeps the moving parts honest. You can see exactly where the vectors live, how similarity is computed, and how results are mapped back to text. That clarity is valuable in Chapter 5. Later, when you move to larger or more dynamic corpora, you can decide whether the extra operational burden is still worth it.
+
+*Prerequisites: `pip install sentence-transformers faiss-cpu`*
 
 ```python
-import chromadb
+import json
+from pathlib import Path
+
+import faiss
+import numpy as np
 from sentence_transformers import SentenceTransformer
 
-# 1. Our raw documents
 documents = {
     "refund_policy": "Customers can request a refund within 30 days of purchase. Refunds over 100 dollars require manager approval.",
     "upload_help": "If file upload fails, check the file size and supported formats. The maximum upload size is 25 MB.",
 }
 
-# 2. A simple word chunker
 def chunk_words(text: str, chunk_size: int = 15, overlap: int = 5) -> list[str]:
     words = text.split()
     step = chunk_size - overlap
@@ -294,71 +318,73 @@ def chunk_words(text: str, chunk_size: int = 15, overlap: int = 5) -> list[str]:
         if words[start:start + chunk_size]
     ]
 
-# 3. Load our local embedding model and persistent database
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-# Using PersistentClient ensures our vectors are saved to disk
-client = chromadb.PersistentClient(path="./chroma_store")
-
-# HNSW is the underlying ANN algorithm. We configure it to expect cosine distances.
-collection = client.get_or_create_collection(
-    name="support_docs",
-    metadata={"hnsw:space": "cosine"}, 
-)
-
-# 4. Ingestion Pipeline
-ids = []
 chunks = []
-metadatas = []
+for source_file, text in documents.items():
+    for chunk_index, chunk in enumerate(chunk_words(text)):
+        chunks.append(
+            {
+                "source_file": source_file,
+                "chunk_index": chunk_index,
+                "text": chunk,
+            }
+        )
 
-for doc_id, text in documents.items():
-    for i, chunk in enumerate(chunk_words(text)):
-        ids.append(f"{doc_id}:chunk_{i}")
-        chunks.append(chunk)
-        metadatas.append({"source": doc_id, "chunk_index": i})
+texts = [item["text"] for item in chunks]
+embeddings = model.encode(texts, normalize_embeddings=True)
+embeddings = np.asarray(embeddings, dtype="float32")
 
-# Generate embeddings and force them to be normalized
-embeddings = model.encode(chunks, normalize_embeddings=True)
+# IndexFlatIP uses inner product. Because the vectors are normalized,
+# this becomes cosine similarity.
+index = faiss.IndexFlatIP(embeddings.shape[1])
+index.add(embeddings)
 
-# Upsert means "insert if new, update if ID already exists"
-collection.upsert(
-    ids=ids,
-    documents=chunks,
-    metadatas=metadatas,
-    embeddings=embeddings.tolist(),
+# Persist both the FAISS index and the chunk metadata.
+# FAISS stores vectors; your application still has to store the text and metadata.
+faiss.write_index(index, "support_docs.index")
+Path("support_docs.metadata.json").write_text(
+    json.dumps(chunks, indent=2),
+    encoding="utf-8",
 )
 
-# 5. Search Function
 def search(query: str, top_k: int = 2) -> list[dict]:
-    query_vector = model.encode(query, normalize_embeddings=True)
+    query_vector = model.encode([query], normalize_embeddings=True)
+    query_vector = np.asarray(query_vector, dtype="float32")
 
-    result = collection.query(
-        query_embeddings=[query_vector.tolist()],
-        n_results=top_k,
-        include=["documents", "metadatas", "distances"],
-    )
+    scores, indices = index.search(query_vector, k=top_k)
 
     matches = []
-    # Unpack the ChromaDB response arrays
-    for document, metadata, distance in zip(
-        result["documents"][0],
-        result["metadatas"][0],
-        result["distances"][0],
-    ):
-        matches.append({
-            "text": document,
-            "source": metadata["source"],
-            "distance": distance,
-        })
+    for score, row_id in zip(scores[0], indices[0]):
+        item = chunks[row_id]
+        matches.append(
+            {
+                "source_file": item["source_file"],
+                "chunk_index": item["chunk_index"],
+                "score": float(score),
+                "text": item["text"],
+            }
+        )
     return matches
 
-# 6. Test it
 print("Query: Can I get my money back after buying?")
 for match in search("Can I get my money back after buying?"):
-    print(f"[{match['source']}] Score: {match['distance']:.4f} -> {match['text']}")
+    print(
+        f"[{match['source_file']}] "
+        f"score={match['score']:.4f} -> {match['text']}"
+    )
 ```
 
-For this specific Chroma collection setup, a *lower* distance means a closer match. Different databases report scores differently, so always verify whether a returned value is a similarity score (higher is better) or a distance (lower is better).
+There are four ideas to notice in this code:
+
+*   `model.encode(...)` turns each chunk into a vector.
+*   `IndexFlatIP` performs exact nearest-neighbor search using inner product.
+*   Because we normalized the vectors first, a **higher** score means a closer semantic match.
+*   FAISS stores row positions, so your code needs a second structure to map a row ID back to the original text and metadata.
+
+That last point matters. FAISS does not know that your vectors represent language. It only sees arrays of numbers. If you want cosine-style ranking, you must normalize consistently before both indexing and querying.
+
+For a tiny local system, this is enough. For a larger product, you would add filters, multi-tenant access control, background ingestion, update handling, and possibly an ANN index instead of exact search. But the retrieval logic would still be the same.
 
 ---
 
@@ -468,8 +494,8 @@ When debugging a bad retrieval, follow this strict checklist:
 1.  **Gather Data:** Choose 5 to 20 text documents (Markdown files, notes, or code READMEs). 
 2.  **Chunking:** Write a script to split these documents into chunks. Ensure each chunk retains its source filename as metadata.
 3.  **Embedding:** Use the `sentence-transformers/all-MiniLM-L6-v2` model to generate normalized embeddings for each chunk.
-4.  **Storage:** Store the chunks, vectors, and metadata in a persistent local vector store (use ChromaDB, pgvector, or FAISS).
-5.  **Search Interface:** Implement a `search(query, top_k)` function that prints the retrieved text, the source document name, and the similarity distance.
+4.  **Storage:** Store the chunks, vectors, and metadata in a persistent local vector store (use FAISS, pgvector, or another local option).
+5.  **Search Interface:** Implement a `search(query, top_k)` function that prints the retrieved text, the source document name, and the similarity score or distance.
 6.  **Evaluation Data:** Create a Python list of at least 10 evaluation queries, pairing each query with the exact source document name you expect it to retrieve.
 7.  **Measurement:** Run your 10 queries through the search function and calculate the `Hit Rate@3` and `MRR`.
 8.  **Iteration:** Change one single variable in your pipeline (e.g., double the chunk size, or switch the embedding model to `nomic-embed-text`). Re-run your ingestion and evaluation. 
@@ -478,6 +504,6 @@ When debugging a bad retrieval, follow this strict checklist:
 **Constraints:**
 *   Keep the entire pipeline local to avoid costs and data privacy concerns.
 *   Do not add an LLM answer generator yet. We are exclusively testing retrieval.
-*   Do not optimize the vector database settings until your chunking strategy is stable.
+*   Do not optimize the vector index settings until your chunking strategy is stable.
 
 By completing this exercise, you will have built the foundational engine of modern AI memory. Once you can reliably chunk, store, and evaluate semantic retrieval, RAG transforms from a guessing game into a predictable engineering problem.

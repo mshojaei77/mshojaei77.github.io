@@ -780,7 +780,6 @@ A comprehensive collection of learning resources organized to match the LLM deve
 **Vision-Language Models:**
 - [CLIP](https://github.com/openai/CLIP)
 - [LLaVA](https://github.com/haotian-liu/LLaVA)
-- [GPT-4V](https://openai.com/research/gpt-4v-system-card)
 - [Flamingo](https://arxiv.org/abs/2204.14198)
 - [BLIP](https://arxiv.org/abs/2201.12086)
 

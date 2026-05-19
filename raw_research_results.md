@@ -179,7 +179,7 @@ MILVUS_HOST = "127.0.0.1"
 MILVUS_PORT = "19530"
 COLLECTION_NAME = "pdf_knowledge_base"
 EMBEDDING_MODEL = "text-embedding-3-small"
-LLM_MODEL = "gpt-4o-mini"
+LLM_MODEL = "gpt-5-mini"
 CHUNK_SIZE = 500      # words per chunk
 CHUNK_OVERLAP = 50    # overlap between chunks
 
@@ -432,7 +432,7 @@ query_emb = openai_client.embeddings.create(model="text-embedding-3-small", inpu
 results = col.search([query_emb], "embedding", {"metric_type": "COSINE", "params": {"nprobe": 10}}, limit=3, output_fields=["text"])
 context = "\n".join([h.entity.get("text") for h in results[0]])
 response = openai_client.chat.completions.create(
-    model="gpt-4o-mini",
+    model="gpt-5-mini",
     messages=[{"role": "user", "content": f"Context:\n{context}\n\nQuestion: What is this about?\nAnswer:"}],
 )
 print(response.choices[0].message.content)
@@ -453,6 +453,15 @@ This implementation gives you a fully functional RAG system that can be adapted 
 
 > **In the next chapter**: We'll explore advanced techniques,hybrid search combining vector and keyword retrieval, reranking for better precision, and deploying RAG systems to production with monitoring and scaling. See you there!
 
+---
+What I would add to Chapter 6:
+
+A short section titled From Search to RAG
+One small code example showing retrieval results shaped like:
+{"chunk_id": "...", "source_file": "...", "page": 4, "score": 0.81, "text": "..."}
+A checklist:
+top_k, dedupe overlapping chunks, keep source IDs, enforce tenant filters, cap context length
+One paragraph saying retrieval eval comes before generation eval
 
 ---
 
@@ -1556,7 +1565,7 @@ from openai import OpenAI
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-RAG_MODEL = os.getenv("RAG_MODEL", "gpt-5.4-mini")
+RAG_MODEL = os.getenv("RAG_MODEL", "gpt-5-nano")
 EMBED_MODEL = os.getenv("RAG_EMBED_MODEL", "text-embedding-3-small")
 
 if not OPENAI_API_KEY:

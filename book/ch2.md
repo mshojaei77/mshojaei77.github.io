@@ -15,6 +15,12 @@ The engineering takeaway is simple: model selection belongs inside the build-mea
 
 There is no universal best model. There is only the best model for a task, under constraints, at a point in time.
 
+**Code Repository**  
+The complete runnable companion project for this chapter is available in the book repository:  
+[github.com/mshojaei77/llm-engineering-in-action/chapter-02-model-selection-workbench](https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-02-model-selection-workbench)
+
+The repository contains a small local workbench that turns leaderboard data, pricing assumptions, and operational constraints into a comparison table and a starter model decision record. The chapter explains what to evaluate; the repository gives you a repeatable way to document the decision.
+
 ## Model Selection Criteria
 
 A common beginner mistake is assuming an AI application is powered by one giant model that does everything. Production systems rarely work that way. Strong systems often combine several specialized components, each chosen for a specific job.

@@ -13,6 +13,12 @@ A production prompt defines the role, task, input, constraints, output format, u
 
 This chapter moves from ad-hoc prompting to **prompt architecture**: structured instructions, separated context, JSON Schema (a formal JSON shape), Pydantic validation (typed Python validation), retries, versioning, debugging, and evaluation.
 
+**Code Repository**  
+The complete runnable companion project for this chapter is available in the book repository:  
+[github.com/mshojaei77/llm-engineering-in-action/chapter-04-ticket-triage](https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-04-ticket-triage)
+
+The repository contains a validated ticket-triage extractor with a Markdown system prompt, typed output contract, one repair retry, and structured run logging. The chapter explains the prompt architecture; the repository gives you the runnable implementation.
+
 Boundary note: later chapters go deep on retrieval, RAG, tools, serving, and evaluation. Here we only introduce those ideas when they affect prompt design. Retrieval means fetching relevant text for the model. RAG, or retrieval-augmented generation, means answering with retrieved text added to the prompt. A tool is an application function or API the model may request. An eval is a repeatable test for model behavior.
 
 ## System and User Prompts
