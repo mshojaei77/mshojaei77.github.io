@@ -57,7 +57,7 @@ date: 2025-01-01
 - Command-Line Chatbot Design
 - Context Growth Management
 - Runtime Error Handling
-- Capstone Project
+- Part 1 Capstone Project
 
 # Part 2: Context, Retrieval, and Grounding
 
