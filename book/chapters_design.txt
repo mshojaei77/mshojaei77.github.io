@@ -1,0 +1,347 @@
+# Post-Chapter-5 Curriculum Design
+
+This design upgrades the second half of the book using the two market reports:
+
+- Job-market-2026.md
+- llm_engineer_market_analysis_report.md
+
+The reports agree on the core market signal: employers want engineers who can build, evaluate, secure, deploy, and explain production LLM systems. The curriculum after Chapter 5 should therefore move from "can build a demo" to "can ship a measurable, defensible system."
+
+Guiding requirements:
+
+- RAG remains the strongest applied entry point.
+- Agentic systems are the fastest-growing specialization.
+- Evaluation, observability, and LLMOps are major differentiators.
+- SQL, FastAPI, Docker, cloud deployment, and access control must be visible.
+- Open-source model skills should include local inference, quantization, PEFT, and serving trade-offs.
+- Every major chapter should produce a portfolio artifact with metrics, tests, or architecture notes.
+
+## Chapter 6: Retrieval-Augmented Generation
+
+Market alignment:
+- Target roles: RAG Engineer, Applied AI Engineer, Full-Stack LLM Engineer.
+- Job keywords: RAG, embeddings, vector database, grounding, citations, context window, FastAPI, Streamlit.
+- Portfolio artifact: PDF Q&A bot with source citations and an evidence inspector.
+
+Students learn the complete basic RAG loop: reuse the Chapter 5 search index, retrieve relevant chunks, build a context-aware prompt, manage context-window budgeting, generate grounded answers, cite sources, handle "I don't know," and debug missing or irrelevant context. Prerequisites are Chapter 5 semantic search plus Chapter 4 prompting discipline.
+
+Core skill: build a document-grounded assistant that answers from company knowledge instead of guessing.
+
+Scope boundary:
+- In scope: single-pass RAG answer generation, context budgeting, grounded prompting, "I don't know" behavior, citation formatting, evidence inspection, and a small API/UI around the loop.
+- Out of scope: hybrid retrieval, reranking, permission-aware retrieval, tool calling, agents, production deployment, observability, and full evaluation/security frameworks.
+- Handoff: Chapter 7 improves the retriever; Chapter 8 adds enterprise data and permissions; Chapters 15-17 productionize, monitor, evaluate, and secure the system.
+
+Mini-project: build a PDF Q&A bot for HR, product, or policy documents that answers with file name, page or section, and quoted supporting chunks.
+
+Production upgrade: expose the RAG loop through a minimal FastAPI endpoint and a small UI so the project feels like a product, not only a notebook.
+
+Evaluation signal: add smoke tests for "answerable," "not answerable," and "citation required" questions.
+
+## Chapter 7: Hybrid Retrieval, Reranking, and RAG Evaluation
+
+Market alignment:
+- Target roles: RAG Engineer, Search Engineer, LLM Evaluation Engineer.
+- Job keywords: BM25, hybrid search, metadata filters, reranking, RRF, recall@k, MRR, NDCG, RAGAS, DeepEval.
+- Portfolio artifact: retrieval quality report showing measurable improvement over basic vector search.
+
+Students learn why basic vector search fails and how to improve it with BM25, metadata filters, hybrid dense+sparse retrieval, query rewriting, reciprocal rank fusion, cross-encoder reranking, and retrieval evaluation. Prerequisites are a working RAG system from Chapter 6.
+
+Core skill: increase recall and precision for real enterprise documents where exact names, IDs, dates, abbreviations, and domain terms matter.
+
+Scope boundary:
+- In scope: retrieval quality improvement, hybrid dense+sparse search, query rewriting, metadata filters, reranking, golden query sets, retrieval metrics, and false-positive/false-negative analysis.
+- Out of scope: basic answer synthesis, enterprise authorization, SQL-backed grounding, tool execution, agent workflows, production monitoring, and security red teaming.
+- Handoff: Chapter 8 applies retrieval to enterprise data and permissions; Chapter 9 turns retrieval into one callable tool inside an LLM application.
+
+Mini-project: upgrade the Chapter 6 bot into a production-style support search system with keyword+vector search, metadata filters, reranking, and retrieval-quality tests.
+
+Production upgrade: create an evaluation script that runs a fixed query set and prints retrieval metrics before and after reranking.
+
+Evaluation signal: show a measurable lift in retrieval recall, precision, or citation faithfulness.
+
+## Chapter 8: Enterprise Data Integration and Permission-Aware RAG
+
+Market alignment:
+- Target roles: Enterprise RAG Engineer, LLM Solutions Engineer, AI Integration Engineer.
+- Job keywords: SQL, Postgres, ETL, metadata, access control, data freshness, row-level security, audit logging, knowledge graph.
+- Portfolio artifact: permission-aware internal assistant connected to both documents and structured data.
+
+Students learn how LLM systems connect to enterprise data without leaking information or serving stale context. Topics include document ingestion pipelines, parser selection, metadata contracts, incremental indexing, deletion and reindexing, SQL-backed grounding, access-control filters, tenant isolation, PII handling, audit logs, and freshness checks.
+
+Core skill: connect LLMs to private company data in a way that respects permissions, provenance, and update cycles.
+
+Scope boundary:
+- In scope: ingestion pipelines, parser choices, metadata contracts, incremental indexing, freshness, deletion/reindexing, SQL grounding, access filters, tenant isolation, PII handling, and audit logs.
+- Out of scope: write-capable tool execution, multi-step planning, agent memory, model serving infrastructure, dashboards, and full security red teaming.
+- Handoff: Chapter 9 wraps these data sources as safe tools; Chapters 15-17 deploy, observe, evaluate, and govern the resulting application.
+
+Mini-project: build an internal policy assistant that combines a vector store for documents with a Postgres table for employees, teams, or product records. The assistant must filter results based on user role and explain which source was used.
+
+Production upgrade: add a reindex command, a data freshness timestamp, and an access-control test suite.
+
+Evaluation signal: include tests proving that unauthorized users cannot retrieve restricted chunks or rows.
+
+## Chapter 9: Tool-Connected LLM Apps and MCP-Style Interfaces
+
+Market alignment:
+- Target roles: Agentic AI Engineer, Applied AI Engineer, LLM Application Engineer.
+- Job keywords: function calling, tool schemas, MCP, A2A, API integration, validation, approval gates, audit trail.
+- Portfolio artifact: customer-support copilot that safely calls read and write tools.
+
+Students learn function calling, tool schemas, argument validation, tool-result injection, API safety, safe repeatable tool calls, permissions, human approval for risky actions, and tool-call logging. The chapter introduces MCP-style tool boundaries conceptually so students understand why production agents need stable tool contracts instead of ad hoc helper functions.
+
+Core skill: let the model operate software safely: search a database, check an order, create a ticket, draft a message, or call an internal API.
+
+Scope boundary:
+- In scope: single-step function calling, tool schemas, argument validation, read/write tool separation, idempotency, approval gates, MCP-style boundaries, and tool-call audit logs.
+- Out of scope: autonomous planning loops, persistent memory, checkpointed workflows, multi-agent collaboration, deployment infrastructure, and broad eval/security suites.
+- Handoff: Chapter 10 adds durable state and multi-step control flow; Chapter 11 coordinates multiple agents; Chapter 17 stress-tests unsafe tool use.
+
+Mini-project: build a customer-support copilot that can search docs, look up order status, draft a refund message, and require approval before any write action.
+
+Production upgrade: log every tool call with user, arguments, result summary, latency, and approval status.
+
+Evaluation signal: test malformed arguments, missing permissions, repeated calls, and unsafe write attempts.
+
+## Chapter 10: Stateful Agent Workflows
+
+Market alignment:
+- Target roles: Agentic AI Engineer, Workflow Automation Engineer, Applied AI Engineer.
+- Job keywords: LangGraph, state machine, planning, memory, checkpoint, retry, interruption, human-in-the-loop.
+- Portfolio artifact: resumable research assistant workflow with checkpoints and approval steps.
+
+Students learn state machines, planning loops, conversation state, user preferences, intermediate task data, checkpoints, retries, interruptions, human-in-the-loop review, resumable execution, workflow graphs, and basic agent observability. Prerequisites are Chapter 9 tool calling plus earlier RAG/search skills.
+
+Core skill: build one agent or one workflow that can work across many steps without becoming an uncontrolled loop.
+
+Scope boundary:
+- In scope: one stateful agent or workflow, state machines, planning loops, checkpoints, retries, interruptions, resumability, human review, and basic workflow observability.
+- Out of scope: teams of agents, supervisor/router patterns, cross-agent negotiation, production deployment, full observability dashboards, and enterprise governance.
+- Handoff: Chapter 11 expands from one workflow to multiple collaborating agents; Chapters 15-17 later deploy, monitor, and evaluate agent systems.
+
+Mini-project: build a research assistant workflow that takes a topic, plans subtasks, searches documents or notes, saves findings, asks for approval before finalizing, and produces a report.
+
+Production upgrade: persist state so an interrupted workflow can resume without losing intermediate work.
+
+Evaluation signal: test retry behavior, checkpoint recovery, human approval, and failure handling.
+
+## Chapter 11: Multi-Agent Systems and Agent Evaluation
+
+Market alignment:
+- Target roles: Agentic AI Engineer, Senior LLM Engineer, AI Automation Architect.
+- Job keywords: multi-agent, supervisor, router, specialist agent, handoff, shared state, agent evaluation, cost control.
+- Portfolio artifact: multi-agent proposal builder with a supervisor and specialist workers.
+
+Students learn when multi-agent systems are useful and when they are overkill: supervisor/router patterns, specialist agents, handoffs, shared state, parallel research, conflict resolution, cost explosion, observability, and evaluation. Prerequisites are Chapter 10 stateful single-agent workflows and Chapter 9 tool use.
+
+Core skill: decompose complex work into coordinated specialists without making the system impossible to debug.
+
+Scope boundary:
+- In scope: multi-agent coordination, supervisor/router patterns, specialist agents, handoffs, shared state, parallel work, conflict handling, agent tracing, cost comparison, and agent-level evaluation.
+- Out of scope: introductory tool schemas, single-agent state management, local model operation, production serving, infrastructure dashboards, and security governance.
+- Handoff: Chapters 9 and 10 provide the tool and state foundations; Chapters 15-17 make the multi-agent system deployable, observable, and safe.
+
+Mini-project: build a multi-agent proposal builder: one agent gathers requirements, one searches case studies, one drafts the proposal, one checks risks/compliance, and a supervisor merges the final output.
+
+Production upgrade: add trace logs for each agent decision, handoff, and final merge.
+
+Evaluation signal: compare single-agent and multi-agent outputs on quality, cost, latency, and failure rate.
+
+## Chapter 12: Local LLM Inference
+
+Market alignment:
+- Target roles: Open-Source LLM Engineer, Privacy-Focused AI Engineer, AI Platform Engineer.
+- Job keywords: Llama, Mistral, Qwen, DeepSeek, GGUF, quantization, Ollama, llama.cpp, Hugging Face, local inference.
+- Portfolio artifact: local private document assistant using an open-weight model.
+
+Students learn how to run open-source models locally or on private servers: model weights, tokenizers, licensing, VRAM/RAM limits, quantization, GGUF, llama.cpp/Ollama-style runtimes, Hugging Face loading, context length, CPU vs GPU trade-offs, basic batching, and privacy trade-offs. Prerequisites are all earlier app patterns, because local inference replaces the model backend without changing the product design.
+
+Core skill: deploy a small local model for private, low-cost, or offline use cases.
+
+Scope boundary:
+- In scope: running open-weight models locally or privately, model files, tokenizers, licenses, quantization, GGUF, local runtimes, hardware limits, privacy trade-offs, and hosted-vs-local comparisons.
+- Out of scope: modifying model weights, supervised fine-tuning, preference tuning, distillation, high-throughput serving, Kubernetes deployment, and production observability.
+- Handoff: Chapter 13 modifies model behavior through PEFT; Chapter 15 serves models and apps under production constraints.
+
+Mini-project: build a local private document assistant that uses a local chat model plus the Chapter 6 RAG pipeline.
+
+Production upgrade: compare local and hosted model outputs for quality, latency, privacy, and cost.
+
+Evaluation signal: record p50/p95 latency, memory use, answer quality, and failure cases.
+
+## Chapter 13: LLM Fine-Tuning with LoRA, QLoRA, and PEFT
+
+Market alignment:
+- Target roles: LLM Fine-Tuning Specialist, Applied ML Engineer, Open-Source Model Engineer.
+- Job keywords: SFT, LoRA, QLoRA, PEFT, Hugging Face, TRL, dataset quality, train/validation split, baseline comparison.
+- Portfolio artifact: fine-tuned support-response model with a before/after evaluation.
+
+Students learn instruction tuning, dataset formatting, dataset quality, train/validation splits, supervised fine-tuning, LoRA, QLoRA, PEFT, hyperparameters, evaluation before/after tuning, overfitting, safety risks, and when not to fine-tune. Prerequisites are local inference from Chapter 12 plus evaluation habits from earlier RAG chapters.
+
+Core skill: adapt model behavior for a narrow task, style, or format, not inject fresh factual knowledge that belongs in RAG.
+
+Scope boundary:
+- In scope: supervised fine-tuning, dataset formatting, data quality, train/validation splits, LoRA, QLoRA, PEFT, hyperparameter basics, overfitting checks, and before/after evaluation.
+- Out of scope: DPO, RLHF/RLAIF, distillation, continued pre-training, foundation-model training, production model serving, and using fine-tuning as a replacement for factual retrieval.
+- Handoff: Chapter 14 covers advanced training judgment; Chapter 15 packages and serves adapted models when they are worth deploying.
+
+Mini-project: fine-tune a support-response model on approved company replies, then compare it against a prompt-only baseline and a RAG baseline.
+
+Production upgrade: package the fine-tuned model with a model card, dataset card, known limitations, and rollback guidance.
+
+Evaluation signal: compare accuracy, format compliance, refusal behavior, cost, and latency before and after tuning.
+
+## Chapter 14: Preference Tuning, Distillation, and Training Judgment
+
+Market alignment:
+- Target roles: LLM Training Specialist, Applied Research Engineer, Model Optimization Engineer.
+- Job keywords: DPO, RLHF, RLAIF, synthetic data, distillation, teacher-student, continued pre-training, compute budget.
+- Portfolio artifact: distilled classifier or mini assistant with quality, speed, and cost comparison.
+
+Students gain advanced awareness of preference tuning, DPO, RLHF/RLAIF concepts, synthetic data generation, teacher-student distillation, rationale transfer, data quality, tokenizer choices, continued pre-training, compute budgeting, and why most companies should not pre-train from scratch.
+
+Core skill: decide when a model should be adapted, distilled, routed, or left alone.
+
+Scope boundary:
+- In scope: preference tuning concepts, DPO/RLHF/RLAIF awareness, synthetic data, teacher-student distillation, continued pre-training judgment, tokenizer/data-quality considerations, compute budgeting, and build-vs-buy-vs-fine-tune decisions.
+- Out of scope: hands-on foundation-model pre-training at scale, distributed training internals, research-grade alignment algorithms, and production serving mechanics.
+- Handoff: Chapter 13 provides basic PEFT experience; Chapter 15 turns selected model decisions into deployable services.
+
+Mini-project: build a distilled classifier or mini assistant from a stronger teacher using synthetic examples, then evaluate quality, speed, and cost.
+
+Production upgrade: write a build-vs-buy-vs-fine-tune decision memo.
+
+Evaluation signal: show whether the smaller model is good enough under real latency and cost constraints.
+
+## Chapter 15: Production LLM Serving and LLMOps
+
+Market alignment:
+- Target roles: LLMOps Engineer, AI Platform Engineer, Production LLM Engineer.
+- Job keywords: FastAPI, Docker, Kubernetes, CI/CD, cloud, vLLM, TGI, TensorRT-LLM, batching, KV cache, autoscaling.
+- Portfolio artifact: productionized RAG/agent API with deployment checklist.
+
+Students learn production serving in two levels. First, they learn application-level serving: API design, authentication, queues, rate limits, caching, streaming at scale, autoscaling, secrets, deployment, rollback, and CI/CD. Second, they learn open-model serving concepts: continuous batching, paged attention, KV-cache optimization, model versioning, GPU utilization, vLLM, TGI, and TensorRT-LLM.
+
+Core skill: turn prototypes into services that survive real users.
+
+Scope boundary:
+- In scope: API serving, authentication, queues, rate limits, caching, streaming, Docker, CI/CD, secrets, rollbacks, cloud deployment basics, health checks, and open-model serving concepts such as batching and KV cache.
+- Out of scope: detailed observability dashboards, cost optimization programs, red-team testing, governance, dataset-level evaluation design, and model training.
+- Handoff: Chapter 16 adds monitoring, reliability, and cost controls; Chapter 17 adds evaluation, security, and governance.
+
+Mini-project: productionize a RAG/agent API with authentication, Docker, environment configuration, logging, retries, caching, and a deployment checklist.
+
+Production upgrade: deploy to one cloud or container environment and document the exact operational steps.
+
+Evaluation signal: run smoke tests, basic load tests, rollback tests, and health checks.
+
+## Chapter 16: Observability, Cost, and Reliability Engineering
+
+Market alignment:
+- Target roles: LLMOps Engineer, AI Platform Engineer, Senior Applied AI Engineer.
+- Job keywords: observability, tracing, prompt versioning, model routing, fallback, p95 latency, token cost, dashboard, incident response.
+- Portfolio artifact: LLMOps dashboard showing cost, latency, errors, traces, and model behavior.
+
+Students learn the operational layer that makes LLM systems maintainable after deployment: structured logs, traces, prompt/version tracking, latency metrics, token usage, model routing, caching, fallbacks, budget alerts, SLA/SLO thinking, queue depth, retry storms, rate-limit handling, incident review, and production debugging.
+
+Core skill: diagnose and improve live LLM systems using evidence instead of guesswork.
+
+Scope boundary:
+- In scope: structured logs, traces, prompt/model versioning, p50/p95 latency, token cost, model routing, fallbacks, cache hit rates, budget alerts, incident review, and reliability debugging.
+- Out of scope: first-time deployment setup, model training, retrieval algorithm design, prompt-injection defense, red teaming, and governance sign-off.
+- Handoff: Chapter 15 provides the deployed service; Chapter 17 uses observability data inside evaluation, security, and governance workflows.
+
+Mini-project: add an LLMOps dashboard to the Chapter 15 app with p50/p95 latency, token cost, cache hit rate, error categories, model/provider routing, and traces for failed requests.
+
+Production upgrade: set a monthly cost budget and implement fallback behavior when the preferred model is unavailable or too expensive.
+
+Evaluation signal: demonstrate a measurable reduction in cost, latency, or failure rate after one optimization.
+
+## Chapter 17: Evaluation, AI Security, and Governance
+
+Market alignment:
+- Target roles: LLM Evaluation Engineer, AI Safety Engineer, Enterprise AI Architect, Senior LLM Engineer.
+- Job keywords: golden datasets, LLM-as-judge, human review, hallucination testing, prompt injection, data leakage, guardrails, governance, red teaming.
+- Portfolio artifact: evaluation and security harness for a production RAG/agent system.
+
+Students learn test datasets, golden answers, regression tests, model-as-judge, human review, retrieval metrics, hallucination checks, citation faithfulness, A/B testing, prompt injection, data leakage, insecure tool use, excessive agency, vector-store risks, monitoring, red teaming, incident response, and governance review.
+
+Core skill: measure and defend LLM systems instead of trusting demos.
+
+Scope boundary:
+- In scope: golden datasets, regression tests, LLM-as-judge, human review, hallucination checks, citation faithfulness, prompt injection, data leakage, unsafe tools, excessive agency, red teaming, risk registers, and governance review.
+- Out of scope: introducing new retrieval, agent, fine-tuning, serving, observability, multimodal, or voice primitives.
+- Handoff: Chapters 6-16 supply systems to test; Chapters 18-20 reuse the same evaluation and governance discipline for multimodal, voice, and domain products.
+
+Mini-project: build an eval-and-security harness for the previous RAG/agent app: run test questions, grade citation faithfulness, test prompt-injection attempts, check tool permissions, and block unsafe tool calls.
+
+Production upgrade: write a lightweight AI risk register with model risks, data risks, tool risks, user risks, and mitigation owners.
+
+Evaluation signal: report pass/fail rates for quality tests, retrieval tests, safety tests, and regression tests.
+
+## Chapter 18: Vision-Language and Document Intelligence Applications
+
+Market alignment:
+- Target roles: Multimodal AI Engineer, Document AI Engineer, Applied AI Engineer.
+- Job keywords: vision-language model, OCR, document understanding, table extraction, visual grounding, multimodal RAG.
+- Portfolio artifact: document-intelligence assistant for invoices, forms, or reports.
+
+Students learn how to work with image inputs, document screenshots, OCR alternatives, chart/table understanding, visual question answering, image-grounded extraction, multimodal prompting, multimodal RAG, visual evidence checking, safety checks, and when to combine vision models with classic parsers.
+
+Core skill: build apps that reason over both text and images: invoices, forms, diagrams, product photos, screenshots, compliance documents, and visual reports.
+
+Scope boundary:
+- In scope: image inputs, screenshots, OCR alternatives, chart/table understanding, visual question answering, image-grounded extraction, multimodal prompting, visual evidence, and document-intelligence evaluation.
+- Out of scope: speech/audio interaction, real-time voice UX, full domain product rollout, general agent architecture, and broad production serving mechanics.
+- Handoff: Chapter 19 covers audio and voice; Chapter 20 integrates document intelligence into a domain product when useful.
+
+Mini-project: build a document-intelligence assistant that accepts invoice or form images, extracts structured fields, answers questions, asks follow-up questions, and cites visual evidence.
+
+Production upgrade: compare classic OCR+parser, VLM-only, and hybrid approaches on accuracy, cost, and failure modes.
+
+Evaluation signal: measure field extraction accuracy, citation correctness, and hallucinated visual claims.
+
+## Chapter 19: Speech and Voice Agents
+
+Market alignment:
+- Target roles: Voice AI Engineer, Agentic AI Engineer, Applied AI Product Engineer.
+- Job keywords: speech-to-text, text-to-speech, real-time audio, interruption handling, latency budget, consent, call workflow.
+- Portfolio artifact: voice appointment assistant with tool use and transcript review.
+
+Students learn speech-to-text, text-to-speech, real-time audio streaming, voice activity detection, turn-taking, interruption handling, latency budgets, voice UX, tool use during calls, transcript storage, consent, and failure recovery.
+
+Core skill: design voice agents that feel responsive and useful, not just a chatbot with a microphone.
+
+Scope boundary:
+- In scope: speech-to-text, text-to-speech, real-time audio streaming, VAD, turn-taking, interruption handling, latency budgets, voice UX, call-time tool use, transcript storage, consent, and fallback behavior.
+- Out of scope: visual document extraction, general RAG construction, multi-agent architecture, full enterprise rollout, and broad governance design.
+- Handoff: Chapter 18 covers visual input; Chapter 20 combines voice with retrieval, tools, evaluation, and governance inside a complete domain product.
+
+Mini-project: build a voice appointment assistant that listens to a user, checks availability through a tool, confirms details, handles interruptions, and creates a booking summary.
+
+Production upgrade: add transcript storage, consent messaging, and fallback to text when audio quality is poor.
+
+Evaluation signal: measure turn latency, interruption recovery, task completion, and transcript accuracy.
+
+## Chapter 20: Domain LLM Product and Portfolio Capstone
+
+Market alignment:
+- Target roles: Applied AI Engineer, LLM Solutions Engineer, Forward-Deployed AI Engineer, LLM Architect.
+- Job keywords: domain discovery, workflow mapping, build-vs-buy, governance, rollout, product metrics, portfolio, impact metrics.
+- Portfolio artifact: complete domain copilot plus architecture doc, evaluation report, cost report, and public technical walkthrough.
+
+Students learn how to combine everything into company-grade products: domain discovery, workflow mapping, user roles, data access, RAG vs fine-tuning decisions, tool integration, human review, compliance, governance, evaluation, monitoring, rollout, pricing, maintenance, and product metrics. The chapter also teaches market positioning: how to turn the capstone into a portfolio project with measurable impact.
+
+Core skill: product judgment, meaning the ability to choose the right mix of generation, retrieval, tools, agents, local models, fine-tuning, multimodal input, voice, serving, evaluation, and security for one real business workflow.
+
+Scope boundary:
+- In scope: end-to-end domain architecture, workflow mapping, role/data modeling, RAG-vs-fine-tuning decisions, tool integration, human review, compliance, rollout planning, product metrics, portfolio packaging, and resume-ready impact framing.
+- Out of scope: teaching new primitives that belong in earlier chapters, deep treatment of every domain regulation, and exhaustive enterprise platform design beyond a focused pilot.
+- Handoff: this is the integration chapter; it pulls from Chapters 6-19 and converts the work into a coherent capstone and career artifact.
+
+Mini-project: build a complete domain copilot for a real department: support, admissions, HR, legal, finance, healthcare, sales, or operations. It must combine private knowledge, structured data, tools, guardrails, evaluation, optional voice/vision, documented risks, and a small pilot deployment.
+
+Production upgrade: create a portfolio package containing a README, architecture diagram, model decision record, eval report, security notes, deployment notes, cost/latency report, and resume bullets using the formula "Built [system] using [stack] to achieve [measurable outcome] under [constraint]."
+
+Evaluation signal: demonstrate one measurable outcome such as improved retrieval recall, reduced latency, lower cost, fewer hallucinations, faster workflow completion, or higher task success rate.
