@@ -21,6 +21,19 @@ manual RAG loop
 
 This chapter deliberately uses one dense-vector retrieval step and one answer-generation step. It does not teach hybrid search, reranking, query rewriting, tool calling, agents, multimodal retrieval, or deep evaluation. Those are later upgrades.
 
+**Market Skill Target**
+Current LLM engineering roles treat RAG as one of the clearest proofs that a candidate can connect models to real company knowledge. This chapter should leave you with a portfolio artifact, not only a tutorial script: a document-grounded RAG assistant with citations, an evidence inspector, smoke tests, and a README that explains the architecture and trade-offs.
+
+By the end of this chapter, you should be able to show:
+
+```text
+- a working document Q&A app
+- a clear ingestion, chunking, embedding, retrieval, and answer-generation pipeline
+- source citations that map to real document locations
+- debug output showing which chunks the model saw
+- starter metrics for retrieval, refusal behavior, latency, and context size
+```
+
 **Code Repository**  
 The complete runnable companion project for this chapter should live in the book repository as:
 [github.com/mshojaei77/llm-engineering-in-action/chapter-06-portable-rag](https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-06-portable-rag)
@@ -190,6 +203,18 @@ Good enough for Chapter 6:
 - The answer includes source labels.
 - The debug endpoint shows retrieved chunks.
 - Unanswerable questions refuse.
+- Smoke tests report starter quality metrics.
+- Latency and context-token estimates are logged.
+```
+
+Use simple thresholds to make "working" concrete:
+
+```text
+- expected_source_found_rate >= 80% on the smoke-test set
+- citation_required_pass_rate = 100% for answerable questions
+- refusal_pass_rate = 100% for unanswerable questions
+- p95 latency is recorded, even if it is not optimized yet
+- average context tokens are recorded
 ```
 
 Not good enough yet:
@@ -198,6 +223,7 @@ Not good enough yet:
 - Enterprise permissions.
 - Hybrid retrieval.
 - Reranking.
+- RAGAS, DeepEval, or LLM-as-judge evaluation.
 - Full observability.
 - Security testing.
 ```
@@ -220,7 +246,11 @@ A RAG-ready chunk should carry this information:
   "text": "International remote work requires prior approval...",
   "token_count": 284,
   "content_hash": "9d8f...",
-  "created_at": "2026-05-20T10:30:00Z"
+  "created_at": "2026-05-20T10:30:00Z",
+  "indexed_at": "2026-05-20T10:35:00Z",
+  "source_updated_at": "2026-05-18T09:00:00Z",
+  "parser_version": "pdf-parser-v1",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2"
 }
 ```
 
@@ -237,8 +267,14 @@ Each field has a job:
 | `token_count` | Helps build context without exceeding a budget. |
 | `content_hash` | Supports duplicate detection and reindexing. |
 | `created_at` | Helps debug stale indexes. |
+| `indexed_at` | Shows when this chunk entered the retrieval system. |
+| `source_updated_at` | Helps detect stale embeddings after a source document changes. |
+| `parser_version` | Helps explain why chunks changed after parser upgrades. |
+| `embedding_model` | Records which embedding model produced the stored vector. |
 
 For HTML and Markdown, page numbers may not exist. Use section titles, heading paths, URLs, or paragraph IDs instead. For PDFs, page numbers are useful but not always perfect. If parsing preserves a page range better than a single page, store the range.
+
+You may eventually add fields such as `department`, `visibility`, `tenant_id`, or `allowed_roles`. Keep those in the metadata design, but do not implement permission-aware retrieval in this chapter. Chapter 8 owns access control and enterprise data boundaries.
 
 The practical rule is:
 
@@ -756,9 +792,11 @@ Most beginner debugging starts too late. Looking only at the final answer hides 
 
 ```json
 {
+  "trace_id": "rag_20260521_001",
   "question": "Can contractors use the travel card?",
   "model": "configured-model-name",
-  "top_k": 5,
+  "embedding_model": "configured-embedding-model",
+  "retrieval_top_k": 5,
   "retrieved_chunks": [
     {
       "chunk_id": "travel-policy:p03:c02",
@@ -775,9 +813,9 @@ Most beginner debugging starts too late. Looking only at the final answer hides 
 
 This is not full observability. It is enough to debug the basic system.
 
-## Minimal Smoke Tests
+## Smoke Tests and Starter Metrics
 
-Chapter 15 will cover evaluation deeply. Chapter 6 only needs a small smoke test harness that catches obvious failures.
+Chapter 17 will cover evaluation deeply. Chapter 6 only needs a small smoke test harness that catches obvious failures and produces starter metrics that a portfolio README can report honestly.
 
 Start with a file like this:
 
@@ -822,7 +860,21 @@ def run_smoke_case(case: dict) -> dict:
     }
 ```
 
-This is not enough for launch. It is enough to prevent the most embarrassing regressions while students are learning.
+Then aggregate the case results into a small report:
+
+```json
+{
+  "cases_total": 10,
+  "expected_source_found_rate": 0.8,
+  "citation_required_pass_rate": 1.0,
+  "refusal_pass_rate": 1.0,
+  "median_latency_ms": 1420,
+  "p95_latency_ms": 2310,
+  "avg_context_tokens": 1180
+}
+```
+
+These numbers are not a launch-grade evaluation. They are a learning checkpoint and a portfolio signal. They show that the project is more than a chatbot demo: it has an answer contract, a retrieval expectation, refusal behavior, and basic operational measurements.
 
 ## Rebuilding the Same Pipeline with LangChain
 
@@ -934,6 +986,21 @@ Use this rule:
 ```text
 If the reader needs it to understand RAG, keep it in the chapter.
 If the reader needs it to run this repository, put it in the README.
+```
+
+The README should make the project understandable to a reviewer in a few minutes:
+
+```text
+- Problem statement: what kind of company knowledge the assistant answers from.
+- Architecture: ingestion -> chunking -> embedding -> vector store -> retrieval -> context -> answer.
+- Model choices: chat model, embedding model, vector store, and why each was selected.
+- Ingestion and chunking strategy: supported file types, metadata, token budget, and known parser limits.
+- Answer contract: answer text, answerability, sources, retrieved chunk IDs, and refusal behavior.
+- Smoke-test results: expected-source rate, citation pass rate, refusal pass rate, latency, and context tokens.
+- Known failure cases: missing retrieval, weak metadata, stale index, unsupported answers, and high latency.
+- Cost and latency notes: hosted model cost, local embedding cost, top_k, context budget, and response time.
+- Screenshots or demo notes: upload flow, answer view, source display, and debug evidence view.
+- Setup notes: environment variables, Docker Compose for Milvus, sample documents, and troubleshooting.
 ```
 
 Be clear about the maturity level:
@@ -1069,6 +1136,26 @@ How you know it works:
 - The framework-free example and LangChain example answer the same test questions.
 - Both versions return answer text, source metadata, retrieved chunk IDs, and answerability.
 - The LangChain version simplifies code without hiding the architecture from the README.
+```
+
+### Portfolio Outcome
+
+At the end of the chapter, write one evidence-based portfolio or resume bullet using this pattern:
+
+```text
+Built [system] using [technical stack] to achieve [measurable outcome] under [production constraint].
+```
+
+For this project, a strong first version would be:
+
+```text
+Built a document-grounded RAG assistant using FastAPI, Milvus, local embeddings, and source citations, with smoke tests covering answerability, expected-source retrieval, refusal behavior, latency, and context size.
+```
+
+If you collect enough cases to report a real number, make the bullet sharper:
+
+```text
+Built a document-grounded RAG assistant using FastAPI, Milvus, and local embeddings, reaching 80% expected-source retrieval on a smoke-test set while preserving source citations and refusal behavior.
 ```
 
 The repository README should carry the operational completion checklist: setup, configuration, Docker, sample documents, smoke tests, provider switching, and troubleshooting.
