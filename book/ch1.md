@@ -2,9 +2,11 @@
 
 For the first year of the generative AI boom, most developers treated large language models (LLMs) like a magical REST API: you send a string of text, wait a few seconds, and an intelligent response comes back.
 
-If you are building a weekend side project, that mental model is good enough. If you are building production systems, treating an LLM as a black box is a recipe for expensive mistakes. If you do not understand how an LLM generates text, you will struggle with cost control, latency tuning, GPU memory limits, output validation, and debugging hallucinations or malformed responses.
+If you are building a weekend side project, that mental model is good enough. If you are building systems that users depend on, treating an LLM as a black box is a recipe for expensive mistakes. If you do not understand how an LLM generates text, you will struggle with cost control, latency tuning, GPU memory limits, output validation, and debugging hallucinations or malformed responses.
 
 This chapter demystifies the "magic." We are skipping the calculus and academic history. Instead, we are following the lifecycle of a prompt from text, to tokens, through the neural network, into probabilities, and back to generated text. The goal is not to become a model researcher. The goal is to understand enough mechanics to build better systems.
+
+I started caring about this when I noticed that two prompts with the same visible meaning behaved differently once token counts, output limits, and decoding settings changed. At first, that felt like model randomness. Later, it became clear that many "LLM bugs" were not mysterious at all. They were token, context, sampling, or validation problems showing up inside a fluent answer.
 
 ## Generation Loop
 
@@ -23,21 +25,44 @@ Here is the basic loop:
 7. The updated sequence becomes the input for the next step.
 8. The loop repeats until the model emits an end token, hits a stop sequence, reaches a token limit, or is interrupted by the application.
 
-That loop sounds simple, but it explains most production behavior. Generation is sequential, so every new output token adds latency. Long outputs cost more because you pay for generated tokens. Bad early tokens can push later tokens in the wrong direction because every generated token becomes part of the next step's context.
+That loop sounds simple, but it explains most of what we see in real applications. Generation is sequential, so every new output token adds latency. Long outputs cost more because you pay for generated tokens. Bad early tokens can push later tokens in the wrong direction because every generated token becomes part of the next step's context.
 
-This last point is called **path dependency**. Once the model emits an incorrect assumption, malformed JSON brace, wrong tool argument, or unsupported claim, the next token is generated on top of that mistake. This is why production systems use structured outputs, validation, retries, retrieval, guardrails, and sometimes human review. They are not decorative features. They counteract the compounding nature of autoregressive generation.
+This last point is called **path dependency**. Once the model emits an incorrect assumption, malformed JSON brace, wrong tool argument, or unsupported claim, the next token is generated on top of that mistake. That is why real applications use structured outputs, validation, retries, retrieval, guardrails, and sometimes human review. They are not decorative features. They counteract the compounding nature of autoregressive generation.
+
+This part gets technical, but the main idea is simple. Real inference work is measured with four key latency signals:
+
+| Component | Definition | What It Affects |
+| --- | --- | --- |
+| **TTFT** | Time to first token — latency until the first output token appears | User-perceived delay; determines perceived response speed |
+| **Total latency** | Time from request start until all output tokens are generated | End-to-end wait time, cost per request, throughput planning |
+| **Inter-token latency (ITL / TPOT)** | Average time between consecutive output tokens after the first token | Streaming UIs, long answers, batched requests |
+| **Throughput** | Total tokens produced per second | Scaling, prefetching, cost budgeting |
+
+A real request might look like this:
+
+```
+Request: 500 input tokens + 0 output tokens
+TTFT: 1200ms
+Decode time: 450ms for 75 output tokens
+Total latency: 1650ms
+Throughput: 75 tokens in 0.45 seconds = 166 tokens/sec
+```
+
+Understanding this breakdown lets you differentiate whether slowness comes from prefill vs decode, model choice, or request batching.
 
 There are two important inference phases:
 
-**Prefill**  
-The model processes the full prompt once. This includes the system message, conversation history, retrieved documents, tool results, and the latest user message. Long prompts make prefill slower and increase memory usage.
+**Prefill**
+The model processes the full prompt once. This includes system or developer instructions, conversation history, retrieved documents, tool results, and the latest user message. Long prompts make prefill slower and increase memory usage.
 
-**Decode**  
+**Decode**
 After prefill, the model generates one new token at a time. Decode is sequential. This is why a model can ingest a long prompt relatively quickly but still take noticeable time to write a long answer.
 
 Inference engines make the decode phase practical with a **key-value cache (KV cache)**. During prefill, the model stores attention information for previous tokens. During decode, it reuses that cached state instead of recomputing the full history from scratch for every new token. Without a KV cache, long generations would scale much worse.
 
-The same loop powers multiple model behaviors you will encounter in practice:
+A useful first guess: if the application feels slow and the answers are long, inspect decode time. If the first token takes noticeable time, inspect prefill, queueing, and request size.
+
+The same loop powers multiple model behaviors we see in practice:
 
 *   **Base models** continue text in the most statistically likely way.
 *   **Instruct models** are fine-tuned to behave like assistants and follow requests.
@@ -78,13 +103,54 @@ Tokenizers also insert **special tokens** that are invisible to users but import
 
 Tokenization also explains some famous model weaknesses. If the model sees text as token IDs rather than literal letters, it may struggle with tasks like counting characters inside a word, reversing exact strings, or reasoning about punctuation-heavy formats. Many "prompt problems" are actually token boundary problems.
 
-For production work, the practical habit is simple: inspect token counts early. Do not estimate context size by words, pages, or characters when money, latency, or context limits matter.
+The decision rule is simple: count tokens before optimizing prompts. Guessing by pages, words, or characters is how teams accidentally build slow and expensive requests.
+
+## Token-Count Lab: Measure Before You Guess
+
+Before sending any request to an LLM API, count tokens. Token count is what limits context windows, drives latency, and triggers pricing models.
+
+To see this in practice, run this Python snippet with tiktoken (or your provider's tokenization tool):
+
+```python
+import tiktoken
+
+# Replace this with the exact model you use.
+# Token counting can change between model versions, so treat this as an estimate.
+model = "gpt-5.5"
+
+try:
+    encoder = tiktoken.encoding_for_model(model)
+except KeyError:
+    # Fallback when the exact model mapping is unavailable.
+    # If encoding_for_model does not know the newest model yet, use the closest
+    # documented encoding and treat the count as an estimate.
+    encoder = tiktoken.get_encoding("o200k_base")
+
+text = "The sky is blue in the daytime and black at night."
+tokens = encoder.encode(text)
+print(f"Text: {text}")
+print(f"Token count: {len(tokens)}")
+print(f"Tokens: {tokens}")
+print(f"Decoded: {encoder.decode(tokens)}")
+```
+
+You will likely observe:
+
+* Plain text: around 0.75-1 token per word.
+* Code or JSON payloads: 0.25-0.5 token per character.
+* Very long strings or recent models: token counts vary differently by language and format.
+
+Then examine how the same text appears in a different encoding if your model changes. Token counting is an estimate, and the mapping can change between model versions. Always test with the specific model's tokenizer, not a generic one.
+
+This lab illustrates the rule: always count tokens before requesting generation. It is not just a curiosity; it is a cost and latency control mechanism.
+
+When I first tested this, code was the surprise. A short function looked small on the page, but the tokenizer treated punctuation, indentation, symbols, and identifiers as many small pieces. That changed how I looked at prompts. A "short" code block is not always short to the model.
 
 ## Decoder-Only Transformers
 
 If autoregressive generation explains *how* text is emitted, the model architecture explains *why* generation has the performance profile it does.
 
-The dominant architecture behind modern text-generation systems is the **Transformer**, introduced in the 2017 paper *Attention Is All You Need*. Transformers replaced older recurrent architectures by processing sequences in parallel during training, which made scaling practical.
+Most modern text-generation systems are built around Transformer-style architectures, introduced in the 2017 paper *Attention Is All You Need*. Transformers replaced older recurrent architectures by processing sequences in parallel during training, which made scaling practical.
 
 There are three broad Transformer families:
 
@@ -106,9 +172,7 @@ A decoder-only prompt lifecycle looks like this:
 6. A decoding strategy selects the next token.
 7. The loop starts again.
 
-<img width="818" height="218" alt="image" src="https://github.com/user-attachments/assets/9fec574e-cd9b-4a14-b4b2-2cb3ec444bd3" />
-
-Modern production models are not identical to the original Transformer. Many use implementation improvements such as rotary positional embeddings, grouped-query attention, RMSNorm, SwiGLU feed-forward layers, mixture-of-experts routing, or specialized attention kernels. You do not need to memorize every variant in Chapter 1. What matters is the engineering implication: the architecture is designed to scale next-token prediction.
+Current models are not identical to the original Transformer. Many use implementation improvements such as rotary positional embeddings, grouped-query attention, RMSNorm, SwiGLU feed-forward layers, mixture-of-experts routing, or specialized attention kernels. We do not need to memorize every variant in Chapter 1. What matters is the engineering implication: the architecture is designed to scale next-token prediction.
 
 This design has two major advantages:
 
@@ -124,7 +188,7 @@ It also has tradeoffs:
 
 For a software engineer, architecture is not trivia. It determines which tasks a model is suited for, how it uses memory, and where latency and cost come from.
 
-## Context Windows and Attention
+## Tokens, Attention, and KV Cache
 
 If token embeddings represent *what* tokens are, **attention** represents how they relate to one another in context.
 
@@ -139,15 +203,41 @@ Modern LLMs use **multi-head attention**, which means the model learns several d
 
 Because text generation is autoregressive, decoder-only models apply causal masking. A token can only attend to earlier tokens, not future ones. That is what prevents the model from "cheating" during next-token prediction.
 
-This leads to one of the most important concepts in production AI: the **context window**. The context window is the maximum number of tokens the model can consider at one time. If your system prompt, retrieved documents, chat history, tool results, and user message exceed that limit, something must be truncated, summarized, retrieved selectively, compressed, or dropped.
+This leads to one of the most important concepts in LLM engineering: the **context window**. The context window is the maximum number of tokens the model can consider at one time. If your system prompt, retrieved documents, chat history, tool results, and user message exceed that limit, something must be truncated, summarized, retrieved selectively, compressed, or dropped.
 
 Long-context models are useful, but the advertised context window is not the same thing as effective context. A model may technically accept 128k, 1M, or more tokens, yet still miss important facts buried in the middle. This is often called the **lost-in-the-middle** problem. More context can also dilute attention, increase cost, and make debugging harder.
 
-Attention also explains why long prompts are expensive. In standard attention, each token can interact with many other tokens in the sequence, so compute and memory costs rise sharply as context grows. Naive self-attention has quadratic scaling with sequence length. Production inference engines use optimized kernels, batching, paging, and KV caches to make this manageable, but the constraint does not disappear.
+**Rule of thumb: context window ≠ useful context.** Consider these practical consequences:
+
+* **Lost in the middle:** The Lost in the Middle paper found that models often perform best when relevant information is near the beginning or end of context and worse when it is buried in the middle.
+* **Scattered instructions:** A long system prompt with careful guidance can be less effective than a concise, positionally strong top instruction followed by a separate tool schema area.
+* **Overfeeding noise:** Dumping all retrieved chunks or all conversation history without compression can overwhelm the model's effective attention without improving answers.
+* **Hardware constraints:** Technical context limits in tokens may be higher than practical context limits due to KV cache memory, GPU memory, and batching constraints.
+
+In practice, treat the technical context window as an upper bound, not a guarantee of better answers. Focus on keeping critical instructions and evidence near strong positions, do not stack everything in the middle, and measure whether added context actually improves performance.
+
+Attention also explains why long prompts are expensive. In standard attention, each token can interact with many other tokens in the sequence, so compute and memory costs rise sharply as context grows. Naive self-attention has quadratic scaling with sequence length. Inference engines in deployed services use optimized kernels, batching, paging, and KV caches to make this manageable, but the constraint does not disappear.
 
 During generation, inference engines avoid recomputing the entire history from scratch by using a **KV cache**. The model stores intermediate key and value states for previous tokens in GPU memory and reuses them for each next-token step.
 
-That cache is one of the main reasons long contexts are expensive in production. The longer the prompt, the longer the output, and the more concurrent users you serve, the larger the KV cache becomes. When a self-hosted inference server hits an out-of-memory error, the KV cache is often a major factor.
+That cache is one of the main reasons long contexts are expensive in practice. When a self-hosted model hits an out-of-memory error, the KV cache is often a major factor, especially with quantized models or long conversations. A practical memory-pressure example:
+
+```
+Example model: Llama 3.1 8B
+batch_size = 8
+sequence_length = 8,192
+num_layers = 32
+num_kv_heads = 8
+head_dim = 128
+precision = fp16 = 2 bytes
+
+KV cache ≈ 8 × 8192 × 32 × 2 × 8 × 128 × 2 bytes
+≈ 8.6 GB
+```
+
+This is an approximation because exact memory can vary by runtime, cache implementation, quantization, tensor dtype, padding, batching, and allocator overhead. The key insight: longer tokens means more GPU memory pressure, which can silently reduce concurrent users or trigger out-of-memory errors.
+
+If the system slows down as conversations grow, inspect context length and concurrency before blaming the model.
 
 Context management is therefore an architecture problem, not just a prompt-writing problem. Common strategies include:
 
@@ -157,7 +247,7 @@ Context management is therefore an architecture problem, not just a prompt-writi
 *   **Memory diffs:** Store only what changed or what matters instead of replaying every event.
 *   **Structured context:** Separate instructions, facts, examples, tool results, and user input so the model can use them predictably.
 
-The production skill is not asking, "How large is the model's maximum context window?" It is asking, "What context does this task actually need, and how do I keep it small, current, and verifiable?"
+A more useful engineering question is: "What context does this task actually need, and how do I keep it small, current, and verifiable?"
 
 ## Logits and Sampling
 
@@ -182,86 +272,101 @@ Engineers sometimes manipulate logits directly. For example, an API may support 
 
 For engineers, the practical takeaway is simple: the model never "knows" the answer in a human sense. It continually assigns probabilities to token continuations and emits one token at a time.
 
-**Code Repository**  
-The complete runnable lab for this part of the chapter is available in the book repository:  
+**Code Repository**
+The complete runnable lab for this part of the chapter is available in the book repository:
+
 [github.com/mshojaei77/llm-engineering-in-action/chapter-01-generation-lab](https://github.com/mshojaei77/llm-engineering-in-action/tree/main/chapter-01-generation-lab)
 
 The lab does not call an LLM API. It prints token pieces for several strings and samples from a tiny set of toy logits at different temperatures. That makes the mechanics visible without adding provider accounts, API keys, cost, or network failures to Chapter 1.
 
 ## Decoding Controls
 
-Once you have logits and probabilities, you need a policy for selecting the next token. That policy is the **decoding strategy**, and API parameters let you control it.
+Once we have logits and probabilities, we need a policy for selecting the next token. That policy is the **decoding strategy**, and API parameters let us control it.
 
-The most important decoding controls are:
+The most important controls are:
 
-**Greedy decoding**  
-Greedy decoding picks the highest-probability token at each step. It is deterministic, but it can be brittle, repetitive, or too narrow for open-ended tasks. Some APIs approximate greedy behavior with `temperature: 0`.
+**Greedy decoding**
+Picks the highest-probability token at each step. It is deterministic, but it can be brittle, repetitive, or too narrow for open-ended tasks. Some APIs approximate greedy behavior with `temperature: 0`.
 
-**Temperature**  
-`temperature` adjusts how sharp or flat the probability distribution feels during sampling. Lower values make outputs more deterministic. Higher values increase variation. Extraction, classification, factual question answering, code generation, and tool invocation usually need low randomness. Brainstorming and creative writing can tolerate more.
+**Temperature**
+Adjusts how sharp or flat the probability distribution feels during sampling. Lower values push outputs toward deterministic. Higher values increase variation. Extraction, classification, factual question answering, code generation, and tool invocation usually need low randomness. Brainstorming and creative writing can tolerate more.
 
-**Top-p and top-k**  
-`top_p`, also called nucleus sampling, limits sampling to the smallest set of tokens whose cumulative probability reaches the threshold `p`. This adapts to the shape of the distribution. `top_k` limits sampling to the `k` most likely tokens, which is simpler but less adaptive.
+**Top-p and top-k**
+`top_p` (nucleus sampling) limits sampling to the smallest set of tokens whose cumulative probability reaches the threshold `p`. This adapts to the shape of the distribution. `top_k` limits sampling to the `k` most likely tokens, which is simpler but less adaptive.
 
-**Min-p and typical sampling**  
-Some local inference stacks expose newer sampling options such as `min_p` or typical sampling. These can help filter very low-probability tokens while preserving diversity, but they are model- and task-dependent. Treat them as tuning tools, not universal fixes.
+**Min-p and typical sampling**
+Some local inference stacks expose newer sampling options such as `min_p` or typical sampling. These can help filter very low-probability tokens while preserving diversity, but they are model- and task-dependent.
 
-**Frequency and presence penalties**  
-`frequency_penalty` reduces the chance of repeating tokens that have already appeared often in the generated text. `presence_penalty` reduces the chance of revisiting concepts that have appeared at all, even if they were not repeated heavily.
+**Frequency and presence penalties**
+`frequency_penalty` reduces the chance of repeating tokens that have already appeared often. `presence_penalty` reduces the chance of revisiting concepts that have appeared at all, even if not repeated heavily.
 
-**Maximum token limits and stop sequences**  
+**Maximum token limits and stop sequences**
 `max_tokens` or `max_completion_tokens` acts as a hard ceiling on output length. This is a cost-control and latency-control tool. `stop` lets you define strings or markers where generation should halt.
 
-**Seed and logit bias**  
-`seed` can help make testing more reproducible in systems that support deterministic sampling. `logit_bias` lets you nudge the probability of specific tokens up or down, which can be useful for constrained behaviors, though it is a sharp tool and easy to misuse.
+**Seed and logit bias**
+`seed` can help make testing more reproducible in systems that support deterministic sampling. `logit_bias` lets you nudge the probability of specific tokens. This is a sharp tool and easy to misuse.
 
-**Structured output and grammar constraints**  
-`response_format`, JSON schema modes, grammar-constrained decoding, or similar controls help force the model into valid JSON or another strict structure. This is usually more reliable than hoping a prompt like "return valid JSON" will work forever.
+**Structured output and grammar constraints**
+Structured-output controls help when the response must be consumed by software. They reduce format drift by constraining the output toward a schema or grammar. Different providers expose this with different parameter names, but the engineering rule is stable: use schema-constrained output when available, then validate the result in application code. JSON Schema structured output is preferred over older JSON mode for models that support it.
 
-**Streaming**  
-`stream` returns partial tokens as they are generated, reducing perceived latency for end users. Streaming does not make the model generate faster, but it makes the application feel more responsive and lets clients show progress.
+**Streaming**
+`stream` returns partial tokens as they are generated, reducing perceived latency for end users. Streaming does not make the model generate faster, but it makes the application feel more responsive.
 
-Good defaults depend on the task:
+Decoding choices are task-dependent. A conservative heuristic:
 
-*   **Extraction, classification, routing, and tool calls:** Use low randomness, strict schemas, short outputs, and validation.
-*   **Factual answers over retrieved documents:** Use low to moderate randomness, citations, missing-evidence behavior, and retrieval checks.
-*   **Coding:** Use low randomness, tests, linters, and output validation.
-*   **Creative writing and ideation:** Use higher randomness, larger output budgets, and looser structure.
+| Task | Temperature | Top-p | Max tokens | Key pattern |
+| --- | --- | --- | --- | --- |
+| Factual QA over provided docs | 0.0-0.3 | 0.8-1.0 | Short | Low randomness, citations, refusal behavior |
+| Code generation | 0.0-0.2 | 0.9-1.0 | 512-2048 | Test-enabled, linter-checked |
+| Tool call / arg extraction | 0.1-0.3 | 0.9-1.0 | 128 | Schema + validator, low repetition |
+| Creative writing | 0.7-1.0 | 0.9-1.0 | 256-1024 | Low penalization, moderate diversity |
+| Summarization | 0.0 | 0.9-1.0 | 300 | Document-grounded, low hallucination |
 
-Avoid "temperature hacking" as a debugging strategy. If the model is using the wrong facts, changing temperature will not fix retrieval. If the output violates a schema, use structured output and validation. If the system is too slow, reduce context or output length before blaming sampling.
+Avoid changing temperature and top-p blindly. Official docs recommend changing one at a time because they strongly interact. In practice, public examples often use settings that are too loose for coding, extraction, or tool calls. Start conservative, change one parameter at a time, and judge the result with tests rather than taste.
+
+My default starting point for most tasks: temperature 0.1, top-p 0.95. I raise temperature only when I want variation. I lower top-p only when the model keeps picking unlikely tokens. Most teams I see over-adjust both at once and then cannot tell which parameter caused the change.
+
+Structured-output modes reduce the chance of malformed machine-readable output. They do not remove the need for runtime validation, business-rule checks, missing-field handling, and safe fallback behavior.
+
+The decision rule: when you ship, validate schema strictly with runtime checks and verify decoding did not silently degrade reliability via format drift or truncation.
 
 ## Generation Failure Scenarios
 
-Text generation fails in predictable ways, and production systems need to anticipate them.
+The first failure that changed my approach was not a dramatic hallucination. It was a clean-looking answer with a broken structure. The text sounded fine, but the JSON parser failed. That is when I stopped treating formatting as a prompt-style problem and started treating it as an output-contract problem.
 
-**Hallucination**  
+Text generation fails in predictable ways, and any deployed system needs to anticipate them.
+
+**Hallucination**
 The model produces plausible-sounding but unsupported content. This often happens when the prompt is ambiguous, the necessary facts are missing from context, or the model is pushed beyond what it actually knows.
 
-**Inconsistency**  
+**Structured-output violations**
+A model can produce valid-looking but structurally wrong or incomplete outputs. Schema support reduces format failure, but runtime validation is still required.
+
+**Inconsistency**
 The same prompt, or a slightly rephrased version of it, produces meaningfully different answers. This is especially dangerous in customer support, compliance, finance, healthcare, and workflow automation.
 
-**Repetition and looping**  
+**Repetition and looping**
 Poor decoding settings, weak prompt structure, or model distribution collapse can cause the model to repeat phrases, restate itself, or get stuck in structural loops.
 
-**Compounding errors**  
+**Compounding errors**
 An early wrong token, wrong assumption, wrong tool call, or malformed structure becomes part of the context for the next token. In agents, this can turn one weak step into a chain of bad decisions.
 
-**Truncation**  
+**Truncation**
 The response stops early because it hit a token limit, a stop sequence, a context constraint, or a timeout. This can silently break JSON, code blocks, SQL, or multi-step instructions.
 
-**Format drift**  
+**Format drift**
 The model was asked for JSON, SQL, markdown, XML, YAML, or another strict format but gradually deviates from the contract. This is common when prompts are underspecified or the output is long.
 
-**Lost context**  
+**Lost context**
 Important information is technically present in the prompt but not used well by the model, especially in long contexts or when relevant facts are buried between unrelated chunks.
 
-**Latency blowups**  
+**Latency blowups**
 Long prompts, reasoning-heavy outputs, tool loops, retries, and large completion limits can make a system feel broken even when it is technically functioning correctly.
 
-**Memory failures**  
+**Memory failures**
 Long context windows, long outputs, large batches, and high concurrency increase KV-cache pressure and can trigger GPU out-of-memory errors on self-hosted systems.
 
-**Safety and security failures**  
+**Safety and security failures**
 Prompt injection, unsafe tool calls, data leakage, and policy-violating output are generation failures at the system level, even if the text looks fluent.
 
 The engineering lesson is that generation quality is not just a model issue. It is a systems issue. Prompt design, retrieval quality, context management, decoding parameters, output validation, tool permissions, observability, and serving infrastructure all shape the final result.
@@ -277,7 +382,7 @@ Common mitigations include:
 *   Track prompts, retrieved chunks, outputs, token counts, latency, and errors.
 *   Run regression tests before changing prompts, models, retrieval settings, or decoding parameters.
 
-Mastering text generation mechanics is what separates prompt users from LLM engineers. The loop is simple, but every production concern in this book flows from it: tokens drive cost, attention drives context limits, logits drive sampling behavior, decode drives latency, and autoregressive errors drive the need for evaluation and guardrails.
+Mastering text generation mechanics is what separates prompt users from LLM engineers. The loop is simple, but every practical concern in this book flows from it: tokens drive cost, attention drives context limits, logits drive sampling behavior, decode drives latency, and autoregressive errors drive the need for evaluation and guardrails.
 
 ## Chat Playgrounds
 
@@ -293,7 +398,7 @@ Use a playground to test:
 *   whether a model can handle images, files, or long context
 *   whether the provider exposes useful code export or API examples
 
-Google AI Studio is useful when you want to experiment with Gemini models and multimodal inputs such as text, images, video, or code. OpenRouter Chat is useful when you want to compare many model families from one interface. Provider-specific playgrounds, such as OpenAI Playground or Anthropic Console, are useful when you plan to build directly on that provider's API.
+Google AI Studio is useful when you want to experiment with Gemini models and multimodal inputs such as text, images, video, or code. Users can prototype prompts and then use Get code to move into the Interactions API or Gemini API. OpenRouter Chat is useful when you want to compare many model families from one interface. Provider-specific playgrounds, such as OpenAI Playground or Anthropic Console, are useful when you plan to build directly on that provider's API.
 
 A simple playground workflow:
 
@@ -305,7 +410,7 @@ A simple playground workflow:
 6. Record the model, settings, prompt, and output.
 7. Move the best configuration into code.
 
-Engineering consequence: playgrounds are excellent for exploration, but they are not production tests. The UI may add hidden defaults, model availability changes, and free tiers can have different limits from paid API usage. Always reproduce important playground findings through the API before shipping.
+Engineering consequence: playgrounds are excellent for exploration, but they are not deployed-service tests. The UI may add hidden defaults, model availability changes, and free tiers can have different limits from paid API usage. Always reproduce important playground findings through the API before shipping.
 
 Common mistakes:
 
@@ -313,6 +418,26 @@ Common mistakes:
 *   Copying playground output into a product without API validation.
 *   Ignoring pricing, rate limits, and data-retention settings.
 *   Pasting secrets, customer data, or private documents into a playground.
+
+## Generation as an Engineering Measurement Problem
+
+A playground answer is useful, but it is not evidence yet. Evidence starts when we record the request shape and the response behavior.
+
+For one generation request, record:
+
+| Field | Why it matters |
+| --- | --- |
+| model | Different models tokenize, sample, price, and fail differently. |
+| input_tokens | Controls context pressure, prefill time, and cost. |
+| output_tokens | Controls decode time, user wait time, and cost. |
+| temperature / top_p | Controls variation and repeatability. |
+| max_output_tokens | Prevents runaway cost and truncation surprises. |
+| TTFT | Measures how quickly the user sees the first token. |
+| total_latency | Measures how long the full answer takes. |
+| format_validity | Shows whether the output can be consumed by software. |
+| notes | Captures hallucination, repetition, truncation, or format drift. |
+
+In practice, this turns generation from "the model gave a nice answer" into "this configuration produced a useful answer within a known cost and latency envelope."
 
 ## Hands-On Exercise
 
@@ -334,11 +459,33 @@ Explain why long prompts can make LLM applications slower and more expensive.
 4. Keep the output limit small, such as 150 to 250 tokens.
 5. Record the model name, temperature, output length, and any visible latency or token usage.
 6. If the playground supports model comparison, run the same prompt against two different models with the same settings.
-7. Write five short observations:
+7. Reproduce the best playground configuration through the API. Measure TTFT, total latency, token counts, and format validity. Record `input_tokens`, `output_tokens`, `total_tokens`, `max_output_tokens`, temperature/top_p if supported, TTFT, total latency, and whether the output matched the expected format.
+8. Write five short observations:
    * Which setting was most consistent?
    * Which setting was most verbose or surprising?
    * Which output was most useful for a technical user?
    * Did a higher temperature improve or weaken the answer?
    * Did two models behave differently under the same prompt?
+9. Explain how the API metrics differ from the playground experience.
+10. Save your experiment trail: prompt, model name, settings, token counts, output, screenshots if useful, API logs, and a short note explaining what changed between runs. This record is not only for the chapter exercise. It gives you a source trail you can defend later: what you tried, what changed, what failed, and what evidence led to your conclusion.
 
-Expected lesson: playgrounds are fast laboratories for understanding generation. Decoding parameters are product controls; they change cost, latency, repeatability, and failure risk even when the prompt stays the same.
+Expected lesson: playgrounds are fast laboratories, but engineering evidence comes from API measurements. Decoding parameters are product controls; they change cost, latency, repeatability, and failure risk even when the prompt stays the same.
+
+> **Portfolio Artifact: Chapter 1 Generation Report**
+> For your portfolio, create a small markdown report for one generation request. Include:
+> * Model used
+> * Prompt
+> * Token counts (input/output)
+> * Temperature, top_p, max_output_tokens
+> * TTFT and total latency
+> * Output length and format validity
+> * Failure notes (hallucination, truncation, drift)
+> * Recommendation: would you use this configuration again?
+
+## References
+
+- OpenAI Cookbook: token counting with tiktoken — https://developers.openai.com/cookbook/examples/how_to_count_tokens_with_tiktoken
+- Hugging Face Transformers: KV cache explanation — https://huggingface.co/docs/transformers/cache_explanation
+- NVIDIA NIM Benchmarking: TTFT, end-to-end latency, ITL/TPOT, TPS — https://docs.nvidia.com/nim/benchmarking/llm/latest/metrics.html
+- OpenAI API Docs: Structured Outputs — https://developers.openai.com/api/docs/guides/structured-outputs
+- Lost in the Middle paper — https://arxiv.org/abs/2307.03172
