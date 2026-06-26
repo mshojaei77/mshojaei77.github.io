@@ -1,11 +1,15 @@
-# Post-Chapter-5 Curriculum Design
+**Curriculum Design**
 
-This design upgrades the second half of the book using the two market reports:
+This document defines the complete curriculum design for the book. It covers the introduction and Chapters 1-20 as one coherent learning path: foundations, first applications, retrieval and grounding, tools and agents, local models and customization, production operations, evaluation, security, multimodal systems, voice, and the final domain-product capstone.
+
+The curriculum is market-aligned and portfolio-driven. Every major chapter should move the reader from concept to runnable artifact, then from runnable artifact to measurable engineering evidence.
+
+The second half of the design also incorporates the two market reports:
 
 - Job-market-2026.md
 - llm_engineer_market_analysis_report.md
 
-The reports agree on the core market signal: employers want engineers who can build, evaluate, secure, deploy, and explain production LLM systems. The curriculum after Chapter 5 should therefore move from "can build a demo" to "can ship a measurable, defensible system."
+The reports agree on the core market signal: employers want engineers who can build, evaluate, secure, deploy, and explain production LLM systems. The curriculum therefore moves from "can call a model API" to "can ship a measurable, defensible AI product."
 
 Guiding requirements:
 
@@ -17,6 +21,136 @@ Guiding requirements:
 - Every major chapter should produce a portfolio artifact with metrics, tests, or architecture notes.
 - Named tools should be taught at the depth appropriate to the chapter: one primary hands-on path, plus explicit comparison labs for credible alternatives. Listing a product is not enough; students should know what problem it solves, when to choose it, and its operational trade-offs.
 - Foundational Python data work needed after Chapter 5 should remain visible through NumPy, pandas, and scikit-learn exercises rather than being assumed.
+
+## Introduction: Modern LLM Engineering
+
+Market alignment:
+- Target roles: Applied AI Engineer, LLM Engineer, GenAI Developer, AI Solutions Engineer.
+- Job keywords: LLM application stack, RAG, agents, evaluation, observability, security, production AI.
+- Portfolio artifact: personal learning roadmap and project plan for the book.
+
+Students learn what an LLM engineer actually does: build systems around models rather than train foundation models from scratch. The introduction frames LLM engineering as systems engineering for probabilistic software, combining software engineering, data engineering, ML engineering, security, and product judgment.
+
+Core skill: translate vague business needs into AI system requirements, constraints, metrics, and risks.
+
+Scope boundary:
+- In scope: role definition, production mindset, application stack, business-to-system translation, reliability, cost, risk, reader prerequisites, and learning outcomes.
+- Out of scope: hands-on coding, deep model internals, detailed retrieval, tool calling, fine-tuning, deployment, and governance mechanics.
+- Handoff: Chapter 1 begins the technical foundation by explaining how generation works.
+
+Mini-project: write a one-page AI product brief for a support assistant, internal knowledge assistant, or domain copilot. Identify users, data sources, model responsibilities, deterministic code responsibilities, privacy risks, cost risks, and success metrics.
+
+Evaluation signal: the brief must distinguish model behavior, application logic, data pipelines, evaluation, and operations instead of treating the LLM as a single black box.
+
+## Chapter 1: LLM Text Generation
+
+Market alignment:
+- Target roles: Applied AI Engineer, LLM Application Engineer, AI Product Engineer.
+- Job keywords: tokens, tokenizer, context window, attention, logits, sampling, temperature, streaming, latency, KV cache.
+- Portfolio artifact: generation-behavior lab notes comparing decoding settings and model behavior.
+
+Students learn the core mechanics of text generation: prompts become tokens, decoder-only Transformers predict the next token, logits become probabilities, and decoding controls shape the output. The chapter connects model internals directly to production concerns: output latency, token cost, context limits, hallucinations, truncation, format drift, repetition, lost context, and KV-cache memory pressure.
+
+Core skill: reason about LLM behavior using generation mechanics rather than treating model output as magic.
+
+Scope boundary:
+- In scope: autoregressive generation, prefill and decode phases, tokenization, subwords, decoder-only Transformers, causal masking, attention, context windows, KV cache, logits, softmax, temperature, top-p/top-k, stop sequences, max tokens, structured-output constraints, playground experimentation, and common generation failures.
+- Out of scope: training math, backpropagation, full Transformer implementation, inference-server internals, retrieval, tool calling, and production deployment.
+- Handoff: Chapter 2 uses these mechanics to evaluate which model is appropriate for a task.
+
+Mini-project: use a chat playground to compare one prompt across multiple decoding settings and, if possible, multiple models. Record model name, temperature, output length, visible latency, and token usage.
+
+Production upgrade: reproduce the best playground configuration through an API call before trusting the result.
+
+Evaluation signal: write five observations explaining consistency, verbosity, usefulness, temperature impact, and cross-model differences.
+
+## Chapter 2: Production Model Selection
+
+Market alignment:
+- Target roles: LLM Engineer, AI Platform Engineer, Solutions Engineer, Applied AI Engineer.
+- Job keywords: model selection, closed models, open-weight models, hosted inference, local inference, benchmarks, leaderboards, model routing, cost, latency, reliability.
+- Portfolio artifact: model decision record for a realistic support-assistant scenario.
+
+Students learn that model choice is an ongoing engineering decision, not a one-time leaderboard pick. They compare generator, embedder, reranker, classifier, router, reasoning, code, vision, audio, and fallback models. They evaluate closed proprietary APIs, hosted open-weight inference, and self-hosted/local inference under task fit, quality bar, latency, cost, context needs, output contract, privacy, licensing, operational burden, and migration path.
+
+Core skill: choose the cheapest and simplest model strategy that meets the product's quality, latency, privacy, and reliability requirements.
+
+Scope boundary:
+- In scope: model-role decomposition, SLMs versus frontier models, open versus closed models, managed APIs, hosted inference, local inference, model cards, leaderboards, public benchmarks, private golden datasets, task-fit matrices, cost per successful task, reliability, privacy, licensing, fallback planning, provider adapters, and model decision records.
+- Out of scope: full benchmarking infrastructure, detailed self-hosted serving, fine-tuning, RAG implementation, deployment automation, and governance frameworks.
+- Handoff: Chapter 3 turns a selected model and API strategy into a working chatbot application.
+
+Mini-project: create a model decision record for a customer-support assistant. Compare one managed API model, one cheaper/smaller model, and one open-weight or hosted open-weight option.
+
+Production upgrade: define a default model, fallback model, review trigger, migration strategy, and private evaluation plan.
+
+Evaluation signal: the MDR must explain what public leaderboards prove, what they cannot prove, and what must be measured on real product data before launch.
+
+## Chapter 3: Streaming Chatbot Applications
+
+Market alignment:
+- Target roles: LLM Application Engineer, Backend AI Engineer, Full-Stack AI Engineer.
+- Job keywords: chat API, message history, streaming, OpenAI-compatible providers, environment variables, API keys, context trimming, token usage, error handling.
+- Portfolio artifact: Telegram AI assistant bot or CLI chatbot with streaming, state, and operational logs.
+
+Students learn the basic application loop behind chat systems: maintain message history, send the relevant context to a stateless API, stream the response, append the assistant reply, and repeat. The chapter covers roles, system prompts, user messages, assistant messages, `.env` configuration, OpenAI-compatible endpoints, provider headers, streaming deltas, usage metadata, command-line controls, context growth, trimming, optional summaries, token/cost visibility, and runtime failure handling.
+
+Core skill: build a working chat application that manages state, secrets, streaming, context size, and API failures explicitly.
+
+Scope boundary:
+- In scope: Chat Completions-style message arrays, provider configuration, `.env` and `.env.example`, API key safety, OpenAI-compatible base URLs, streaming output, usage metadata, CLI control commands, context trimming, latency and token logging, and handling missing config, auth errors, rate limits, context-length errors, network failures, and interrupted streams.
+- Out of scope: structured outputs, RAG, tool calling, persistent production memory, web UI architecture, advanced retries, observability dashboards, and deployment.
+- Handoff: Chapter 4 makes prompts and model outputs reliable enough for downstream software.
+
+Mini-project: build a Telegram assistant bot that keeps separate short histories per chat ID, trims history, calls an OpenAI-compatible model, handles Telegram and provider errors, and exposes `/start`, `/clear`, and `/stats`.
+
+Production upgrade: add per-user rate limits, optional SQLite history, fallback model configuration, and logs for model, chat ID, latency, token usage, and error type.
+
+Evaluation signal: test missing keys, normal messages, long conversations, `/clear`, rate-limit behavior, provider errors, context-length failures, and secret-safe logs.
+
+## Chapter 4: Prompting and Structured Outputs
+
+Market alignment:
+- Target roles: LLM Application Engineer, AI Product Engineer, LLM Evaluation Engineer.
+- Job keywords: system prompt, user prompt, instruction hierarchy, prompt injection, structured outputs, JSON Schema, Pydantic, validation, prompt versioning.
+- Portfolio artifact: validated support-ticket triage extractor with typed output, repair retry, and structured logs.
+
+Students learn that production prompting is a runtime contract, not clever wording. They separate stable system instructions from dynamic user data, use delimiters for untrusted inputs, apply instruction hierarchy, design prompt security boundaries, use task-specific prompt patterns, assemble context deliberately, control cost and latency, version prompts as Markdown assets, debug failures systematically, and validate machine-consumed outputs with JSON Schema and Pydantic.
+
+Core skill: design prompts and output contracts that downstream software can validate, debug, version, and evaluate.
+
+Scope boundary:
+- In scope: system/user prompt separation, KERNEL prompt anatomy, XML-style delimiters, instruction hierarchy, prompt injection basics, classification/extraction/RAG/tool/rewrite prompt patterns, assumption audits, anti-prompts, prompt chaining, few-shot examples, context assembly, prompt caching order, cost and latency effects, prompt versioning, debugging logs, JSON Schema, structured outputs, Pydantic validation, business-rule validation, refusals, and one repair retry.
+- Out of scope: full RAG systems, production tool calling, agents, complete security red teaming, full eval platforms, deployment, and observability dashboards.
+- Handoff: Chapter 5 uses prompt/context discipline to begin retrieval and semantic search.
+
+Mini-project: build a support-ticket triage extractor that classifies category and priority, summarizes the ticket, flags human escalation, records missing fields, validates with Pydantic, and retries once on validation failure.
+
+Production upgrade: store the system prompt in `prompts/ticket_triage.system.md`, log prompt version, model, raw output, parsed output, validation result, token usage, latency, retry count, and business-rule failures.
+
+Evaluation signal: test valid tickets, ambiguous tickets, prompt-injection text inside customer input, missing fields, urgent tickets that must require human review, malformed model output, and schema violations.
+
+## Chapter 5: Embeddings and Semantic Search
+
+Market alignment:
+- Target roles: RAG Engineer, Search Engineer, Applied AI Engineer, AI Integration Engineer.
+- Job keywords: embeddings, semantic search, vector database, FAISS, pgvector, Qdrant, chunking, metadata, cosine similarity, retrieval metrics.
+- Portfolio artifact: local semantic-search workbench with persistent index and retrieval metrics.
+
+Students learn how to turn text into vectors, split documents into useful chunks, preserve metadata, choose embedding models, generate and cache embeddings, store vectors, search by similarity, and evaluate retrieval separately from generation. The chapter establishes the retrieval foundation for RAG without adding answer generation yet.
+
+Core skill: build and evaluate a local semantic search engine over real documents.
+
+Scope boundary:
+- In scope: vectors, embeddings, dense representations, cosine similarity, dot product, normalization, chunking strategies, overlap, metadata, tenant IDs, hosted versus local embedding models, MTEB as a shortlist tool, embedding model/version coupling, batch generation, embedding caches, raw text storage, async ingestion concepts, FAISS, hnswlib, LanceDB, ChromaDB, pgvector, Qdrant, Milvus, Weaviate, Pinecone, Elasticsearch/OpenSearch-style options, ANN concepts, persistent FAISS indexes, search result mapping, Hit Rate@k, Recall@k, MRR, nDCG, and retrieval debugging.
+- Out of scope: answer generation, RAG prompting, citations, hybrid retrieval, BM25, reranking, permission-aware production retrieval, tool use, agents, deployment, and LLM-as-judge evaluation.
+- Handoff: Chapter 6 uses semantic search results to build a grounded RAG assistant with citations.
+
+Mini-project: build a local semantic document search engine over 5-20 files. Chunk the documents, embed with `sentence-transformers/all-MiniLM-L6-v2`, persist vectors and metadata, implement `search(query, top_k)`, and create at least 10 labeled retrieval queries.
+
+Production upgrade: change one retrieval variable, such as chunk size or embedding model, rebuild the index, rerun the evaluation, and document whether Hit Rate@3 and MRR improved or degraded.
+
+Evaluation signal: report retrieved chunks, source filenames, scores, Hit Rate@3, MRR, and a short failure analysis for missed or weak queries.
 
 ## Chapter 6: Retrieval-Augmented Generation
 

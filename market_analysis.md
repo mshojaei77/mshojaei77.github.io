@@ -1,4 +1,4 @@
-# Global LLM Engineering Talent Market Analysis
+# Market Analysis
 
 ## Executive Summary
 
