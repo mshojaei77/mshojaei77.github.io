@@ -477,7 +477,7 @@ At senior levels, the market pays for judgment. Tools change quickly; architectu
 
 ## 17. Strategic Implications for Employers
 
-Employers face a difficult talent problem. The exact profile they want—senior software engineer, ML practitioner, cloud architect, product thinker, and LLM specialist—is rare. Waiting for perfect candidates will slow execution.
+Employers face a difficult talent problem. The exact profile they want,senior software engineer, ML practitioner, cloud architect, product thinker, and LLM specialist,is rare. Waiting for perfect candidates will slow execution.
 
 A better strategy is to build talent internally.
 

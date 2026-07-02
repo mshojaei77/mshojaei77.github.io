@@ -32,7 +32,7 @@ For now, let's look at how software can measure meaning.
 
 To make semantic search work, we need to turn text into a format that software can mathematically compare. 
 
-A **vector** is simply an ordered list of numbers. An **embedding** is a specific type of dense vector—a long list of floating-point numbers (typically 384 to 4,096 dimensions)—that captures the semantic meaning of text. "Dense" means that almost every position in the vector carries a useful value. A "dimension" is just one of those positions.
+A **vector** is simply an ordered list of numbers. An **embedding** is a specific type of dense vector,a long list of floating-point numbers (typically 384 to 4,096 dimensions),that captures the semantic meaning of text. "Dense" means that almost every position in the vector carries a useful value. A "dimension" is just one of those positions.
 
 Here is a simplified **4-dimensional** example. Real embeddings are much longer, but this illustrates the concept clearly:
 
@@ -147,7 +147,7 @@ def chunk_words(text: str, chunk_size: int = 180, overlap: int = 40) -> list[str
 This is not the final chunker for a serious production system, but it gives you a working baseline to evaluate before you add complexity. (For production, you can explore open-source libraries like `langchain-text-splitters`, LlamaIndex splitters, or `superlinked/chunking-research`).
 
 ### The Importance of Metadata
-Text alone is rarely enough. When a document has structure, you must preserve it. Headings, URLs, source IDs, and permissions matter just as much as the text itself. We store these as **metadata**—structured dictionary fields attached to each chunk. 
+Text alone is rarely enough. When a document has structure, you must preserve it. Headings, URLs, source IDs, and permissions matter just as much as the text itself. We store these as **metadata**,structured dictionary fields attached to each chunk. 
 
 In multi-customer systems, a critical piece of metadata is the **tenant** (the account or workspace ID). This controls who is allowed to see the chunk and prevents disastrous data leaks between customers.
 

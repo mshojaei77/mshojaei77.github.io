@@ -33,7 +33,7 @@ This part gets technical, but the main idea is simple. Real inference work is me
 
 | Component | Definition | What It Affects |
 | --- | --- | --- |
-| **TTFT** | Time to first token — latency until the first output token appears | User-perceived delay; determines perceived response speed |
+| **TTFT** | Time to first token , latency until the first output token appears | User-perceived delay; determines perceived response speed |
 | **Total latency** | Time from request start until all output tokens are generated | End-to-end wait time, cost per request, throughput planning |
 | **Inter-token latency (ITL / TPOT)** | Average time between consecutive output tokens after the first token | Streaming UIs, long answers, batched requests |
 | **Throughput** | Total tokens produced per second | Scaling, prefetching, cost budgeting |
@@ -484,8 +484,8 @@ Expected lesson: playgrounds are fast laboratories, but engineering evidence com
 
 ## References
 
-- OpenAI Cookbook: token counting with tiktoken — https://developers.openai.com/cookbook/examples/how_to_count_tokens_with_tiktoken
-- Hugging Face Transformers: KV cache explanation — https://huggingface.co/docs/transformers/cache_explanation
-- NVIDIA NIM Benchmarking: TTFT, end-to-end latency, ITL/TPOT, TPS — https://docs.nvidia.com/nim/benchmarking/llm/latest/metrics.html
-- OpenAI API Docs: Structured Outputs — https://developers.openai.com/api/docs/guides/structured-outputs
-- Lost in the Middle paper — https://arxiv.org/abs/2307.03172
+- OpenAI Cookbook: token counting with tiktoken , https://developers.openai.com/cookbook/examples/how_to_count_tokens_with_tiktoken
+- Hugging Face Transformers: KV cache explanation , https://huggingface.co/docs/transformers/cache_explanation
+- NVIDIA NIM Benchmarking: TTFT, end-to-end latency, ITL/TPOT, TPS , https://docs.nvidia.com/nim/benchmarking/llm/latest/metrics.html
+- OpenAI API Docs: Structured Outputs , https://developers.openai.com/api/docs/guides/structured-outputs
+- Lost in the Middle paper , https://arxiv.org/abs/2307.03172
