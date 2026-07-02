@@ -1,92 +1,112 @@
-# Portfolio
+# About
+
 ## Mohammad Shojaei
-*Machine Learning Engineer – Large Language Models & NLP*
 
-<p align="center">
-📧 shojaei.dev@gmail.com | <a href="https://www.linkedin.com/in/mshojaei77">LinkedIn</a> | <a href="https://github.com/mshojaei77">GitHub</a> | <a href="https://huggingface.co/mshojaei77">Hugging Face</a>
-</p>
+AI Engineer focused on production LLM agents, retrieval systems, evaluation, and applied machine learning.
 
----
-
-## Summary
-Results-driven Machine Learning Engineer with over two years of experience designing, fine-tuning, and deploying LLM-powered products across finance, real estate, and healthcare. Specialized in Retrieval-Augmented Generation (RAG), parameter-efficient fine-tuning (LoRA/QLoRA), and inference optimization. Proven ability to reduce infrastructure costs by 35%, achieve sub-250ms p95 latency, and increase user engagement by 40%.
+[Email](mailto:shojaei.dev@gmail.com) - [LinkedIn](https://www.linkedin.com/in/mshojaei77) - [GitHub](https://github.com/mshojaei77) - [Hugging Face](https://huggingface.co/mshojaei77)
 
 ---
 
-## Core Competencies
-- **LLM Development:** GPT-style Models (Gemma, Phi, Llama), Instruction & Alignment Tuning (SFT, RLHF), PEFT (LoRA, QLoRA)
-- **RAG & Vector Search:** Qdrant, Milvus, Approximate Nearest Neighbor (ANN) Search, Re-ranking, Custom Chunking
-- **Inference Optimization:** Quantization (AWQ, GGUF), KV-Cache, Speculative Decoding, Throughput Tuning
-- **MLOps & Deployment:** Docker, FastAPI, Uvicorn, Hugging Face Hub, LangServe
-- **General:** Python, SQL, AWS, Runpod, Git, Agile Methodologies
+## Profile
+
+I build production-oriented AI systems: LLM agents, RAG pipelines, OpenAI-compatible APIs, evaluation workflows, and machine-learning tools for real-world domains such as real estate, finance, healthcare, education, and Persian NLP.
+
+My recent work is centered on agentic systems that need to be reliable outside demos: streaming responses, tool calling, conversation memory, retrieval quality checks, structured outputs, tracing, cost and token tracking, regression checks, and deployment runbooks. I work mostly with Python, FastAPI, LangGraph, Hugging Face, vLLM, vector search, reranking, QLoRA/LoRA fine-tuning, and evaluation frameworks.
+
+I care about AI systems that are measurable, debuggable, and honest about their limits. A good system should not only answer; it should expose its sources, failure modes, latency, cost, and quality signals.
 
 ---
 
-## Professional Experience
+## Current Focus
 
-**No Limits Market Ltd.**, Remote – Dubai, UAE
-*LLM Engineer*, January 2025 – Present
-- Architected a RAG-based financial research platform serving over 50 analysts, reducing research time by 45%.
-- Deployed AWQ-quantized models with optimized batching, achieving a 35% cost reduction and sub-250ms p95 latency.
-- Automated JSON-schema report generation via structured LLM outputs, increasing analyst throughput by 60%.
-- Implemented a CI/CD pipeline with automated evaluation metrics (perplexity, factual consistency), maintaining a 95%+ pass rate.
-
-**Owlio**, Remote – Turin, IT
-*AI Engineer*, September 2024 – January 2025
-- Designed an educational AI agent using RAG and fine-tuned LLMs to convert passive lecture content into interactive learning experiences.
-- Engineered custom chunking strategies for video transcript processing, optimizing retrieval accuracy for educational content.
-- Implemented a token-based caching system that reduced GPT API costs by 40% while maintaining response quality.
-- Built automated evaluation pipelines to measure RAG performance, content accuracy, and student engagement metrics.
-
-**Real-Estate Startup**, Remote – Moscow, RU
-*Generative AI Engineer (Contract)*, May 2025 – Present
-- Fine-tuned a multilingual LLM using LoRA with domain-specific datasets, achieving 90% accuracy in handling over 50,000 monthly queries.
-- Integrated Speech-to-Text/Text-to-Speech microservices via FastAPI to enable 24/7 automated client interaction.
-- Developed a comprehensive evaluation framework to measure coherence, relevance, and safety, maintaining over 85% performance across all KPIs.
-- Reduced safety incidents to less than 1% through systematic prompt engineering and content filtering.
-
-**Alpha Neuroscience Co.**, Remote – Tehran, IR
-*Machine Learning Engineer*, May 2023 – April 2025
-- Developed an EEG artifact detection system using 1D-CNN and Transformer architectures, achieving a 70% improvement in accuracy.
-- Built and deployed a PyQt5 desktop application to over 200 medical technicians, reducing per-patient review time by 15 minutes.
-- Implemented a RAG-powered clinical assistant that decreased clinician query response time by 50% and improved diagnostic precision by 18 percentage points.
-- Collaborated with medical professionals to validate model outputs and ensure clinical compliance.
-
-**Kerman Motor**, Bam, Kerman Province, Iran – On-site
-*Generative AI Consultant (Seasonal)*, December 2023 – January 2024
-- Conducted technical workshops on implementing LLMs in industrial settings.
-- Mentored development teams on RAG implementation and prompt engineering best practices.
-- Developed proof-of-concept applications demonstrating practical AI applications.
-
-*Previous Role:* Freelance AI & Generative AI Consultant (October 2023 – January 2025)
+- Building production LLM agents with tool calling, memory, routing, monitoring, and safe fallback behavior.
+- Designing RAG and deep-research pipelines with source-grounded answers, reranking, citation filtering, and retrieval evaluation.
+- Fine-tuning and evaluating Qwen/Gemma-family models for domain-specific behavior, especially Persian and Russian-domain workflows.
+- Turning prototypes into maintainable services with FastAPI, OpenAI-compatible APIs, streaming, structured logs, health checks, systemd deployment, and benchmark suites.
 
 ---
 
-## Open-Source Contributions 
-- **Hugging Face Impact:** Published 12 Persian LLMs and 21 datasets, accumulating over 100,000 downloads.
-- **ReActMCP (140 ⭐):** Developed a reactive agent framework enabling real-time web search capabilities.
-- **Ollama-Desktop & Ollama-RAG (60 ⭐):** Created a local GUI and FAISS-powered RAG toolkit for offline LLM deployment.
-- **Community Leadership:** Delivered technical workshops on LLM implementation and was recognized as a Community Leader.
+## Experience
+
+### AI Engineer, PropTech Startup
+
+Remote, Moscow - May 2025 - Present
+
+- Building a Russian real-estate voice agent that integrates ASR, LLM reasoning, XTTS, and LiveKit telephony for property outreach, qualification, objection handling, callback flows, and specialist handoff.
+- Developed an OpenAI-compatible backend with streaming responses, tool calling, thread-safe conversation context, token tracking, caching, prompt optimization, detailed monitoring, and persistent memory.
+- Designed a LangGraph-based conversation engine with intent classification, dynamic routing, busy-user handling, company-information responses, multilingual property-search tools, and DuckDB full-text search.
+- Fine-tuned and evaluated Qwen/Gemma-family models for real-estate operator conversations, improving brevity, instruction adherence, and sales-script consistency.
+- Reported sub-250ms p95 latency and about 35% infrastructure cost reduction through streaming, quantization, vLLM serving, model-selection trade-offs, tracing, benchmark suites, and operational runbooks.
+
+### AI Engineer, No Limits Market Ltd
+
+Remote, Dubai - Jan 2025 - Dec 2025
+
+- Built AI-powered financial research and market-intelligence agents for stock analysis, financial news monitoring, trading-signal processing, Persian financial content generation, and Telegram-ready reporting.
+- Developed an 8-stage FinancialKG pipeline for RSS ingestion, web scraping, topic extraction, web search, financial analysis, post generation, Persian translation, and Telegram publishing.
+- Built a Tehran Stock Exchange multi-agent system with dedicated data, analysis, and content agents for technical analysis, fundamental analysis, risk assessment, and structured financial reporting.
+- Integrated PyTSETMC, DuckDuckGo Search, Exa Search, RSS feeds, web scraping, Codal/TSETMC-style sources, custom embeddings, and LangGraph tool-calling workflows.
+- Added retries, checkpointing, link deduplication, admin commands, daily reports, structured logs, error recovery, schema-guided generation, LLM-as-judge review, and report validation.
+
+### ML Engineer, Alpha Neuroscience Company
+
+Tehran - May 2022 - May 2024
+
+- Built ML and signal-processing features for ALPHA, a PyQt5 desktop platform for real-time EEG visualization, recording, analysis, quality monitoring, patient management, clinical review, and report generation.
+- Developed EEG preprocessing workflows with MNE-Python, SciPy, NumPy, and Pandas for EDF loading, filtering, notch filtering, artifact handling, segmentation, and frequency-domain analysis.
+- Implemented real-time signal-quality and artifact-detection logic covering channel correlation, flatline detection, adaptive thresholds, RMS/PSD checks, eye blinks, EMG, electrode pops, cable movement, baseline drift, and 50/60Hz interference.
+- Built spectral-analysis modules for FFT, PSD, band-power extraction, Z-scored power ratios, and topographical brain-map visualizations across Delta, Theta, Alpha, Beta, and High-Beta bands.
+- Built medical assistant and report-support workflows that helped technicians and clinicians summarize EEG findings and review patient context.
+
+### Independent AI/LLM Engineer
+
+Remote - 2023 - Present
+
+- Built custom RAG, deep-research, and knowledge-management systems using FAISS, Weaviate, LangChain, LlamaIndex, OpenRouter, Ollama, Streamlit, custom chunking, reranking, memory, citations, and persistent Q&A workflows.
+- Developed document-grounded Persian banking and enterprise assistants with source-aware retrieval, citation filtering, streaming answers, reranking, and strict answer-from-documents guardrails.
+- Built educational AI systems that convert lecture videos and transcripts into interactive learning materials, including transcript retrieval, summaries, quizzes, and tutorial-style UI generation.
+- Delivered VLM/OCR and document-extraction pipelines using Qwen-VL, Florence-2, EasyOCR, PaddleOCR, Tesseract, object detection, salary-document extraction, and OCR quality comparison workflows.
 
 ---
 
-## Education
-**Bachelor of Science, Computer Engineering** , University of Bam, *May 2024*
+## Selected Open-Source Work
+
+- [ReActMCP](https://github.com/mshojaei77/ReActMCP): MCP web-search server/client that connects Exa-powered search to AI assistants.
+- [pytsetmc-api](https://github.com/mshojaei77/pytsetmc-api): typed Python client for Tehran Stock Exchange Market Center data retrieval with Pydantic validation, retries, logging, fallbacks, CLI usage, tests, and documentation.
+- [Hugging Face](https://huggingface.co/mshojaei77): 14+ models, Persian NLP datasets, and leaderboard spaces focused on low-resource evaluation, tokenizer training, LoRA adapters, model cards, dataset cards, and Persian benchmark workflows.
+- Broader GitHub portfolio: 50+ public repositories across LLM tooling, local AI apps, RAG, MCP clients, prompt engineering, web scraping, browser extensions, subtitle translation, VRAM estimation, Persian LLM evaluation, and AI learning resources.
 
 ---
 
-## Professional Certifications
-- CS224N: Natural Language Processing with Deep Learning – Stanford University, 2024
-- LangChain for LLM Application Development – DeepLearning.AI, 2024
-- Machine Learning Specialization – DeepLearning.AI, 2024
-- Harvard CS50P: Introduction to Programming with Python – Harvard University, 2023
+## Technical Skills
+
+**LLM and agents:** LangGraph, CrewAI, AutoGen, tool/function calling, multi-step agents, conversation memory, dynamic routing, intent classification, specialist handoff, ReAct-style workflows, MCP, prompt optimization, guardrails, agent evaluation.
+
+**RAG and retrieval:** FAISS, Weaviate, LangChain, LlamaIndex, custom chunking, reranking, citation-aware retrieval, source-grounded Q&A, DuckDB FTS, vector search, RAGAS, DeepEval.
+
+**Model engineering:** Hugging Face Transformers, Qwen, Gemma, QLoRA/LoRA, PEFT, bitsandbytes, Unsloth, W&B, fine-tuning, quantization, model cards, dataset cards, Whisper fine-tuning, TTS.
+
+**Production AI and LLMOps:** FastAPI, OpenAI-compatible APIs, streaming responses, vLLM serving, token/cost tracking, caching, structured logs, tracing, health checks, systemd deployment, operational runbooks, latency optimization, regression checks, Kubernetes, MLflow, CI/CD for ML.
+
+**Data and ML:** Python, NumPy, Pandas, SciPy, MNE-Python, signal processing, feature engineering, anomaly detection, FFT, PSD, EEG preprocessing, PySpark.
+
+**Automation and integrations:** web scraping, RSS ingestion, Telegram bots, MCP clients, SSE/stdio transports, OpenAI function calling, financial-data APIs, OCR/VLM pipelines, structured extraction workflows.
 
 ---
 
-## Technical Expertise
-- **Languages & Frameworks:** Python, PyTorch, Transformers, JAX, PEFT, bitsandbytes, FlashAttention, FastAPI, LangChain, LangGraph
-- **Data & ML Infrastructure:** Vector Databases (FAISS, Milvus, Qdrant), RAG, KV-Cache, Quantization (GPTQ, AWQ)
-- **MLOps & Deployment:** Docker, GitHub Actions, CI/CD, Monitoring, AWS, GCP, MLOps, LLMOps
-- **AI Techniques:** RLHF, Prompt Engineering, Agent Development, Model Fine-tuning, Inference Optimization
+## Education and Training
 
+**B.Sc. Computer Engineering**
+Higher Education Complex of Bam - 2020 - 2024
 
+- LangChain for LLM Application Development, DeepLearning.AI, 2024
+- CS224N: Natural Language Processing with Deep Learning, Stanford, 2024
+- Machine Learning Specialization, DeepLearning.AI, 2023
+- CS50P: Introduction to Programming with Python, Harvard, 2023
+
+---
+
+## What This Site Is About
+
+This site is where I publish practical learning material on LLMs, RAG, agents, evaluation, and production AI engineering. The goal is to make advanced AI engineering easier to reproduce: clear concepts, concrete code, realistic failure modes, and measurable outcomes.
