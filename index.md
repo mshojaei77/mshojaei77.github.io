@@ -4,69 +4,46 @@ nav_order: 0
 ---
 
 # Mohammad Shojaei
-{: .fs-9 }
 
-AI Engineer building practical LLM systems, research agents, RAG pipelines, and fine-tuned models that survive outside notebooks.
-{: .fs-6 .fw-300 }
+AI Engineer building production LLM systems, research agents, RAG pipelines, evaluation loops, and small-model fine-tuning workflows.
 
-I work on the messy middle between papers and production: retrieval quality, evaluation, tool use, inference cost, dataset design, and the boring reliability details that make AI products usable.
-{: .fs-5 .fw-300 }
+I work in the messy space between papers and production: retrieval quality, tool calls, state, memory, citations, inference cost, latency, monitoring, and the failure modes that usually hide behind clean demos.
 
-[Read my work](#writing--notes){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Resume & Portfolio](about.html){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Read my notes](llm-engineering-in-action.html){: .btn .btn-primary }
+[Resume & Portfolio](about.html){: .btn }
 
-[Email](mailto:shojaei.dev@gmail.com) · [LinkedIn](https://www.linkedin.com/in/mshojaei77) · [GitHub](https://github.com/mshojaei77) · [Hugging Face](https://huggingface.co/mshojaei77)
+[Email](mailto:shojaei.dev@gmail.com) · [LinkedIn](https://www.linkedin.com/in/mshojaei7) · [GitHub](https://github.com/mshojaei77) · [Hugging Face](https://huggingface.co/mshojaei77) · [Medium](https://medium.com/@mshojaei77)
 
 ---
 
-## What I build
+## What I work on
 
-I design and ship LLM-powered systems where quality, latency, cost, and maintainability all matter at the same time.
-
-| Area | What I focus on |
-|---|---|
-| **RAG & Search** | Chunking, retrieval, reranking, citation-grounded answers, and evaluation loops. |
-| **Agents & Workflows** | Tool use, LangGraph-style state machines, validation gates, human approval points, and recovery from failure. |
-| **Fine-tuning & Datasets** | SFT datasets, instruction formatting, small-model adaptation, and domain-specific training pipelines. |
-| **LLM Infrastructure** | Inference optimization, observability, cost control, deployment, and production debugging. |
+- **Reliable AI agents** — LangGraph-style workflows, tool use, state management, validation gates, recovery, and human approval points.
+- **RAG & research systems** — source-grounded answers, evidence tracking, reranking, citations, retrieval evaluation, and long-running research workflows.
+- **Small-model training** — Persian and low-resource datasets, LoRA/QLoRA, instruction tuning, tokenizer work, model cards, and benchmark loops.
+- **Production LLMOps** — OpenAI-compatible APIs, FastAPI, vLLM, streaming, tracing, cost control, latency tuning, and regression checks.
 
 ---
 
-## Current direction
+## Current focus
 
-Right now I am mostly exploring how to make **research agents** more reliable: not just better prompts, but better state, evidence tracking, validation, citations, and human checkpoints.
+I am currently building and writing about **research agents that behave like real systems**: they gather evidence, keep state, cite sources, handle tool failures, and fail loudly instead of inventing confident nonsense.
 
-The question I keep coming back to:
+The question I keep returning to:
 
-> How do we turn deep research, RAG, and agent workflows into systems that are trustworthy enough for real users?
-
-That means fewer demos, more measurements, and more attention to the boring failure modes: stale context, weak retrieval, silent tool failures, retry bugs, hallucinated citations, and expensive inference paths.
+> How do we turn RAG, deep research, and agent workflows into systems that are useful enough to trust outside a notebook?
 
 ---
 
-## Writing & notes
+## Start here
 
-I write like a builder: experiments, breakdowns, bugs, implementation notes, and lessons from trying to make LLM systems behave in the real world.
-
-Good starting points:
-
-- **Production LLM systems** — RAG, agents, evals, observability, and deployment tradeoffs.
-- **Fine-tuning small models** — dataset design, training recipes, and practical failure cases.
-- **Research agents** — planning, evidence collection, source validation, and long-running workflows.
-- **AI engineering notes** — the small technical details that usually get skipped in polished tutorials.
+- **LLM Engineering in Action** — practical notes from building agents, RAG systems, evals, and production LLM infrastructure.
+- **Medium essays** — longer tutorials and breakdowns on fine-tuning, deployment, inference, and research-agent architecture.
+- **GitHub & Hugging Face** — open-source experiments, datasets, models, Persian NLP benchmarks, and agent tooling.
 
 ---
 
-## Selected work
+## Working style
 
-- [GitHub](https://github.com/mshojaei77) — open-source experiments, agents, RAG systems, and ML engineering projects.
-- [Hugging Face](https://huggingface.co/mshojaei77) — datasets, models, and fine-tuning experiments.
-- [Resume & Portfolio](about.html) — full background, experience, and technical profile.
+Practical first. Measure before polishing. Prefer small reproducible systems over magical demos.
 
----
-
-## How I think about AI engineering
-
-AI products do not fail only because the model is weak. They fail because the system around the model is vague: no evals, no recovery path, no source discipline, no observability, and no honest measurement.
-
-My work is about closing that gap — turning research ideas into systems that can be tested, deployed, improved, and trusted.
