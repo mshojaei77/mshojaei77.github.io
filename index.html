@@ -13,7 +13,6 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mshojaei77.github.io/" />
   <meta property="og:image" content="https://github.com/mshojaei77.png" />
-
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Mohammad Shojaei" />
   <meta name="twitter:description" content="Production AI notes, LLM engineering book, roadmap, newsletter, code, and essays." />
@@ -61,6 +60,7 @@
       --line: #e5dfd2;
       --accent: #1d4ed8;
       --accent-soft: #dbeafe;
+      --icon-bg: #f1eadc;
       --max: 760px;
     }
 
@@ -74,6 +74,7 @@
         --line: #2b2b2b;
         --accent: #93c5fd;
         --accent-soft: #172033;
+        --icon-bg: #202020;
       }
     }
 
@@ -114,6 +115,36 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
     }
 
+    .icon {
+      width: 1em;
+      height: 1em;
+      flex: 0 0 auto;
+      stroke-width: 1.9;
+      vertical-align: -0.14em;
+    }
+
+    .brand-icon {
+      width: 1em;
+      height: 1em;
+      flex: 0 0 auto;
+      fill: currentColor;
+      stroke: none;
+      vertical-align: -0.14em;
+    }
+
+    .brand-emoji {
+      display: inline-flex;
+      width: 1em;
+      height: 1em;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 1.02em;
+      line-height: 1;
+      vertical-align: -0.12em;
+    }
+
     header {
       border-top: 4px solid var(--ink);
       border-bottom: 1px solid var(--line);
@@ -130,6 +161,9 @@
     }
 
     .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       color: var(--ink);
       font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
       font-size: 19px;
@@ -137,6 +171,16 @@
       letter-spacing: -.02em;
       text-decoration: none;
       white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: inline-grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--muted);
     }
 
     nav ul {
@@ -150,6 +194,9 @@
     }
 
     nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       color: var(--muted);
       text-decoration: none;
     }
@@ -159,15 +206,28 @@
       text-decoration: underline;
     }
 
-    main { padding: 42px 0 46px; }
+    main { padding: 38px 0 44px; }
 
-    .intro { padding: 8px 0 26px; }
+    .intro { padding: 6px 0 24px; }
 
     .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       margin: 0 0 12px;
       color: var(--faint);
       font-size: 12px;
       letter-spacing: .01em;
+    }
+
+    .dot-icon {
+      display: inline-grid;
+      width: 21px;
+      height: 21px;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--faint);
     }
 
     h1,
@@ -179,13 +239,18 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(2rem, 5vw, 2.65rem);
+      font-size: clamp(1.9rem, 5vw, 2.45rem);
     }
 
     h2 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       margin: 0 0 12px;
-      font-size: 1.18rem;
+      font-size: 1.12rem;
     }
+
+    h2 .icon { color: var(--faint); }
 
     h3 {
       margin: 0;
@@ -194,23 +259,39 @@
 
     .lede {
       max-width: 66ch;
-      margin: 16px 0 0;
+      margin: 15px 0 0;
       color: var(--muted);
-      font-size: 1.02rem;
+      font-size: 1rem;
     }
 
     .quick-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px 14px;
+      gap: 8px;
       margin-top: 18px;
-      font-size: .96rem;
+      font-size: .93rem;
     }
 
-    .quick-links a { white-space: nowrap; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .chip:hover {
+      border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+      background: color-mix(in srgb, var(--accent-soft) 45%, var(--paper));
+      text-decoration: none;
+    }
 
     section {
-      padding: 22px 0 8px;
+      padding: 21px 0 8px;
       border-top: 1px solid var(--line);
     }
 
@@ -225,7 +306,7 @@
       display: grid;
       grid-template-columns: 112px minmax(0, 1fr);
       gap: 18px;
-      padding: 15px 0;
+      padding: 14px 0;
       border-bottom: 1px solid var(--line);
     }
 
@@ -236,10 +317,39 @@
       padding-top: 2px;
     }
 
+    .meta-line {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .mini-icon {
+      display: inline-grid;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--icon-bg);
+      color: var(--muted);
+    }
+
+    .mini-icon .brand-icon,
+    .mini-icon .brand-emoji {
+      width: 13px;
+      height: 13px;
+      font-size: 13px;
+    }
+
+    .item:hover .mini-icon {
+      color: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 32%, var(--line));
+    }
+
     .item p {
       margin: 5px 0 0;
       color: var(--muted);
-      font-size: .97rem;
+      font-size: .96rem;
     }
 
     .item a.title {
@@ -254,17 +364,25 @@
     }
 
     .note {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
       margin: 16px 0 0;
-      padding: 12px 14px;
+      padding: 11px 13px;
       border: 1px solid var(--line);
       background: var(--paper);
       color: var(--muted);
-      font-size: .95rem;
+      font-size: .94rem;
+    }
+
+    .note .icon {
+      margin-top: .25em;
+      color: var(--faint);
     }
 
     footer {
       border-top: 1px solid var(--line);
-      padding: 22px 0 32px;
+      padding: 21px 0 32px;
       color: var(--faint);
       font-size: 12px;
     }
@@ -280,8 +398,14 @@
 
     .socials {
       display: flex;
-      gap: 12px;
+      gap: 11px;
       flex-wrap: wrap;
+    }
+
+    .socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     @media (max-width: 640px) {
@@ -290,21 +414,74 @@
       main { padding-top: 30px; }
       .nav { align-items: flex-start; }
       nav ul { gap: 8px 12px; }
+      nav a .icon { display: none; }
       .item { grid-template-columns: 1fr; gap: 5px; padding: 14px 0; }
       .meta { padding-top: 0; }
     }
   </style>
 </head>
 <body>
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m7 8 4 4-4 4" /><path d="M13 16h4" />
+    </symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 7v14" /><path d="M3 18a2 2 0 0 0 2 2h7V5H5a2 2 0 0 0-2 2v11Z" /><path d="M21 18a2 2 0 0 1-2 2h-7V5h7a2 2 0 0 1 2 2v11Z" />
+    </symbol>
+    <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18-6 3V6l6-3 6 3 6-3v15l-6 3-6-3Z" /><path d="M9 3v15" /><path d="M15 6v15" />
+    </symbol>
+    <symbol id="i-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5h13a3 3 0 0 1 3 3v11H6a2 2 0 0 1-2-2V5Z" /><path d="M20 8h-3v9a2 2 0 0 0 2 2" /><path d="M8 9h5" /><path d="M8 13h7" /><path d="M8 17h5" />
+    </symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 6h13" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M3 6h.01" /><path d="M3 12h.01" /><path d="M3 18h.01" />
+    </symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m8 9-4 3 4 3" /><path d="m16 9 4 3-4 3" /><path d="m14 4-4 16" />
+    </symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" />
+    </symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 2h6" /><path d="M10 2v6l-5 9a3 3 0 0 0 2.6 4.5h8.8A3 3 0 0 0 19 17l-5-9V2" /><path d="M8.5 15h7" />
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3 10.2 8.2 5 10l5.2 1.8L12 17l1.8-5.2L19 10l-5.2-1.8L12 3Z" /><path d="M19 17v4" /><path d="M21 19h-4" />
+    </symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2" /><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2" />
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" />
+    </symbol>
+
+    <symbol id="brand-github" viewBox="0 0 24 24">
+      <path d="M12 .3C5.37.3 0 5.67 0 12.3c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.04c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02.01 2.04.14 3 .41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12.01 12.01 0 0 0 24 12.3C24 5.67 18.63.3 12 .3Z"/>
+    </symbol>
+    <symbol id="brand-linkedin" viewBox="0 0 24 24">
+      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/>
+    </symbol>
+    <symbol id="brand-x" viewBox="0 0 24 24">
+      <path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4Z"/>
+    </symbol>
+    <symbol id="brand-medium" viewBox="0 0 24 24">
+      <path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12Zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42ZM24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12Z"/>
+    </symbol>
+  </svg>
+
   <header>
     <div class="wrap nav">
-      <a class="brand" href="/">Mohammad Shojaei</a>
+      <a class="brand" href="/">
+        <span class="brand-mark"><svg class="icon"><use href="#i-terminal"></use></svg></span>
+        Mohammad Shojaei
+      </a>
       <nav aria-label="Main navigation">
         <ul>
-          <li><a href="/book/">book</a></li>
-          <li><a href="/roadmap.html">roadmap</a></li>
-          <li><a href="https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200">newsletter</a></li>
-          <li><a href="/about.html">about</a></li>
+          <li><a href="/book/"><svg class="icon"><use href="#i-book"></use></svg>book</a></li>
+          <li><a href="/roadmap.html"><svg class="icon"><use href="#i-map"></use></svg>roadmap</a></li>
+          <li><a href="https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200"><svg class="icon"><use href="#i-news"></use></svg>newsletter</a></li>
+          <li><a href="/about.html"><svg class="icon"><use href="#i-link"></use></svg>about</a></li>
         </ul>
       </nav>
     </div>
@@ -312,7 +489,7 @@
 
   <main class="wrap">
     <section class="intro" aria-labelledby="intro-title">
-      <p class="eyebrow mono">LLMs · AI engineer · production notes</p>
+      <p class="eyebrow mono"><span class="dot-icon"><svg class="icon"><use href="#i-spark"></use></svg></span>AI engineer</p>
       <h1 id="intro-title">Mohammad Shojaei</h1>
       <p class="lede">
         I build LLM systems and write about the weird parts: agents that lose state, retrieval that sounds right until it isn't, evals that replace vibes, and model-serving bills that quietly become a plot twist.
@@ -320,20 +497,16 @@
       <p class="lede">
         This page is only the index. The longer biography and work history live on <a href="/about.html">/about</a>.
       </p>
-      <div class="quick-links" aria-label="Primary links">
-        <a href="/book/">LLM Engineering in Action</a>
-        <span aria-hidden="true">·</span>
-        <a href="/roadmap.html">LLM Development Roadmap</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200">Building Production AI</a>
-      </div>
     </section>
 
     <section aria-labelledby="start-title">
-      <h2 id="start-title">Start here</h2>
+      <h2 id="start-title"><svg class="icon"><use href="#i-list"></use></svg>Start here</h2>
       <div class="list">
         <article class="item">
-          <div class="meta">book<br />living draft</div>
+          <div class="meta">
+            <span class="meta-line"><span class="mini-icon"><svg class="icon"><use href="#i-book"></use></svg></span>book</span>
+            <span>living draft</span>
+          </div>
           <div>
             <h3><a class="title" href="/book/">LLM Engineering in Action</a></h3>
             <p>The book I’m writing about the LLM stack from useful foundations to systems that need to run, fail, recover, and be debugged.</p>
@@ -341,7 +514,10 @@
         </article>
 
         <article class="item">
-          <div class="meta">roadmap<br />study path</div>
+          <div class="meta">
+            <span class="meta-line"><span class="mini-icon"><svg class="icon"><use href="#i-map"></use></svg></span>roadmap</span>
+            <span>study path</span>
+          </div>
           <div>
             <h3><a class="title" href="/roadmap.html">LLM Development Roadmap</a></h3>
             <p>A practical path through LLMs. Not a sacred curriculum. More like a map with coffee stains and warning labels.</p>
@@ -349,7 +525,10 @@
         </article>
 
         <article class="item">
-          <div class="meta">weekly<br />newsletter</div>
+          <div class="meta">
+            <span class="meta-line"><span class="mini-icon"><svg class="icon"><use href="#i-news"></use></svg></span>weekly</span>
+            <span>newsletter</span>
+          </div>
           <div>
             <h3><a class="title" href="https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200">Building Production AI</a></h3>
             <p>Short field notes on agents, retrieval, evals, serving, debugging, and the boring glue that makes AI systems survive users.</p>
@@ -359,10 +538,12 @@
     </section>
 
     <section aria-labelledby="elsewhere-title">
-      <h2 id="elsewhere-title">Elsewhere</h2>
+      <h2 id="elsewhere-title"><svg class="icon"><use href="#i-link"></use></svg>Elsewhere</h2>
       <div class="list">
         <article class="item">
-          <div class="meta">code</div>
+          <div class="meta">
+            <span class="meta-line"><span class="mini-icon"><svg class="brand-icon"><use href="#brand-github"></use></svg></span>code</span>
+          </div>
           <div>
             <h3><a class="title" href="https://github.com/mshojaei77">GitHub</a></h3>
             <p>Tools, experiments, and small engineering artifacts. Some are useful. Some are suspiciously alive.</p>
@@ -370,7 +551,9 @@
         </article>
 
         <article class="item">
-          <div class="meta">essays</div>
+          <div class="meta">
+            <span class="meta-line"><span class="mini-icon"><svg class="brand-icon"><use href="#brand-medium"></use></svg></span>essays</span>
+          </div>
           <div>
             <h3><a class="title" href="https://medium.com/@mshojaei77">Medium</a></h3>
             <p>Longer writeups when a bug, paper, or late-night experiment turns into something worth explaining.</p>
@@ -378,17 +561,15 @@
         </article>
 
         <article class="item">
-          <div class="meta">lab</div>
+          <div class="meta">
+            <span class="meta-line"><span class="mini-icon"><span class="brand-emoji" aria-hidden="true">🤗</span></span>lab</span>
+          </div>
           <div>
             <h3><a class="title" href="https://huggingface.co/mshojaei77">Hugging Face</a></h3>
             <p>Models, datasets, adapters, and evaluation leftovers from the build loop.</p>
           </div>
         </article>
       </div>
-
-      <p class="note">
-        Design goal for this homepage: small, readable, boring in the good way. No giant hero. No résumé cosplay. Just paths.
-      </p>
     </section>
   </main>
 
@@ -396,11 +577,12 @@
     <div class="wrap foot">
       <div>© 2026 Mohammad Shojaei</div>
       <div class="socials">
-        <a href="mailto:shojaei.dev@gmail.com">email</a>
-        <a href="https://www.linkedin.com/in/mshojaei77/">linkedin</a>
-        <a href="https://github.com/mshojaei77">github</a>
-        <a href="https://huggingface.co/mshojaei77">hf</a>
-        <a href="https://x.com/realshojaei">x</a>
+        <a href="mailto:shojaei.dev@gmail.com"><svg class="icon"><use href="#i-mail"></use></svg>email</a>
+        <a href="https://www.linkedin.com/in/mshojaei77/"><svg class="brand-icon"><use href="#brand-linkedin"></use></svg>linkedin</a>
+        <a href="https://github.com/mshojaei77"><svg class="brand-icon"><use href="#brand-github"></use></svg>github</a>
+        <a href="https://huggingface.co/mshojaei77"><span class="brand-emoji" aria-hidden="true">🤗</span>hf</a>
+        <a href="https://medium.com/@mshojaei77"><svg class="brand-icon"><use href="#brand-medium"></use></svg>medium</a>
+        <a href="https://x.com/realshojaei"><svg class="brand-icon"><use href="#brand-x"></use></svg>x</a>
       </div>
     </div>
   </footer>
