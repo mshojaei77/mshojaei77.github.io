@@ -9,7 +9,7 @@ AI Engineer building production LLM systems, research agents, RAG pipelines, eva
 
 I work in the messy space between papers and production: retrieval quality, tool calls, state, memory, citations, inference cost, latency, monitoring, and the failure modes that usually hide behind clean demos.
 
-[Read my notes](llm-engineering-in-action.html){: .btn .btn-primary }
+[Read my book](https://mshojaei77.github.io/book/){: .btn .btn-primary }
 [Resume & Portfolio](about.html){: .btn }
 
 [Email](mailto:shojaei.dev@gmail.com) · [LinkedIn](https://www.linkedin.com/in/mshojaei7) · [GitHub](https://github.com/mshojaei77) · [Hugging Face](https://huggingface.co/mshojaei77) · [Medium](https://medium.com/@mshojaei77)
@@ -18,9 +18,9 @@ I work in the messy space between papers and production: retrieval quality, tool
 
 ## What I work on
 
-- **Reliable AI agents** — LangGraph-style workflows, tool use, state management, validation gates, recovery, and human approval points.
+- **Reliable AI agents** — LangGraph workflows, tool use, state management, validation gates, recovery, and human approval points.
 - **RAG & research systems** — source-grounded answers, evidence tracking, reranking, citations, retrieval evaluation, and long-running research workflows.
-- **Small-model training** — Persian and low-resource datasets, LoRA/QLoRA, instruction tuning, tokenizer work, model cards, and benchmark loops.
+- **Small-model training** — Persian and low-resource datasets, LoRA/QLoRA, RL, tokenizer work, dataset gathering, and benchmark loops.
 - **Production LLMOps** — OpenAI-compatible APIs, FastAPI, vLLM, streaming, tracing, cost control, latency tuning, and regression checks.
 
 ---
@@ -32,14 +32,6 @@ I am currently building and writing about **research agents that behave like rea
 The question I keep returning to:
 
 > How do we turn RAG, deep research, and agent workflows into systems that are useful enough to trust outside a notebook?
-
----
-
-## Start here
-
-- **LLM Engineering in Action** — practical notes from building agents, RAG systems, evals, and production LLM infrastructure.
-- **Medium essays** — longer tutorials and breakdowns on fine-tuning, deployment, inference, and research-agent architecture.
-- **GitHub & Hugging Face** — open-source experiments, datasets, models, Persian NLP benchmarks, and agent tooling.
 
 ---
 
