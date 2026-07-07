@@ -1,107 +1,493 @@
----
-layout: null
-title: Mohammad Shojaei
----
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mohammad Shojaei</title>
-  <meta name="description" content="Mohammad Shojaei — AI Engineer building production LLM agents, RAG systems, evaluation loops, and small-model fine-tuning workflows.">
-  <link rel="stylesheet" href="/assets/css/home.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mohammad Shojaei — Production AI Notes</title>
+  <meta name="description" content="Mohammad Shojaei writes and builds around production LLM systems: agents, RAG, evaluation, model serving, and LLMOps." />
+  <meta name="author" content="Mohammad Shojaei" />
+  <meta name="theme-color" content="#0d0f13" />
+
+  <meta property="og:title" content="Mohammad Shojaei — Production AI Notes" />
+  <meta property="og:description" content="A compact map of my LLM book, roadmap, newsletter, writing, and production AI experiments." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mshojaei77.github.io/" />
+  <meta property="og:image" content="https://github.com/mshojaei77.png" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Mohammad Shojaei — Production AI Notes" />
+  <meta name="twitter:description" content="LLM agents, RAG, evaluation, model serving, and the debugging notes between prototype and production." />
+  <meta name="twitter:image" content="https://github.com/mshojaei77.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Mohammad Shojaei",
+    "url": "https://mshojaei77.github.io/",
+    "image": "https://github.com/mshojaei77.png",
+    "jobTitle": "AI Engineer",
+    "address": { "@type": "PostalAddress", "addressCountry": "Netherlands" },
+    "sameAs": [
+      "https://github.com/mshojaei77",
+      "https://huggingface.co/mshojaei77",
+      "https://medium.com/@mshojaei77",
+      "https://www.linkedin.com/in/mshojaei77/",
+      "https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200",
+      "https://x.com/realshojaei"
+    ],
+    "knowsAbout": [
+      "Large Language Models",
+      "AI Agents",
+      "Retrieval-Augmented Generation",
+      "LLM Evaluation",
+      "LLMOps",
+      "Model Serving",
+      "LangGraph",
+      "vLLM",
+      "Hugging Face",
+      "FastAPI"
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #f8f5ee;
+      --paper: #fffdf7;
+      --ink: #151515;
+      --muted: #666057;
+      --soft: #918a7e;
+      --line: #ded4c4;
+      --accent: #14532d;
+      --accent-2: #9a3412;
+      --code: #0d0f13;
+      --code-ink: #d7fbe8;
+      --max: 940px;
+      --radius: 18px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #090c11;
+        --paper: #111827;
+        --ink: #f5f2ea;
+        --muted: #b8b0a4;
+        --soft: #8e877c;
+        --line: #273244;
+        --accent: #86efac;
+        --accent-2: #fdba74;
+        --code: #020617;
+        --code-ink: #bbf7d0;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 5% 0%, rgba(20, 83, 45, .10), transparent 30rem),
+        radial-gradient(circle at 92% 6%, rgba(154, 52, 18, .08), transparent 28rem),
+        var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      text-underline-offset: .18em;
+      text-decoration-thickness: .08em;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .mono, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0;
+      font-size: 14px;
+    }
+
+    .brand {
+      color: var(--ink);
+      font-weight: 800;
+      letter-spacing: -.025em;
+      white-space: nowrap;
+    }
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav a { color: var(--muted); }
+    nav a:hover { color: var(--ink); }
+
+    main { padding: 56px 0 70px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+      gap: 34px;
+      align-items: center;
+      padding: 18px 0 40px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent-2);
+      font-size: 13px;
+      letter-spacing: .02em;
+    }
+
+    h1, h2, h3 { line-height: 1.12; }
+
+    h1 {
+      margin: 0;
+      max-width: 11ch;
+      font-size: clamp(2.75rem, 7vw, 5.5rem);
+      letter-spacing: -.08em;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+      letter-spacing: -.05em;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      letter-spacing: -.025em;
+    }
+
+    .lead {
+      margin: 22px 0 0;
+      max-width: 64ch;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.75vw, 1.25rem);
+    }
+
+    .lead strong { color: var(--ink); }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 41px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .button.primary {
+      color: #fffdf7;
+      border-color: color-mix(in srgb, var(--accent) 70%, #000);
+      background: color-mix(in srgb, var(--accent) 86%, #111827);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .button.primary { color: #07130b; background: var(--accent); }
+    }
+
+    .terminal {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--code);
+      color: var(--code-ink);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .10);
+      transform: rotate(.45deg);
+    }
+
+    .terminal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 13px;
+      border-bottom: 1px solid rgba(255, 255, 255, .10);
+      color: rgba(215, 251, 232, .72);
+      font-size: 12px;
+    }
+
+    .dots { display: inline-flex; gap: 6px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(215, 251, 232, .34); }
+
+    .terminal-body {
+      padding: 16px 17px 18px;
+      font-size: 13px;
+      line-height: 1.72;
+      white-space: pre-wrap;
+    }
+
+    .comment { color: rgba(215, 251, 232, .55); }
+    .prompt { color: #93c5fd; }
+    .green { color: #86efac; }
+    .orange { color: #fdba74; }
+
+    section { padding: 34px 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .card {
+      min-height: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, .035);
+    }
+
+    .card:hover {
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+      transform: translateY(-1px);
+    }
+
+    .card p { margin: 0; color: var(--muted); }
+    .card a.title { color: var(--ink); font-weight: 820; }
+    .meta { margin-top: 12px; color: var(--soft); font-size: 13px; }
+
+    .thin {
+      max-width: 70ch;
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .feed {
+      display: grid;
+      gap: 10px;
+    }
+
+    .feed a {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 14px 16px;
+      color: var(--ink);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+    }
+
+    .feed a:hover { transform: translateX(2px); text-decoration: none; }
+    .feed span { color: var(--muted); display: block; font-size: 14px; margin-top: 2px; }
+    .arrow { color: var(--soft); }
+
+    .note {
+      margin: 26px 0 0;
+      padding: 18px;
+      border-left: 3px solid var(--accent);
+      color: var(--muted);
+      background: color-mix(in srgb, var(--paper) 72%, transparent);
+      border-radius: 0 16px 16px 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 42px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .links { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .terminal { transform: none; }
+      h1 { max-width: 10ch; }
+    }
+
+    @media (max-width: 620px) {
+      body { font-size: 16px; }
+      main { padding-top: 34px; }
+      nav ul { display: none; }
+      .feed a { grid-template-columns: 1fr; }
+      .arrow { display: none; }
+      .wrap { padding: 0 18px; }
+    }
+  </style>
 </head>
-
 <body>
-  <main class="page">
-    <header class="site-header">
+  <header>
+    <div class="wrap nav">
       <a class="brand" href="/">Mohammad Shojaei</a>
-
-      <nav class="nav" aria-label="Main navigation">
-        <a href="/book/">Book</a>
-        <a href="/about.html">Portfolio</a>
-        <a href="https://medium.com/@mshojaei77">Writing</a>
-        <a href="https://github.com/mshojaei77">GitHub</a>
-        <a href="https://huggingface.co/mshojaei77">Hugging Face</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/book/">book</a></li>
+          <li><a href="/roadmap.html">roadmap</a></li>
+          <li><a href="https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200">newsletter</a></li>
+          <li><a href="/about.html">about</a></li>
+          <li><a href="mailto:shojaei.dev@gmail.com">email</a></li>
+        </ul>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="kicker">AI Engineer · LLM Agents · RAG · Evaluation</p>
-
-        <h1>I build production LLM systems that survive outside notebooks.</h1>
-
-        <p>
-          I work on the unglamorous parts of AI engineering: tool calls, retrieval quality,
-          state, memory, citations, inference cost, latency, monitoring, and failure handling.
+  <main class="wrap">
+    <section class="hero" aria-labelledby="intro-title">
+      <div>
+        <p class="eyebrow mono">Netherlands · production AI · agents/RAG/evals</p>
+        <h1 id="intro-title">LLM systems, minus the demo fog.</h1>
+        <p class="lead">
+          I’m Mohammad. I build and write about <strong>production LLM systems</strong>: agents with state, RAG that cites its sources, evaluation loops, model serving, cost/latency work, and the awkward failure paths everyone discovers too late.
         </p>
-
-        <p>
-          Recently I’ve been focused on research agents, source-grounded RAG, small-model
-          fine-tuning, Persian NLP, OpenAI-compatible APIs, and vLLM deployment.
+        <p class="lead">
+          This homepage is just the map. My work history lives on the <a href="/about.html">about page</a>; this front page is for the stuff I’m actively publishing.
         </p>
+        <div class="actions">
+          <a class="button primary" href="/book/">Read the book</a>
+          <a class="button" href="/roadmap.html">LLM roadmap</a>
+          <a class="button" href="https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200">Weekly newsletter</a>
+          <a class="button" href="https://github.com/mshojaei77">GitHub</a>
+        </div>
       </div>
 
-      <img class="avatar" src="https://github.com/mshojaei77.png" alt="Mohammad Shojaei">
+      <aside class="terminal" aria-label="Terminal style note">
+        <div class="terminal-top mono">
+          <span class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+          <span>~/scratchpad</span>
+        </div>
+        <div class="terminal-body mono"><span class="prompt">$</span> cat current-loop.txt
+
+<span class="comment"># things I keep coming back to</span>
+- agents need state, not vibes
+- RAG needs evals, not screenshots
+- serving needs latency budgets
+- prompts need versioning
+- tools need audit logs
+
+<span class="prompt">$</span> echo belief
+<span class="green">make failure visible.</span>
+<span class="orange">then ship the boring fix.</span></div>
+      </aside>
     </section>
 
-    <section class="section">
-      <h2>Selected work</h2>
+    <section aria-labelledby="start-title">
+      <p class="eyebrow mono">start here</p>
+      <h2 id="start-title">Three useful doors.</h2>
+      <div class="grid">
+        <article class="card">
+          <a class="title" href="/book/">LLM Engineering in Action</a>
+          <p>A book I’m writing about moving from LLM foundations to production systems: RAG, agents, fine-tuning, LLMOps, evaluation, security, and deployment.</p>
+          <div class="meta mono">book / living draft</div>
+        </article>
 
-      <ul class="links-list">
-        <li>
-          <a href="https://huggingface.co/datasets/mshojaei77/terminal-command-execution-sft">terminal-command-execution-sft</a>
-          — SFT dataset for terminal command generation.
-        </li>
-        <li>
-          <a href="https://github.com/mshojaei77/ReActMCP">ReActMCP</a>
-          — MCP web-search server/client for AI assistants.
-        </li>
-        <li>
-          <a href="https://github.com/mshojaei77/ParsiEval">ParsiEval</a>
-          — Persian LLM evaluation benchmark.
-        </li>
-        <li>
-          <a href="https://github.com/mshojaei77/open-notebook">Open Notebook</a>
-          — RAG knowledge base over websites, PDFs, and text.
-        </li>
-        <li>
-          <a href="https://github.com/mshojaei77/pytsetmc-api">pytsetmc-api</a>
-          — typed Python client for Tehran Stock Exchange data.
-        </li>
-      </ul>
+        <article class="card">
+          <a class="title" href="/roadmap.html">LLM Development Roadmap</a>
+          <p>A hands-on roadmap for people who want to learn the full LLM stack: foundations, training, evaluation, inference, RAG, agents, multimodal, and production work.</p>
+          <div class="meta mono">roadmap / learning path</div>
+        </article>
+
+        <article class="card">
+          <a class="title" href="https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200">Building Production AI</a>
+          <p>My weekly LinkedIn newspaper/newsletter: short, practical notes on real LLM systems, agents, RAG pipelines, evals, serving workflows, and debugging scars.</p>
+          <div class="meta mono">newsletter / weekly notes</div>
+        </article>
+      </div>
     </section>
 
-    <section class="section">
-      <h2>Writing</h2>
-
-      <p>
-        I write practical notes on LLM agents, RAG, fine-tuning, evaluation, Persian NLP,
-        and deployment — usually from the debugging side of things.
+    <section aria-labelledby="writing-title">
+      <p class="eyebrow mono">recent rabbit holes</p>
+      <h2 id="writing-title">Mostly technical notes.</h2>
+      <p class="thin">
+        I like posts that feel like a lab notebook after the coffee got cold: what was built, what broke, what trade-off mattered, and what I’d do differently next time.
       </p>
+      <div class="feed">
+        <a href="https://medium.com/@mshojaei77">
+          <strong>Medium essays<span>Longer writeups on agents, RAG, fine-tuning, vLLM deployment, and LLM engineering patterns.</span></strong>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://github.com/mshojaei77">
+          <strong>GitHub experiments<span>Open-source tools, agent experiments, retrieval systems, datasets, utilities, and unfinished little gremlins.</span></strong>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://huggingface.co/mshojaei77">
+          <strong>Hugging Face lab<span>Models, datasets, adapters, and evaluation artifacts from my LLM experimentation loop.</span></strong>
+          <span class="arrow">→</span>
+        </a>
+      </div>
 
-      <p>
-        <a href="/book/">LLM Engineering In Action</a> ·
-        <a href="https://medium.com/@mshojaei77">Medium</a>
+      <p class="note">
+        For background, projects, skills, and contact details, go to <a href="/about.html">/about</a>. This front page is intentionally small: book, roadmap, newsletter, writing, code. That’s the whole game.
       </p>
     </section>
-
-    <section class="section">
-      <h2>Current loop</h2>
-
-      <p>
-        Build small. Measure early. Cite sources. Make failure visible.
-      </p>
-    </section>
-
-    <footer class="footer">
-      <a href="mailto:shojaei.dev@gmail.com">Email</a>
-      <a href="https://www.linkedin.com/in/mshojaei77">LinkedIn</a>
-      <a href="https://github.com/mshojaei77">GitHub</a>
-      <a href="https://huggingface.co/mshojaei77">Hugging Face</a>
-      <a href="https://medium.com/@mshojaei77">Medium</a>
-    </footer>
   </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>© 2026 Mohammad Shojaei · updated July 2026</div>
+      <div class="links">
+        <a href="mailto:shojaei.dev@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/mshojaei77/">LinkedIn</a>
+        <a href="https://github.com/mshojaei77">GitHub</a>
+        <a href="https://huggingface.co/mshojaei77">Hugging Face</a>
+        <a href="https://medium.com/@mshojaei77">Medium</a>
+        <a href="https://x.com/realshojaei">X</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
