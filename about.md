@@ -29,7 +29,7 @@ I care about AI systems that are measurable, debuggable, and honest about their 
 
 ## Experience
 
-### AI Engineer, PropTech Startup
+### AI Engineer, Sunlife Estate
 
 Remote, Moscow - May 2025 - Present
 
