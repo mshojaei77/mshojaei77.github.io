@@ -29,7 +29,7 @@ I care about AI systems that are measurable, debuggable, and honest about their 
 
 ## Experience
 
-### AI Engineer, Sunlife Estate
+### AI Engineer, [Sunlife Estate](https://sunlife.estate/)
 
 Remote, Moscow - May 2025 - Present
 
@@ -39,7 +39,7 @@ Remote, Moscow - May 2025 - Present
 - Fine-tuned and evaluated Qwen/Gemma-family models for real-estate operator conversations, improving brevity, instruction adherence, and sales-script consistency.
 - Reported sub-250ms p95 latency and about 35% infrastructure cost reduction through streaming, quantization, vLLM serving, model-selection trade-offs, tracing, benchmark suites, and operational runbooks.
 
-### AI Engineer, No Limits Market Ltd
+### AI Engineer, [No Limit Markets Ltd](https://nolimitmarkets.com/)
 
 Remote, Dubai - Jan 2025 - Dec 2025
 
@@ -49,7 +49,7 @@ Remote, Dubai - Jan 2025 - Dec 2025
 - Integrated PyTSETMC, DuckDuckGo Search, Exa Search, RSS feeds, web scraping, Codal/TSETMC-style sources, custom embeddings, and LangGraph tool-calling workflows.
 - Added retries, checkpointing, link deduplication, admin commands, daily reports, structured logs, error recovery, schema-guided generation, LLM-as-judge review, and report validation.
 
-### ML Engineer, Alpha Neuroscience Company
+### ML Engineer, [Alpha Neuroscience](https://www.alphaica.com)
 
 Tehran - May 2022 - May 2024
 
