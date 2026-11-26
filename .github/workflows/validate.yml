@@ -10,11 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/jekyll-build-pages@v1
         with:
-          ruby-version: '3.3'
-          bundler-cache: true
-      - run: bundle exec jekyll build
-        env:
-          JEKYLL_ENV: production
+          source: .
+          destination: ./_site
       - run: python3 scripts/check_site.py _site
