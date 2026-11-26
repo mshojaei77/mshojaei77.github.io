@@ -36,3 +36,7 @@ All internal tutorials and articles have paired English and Persian routes. Reso
 ## Direct publication policy
 
 Publish authored articles directly in the bilingual blog; do not link to Medium or advertise a separate newsletter. Keep existing technical reference titles and replace missing links to the author's work with verified local article routes only after the migrated articles have been published. The retired newsletter pages are removed from the generated site.
+
+## Document parsing tutorial
+
+Both language versions use the same practical tutorial and the same downloadable code in `assets/examples/document-parsing/`. The Python fixture test exercises native text, a simple digital table, scan routing and English OCR. Optional external tools are documented extensions, not part of that smoke test. Keep source links, matching examples, stable language routes and legacy section anchors. Do not reintroduce project-specific benchmarks or claim production quality from the synthetic fixture.

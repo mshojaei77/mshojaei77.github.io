@@ -15,6 +15,15 @@ jobs:
           source: .
           destination: ./_site
       - run: python3 scripts/check_site.py _site
+      - name: Test the document parsing tutorial
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-eng
+          python3 -m venv /tmp/tutorial-env
+          /tmp/tutorial-env/bin/python -m pip install -r assets/examples/document-parsing/requirements.txt
+          export TUTORIAL_TESSDATA="$(dirname "$(dpkg -L tesseract-ocr-eng | grep '/eng.traineddata$' | head -n 1)")"
+          test -f "$TUTORIAL_TESSDATA/eng.traineddata"
+          /tmp/tutorial-env/bin/python scripts/test_document_parsing_tutorial.py
       - name: Install browser test dependencies
         run: |
           npm install --prefix /tmp/publication-browser --no-audit --no-fund playwright@1.58.2
