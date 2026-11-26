@@ -185,35 +185,40 @@ if not redirect.is_file() or f"url={guide_route}" not in redirect.read_text(enco
     errors.append("Missing redirect from accidentally published duplicate URL")
 if inspect_route("/writing/document-parsing/").alternates:
     errors.append("Older English tutorial incorrectly advertised as translation of v6")
-# CMS files are served unchanged and excluded from public discovery.
-import json
+# Publication Studio must be self-hosted, excluded from indexing, and keep source files intact.
 admin = root / "admin/index.html"
-config = root / "admin/config.yml"
-if not admin.is_file() or not config.is_file():
-    errors.append("CMS entry point or config missing")
+if not admin.is_file():
+    errors.append("Studio entry point missing")
 else:
-    cms = json.loads(config.read_text(encoding="utf-8"))
     html = admin.read_text(encoding="utf-8")
-    if cms["backend"] != {"name": "github", "repo": "mshojaei77/mshojaei77.github.io", "branch": "main", "auth_methods": ["token"], "open_authoring": False}:
-        errors.append("CMS authentication configuration changed unexpectedly")
-    if cms["publish_mode"] != "editorial_workflow" or any(c.get("publish") is not False or c.get("delete") is not False for c in cms["collections"]):
-        errors.append("CMS must require reviewed PR merges and protect published URLs")
-    if "https://unpkg.com/@sveltia/cms@0.273.1/dist/sveltia-cms.js" not in html or "noindex,nofollow,noarchive" not in html:
-        errors.append("CMS version pin or robots metadata missing")
+    for marker in ('/admin/studio.js', 'noindex,nofollow,noarchive', 'sandbox=""', "connect-src https://api.github.com"):
+        if marker not in html:
+            errors.append(f"Studio security/boot marker missing: {marker}")
+    if "unpkg.com" in html or (root / "admin/config.yml").exists():
+        errors.append("Retired Sveltia CMS remains deployed")
+    for name in ("studio.js", "studio-core.js", "studio.css", "preview-worker.js"):
+        if not (root / "admin" / name).is_file():
+            errors.append(f"Studio asset missing: {name}")
     if "/admin/" in (root / "sitemap.xml").read_text(encoding="utf-8"):
         errors.append("Admin must not appear in sitemap")
     if "Disallow: /admin/" not in (root / "robots.txt").read_text(encoding="utf-8"):
         errors.append("Admin crawler exclusion missing")
-    file_entries = [f for c in cms["collections"] for f in c.get("files", [])]
-    for entry in file_entries:
-        if not Path(entry["file"]).is_file():
-            errors.append(f"CMS file entry missing: {entry['file']}")
-        body = next(f for f in entry["fields"] if f["name"] == "body")
-        if body.get("modes") != ["raw"] or body.get("sanitize_preview") is not True:
-            errors.append(f"Unsafe editor mode: {entry['file']}")
-    posts = [c for c in cms["collections"] if c.get("folder") == "_posts"]
-    if len(posts) != 2 or not all(c["create"] and c["extension"] == "md" for c in posts):
-        errors.append("CMS Markdown creation collections missing")
+# Unique canonical post routes, including newly created Studio posts.
+from collections import Counter
+post_routes = []
+for path in Path("_posts").iterdir():
+    if path.suffix not in (".md", ".markdown", ".html"):
+        continue
+    text = path.read_text(encoding="utf-8")
+    front = re.match(r"^---\n(.*?)\n---(?:\n|$)", text, re.S)
+    route = re.search(r"^permalink:\s*(.*?)\s*$", front.group(1), re.M) if front else None
+    if not route:
+        errors.append(f"Missing explicit permalink: {path}")
+    else:
+        post_routes.append(route.group(1).strip("'\\\""))
+for route, count in Counter(post_routes).items():
+    if count > 1:
+        errors.append(f"Duplicate post permalink: {route}")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)
