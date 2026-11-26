@@ -5,14 +5,14 @@ title: "مقایسهٔ پایگاه‌های دادهٔ برداری"
 description: "راهنمای مقایسهٔ گزینه‌های اصلی Vector DB."
 permalink: /fa/writing/vector-databases/
 nav_exclude: true
-date: 2026-11-26 16:35:12 +0000
+date: "2023-08-25 00:00:00 +0000"
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
 ---
-<h1>مقایسهٔ پایگاه‌های دادهٔ برداری</h1><p>راهنمای مقایسهٔ Vector DBهای مطرح</p><p class="language-note">اعداد و توضیحات مجوز از مقایسهٔ اصلی حفظ شده‌اند. شرایط Benchmark همهٔ اعداد مشخص نیست و این‌ها مشخصات به‌روز یا نتایج مستقل تأییدشده محسوب نمی‌شوند.</p><div class="tablewrap"><table><thead><tr><th scope="col">پایگاه داده</th><th scope="col">مجوز و میزبانی</th><th scope="col">مقیاس و عملکرد</th><th scope="col">فیلتر و جست‌وجو</th><th scope="col">اکوسیستم و ابزارها</th><th scope="col">نقاط قوت</th><th scope="col">محدودیت‌ها</th></tr></thead><tbody><tr><td><strong>Qdrant</strong></td><td>Apache-2؛ میزبانی شخصی و ابری</td><td>p50 کمتر از ۳ میلی‌ثانیه (۱ میلیون بردار)<br>کوانتیزه‌سازی: حدود ۳۰ برابر کاهش RAM</td><td>فیلتر بر اساس Payload<br>چند بردار برای هر سند</td><td>APIهای HTTP و gRPC<br>LangChain/LlamaIndex</td><td>RPS بالا<br>پشتیبانی آماده از چند بردار</td><td>سرویس ابری مدیریت‌شده جدیدتر<br>امکانات RBAC سازمانی کمتر</td></tr>
+<h1>مقایسهٔ پایگاه‌های دادهٔ برداری</h1><p> مقایسهٔ Vector DBهای مطرح</p><p class="language-note">اعداد و توضیحات مجوز از مقایسهٔ اصلی حفظ شده‌اند. شرایط Benchmark همهٔ اعداد مشخص نیست و این‌ها مشخصات به‌روز یا نتایج مستقل تأییدشده محسوب نمی‌شوند.</p><div class="tablewrap"><table><thead><tr><th scope="col">پایگاه داده</th><th scope="col">مجوز و میزبانی</th><th scope="col">مقیاس و عملکرد</th><th scope="col">فیلتر و جست‌وجو</th><th scope="col">اکوسیستم و ابزارها</th><th scope="col">نقاط قوت</th><th scope="col">محدودیت‌ها</th></tr></thead><tbody><tr><td><strong>Qdrant</strong></td><td>Apache-2؛ میزبانی شخصی و ابری</td><td>p50 کمتر از ۳ میلی‌ثانیه (۱ میلیون بردار)<br>کوانتیزه‌سازی: حدود ۳۰ برابر کاهش RAM</td><td>فیلتر بر اساس Payload<br>چند بردار برای هر سند</td><td>APIهای HTTP و gRPC<br>LangChain/LlamaIndex</td><td>RPS بالا<br>پشتیبانی آماده از چند بردار</td><td>سرویس ابری مدیریت‌شده جدیدتر<br>امکانات RBAC سازمانی کمتر</td></tr>
 <tr><td><strong>Milvus</strong></td><td>Apache-2 و Zilliz Cloud</td><td>میلیاردها بردار<br>HNSW و IVF-PQ روی CPU/GPU</td><td>جست‌وجوی ترکیبی Sparse + Dense<br>فیلترهای بولی</td><td>ده‌ها آموزش RAG</td><td>مقیاس‌پذیری بالغ<br>از لپ‌تاپ تا کلاستر</td><td>پیچیدگی عملیات در محل سازمان<br>وابستگی به فروشندهٔ ابری</td></tr>
 <tr><td><strong>Weaviate</strong></td><td>Apache-2؛ میزبانی شخصی و Serverless</td><td>هستهٔ Go؛ Sharding خودکار<br>مقیاس تا میلیاردها بردار</td><td>ترکیب BM25 و بردار<br>فیلتر متادیتا و جغرافیایی</td><td>APIهای GraphQL و REST<br>Agents SDK و کتاب الکترونیکی RAG</td><td>بردارسازی آماده<br>RBAC چندمستأجری و SOC 2</td><td>تأخیر بالاتر نوشتن در مقیاس بزرگ</td></tr>
 <tr><td><strong>Faiss</strong></td><td>BSD-2 (کتابخانه، نه پایگاه داده)</td><td>جست‌وجوی تقریبی نزدیک‌ترین همسایه (ANN) خام بسیار سریع روی GPU؛ در متن اصلی سریع‌ترین معرفی شده</td><td>ندارد؛ باید خودتان بسازید</td><td>رابط Python/C++<br>زیربنای بسیاری از پایگاه‌ها</td><td>کنترل کامل الگوریتم<br>بدون ارتباط شبکه‌ای</td><td>بدون ذخیره‌سازی پایدار یا احراز هویت<br>ساخت سرور با شماست</td></tr>
