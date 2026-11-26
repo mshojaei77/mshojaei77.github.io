@@ -11,6 +11,13 @@ export function documentLanguage(path){
  const old={'_posts/2026-11-26-document-parsing.md':'fa','_posts/2026-11-26-document-parsing-en.html':'en','about.md':'en','roadmap.md':'en','fa/about/index.html':'fa','fa/roadmap/index.md':'fa'};
  return old[path]||(/^_posts\/\d{4}-\d{2}-\d{2}-(fa|en)-[A-Za-z0-9_-]+\.(md|markdown|html)$/.exec(path)?.[1]??null);
 }
+export function postRoute(path){
+ const lang=documentLanguage(path);
+ if(!path.startsWith('_posts/')||!lang)return null;
+ const old={'_posts/2026-11-26-document-parsing.md':'document-parsing','_posts/2026-11-26-document-parsing-en.html':'document-parsing'};
+ const slug=old[path]||/^\d{4}-\d{2}-\d{2}-(?:fa|en)-([a-z0-9]+(?:-[a-z0-9]+)*)\.(?:md|markdown|html)$/.exec(path.split('/').pop())?.[1];
+ return slug?(lang==='fa'?'/fa':'')+'/writing/'+slug+'/':null;
+}
 export const encodedPath = p => p.split('/').map(encodeURIComponent).join('/');
 export const bytes = s => new TextEncoder().encode(s);
 export function to64(a){let s='';for(let i=0;i<a.length;i+=16384)s+=String.fromCharCode(...a.subarray(i,i+16384));return btoa(s);}
@@ -62,11 +69,44 @@ export class GitHub{
  async ref(branch='main'){return this.call(ROOT+'/git/ref/heads/'+encodedPath(branch),{missing:true});}
  async pulls(branch){return this.call(ROOT+'/pulls?state=all&head='+encodeURIComponent(OWNER+':'+branch)+'&base=main');}
  async pr(number){if(!Number.isInteger(number)||number<1)throw Error('Invalid PR.');return this.call(ROOT+'/pulls/'+number);}
- async prepare(d){if(!allowed(d.path))throw Error('Invalid content path.');if(bytes(d.source).length>MAX_BYTES)throw Error('Article exceeds the 950 KB Studio source limit. Download the source and use GitHub instead.');const main=await this.ref();if(!main?.object?.sha)throw Error('Could not resolve main.');const base=main.object.sha;const current=await this.read(d.path,base);if((current?.sha??null)!==d.baseSha)throw Error('Main has changed since this draft was opened. Download your draft and reconcile with the current source; nothing was overwritten.');if(d.deleting){if(!current||!d.baseSha)throw Error('Post is not published.');const retired=retirement(d.path,current.source);if(await this.file(retired.path,base))throw Error('A retirement page already exists.');return {base,files:await this.submissionFiles(d)};}const m=meta(d.source);if(documentLanguage(d.path)!==m.lang||!m.title.trim()||!m.description.trim()||!m.permalink||!['fa','en'].includes(m.lang))throw Error('Missing required article metadata.');if(current){const old=meta(current.source);for(const k of ['permalink','lang','date','layout'])if(m[k]!==old[k])throw Error('Protected metadata changed: '+k);}else{if(!d.path.startsWith('_posts/')||!new RegExp('^'+(m.lang==='fa'?'/fa':'')+'/writing/[a-z0-9]+(?:-[a-z0-9]+)*/$').test(m.permalink))throw Error('Invalid new post permalink.');const retired=retirement(d.path,d.source);if(await this.file(retired.path,base))throw Error('This permalink belongs to a removed article. Choose another slug.');const items=await this.list(base);for(const item of items.filter(x=>x.path.startsWith('_posts/'))){if(item.path===d.path)throw Error('Post already exists.');const other=await this.read(item.path,base);if(other&&meta(other.source).permalink===m.permalink)throw Error('This permalink is already published.');}}
- if(current?.source===d.source&&!d.assets?.length)throw Error('There are no changes to submit.');return {base,files:await this.submissionFiles(d)};}
+ async prepare(d){if(!allowed(d.path))throw Error('Invalid content path.');if(bytes(d.source).length>MAX_BYTES)throw Error('Article exceeds the 950 KB Studio source limit. Download the source and use GitHub instead.');const main=await this.ref();if(!main?.object?.sha)throw Error('Could not resolve main.');const base=main.object.sha;const current=await this.read(d.path,base);if((current?.sha??null)!==d.baseSha)throw Error('Main has changed since this draft was opened. Download your draft and reconcile with the current source; nothing was overwritten.');if(d.deleting){if(!current||!d.baseSha)throw Error('Post is not published.');const retired=retirement(d.path,current.source);if(await this.file(retired.path,base))throw Error('A retirement page already exists.');return {base,files:await this.submissionFiles(d)};}const m=meta(d.source);if(documentLanguage(d.path)!==m.lang||!m.title.trim()||!m.description.trim()||!m.permalink||!['fa','en'].includes(m.lang))throw Error('Missing required article metadata.');if(current){const old=meta(current.source);for(const k of ['permalink','lang','date','layout'])if(m[k]!==old[k])throw Error('Protected metadata changed: '+k);}else{if(!d.path.startsWith('_posts/')||!new RegExp('^'+(m.lang==='fa'?'/fa':'')+'/writing/[a-z0-9]+(?:-[a-z0-9]+)*/$').test(m.permalink))throw Error('Invalid new post permalink.');const retired=retirement(d.path,d.source);if(await this.file(retired.path,base))throw Error('This permalink belongs to a removed article. Choose another slug.');if(postRoute(d.path)!==m.permalink)throw Error('Filename does not match the canonical permalink.');const items=await this.list(base);if(items.some(item=>postRoute(item.path)===m.permalink))throw Error('This permalink is already published.');}
+ if(current?.source===d.source&&!d.assets?.length)throw Error('There are no changes to publish.');return {base,files:await this.submissionFiles(d)};}
  async submissionFiles(d){if(!allowed(d.path))throw Error('Invalid content path.');if(d.deleting){if(!d.baseSha)throw Error('Only published posts can be deleted.');const retired=retirement(d.path,d.source);return [{path:d.path,sha:null,deleted:true},{...retired,sha:await blobSha(bytes(retired.content))}];}const files=[{path:d.path,sha:await blobSha(bytes(d.source)),content:d.source}];for(const asset of d.assets||[]){if(!/^assets\/uploads\/[a-f0-9-]+\.(png|jpg|webp|gif)$/.test(asset.path)||await blobSha(from64(asset.base64))!==asset.sha)throw Error('Invalid staged image.');files.push({path:asset.path,sha:asset.sha,base64:asset.base64});}return files;}
- async submit(d,saveAttempt){const files=await this.submissionFiles(d);const fingerprint=files.map(x=>x.path+':'+x.sha).join('|');let attempt=d.attempt;if(attempt?.fingerprint===fingerprint){const prior=await this.pulls(attempt.branch);if(prior.length)return prior[0];}const {base}=await this.prepare(d);if(attempt&&attempt.fingerprint!==fingerprint){if(await this.ref(attempt.branch))throw Error('A previous submission already reached GitHub. Restore the submitted draft or inspect its branch before editing further.');attempt=null;}if(!attempt){attempt={branch:'studio/'+crypto.randomUUID(),base,fingerprint};d.attempt=attempt;await saveAttempt();}const prior=await this.pulls(attempt.branch);if(prior.length)return prior[0];let ref=await this.ref(attempt.branch);if(!ref){const commit=await this.call(ROOT+'/git/commits/'+attempt.base);const entries=[];for(const f of files){if(f.deleted){entries.push({path:f.path,mode:'100644',type:'blob',sha:null});}else if(f.base64){const blob=await this.call(ROOT+'/git/blobs',{method:'POST',body:{content:f.base64,encoding:'base64'}});if(blob.sha!==f.sha)throw Error('Media integrity check failed.');entries.push({path:f.path,mode:'100644',type:'blob',sha:blob.sha});}else entries.push({path:f.path,mode:'100644',type:'blob',content:f.content});}const tree=await this.call(ROOT+'/git/trees',{method:'POST',body:{base_tree:commit.tree.sha,tree:entries}});const next=await this.call(ROOT+'/git/commits',{method:'POST',body:{message:(d.deleting?'Studio: remove ':'Studio: ')+meta(d.source).title.slice(0,100),tree:tree.sha,parents:[attempt.base]}});ref=await this.call(ROOT+'/git/refs',{method:'POST',body:{ref:'refs/heads/'+attempt.branch,sha:next.sha}});}
- for(const f of files){const got=await this.file(f.path,ref.object.sha);if((got?.sha??null)!==f.sha)throw Error('Existing submission branch differs from this draft. No overwrite attempted.');}return this.call(ROOT+'/pulls',{method:'POST',body:{title:(d.deleting?'Remove article: ':'Publication: ')+meta(d.source).title.slice(0,120),head:attempt.branch,base:'main',body:d.deleting?'Requested removal of a published post. Its original URL becomes a noindex removal notice; source is retained in Git history. Review and merge only after CI passes.':'Created by Publication Studio. Review the content diff and merge only after publication validation succeeds. Public URLs are preserved.',draft:false}});}
+
+ // One GitHub commit with an explicit compare-and-swap on main; never force-push.
+ async publish(d,saveAttempt){
+  if(d.pr||d.attempt)throw Error('Resolve the previous pull request first.');
+  const files=await this.submissionFiles(d);
+  const fingerprint=files.map(f=>f.path+':'+f.sha).join('|');
+  if(d.directAttempt){
+   if(d.directAttempt.fingerprint!==fingerprint)throw Error('An earlier publish may have succeeded. Check its result before modifying this draft.');
+   const head=await this.ref();
+   const matches=await Promise.all(files.map(async f=>((await this.file(f.path,head.object.sha))?.sha??null)===f.sha));
+   if(matches.every(Boolean))return {oid:head.object.sha,recovered:true,sourceSha:files[0].sha};
+  }
+  const {base}=await this.prepare(d);
+  d.directAttempt={fingerprint,base};await saveAttempt();
+  const fileChanges={additions:files.filter(f=>!f.deleted).map(f=>({path:f.path,contents:f.base64||to64(bytes(f.content))})),deletions:files.filter(f=>f.deleted).map(f=>({path:f.path}))};
+  const query='mutation Publish($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid url } } }';
+  const result=await this.call('/graphql',{method:'POST',body:{query,variables:{input:{branch:{repositoryNameWithOwner:REPO,branchName:'main'},expectedHeadOid:base,message:{headline:(d.deleting?'Studio: remove ':'Studio: publish ')+meta(d.source).title.slice(0,100)},fileChanges}}}});
+  if(result.errors?.length||!result.data?.createCommitOnBranch?.commit?.oid)throw Error('GitHub did not confirm the commit: '+(result.errors?.map(e=>e.message).join('; ')||'unknown response')+'. Retry to check the outcome; local draft retained.');
+  return {...result.data.createCommitOnBranch.commit,sourceSha:files[0].sha};
+ }
+ async resolveLegacy(d){
+  if(!d.attempt&&!d.pr)return;
+  const pr=d.pr?await this.pr(d.pr.number):(await this.pulls(d.attempt.branch))[0];
+  if(pr&&pr.state==='open'){d.pr={number:pr.number};return;}
+  if(pr&&(pr.merged||pr.merged_at)){
+   const current=await this.read(d.path);
+   if(d.deleting&&!current){return 'deleted';}
+   if(!current||current.source!==d.source)throw Error('The previous merged PR differs from your local draft. Download it and reconcile before publishing.');
+   d.baseSha=current.sha;d.assets=[];
+  }else if(!pr&&d.attempt&&await this.ref(d.attempt.branch)){
+   // Legacy branch without a PR cannot have changed main; retain its Git history.
+  }
+  d.pr=null;d.attempt=null;d.deleting=false;
+ }
+
 }
 let dbPromise;
 function db(){if(!dbPromise)dbPromise=new Promise((resolve,reject)=>{const r=indexedDB.open('publication-studio-v1',1);r.onupgradeneeded=()=>r.result.createObjectStore('drafts',{keyPath:'path'});r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.onblocked=()=>reject(Error('Draft database is blocked by another tab.'));});return dbPromise;}

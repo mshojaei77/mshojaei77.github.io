@@ -1,5 +1,10 @@
 {% assign language = page.lang | default: 'en' %}
 {% assign pair = site.data.languages | where: language, page.url | first %}
+{% if pair and pair.hidden and page.url contains '/writing/' %}
+  {% assign en_post = site.posts | where: 'url', pair.en | first %}
+  {% assign fa_post = site.posts | where: 'url', pair.fa | first %}
+  {% unless en_post and fa_post %}{% assign pair = nil %}{% endunless %}
+{% endif %}
 <!doctype html>
 <html lang="{{ language }}" dir="{% if language == 'fa' %}rtl{% else %}ltr{% endif %}">
 <head>

@@ -1,8 +1,13 @@
 {% assign current_language = page.lang | default: 'en' %}
 {% assign language_pair = site.data.languages | where: current_language, page.url | first %}
+{% if language_pair and language_pair.hidden and page.url contains '/writing/' %}
+  {% assign en_post = site.posts | where: 'url', language_pair.en | first %}
+  {% assign fa_post = site.posts | where: 'url', language_pair.fa | first %}
+  {% unless en_post and fa_post %}{% assign language_pair = nil %}{% endunless %}
+{% endif %}
 <div class="language-switch" role="group" aria-label="{% if current_language == 'fa' %}زبان سایت{% else %}Site language{% endif %}" dir="ltr">
 {% if current_language == 'fa' %}
-  <a lang="en" hreflang="en" href="{{ page.english_source | default: language_pair.en | default: '/' }}">EN</a><span class="language-divider" aria-hidden="true">/</span><span lang="fa" aria-current="true">FA</span>
+  <a lang="en" hreflang="en" href="{{ language_pair.en | default: '/' }}">EN</a><span class="language-divider" aria-hidden="true">/</span><span lang="fa" aria-current="true">FA</span>
 {% else %}
   <span lang="en" aria-current="true">EN</span><span class="language-divider" aria-hidden="true">/</span><a lang="fa" hreflang="fa" href="{{ language_pair.fa | default: '/fa/' }}" aria-label="فارسی">FA</a>
 {% endif %}
