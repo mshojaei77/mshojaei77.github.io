@@ -1,5 +1,6 @@
 {% assign copy = site.data.home[page.lang] %}
 {% assign connect = site.data.home.sections | where: 'key', 'elsewhere' | first %}
+{% assign writing_url = '/writing/' %}{% if page.lang == 'fa' %}{% assign writing_url = '/fa/writing/' %}{% endif %}
 <section class="intro home-hero" aria-labelledby="intro-title">
   <p class="eyebrow"><span class="home-role-mark" aria-hidden="true"></span>{{ copy.role | escape }}</p>
   <h1 id="intro-title">{{ copy.name | escape }}</h1>
@@ -8,28 +9,28 @@
   <div class="quick-links">
     {% for action in copy.actions %}<a class="action{% if forloop.first %} primary{% endif %}" href="{{ action.url }}">{{ action.label | escape }}{% if forloop.first %}<span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>{% endif %}</a>{% endfor %}
   </div>
-  <p class="home-focus">{{ copy.focus | escape }}</p>
+  <div class="home-focus">{% for topic in site.data.home.hero_topics %}<a class="topic-pill" href="{{ writing_url }}?topic={{ topic }}">{{ site.data.topics.labels[topic][page.lang] | escape }}</a>{% endfor %}</div>
 </section>
+{% include published-posts.html limit=3 home=true %}
 <section class="home-work" data-home-section="work" aria-labelledby="work-title">
   <div class="section-heading"><h2 id="work-title">{{ copy.work_heading | escape }}</h2><a class="section-link" href="https://github.com/mshojaei77?tab=repositories">{{ copy.work_all | escape }}</a></div>
   <div class="home-work-grid">
   {% for project in site.data.home.selected_work %}{% assign entry = project[page.lang] %}
-    <article class="entry-card featured-work" data-project="{{ project.repo | escape }}">
+    <article class="entry-card featured-work{% if project.flagship %} flagship{% endif %}" data-project="{{ project.repo | escape }}">
       <div class="project-meta"><span class="meta">{{ entry.tag | escape }}</span><span class="project-stars" aria-label="{{ project.stars }} {{ copy.work_stars | escape }}"><span aria-hidden="true">★</span> <bdi>{% if page.lang == 'fa' %}{% include persian-digits.html value=project.stars %}{% else %}{{ project.stars }}{% endif %}</bdi></span></div>
       <h3><a href="https://github.com/mshojaei77/{{ project.repo }}" dir="ltr">{{ entry.title | escape }}</a></h3>
       <p>{{ entry.desc | escape }}</p>
-      <span class="work-link" aria-hidden="true">{{ copy.work_link | escape }} ↗</span>
+      <div class="project-stack" aria-label="{% if page.lang == 'fa' %}فناوری‌ها{% else %}Technologies{% endif %}">{% for tech in project.stack %}<span dir="ltr">{{ tech | escape }}</span>{% endfor %}</div>
+      <span class="project-arrow" aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span>
     </article>
   {% endfor %}
   </div>
-  <p class="project-snapshot">{{ copy.work_snapshot | escape }}</p>
+  <p class="project-snapshot">{{ copy.snapshot_label | escape }} <bdi dir="ltr">{% if page.lang == 'fa' %}{% include persian-digits.html value=site.data.home.snapshot_date %}{% else %}{{ site.data.home.snapshot_date }}{% endif %}</bdi></p>
 </section>
-{% include published-posts.html limit=3 home=true %}
 <section class="home-connect" data-home-section="elsewhere" aria-labelledby="elsewhere-title">
   <div class="section-heading"><h2 id="elsewhere-title">{{ connect[page.lang] | escape }}</h2></div>
   <div class="home-connect-grid">
-  {% for item in connect.items %}{% assign entry = item[page.lang] %}
-    <article class="entry-card{% if forloop.first %} contact-primary{% endif %}"><div class="home-card-top"><span class="meta">{{ entry.tag | escape }}</span><span aria-hidden="true">↗</span></div><h3><a href="{{ entry.url }}">{{ entry.title | escape }}</a></h3><p>{{ entry.desc | escape }}</p></article>
-  {% endfor %}
+    <article class="entry-card contact-panel"><span class="meta"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg> {% if page.lang == 'fa' %}ارتباط مستقیم{% else %}Direct contact{% endif %}</span><h3>{{ copy.contact_title | escape }}</h3><p>{{ copy.contact_desc | escape }}</p><div class="contact-actions"><a class="action primary" href="mailto:shojaei.dev@gmail.com">{{ copy.contact_action | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span></a></div></article>
+    <article class="entry-card contact-panel"><span class="meta"><svg class="icon" aria-hidden="true"><use href="#i-send"></use></svg> {% if page.lang == 'fa' %}جامعه و خبرخوان{% else %}Community and feed{% endif %}</span><h3>{{ copy.community_title | escape }}</h3><p>{{ copy.community_desc | escape }}</p><div class="contact-actions"><a href="https://t.me/LLMEngineers">{{ copy.channel | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span></a><a href="https://t.me/AI_LLMs">{{ copy.group | escape }}</a><a href="/feed.xml">RSS</a></div></article>
   </div>
 </section>

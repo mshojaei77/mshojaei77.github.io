@@ -22,7 +22,7 @@ fs.mkdirSync(out, { recursive: true });
         const immediate=await page.evaluate(()=>{
           const root=document.documentElement,button=document.querySelector('#site-theme'),cards=[...document.querySelectorAll('.featured-work,.home-connect .entry-card')];
           const states=[];
-          for(let i=0;i<2;i++){button.click();const dark=root.dataset.theme==='dark';states.push({mode:root.dataset.theme,correct:cards.every(c=>getComputedStyle(c).backgroundColor===(dark?'rgb(22, 22, 22)':'rgb(255, 253, 248)')&&getComputedStyle(c.querySelector('.meta')).color===(dark?'rgb(184, 178, 168)':'rgb(98, 96, 90)')),transitions:cards.map(c=>getComputedStyle(c).transitionProperty)});}
+          for(let i=0;i<2;i++){button.click();const dark=root.dataset.theme==='dark';states.push({mode:root.dataset.theme,correct:cards.every(c=>getComputedStyle(c).backgroundColor===(dark?'rgb(28, 28, 28)':'rgb(255, 253, 248)')&&getComputedStyle(c.querySelector('.meta')).color===(dark?'rgb(184, 178, 168)':'rgb(98, 96, 90)')),transitions:cards.map(c=>getComputedStyle(c).transitionProperty)});}
           return states;
         });
         assert(immediate.every(s=>s.correct&&s.transitions.every(t=>!t.includes('background-color')&&t!=='all')),JSON.stringify(immediate));
@@ -69,17 +69,16 @@ fs.mkdirSync(out, { recursive: true });
         assert(!facts.intersects, width + ' ' + lang + ' nav overlap');
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
-        assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 1); assert(facts.rss);
+        assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 2); assert(facts.rss);
         const latestCount=Math.min(3,postCounts[lang]);
-        assert.deepEqual(facts.sections.map(x=>x[0]),latestCount?['work','latest','elsewhere']:['work','elsewhere']);
+        assert.deepEqual(facts.sections.map(x=>x[0]),latestCount?['latest','work','elsewhere']:['work','elsewhere']);
         assert(!facts.startPresent,'Start here must be absent');
         assert.equal(facts.latest.length,latestCount);
-        if(width>760&&latestCount>1&&lang==='en')assert.equal(new Set(facts.grid).size,1,'English desktop cards must align');
-        if(latestCount>1&&lang==='fa')assert.equal(new Set(facts.grid).size,latestCount,'Persian editorial rows must stack');
-        assert.equal(facts.sections.at(-1)[1],8);assert.deepEqual(facts.work,['ReActMCP','ParsiEval','invoice-to-pay-agent','SubTrans-Ollama'].map(n=>'https://github.com/mshojaei77/'+n));assert.equal(facts.sections[0][1],4);assert(facts.email);assert.deepEqual(facts.labels,['English','فارسی']);assert.equal(facts.topBorder,'0px');
+        if(latestCount>1)assert.equal(new Set(facts.grid).size,latestCount,'Latest writing rows must stack');
+        assert.equal(facts.sections.at(-1)[1],2);assert.deepEqual(facts.work,['ReActMCP','ParsiEval','SubTrans-Ollama','invoice-to-pay-agent'].map(n=>'https://github.com/mshojaei77/'+n));assert.equal(facts.sections.find(x=>x[0]==='work')[1],4);assert(facts.email);assert.deepEqual(facts.labels,['English','فارسی']);assert.equal(facts.topBorder,'0px');
         assert.equal(facts.latest.length,new Set(facts.latest).size);
-        assert.deepEqual(facts.heroLinks,lang==='fa'?['/fa/writing/']:['/writing/']);
-        assert(facts.latest.every(x=>x.startsWith(lang==='fa'?'/fa/writing/':'/writing/')));
+        assert.deepEqual(facts.heroLinks,lang==='fa'?['/fa/writing/','/fa/about/']:['/writing/','/about.html']);
+        assert(facts.latest.every(x=>x.startsWith(lang==='fa'?'/fa/writing/':'/writing/')));assert.equal(await page.locator('.latest-featured').count(),latestCount?1:0);assert.equal(await page.locator('.home-latest .read-time').count(),latestCount);assert.equal(await page.locator('.home-focus .topic-pill').count(),3);assert.equal(await page.locator('.project-stack').count(),4);assert.equal(await page.locator('.work-link').count(),0);assert(await page.evaluate(()=>{const a=document.querySelector('header .wrap').getBoundingClientRect(),b=document.querySelector('main.wrap').getBoundingClientRect();return Math.abs(a.left-b.left)<1&&Math.abs(a.width-b.width)<1;}));
         if (lang === 'fa') {
           assert(facts.fontLoaded, 'self-hosted Persian font did not load');
           assert(facts.fonts.every(x=>x.startsWith('Vazirmatn')), JSON.stringify(facts.fonts));
@@ -115,6 +114,18 @@ fs.mkdirSync(out, { recursive: true });
       await context.close();
     }
     const p = await browser.newPage();
+    for(const lang of ['en','fa']){
+      const root=lang==='fa'?'/fa/':'/',archive=root+'writing/';
+      await p.goto(origin+root);await p.locator('#site-search').click();await p.waitForURL(origin+archive+'?search=1');await p.locator('#writing-search').waitFor();
+      assert.equal(await p.locator('#writing-search').evaluate(el=>document.activeElement===el),true);
+      const all=p.locator('.writing-list .entry-card'),visible=p.locator('.writing-list .entry-card:visible');
+      assert.equal(await all.count(),postCounts[lang]);assert.equal(await visible.count(),postCounts[lang]);
+      await p.locator('#writing-search').fill('zz_no_article_123');assert.equal(await visible.count(),0);
+      await p.locator('#writing-search').fill('');assert.equal(await visible.count(),postCounts[lang]);
+      await p.locator('[data-topic="rag"]').click();const expected=await all.evaluateAll(rows=>rows.filter(r=>r.dataset.postTopics.split(' ').includes('rag')).length);assert.equal(await visible.count(),expected);
+      await p.reload();assert.equal(await visible.count(),expected);assert.equal(await p.locator('[data-topic="rag"]').getAttribute('aria-pressed'),'true');
+      await p.goto(origin+root);await p.locator('.home-focus a[href*="topic=evaluation"]').click();await p.locator('[data-topic="evaluation"][aria-pressed="true"]').waitFor();assert(await visible.evaluateAll(rows=>rows.every(r=>r.dataset.postTopics.split(' ').includes('evaluation'))));
+    }
     for(const [route,title] of [['/roadmap.html','AI Engineering Roadmap'],['/fa/roadmap/','نقشهٔ راه مهندسی هوش مصنوعی']]){assert((await p.goto(origin+route)).ok());assert((await p.title()).includes(title));assert.equal(await p.locator('main h1').first().textContent(),title);}
     const isRetired = route => fs.existsSync('retired-posts/'+(route.startsWith('/fa/')?'fa':'en')+'-'+route.split('/').filter(Boolean).at(-1)+'.html');
     const checkSwitch = async (page,route,other,lang) => {
