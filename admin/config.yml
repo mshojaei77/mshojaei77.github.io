@@ -1,0 +1,796 @@
+{
+  "backend": {
+    "name": "github",
+    "repo": "mshojaei77/mshojaei77.github.io",
+    "branch": "main",
+    "auth_methods": [
+      "token"
+    ],
+    "open_authoring": false
+  },
+  "site_url": "https://mshojaei77.github.io",
+  "display_url": "https://mshojaei77.github.io",
+  "publish_mode": "editorial_workflow",
+  "media_folder": "assets/uploads",
+  "public_folder": "/assets/uploads",
+  "collections": [
+    {
+      "name": "existing_articles",
+      "label": "Existing articles | نوشته‌های منتشرشده",
+      "delete": false,
+      "publish": false,
+      "files": [
+        {
+          "name": "parsing_fa",
+          "label": "Document Parsing — فارسی (v6)",
+          "file": "_posts/2026-11-26-document-parsing.md",
+          "format": "yaml-frontmatter",
+          "preview_path": "/fa/writing/document-parsing/",
+          "fields": [
+            {
+              "name": "title",
+              "label": "عنوان",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "توضیحات",
+              "widget": "text"
+            },
+            {
+              "name": "excerpt",
+              "label": "RSS excerpt",
+              "widget": "text",
+              "required": false
+            },
+            {
+              "name": "date",
+              "label": "Publication date",
+              "widget": "datetime",
+              "readonly": true,
+              "format": "YYYY-MM-DD HH:mm:ss ZZ",
+              "input_timezone": "utc",
+              "output_utc": true
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "article"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "fa"
+            },
+            {
+              "name": "nav_exclude",
+              "widget": "hidden",
+              "default": true
+            },
+            {
+              "name": "article_kind",
+              "label": "Article type",
+              "widget": "select",
+              "options": [
+                "essay",
+                "tutorial"
+              ],
+              "default": "essay"
+            },
+            {
+              "name": "show_article_header",
+              "label": "Render title and description above body",
+              "widget": "boolean",
+              "default": false,
+              "hint": "Turn off if the body already contains its own H1."
+            },
+            {
+              "name": "image",
+              "label": "Social image",
+              "widget": "image",
+              "default": "/assets/img/social-card.png",
+              "required": false
+            },
+            {
+              "name": "feed",
+              "label": "Feed",
+              "widget": "object",
+              "fields": [
+                {
+                  "name": "excerpt_only",
+                  "label": "Excerpt only",
+                  "widget": "boolean",
+                  "default": true
+                }
+              ]
+            },
+            {
+              "name": "tags",
+              "label": "Tags",
+              "widget": "list",
+              "required": false
+            },
+            {
+              "name": "body",
+              "label": "متن مقاله",
+              "widget": "richtext",
+              "format": "markdown",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true,
+              "hint": "Source-only to protect inline SVG, HTML, and special markup. Review the Git diff before merging."
+            }
+          ]
+        },
+        {
+          "name": "parsing_en",
+          "label": "Document Parsing — English tutorial",
+          "file": "_posts/2026-11-26-document-parsing-en.html",
+          "format": "yaml-frontmatter",
+          "preview_path": "/writing/document-parsing/",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "widget": "text"
+            },
+            {
+              "name": "excerpt",
+              "label": "RSS excerpt",
+              "widget": "text",
+              "required": false
+            },
+            {
+              "name": "date",
+              "label": "Publication date",
+              "widget": "datetime",
+              "readonly": true,
+              "format": "YYYY-MM-DD HH:mm:ss ZZ",
+              "input_timezone": "utc",
+              "output_utc": true
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "article"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "en"
+            },
+            {
+              "name": "nav_exclude",
+              "widget": "hidden",
+              "default": true
+            },
+            {
+              "name": "article_kind",
+              "label": "Article type",
+              "widget": "select",
+              "options": [
+                "essay",
+                "tutorial"
+              ],
+              "default": "tutorial"
+            },
+            {
+              "name": "show_article_header",
+              "label": "Render title and description above body",
+              "widget": "boolean",
+              "default": true,
+              "hint": "Turn off if the body already contains its own H1."
+            },
+            {
+              "name": "image",
+              "label": "Social image",
+              "widget": "image",
+              "default": "/assets/img/social-card.png",
+              "required": false
+            },
+            {
+              "name": "feed",
+              "label": "Feed",
+              "widget": "object",
+              "fields": [
+                {
+                  "name": "excerpt_only",
+                  "label": "Excerpt only",
+                  "widget": "boolean",
+                  "default": true
+                }
+              ]
+            },
+            {
+              "name": "tags",
+              "label": "Tags",
+              "widget": "list",
+              "required": false
+            },
+            {
+              "name": "body",
+              "label": "Article body",
+              "widget": "richtext",
+              "format": "html",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true,
+              "hint": "Source-only to protect inline SVG, HTML, and special markup. Review the Git diff before merging."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "posts_fa",
+      "label": "نوشته‌های فارسی | Persian posts",
+      "folder": "_posts",
+      "format": "yaml-frontmatter",
+      "extension": "md",
+      "create": true,
+      "delete": false,
+      "publish": false,
+      "slug": "{{year}}-{{month}}-{{day}}-fa-{{slug}}",
+      "filter": {
+        "field": "permalink",
+        "pattern": "^/fa/writing/(?!document-parsing(?:-engineering)?/$).+/$"
+      },
+      "preview_path": "{{fields.permalink}}",
+      "fields": [
+        {
+          "name": "title",
+          "label": "عنوان",
+          "widget": "string"
+        },
+        {
+          "name": "description",
+          "label": "توضیحات",
+          "widget": "text"
+        },
+        {
+          "name": "excerpt",
+          "label": "RSS excerpt",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "date",
+          "label": "Publication date",
+          "widget": "datetime",
+          "type": "date",
+          "format": "YYYY-MM-DD"
+        },
+        {
+          "name": "permalink",
+          "label": "Permanent URL",
+          "widget": "string",
+          "unique": true,
+          "pattern": [
+            "^/fa/writing/(?!document-parsing(?:-engineering)?/$)[a-z0-9]+(?:-[a-z0-9]+)*/$",
+            "Use /fa/writing/your-unique-ascii-slug/"
+          ],
+          "hint": "Choose once. Never change a published URL."
+        },
+        {
+          "name": "layout",
+          "widget": "hidden",
+          "default": "article"
+        },
+        {
+          "name": "lang",
+          "widget": "hidden",
+          "default": "fa"
+        },
+        {
+          "name": "nav_exclude",
+          "widget": "hidden",
+          "default": true
+        },
+        {
+          "name": "article_kind",
+          "label": "Article type",
+          "widget": "select",
+          "options": [
+            "essay",
+            "tutorial"
+          ],
+          "default": "essay"
+        },
+        {
+          "name": "show_article_header",
+          "label": "Render title and description above body",
+          "widget": "boolean",
+          "default": true,
+          "hint": "Turn off if the body already contains its own H1."
+        },
+        {
+          "name": "image",
+          "label": "Social image",
+          "widget": "image",
+          "default": "/assets/img/social-card.png",
+          "required": false
+        },
+        {
+          "name": "feed",
+          "label": "Feed",
+          "widget": "object",
+          "fields": [
+            {
+              "name": "excerpt_only",
+              "label": "Excerpt only",
+              "widget": "boolean",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "tags",
+          "label": "Tags",
+          "widget": "list",
+          "required": false
+        },
+        {
+          "name": "body",
+          "label": "متن مقاله",
+          "widget": "richtext",
+          "format": "markdown",
+          "modes": [
+            "rich_text",
+            "raw"
+          ],
+          "sanitize_preview": true,
+          "hint": "Use visual editing for ordinary content; raw Markdown for advanced markup."
+        }
+      ]
+    },
+    {
+      "name": "posts_en",
+      "label": "English posts",
+      "folder": "_posts",
+      "format": "yaml-frontmatter",
+      "extension": "md",
+      "create": true,
+      "delete": false,
+      "publish": false,
+      "slug": "{{year}}-{{month}}-{{day}}-en-{{slug}}",
+      "filter": {
+        "field": "permalink",
+        "pattern": "^/writing/(?!document-parsing/$).+/$"
+      },
+      "preview_path": "{{fields.permalink}}",
+      "fields": [
+        {
+          "name": "title",
+          "label": "Title",
+          "widget": "string"
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "widget": "text"
+        },
+        {
+          "name": "excerpt",
+          "label": "RSS excerpt",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "date",
+          "label": "Publication date",
+          "widget": "datetime",
+          "type": "date",
+          "format": "YYYY-MM-DD"
+        },
+        {
+          "name": "permalink",
+          "label": "Permanent URL",
+          "widget": "string",
+          "unique": true,
+          "pattern": [
+            "^/writing/(?!document-parsing/$)[a-z0-9]+(?:-[a-z0-9]+)*/$",
+            "Use /writing/your-unique-ascii-slug/"
+          ],
+          "hint": "Choose once. Never change a published URL."
+        },
+        {
+          "name": "layout",
+          "widget": "hidden",
+          "default": "article"
+        },
+        {
+          "name": "lang",
+          "widget": "hidden",
+          "default": "en"
+        },
+        {
+          "name": "nav_exclude",
+          "widget": "hidden",
+          "default": true
+        },
+        {
+          "name": "article_kind",
+          "label": "Article type",
+          "widget": "select",
+          "options": [
+            "essay",
+            "tutorial"
+          ],
+          "default": "essay"
+        },
+        {
+          "name": "show_article_header",
+          "label": "Render title and description above body",
+          "widget": "boolean",
+          "default": true,
+          "hint": "Turn off if the body already contains its own H1."
+        },
+        {
+          "name": "image",
+          "label": "Social image",
+          "widget": "image",
+          "default": "/assets/img/social-card.png",
+          "required": false
+        },
+        {
+          "name": "feed",
+          "label": "Feed",
+          "widget": "object",
+          "fields": [
+            {
+              "name": "excerpt_only",
+              "label": "Excerpt only",
+              "widget": "boolean",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "tags",
+          "label": "Tags",
+          "widget": "list",
+          "required": false
+        },
+        {
+          "name": "body",
+          "label": "Article body",
+          "widget": "richtext",
+          "format": "markdown",
+          "modes": [
+            "rich_text",
+            "raw"
+          ],
+          "sanitize_preview": true,
+          "hint": "Use visual editing for ordinary content; raw Markdown for advanced markup."
+        }
+      ]
+    },
+    {
+      "name": "pages",
+      "label": "Pages | صفحه‌ها",
+      "delete": false,
+      "publish": false,
+      "files": [
+        {
+          "name": "about_en",
+          "label": "About — English",
+          "file": "about.md",
+          "format": "yaml-frontmatter",
+          "preview_path": "/about.html",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "widget": "text"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "en"
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "article"
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "nav_order",
+              "widget": "hidden",
+              "default": 6
+            },
+            {
+              "name": "body",
+              "label": "Source",
+              "widget": "richtext",
+              "format": "markdown",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true
+            }
+          ]
+        },
+        {
+          "name": "about_fa",
+          "label": "دربارهٔ من",
+          "file": "fa/about/index.html",
+          "format": "yaml-frontmatter",
+          "preview_path": "/fa/about/",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "widget": "text"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "fa"
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "article"
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "nav_exclude",
+              "widget": "hidden",
+              "default": true
+            },
+            {
+              "name": "body",
+              "label": "Source",
+              "widget": "richtext",
+              "format": "html",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true
+            }
+          ]
+        },
+        {
+          "name": "roadmap_en",
+          "label": "Roadmap — English",
+          "file": "roadmap.md",
+          "format": "yaml-frontmatter",
+          "preview_path": "/roadmap.html",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "widget": "text"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "en"
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "article"
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "nav_order",
+              "widget": "hidden",
+              "default": 7
+            },
+            {
+              "name": "body",
+              "label": "Source",
+              "widget": "richtext",
+              "format": "markdown",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true
+            }
+          ]
+        },
+        {
+          "name": "roadmap_fa",
+          "label": "نقشهٔ راه",
+          "file": "fa/roadmap/index.md",
+          "format": "yaml-frontmatter",
+          "preview_path": "/fa/roadmap/",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "widget": "text"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "fa"
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "article"
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "nav_exclude",
+              "widget": "hidden",
+              "default": true
+            },
+            {
+              "name": "body",
+              "label": "Source",
+              "widget": "richtext",
+              "format": "markdown",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true
+            }
+          ]
+        },
+        {
+          "name": "research_en",
+          "label": "Research — English",
+          "file": "research/index.html",
+          "format": "yaml-frontmatter",
+          "preview_path": "/research/",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "widget": "text"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "en"
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "publication"
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "nav_order",
+              "widget": "hidden",
+              "default": 3
+            },
+            {
+              "name": "body",
+              "label": "Source",
+              "widget": "richtext",
+              "format": "html",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true
+            }
+          ]
+        },
+        {
+          "name": "research_fa",
+          "label": "پژوهش",
+          "file": "fa/research/index.html",
+          "format": "yaml-frontmatter",
+          "preview_path": "/fa/research/",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "widget": "text"
+            },
+            {
+              "name": "lang",
+              "widget": "hidden",
+              "default": "fa"
+            },
+            {
+              "name": "layout",
+              "widget": "hidden",
+              "default": "publication"
+            },
+            {
+              "name": "permalink",
+              "label": "Permanent URL",
+              "widget": "string",
+              "readonly": true
+            },
+            {
+              "name": "nav_exclude",
+              "widget": "hidden",
+              "default": true
+            },
+            {
+              "name": "body",
+              "label": "Source",
+              "widget": "richtext",
+              "format": "html",
+              "modes": [
+                "raw"
+              ],
+              "sanitize_preview": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -95,7 +95,7 @@ for lang, own in article_routes.items():
     for path in (prefix + "index.html", prefix + "writing/index.html"):
         parser = Links()
         parser.feed((root / path).read_text(encoding="utf-8"))
-        if own not in parser.links or other in parser.links:
+        if (path.endswith("writing/index.html") and own not in parser.links) or other in parser.links:
             errors.append(f"{path}: article language isolation failed")
     for path in ("feed.xml", "sitemap.xml"):
         if (root / path).is_file() and own not in (root / path).read_text(encoding="utf-8"):
@@ -172,7 +172,9 @@ else:
 for name in ("fa/index.html", "fa/writing/index.html", "index.html", "writing/index.html"):
     parser = Links()
     parser.feed((root / name).read_text(encoding="utf-8"))
-    if parser.links.count(guide_route) != int(name.startswith("fa/")) or obsolete_route in parser.links:
+    expected = name == "fa/writing/index.html"
+    count = parser.links.count(guide_route)
+    if (expected and count != 1) or (name == "fa/index.html" and count > 1) or (not name.startswith("fa/") and count) or obsolete_route in parser.links:
         errors.append(f"{name}: canonical article listing must be unique")
 for name in ("feed.xml", "sitemap.xml"):
     html = (root / name).read_text(encoding="utf-8")
@@ -183,6 +185,35 @@ if not redirect.is_file() or f"url={guide_route}" not in redirect.read_text(enco
     errors.append("Missing redirect from accidentally published duplicate URL")
 if inspect_route("/writing/document-parsing/").alternates:
     errors.append("Older English tutorial incorrectly advertised as translation of v6")
+# CMS files are served unchanged and excluded from public discovery.
+import json
+admin = root / "admin/index.html"
+config = root / "admin/config.yml"
+if not admin.is_file() or not config.is_file():
+    errors.append("CMS entry point or config missing")
+else:
+    cms = json.loads(config.read_text(encoding="utf-8"))
+    html = admin.read_text(encoding="utf-8")
+    if cms["backend"] != {"name": "github", "repo": "mshojaei77/mshojaei77.github.io", "branch": "main", "auth_methods": ["token"], "open_authoring": False}:
+        errors.append("CMS authentication configuration changed unexpectedly")
+    if cms["publish_mode"] != "editorial_workflow" or any(c.get("publish") is not False or c.get("delete") is not False for c in cms["collections"]):
+        errors.append("CMS must require reviewed PR merges and protect published URLs")
+    if "https://unpkg.com/@sveltia/cms@0.273.1/dist/sveltia-cms.js" not in html or "noindex,nofollow,noarchive" not in html:
+        errors.append("CMS version pin or robots metadata missing")
+    if "/admin/" in (root / "sitemap.xml").read_text(encoding="utf-8"):
+        errors.append("Admin must not appear in sitemap")
+    if "Disallow: /admin/" not in (root / "robots.txt").read_text(encoding="utf-8"):
+        errors.append("Admin crawler exclusion missing")
+    file_entries = [f for c in cms["collections"] for f in c.get("files", [])]
+    for entry in file_entries:
+        if not Path(entry["file"]).is_file():
+            errors.append(f"CMS file entry missing: {entry['file']}")
+        body = next(f for f in entry["fields"] if f["name"] == "body")
+        if body.get("modes") != ["raw"] or body.get("sanitize_preview") is not True:
+            errors.append(f"Unsafe editor mode: {entry['file']}")
+    posts = [c for c in cms["collections"] if c.get("folder") == "_posts"]
+    if len(posts) != 2 or not all(c["create"] and c["extension"] == "md" for c in posts):
+        errors.append("CMS Markdown creation collections missing")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)

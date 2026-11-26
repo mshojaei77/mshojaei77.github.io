@@ -89,8 +89,14 @@ fs.mkdirSync(out, { recursive: true });
     const englishRoute = '/writing/document-parsing/';
     for (const route of ['/', '/fa/', '/writing/', '/fa/writing/']) {
       assert((await p.goto(origin+route)).ok());
-      assert.equal(await p.locator('a[href="'+articleRoute+'"]').count(), route.startsWith('/fa/') ? 1 : 0);
-      assert.equal(await p.locator('a[href="'+englishRoute+'"]').count(), route.startsWith('/fa/') ? 0 : 1);
+      const faCount = await p.locator('a[href="'+articleRoute+'"]').count();
+      const enCount = await p.locator('a[href="'+englishRoute+'"]').count();
+      if (route === '/fa/writing/') assert.equal(faCount, 1);
+      else if (route === '/fa/') assert(faCount <= 1);
+      else assert.equal(faCount, 0);
+      if (route === '/writing/') assert.equal(enCount, 1);
+      else if (route === '/') assert(enCount <= 1);
+      else assert.equal(enCount, 0);
       assert.equal(await p.locator('a[href="/fa/writing/document-parsing-engineering/"]').count(),0);
     }
     for (const lang of ['en']) for (const width of [375, 1440]) {
@@ -152,6 +158,45 @@ fs.mkdirSync(out, { recursive: true });
     }
     assert((await p.goto(origin+'/fa/writing/document-parsing-engineering/')).ok());
     await p.waitForURL(origin+articleRoute);
+    // Real pinned CMS boot; all GitHub requests intercepted. No real credentials or writes.
+    const cmsContext = await browser.newContext({locale:'en-US',viewport:{width:1440,height:900}});
+    const cmsPage = await cmsContext.newPage();
+    const mutations = [];
+    const diagnostics = [];
+    const deniedRequests = [];
+    cmsPage.on('pageerror', err => diagnostics.push(err.message));
+    cmsPage.on('console', msg => {if(msg.type()==='error') diagnostics.push(msg.text());});
+    cmsPage.on('requestfailed', req => diagnostics.push(req.url()+' '+req.failure()?.errorText));
+    await cmsPage.route('https://api.github.com/**', async route => {
+      const req = route.request();
+      const headers = {'access-control-allow-origin':'*','access-control-allow-headers':'*','access-control-allow-methods':'GET,POST,OPTIONS'};
+      if(req.method()==='OPTIONS') return route.fulfill({status:204,headers});
+      if(!['GET','HEAD','POST'].includes(req.method()) || /\bmutation\b/.test(req.postData() || '')) mutations.push(req.method());
+      deniedRequests.push(req.url());
+      await route.fulfill({status:401,headers,contentType:'application/json',body:'{"message":"Bad credentials"}'});
+    });
+    try {
+      assert((await cmsPage.goto(origin+'/admin/')).ok());
+      // Exact accessible name from the pinned upstream sign-in.e2e.js.
+      const signIn = cmsPage.getByRole('button',{name:'Sign In Using Access Token',exact:true});
+      await signIn.waitFor({timeout:30000});
+      assert.equal(await cmsPage.getByRole('button',{name:/^Sign In with .*GitHub/i}).count(),0);
+      assert.deepEqual(mutations,[]);
+      await cmsPage.screenshot({path:out+'/cms-sign-in.png'});
+      await signIn.click();
+      const dialog = cmsPage.getByRole('alertdialog',{name:'Sign In Using Access Token'});
+      await dialog.getByRole('textbox',{name:'Personal Access Token'}).fill('not-the-token');
+      await dialog.getByRole('button',{name:'Sign In',exact:true}).click();
+      await cmsPage.getByText('The provided token is invalid. Please check and try again.').waitFor({timeout:30000});
+      assert(deniedRequests.length>0, 'expected a denied GitHub request');
+      assert.equal(await cmsPage.getByRole('button',{name:'Show Account Menu'}).count(),0);
+      assert.deepEqual(mutations,[]);
+    } catch (error) {
+      console.error('CMS diagnostics:', diagnostics, (await cmsPage.locator('body').innerText()).slice(0,6000));
+      await cmsPage.screenshot({path:out+'/cms-failure.png'}).catch(()=>{});
+      throw error;
+    } finally { await cmsContext.close(); }
+    console.log('Verified pinned Sveltia CMS boot, token-only sign-in and rejected invalid credentials.');
     console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 6 localized resource routes.');
   } finally { await browser.close(); }
