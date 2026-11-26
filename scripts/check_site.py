@@ -89,6 +89,16 @@ for en, fa in pairs:
         if fa != "/fa/writing/document-parsing/" and (f.alternates.get("fa") != fa or f.alternates.get("en") != en):
             errors.append(f"{en}: missing language alternates")
 article_routes = {"fa": "/fa/writing/document-parsing/", "en": "/writing/document-parsing/"}
+def listed_xml(name, route):
+    import xml.etree.ElementTree as ET
+    tree = ET.parse(root / name)
+    ns = "{http://www.w3.org/2005/Atom}"
+    if name == "feed.xml":
+        urls = [link.get("href", "") for entry in tree.findall(ns + "entry") for link in entry.findall(ns + "link") if link.get("rel", "alternate") == "alternate"]
+    else:
+        urls = [node.text or "" for node in tree.iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+    return any(urlsplit(url).path == route for url in urls)
+
 def retired(route):
     page = root / route.lstrip("/") / "index.html"
     return page.is_file() and "data-retired-post" in page.read_text(encoding="utf-8")
@@ -102,7 +112,7 @@ for lang, own in article_routes.items():
         if (path.endswith("writing/index.html") and (own in parser.links) == retired(own)) or (retired(own) and own in parser.links) or other in parser.links:
             errors.append(f"{path}: article language isolation failed")
     for path in ("feed.xml", "sitemap.xml"):
-        if (root / path).is_file() and ((own in (root / path).read_text(encoding="utf-8")) == retired(own)):
+        if (root / path).is_file() and (listed_xml(path, own) == retired(own)):
             errors.append(f"{path}: missing {own}")
 for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
     html = (root / path).read_text(encoding="utf-8")
@@ -182,7 +192,7 @@ for name in ("fa/index.html", "fa/writing/index.html", "index.html", "writing/in
         errors.append(f"{name}: canonical article listing must be unique")
 for name in ("feed.xml", "sitemap.xml"):
     html = (root / name).read_text(encoding="utf-8")
-    if ((guide_route in html) == retired(guide_route)) or obsolete_route in html:
+    if (listed_xml(name, guide_route) == retired(guide_route)) or listed_xml(name, obsolete_route):
         errors.append(f"{name}: wrong canonical article listing")
 redirect = root / obsolete_route.lstrip("/") / "index.html"
 if not redirect.is_file() or f"url={guide_route}" not in redirect.read_text(encoding="utf-8"):
@@ -241,7 +251,15 @@ for path in Path("retired-posts").glob("*.html"):
         errors.append(f"Removal notice is indexable: {route}")
     for name in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html", "feed.xml", "sitemap.xml"):
         output = root / name
-        if output.is_file() and route in output.read_text(encoding="utf-8"):
+        if not output.is_file():
+            continue
+        if name.endswith(".xml"):
+            found = listed_xml(name, route)
+        else:
+            parser = Links()
+            parser.feed(output.read_text(encoding="utf-8"))
+            found = route in parser.links
+        if found:
             errors.append(f"Removed route still listed in {name}: {route}")
 if errors:
     print("\n".join(sorted(set(errors))))
