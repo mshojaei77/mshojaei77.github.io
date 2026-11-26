@@ -34,6 +34,7 @@ jobs:
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 --directory _site > /tmp/site-http.log 2>&1 &
           for i in {1..20}; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
+          node scripts/check_studio.cjs
           node scripts/check_browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
