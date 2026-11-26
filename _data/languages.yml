@@ -47,3 +47,8 @@
   en_label: "Interview questions"
   fa_label: "سؤالات مصاحبه"
   hidden: true
+- en: "/market_analysis.html"
+  fa: "/fa/market-analysis/"
+  en_label: "Market analysis"
+  fa_label: "تحلیل بازار"
+  hidden: true
