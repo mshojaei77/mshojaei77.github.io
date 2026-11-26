@@ -2,8 +2,15 @@
 layout: article
 lang: fa
 title: "آشنایی با مدل‌های زبانی بزرگ (LLM)"
-permalink: /fa/materials/Intro/
+permalink: /fa/writing/intro-to-llms/
 nav_exclude: true
+description: "آشنایی با مدل‌های زبانی بزرگ (LLM)"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # آشنایی با مدل‌های زبانی بزرگ (LLM)

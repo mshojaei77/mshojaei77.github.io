@@ -2,8 +2,15 @@
 layout: article
 lang: fa
 title: "آموزش Tokenization؛ تبدیل متن به توکن"
-permalink: /fa/materials/Tokenization/
+permalink: /fa/writing/tokenization/
 nav_exclude: true
+description: "آموزش Tokenization؛ تبدیل متن به توکن"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # آموزش Tokenization؛ تبدیل متن به توکن

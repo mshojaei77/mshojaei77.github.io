@@ -1,11 +1,16 @@
 ---
 title: "Tokenization Tutorial: Text to Tokens for LLMs"
-nav_order: 3
-parent: Tutorials
 layout: article
 lang: en
-permalink: /materials/Tokenization/
+permalink: /writing/tokenization/
 nav_exclude: true
+description: "Tokenization Tutorial: Text to Tokens for LLMs"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # Tokenization Tutorial 🔢: Text to Numbers Hack for LLM Smarts

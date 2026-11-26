@@ -1,11 +1,16 @@
 ---
 title: "Embeddings Tutorial: Word Vectors for LLMs"
-nav_order: 5
-parent: Tutorials
 layout: article
 lang: en
-permalink: /materials/Embeddings/
+permalink: /writing/embeddings/
 nav_exclude: true
+description: "Embeddings Tutorial: Word Vectors for LLMs"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # Embeddings Tutorial 🌐: Word2Vec Hack – Numbers that Grok Meaning

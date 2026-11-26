@@ -1,30 +1,34 @@
 ---
+title: "Neural Networks Tutorial: Foundations for LLMs"
 layout: article
-lang: fa
-title: "آموزش شبکه‌های عصبی؛ مبانی LLM"
-permalink: /fa/materials/Neural_Networks/
+lang: en
+permalink: /writing/neural-networks/
 nav_exclude: true
+description: "Neural Networks Tutorial: Foundations for LLMs"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
-# آموزش شبکه‌های عصبی؛ مبانی LLM
+# Neural Networks Tutorial 🧠: Math and Mechanics for LLM Foundations
+Hack into neural networks guide – vectors to backprop, no fluff. Essential for understanding large language models.
 
-از بردارها تا پس‌انتشار خطا؛ مبانی لازم برای فهم مدل‌های زبانی.
+## Neural Networks Basics
+- Neurons, layers, weights, biases – the building blocks.
+- Types: Feedforward, CNN, RNN – when to use what.
+- Activations, backpropagation guide, gradient descent hacks.
+- Loss functions, regularization, optimizers for peak performance.
 
-## مبانی شبکهٔ عصبی
-- نورون، لایه، وزن و بایاس: اجزای اصلی.
-- انواع شبکه: Feedforward، CNN و RNN و انتخاب کاربرد هرکدام.
-- تابع فعال‌سازی، Backpropagation و Gradient Descent.
-- تابع زیان، Regularization و Optimizer برای بهبود عملکرد.
+## Why Neural Networks Matter in AI
+Dive deep into how neural nets power LLMs. Got questions? What's your biggest backprop struggle? 🤔
 
-## چرا شبکه‌های عصبی مهم‌اند؟
-بررسی می‌کنیم شبکه‌های عصبی چگونه در LLM به کار می‌روند. کدام بخش پس‌انتشار برای شما دشوارتر است؟
-
-## یادداشت‌های من دربارهٔ شبکه‌های عصبی
-
+## My Neural Networks Notes
 - Demystifying Neural Networks A-Z
 
-## منابع پیشنهادی شبکه‌های عصبی
-
+## Top Neural Networks Resources
 - [Deep Learning Book](https://www.deeplearningbook.org/)
 - [Neural Nets Book](http://neuralnetworksanddeeplearning.com/)
 - [Stanford CS231n](http://cs231n.stanford.edu/)
@@ -41,4 +45,4 @@ nav_exclude: true
 - [PyTorch Tutorials](https://pytorch.org/tutorials/)
 - [PyTorch NN Module](https://pytorch.org/docs/stable/nn.html)
 
-کلیدواژه‌ها: شبکه‌های عصبی، پس‌انتشار، یادگیری عمیق، مبانی LLM
+Keywords: neural networks tutorial, backpropagation guide, deep learning basics, AI neural nets, LLM foundations

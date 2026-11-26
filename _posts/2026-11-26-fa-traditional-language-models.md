@@ -2,8 +2,15 @@
 layout: article
 lang: fa
 title: "مدل‌های زبانی سنتی؛ پیش از Transformer"
-permalink: /fa/materials/Traditional_LMs/
+permalink: /fa/writing/traditional-language-models/
 nav_exclude: true
+description: "مدل‌های زبانی سنتی؛ پیش از Transformer"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # مدل‌های زبانی سنتی؛ پیش از Transformer

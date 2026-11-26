@@ -2,8 +2,15 @@
 layout: article
 lang: fa
 title: "آموزش Embedding؛ بردارهای واژه در LLM"
-permalink: /fa/materials/Embeddings/
+permalink: /fa/writing/embeddings/
 nav_exclude: true
+description: "آموزش Embedding؛ بردارهای واژه در LLM"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # آموزش Embedding؛ بردارهای واژه در LLM

@@ -1,11 +1,16 @@
 ---
 title: "Transformers Tutorial: Attention Revolution for LLMs"
-nav_order: 6
-parent: Tutorials
 layout: article
 lang: en
-permalink: /materials/Transformers/
+permalink: /writing/transformers/
 nav_exclude: true
+description: "Transformers Tutorial: Attention Revolution for LLMs"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # Transformers Tutorial ⚡: Attention Mechanism Explained – Parallel Seq Magic

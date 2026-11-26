@@ -1,11 +1,16 @@
 ---
 title: "Traditional Language Models Tutorial: Pre-Transformers Era"
-nav_order: 4
-parent: Tutorials
 layout: article
 lang: en
-permalink: /materials/Traditional_LMs/
+permalink: /writing/traditional-language-models/
 nav_exclude: true
+description: "Traditional Language Models Tutorial: Pre-Transformers Era"
+date: 2026-11-26 00:00:00 +0000
+article_kind: tutorial
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 # Traditional Language Models Tutorial 📜: Old School Word Predictors Before Transformers
