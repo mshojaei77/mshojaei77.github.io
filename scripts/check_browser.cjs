@@ -130,6 +130,25 @@ fs.mkdirSync(out, { recursive: true });
       await a.waitForURL(origin+(lang==='fa'?englishRoute:articleRoute));
       await ctx.close();
     }
+    for (const width of [375, 1440]) {
+      const ctx = await browser.newContext({viewport:{width,height:900}});
+      const guide = await ctx.newPage();
+      const failures = [];
+      guide.on('pageerror', err => failures.push(err.message));
+      assert((await guide.goto(origin+'/fa/writing/document-parsing-engineering/')).ok());
+      await guide.evaluate(()=>document.fonts.ready);
+      assert.equal(await guide.locator('html').getAttribute('lang'),'fa');
+      assert.equal(await guide.locator('html').getAttribute('dir'),'rtl');
+      assert.equal(await guide.locator('main article h1').count(),1);
+      assert.equal(await guide.locator('main figure svg').count(),25);
+      assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'engineering guide horizontal overflow '+width);
+      assert(await guide.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
+      await guide.locator('#site-theme').click();
+      assert.equal(await guide.locator('html').getAttribute('data-theme'),'dark');
+      assert.deepEqual(failures,[]);
+      await guide.screenshot({path:out+'/document-parsing-engineering-fa-'+width+'.png'});
+      await ctx.close();
+    }
     assert.deepEqual(tutorialCode.en, tutorialCode.fa, 'code examples must match across languages');
     console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 6 localized resource routes.');
