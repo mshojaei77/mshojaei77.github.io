@@ -21,12 +21,12 @@
     <link rel="alternate" hreflang="x-default" href="{{ pair.en | absolute_url }}">
   {% endif %}
   {% if page.retired_post %}<meta name="robots" content="noindex,nofollow">{% endif %}
-  <meta name="color-scheme" content="light">
-  <script src="/assets/js/theme.js"></script>
+  <meta name="color-scheme" content="light dark">
+  <script src="/assets/js/theme.js?v=3"></script>
   <link rel="icon" href="/assets/img/favicon.ico">
   {% if language == 'fa' %}<link rel="preload" href="/assets/fonts/Vazirmatn-variable.woff2" as="font" type="font/woff2" crossorigin>{% endif %}
-  <link rel="stylesheet" href="/assets/css/publication.css?v=4">
-  {% if page.url == '/' or page.url == '/fa/' %}<link rel="stylesheet" href="/assets/css/homepage.css?v=2">{% endif %}
+  <link rel="stylesheet" href="/assets/css/publication.css?v=5">
+  {% if page.url == '/' or page.url == '/fa/' %}<link rel="stylesheet" href="/assets/css/homepage.css?v=4">{% endif %}
   {% feed_meta %}
   {% if page.article_widgets %}<script defer src="/assets/js/document-parsing.js"></script>{% endif %}
 </head>
@@ -63,6 +63,8 @@
     <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
       <path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2" /><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2" />
     </symbol>
+    <symbol id="i-rss" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 5a15 15 0 0 1 15 15M4 11a9 9 0 0 1 9 9"/><circle cx="5" cy="19" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linejoin="round"><path d="m3 10 18-7-7 18-4-7-7-4Zm7 4L21 3"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" />
     </symbol>
@@ -77,18 +79,18 @@
       <path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.49h2.04L6.49 3.24H4.3l13.31 17.4Z"/>
     </symbol>
   </svg>
-  <header>
+  <header class="site-header">
     <div class="wrap nav">
-      <a class="brand" href="{% if language == 'fa' %}/fa/{% else %}/{% endif %}"><span class="brand-mark" aria-hidden="true"><svg class="icon"><use href="#i-terminal"></use></svg></span>{% if language == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}</a>
+      <a class="brand" href="{% if language == 'fa' %}/fa/{% else %}/{% endif %}"{% if page.url == '/' or page.url == '/fa/' %} aria-current="page"{% endif %}><span class="brand-mark" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-terminal"></use></svg></span>{% if language == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}</a>
       <nav aria-label="{% if language == 'fa' %}ناوبری اصلی{% else %}Main navigation{% endif %}"><ul>
       {% for item in site.data.languages %}
         {% unless forloop.first or item.hidden %}
           {% if language == 'fa' %}{% assign target = item.fa %}{% assign label = item.fa_label %}{% else %}{% assign target = item.en %}{% assign label = item.en_label %}{% endif %}
-          <li><a href="{{ target }}"{% if page.url == target %} aria-current="page"{% endif %}>{{ label }}</a></li>
+          <li><a href="{{ target }}"{% if page.url == target %} aria-current="page"{% elsif item.en == '/writing/' and page.url contains '/writing/' %} aria-current="location"{% endif %}>{{ label }}</a></li>
         {% endunless %}
       {% endfor %}
       </ul></nav>
-      <div class="header-controls">{% include language-switch.html %}<button type="button" class="theme-switch" id="site-theme" aria-label="{% if language == 'fa' %}تغییر حالت روشن و تاریک{% else %}Toggle light and dark theme{% endif %}" aria-pressed="false"><span aria-hidden="true">☾</span></button></div>
+      <div class="header-controls">{% include language-switch.html %}<button type="button" class="theme-switch" id="site-theme" aria-label="{% if language == 'fa' %}تغییر حالت روشن و تاریک{% else %}Toggle light and dark theme{% endif %}" title="{% if language == 'fa' %}فعال‌کردن حالت تاریک{% else %}Switch to dark theme{% endif %}"><span aria-hidden="true">☾</span></button></div>
     </div>
   </header>
   <main class="wrap" id="main-content" tabindex="-1">
@@ -96,15 +98,15 @@
   </main>
   <footer>
     <div class="wrap foot">
-      <div>© {{ site.time | date: '%Y' }} {% if language == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}</div>
-      <div class="socials"><a href="/feed.xml">RSS</a>
-        <a href="mailto:shojaei.dev@gmail.com"><svg class="icon"><use href="#i-mail"></use></svg>{% if language == 'fa' %}ایمیل{% else %}email{% endif %}</a>
-        <a href="https://www.linkedin.com/in/mshojaei77/"><svg class="brand-icon"><use href="#brand-linkedin"></use></svg>LinkedIn</a>
-        <a href="https://github.com/mshojaei77"><svg class="brand-icon"><use href="#brand-github"></use></svg>GitHub</a>
-        <a href="https://huggingface.co/mshojaei77">Hugging Face</a>
-        <a href="https://t.me/LLMEngineers">{% if language == 'fa' %}کانال تلگرام{% else %}Telegram channel{% endif %}</a>
-        <a href="https://t.me/AI_LLMs">{% if language == 'fa' %}گروه تلگرام{% else %}Telegram community{% endif %}</a>
-        <a href="https://x.com/realshojaei"><svg class="brand-icon"><use href="#brand-x"></use></svg>X</a>
+      <div>© {% assign footer_year = site.time | date: '%Y' %}{% if language == 'fa' %}{% include persian-digits.html value=footer_year %}{% else %}{{ footer_year }}{% endif %} {% if language == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}</div>
+      <div class="socials"><a href="/feed.xml"><svg class="icon" aria-hidden="true"><use href="#i-rss"></use></svg>RSS</a>
+        <a href="mailto:shojaei.dev@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>{% if language == 'fa' %}ایمیل{% else %}email{% endif %}</a>
+        <a href="https://www.linkedin.com/in/mshojaei77/"><svg class="brand-icon" aria-hidden="true"><use href="#brand-linkedin"></use></svg>LinkedIn</a>
+        <a href="https://github.com/mshojaei77"><svg class="brand-icon" aria-hidden="true"><use href="#brand-github"></use></svg>GitHub</a>
+        <a href="https://huggingface.co/mshojaei77"><svg class="icon" aria-hidden="true"><use href="#i-flask"></use></svg>Hugging Face</a>
+        <a href="https://t.me/LLMEngineers"><svg class="icon" aria-hidden="true"><use href="#i-send"></use></svg>{% if language == 'fa' %}کانال تلگرام{% else %}Telegram channel{% endif %}</a>
+        <a href="https://t.me/AI_LLMs"><svg class="icon" aria-hidden="true"><use href="#i-send"></use></svg>{% if language == 'fa' %}گروه تلگرام{% else %}Telegram community{% endif %}</a>
+        <a href="https://x.com/realshojaei"><svg class="brand-icon" aria-hidden="true"><use href="#brand-x"></use></svg>X</a>
       </div>
     </div>
   </footer>
