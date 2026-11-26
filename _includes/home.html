@@ -1,12 +1,4 @@
 {% assign copy = site.data.home[page.lang] %}
-{% assign local_posts = site.posts | where: 'lang', page.lang %}
-{% assign featured_post = nil %}
-{% for route in copy.featured_routes %}
-  {% assign candidate = local_posts | where: 'url', route | first %}
-  {% if candidate %}{% assign featured_post = candidate %}{% break %}{% endif %}
-{% endfor %}
-{% assign start = site.data.home.sections | where: 'key', 'start' | first %}
-{% assign roadmap = start.items.first[page.lang] %}
 {% assign connect = site.data.home.sections | where: 'key', 'elsewhere' | first %}
 <section class="intro home-hero" aria-labelledby="intro-title">
   <p class="eyebrow"><span class="home-role-mark" aria-hidden="true"></span>{{ copy.role | escape }}</p>
@@ -19,26 +11,7 @@
   </div>
   <div class="home-focus"><span>{{ copy.focus | escape }}</span><a href="{{ copy.about_url }}">{{ copy.about_label | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span></a></div>
 </section>
-<section class="home-start" data-home-section="start" aria-labelledby="start-title">
-  <div class="section-heading"><h2 id="start-title">{{ start[page.lang] | escape }}</h2></div>
-  <div class="home-start-grid{% unless featured_post %} single{% endunless %}">
-    <article class="entry-card home-roadmap">
-      <div class="home-card-top"><span class="meta">{{ roadmap.tag | escape }}</span><svg class="icon" aria-hidden="true"><use href="#i-map"></use></svg></div>
-      <h3><a href="{{ roadmap.url }}">{{ roadmap.title | escape }}</a></h3>
-      <p>{{ roadmap.desc | escape }}</p>
-      <span class="home-card-cta" aria-hidden="true">{{ copy.open_roadmap | escape }} {% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>
-    </article>
-    {% if featured_post %}
-    <article class="entry-card home-featured" data-featured-post="{{ featured_post.url | escape }}">
-      <div class="home-card-top"><span class="meta">{{ copy.featured | escape }}</span><svg class="icon" aria-hidden="true"><use href="#i-book"></use></svg></div>
-      <h3><a href="{{ featured_post.url | relative_url }}">{{ featured_post.title | escape }}</a></h3>
-      <p>{{ featured_post.description | escape }}</p>
-      <span class="home-card-cta" aria-hidden="true">{{ copy.read_article | escape }} {% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>
-    </article>
-    {% endif %}
-  </div>
-</section>
-{% include published-posts.html limit=3 home=true exclude_url=featured_post.url %}
+{% include published-posts.html limit=3 home=true %}
 <section class="home-connect" data-home-section="elsewhere" aria-labelledby="elsewhere-title">
   <div class="section-heading"><h2 id="elsewhere-title">{{ connect[page.lang] | escape }}</h2></div>
   <div class="home-connect-grid">

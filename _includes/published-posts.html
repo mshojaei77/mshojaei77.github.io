@@ -1,5 +1,4 @@
 {% assign published_posts = site.posts | where: 'lang', page.lang %}
-{% if include.exclude_url %}{% assign published_posts = published_posts | where_exp: 'post', 'post.url != include.exclude_url' %}{% endif %}
 {% assign post_limit = include.limit | default: published_posts.size %}
 {% if published_posts.size > 0 %}
 <section aria-labelledby="latest-posts-title"{% if include.home %} class="home-latest" data-home-section="latest"{% endif %}>

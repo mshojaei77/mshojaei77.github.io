@@ -1,4 +1,4 @@
-import {GitHub,OWNER,SITE,LABELS,allowed,documentLanguage,meta,splitSource,setScalar,bodyWithLineEndings,createPost,parseImport,retirement,drafts,bytes,to64,blobSha,MAX_BYTES} from './studio-core.js?v=2';
+import {GitHub,OWNER,SITE,LABELS,allowed,documentLanguage,meta,splitSource,setScalar,bodyWithLineEndings,createPost,parseImport,retirement,drafts,bytes,to64,blobSha,MAX_BYTES} from './studio-core.js?v=5';
 const $=id=>document.getElementById(id);
 let api=null,items=[],local=new Map(),d=null,timer=null,saving=Promise.resolve(),version=0,stored=0,busy=false,worker=null,previewId=0,releaseTab=null;
 async function acquireTab(){if(!navigator.locks)return;await new Promise((resolve,reject)=>{navigator.locks.request('publication-studio-owner',{ifAvailable:true},async lock=>{if(!lock){reject(Error('Studio is already open in another tab. Close it before editing.'));return;}resolve();await new Promise(done=>{releaseTab=done;});}).catch(reject);});}

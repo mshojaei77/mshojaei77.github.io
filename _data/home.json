@@ -13,27 +13,20 @@
       },
       {
         "url": "/roadmap.html",
-        "label": "LLM Development Roadmap"
+        "label": "AI Engineering Roadmap"
       }
     ],
     "notebook": "This is my engineering notebook.",
     "focus": "Production LLM systems · Evaluation · Multilingual AI, especially Persian",
     "latest": "Latest writing",
-    "all_writing": "All writing",
-    "featured": "Selected reading",
-    "read_article": "Read article",
-    "open_roadmap": "Explore the roadmap",
-    "featured_routes": [
-      "/writing/vector-databases/",
-      "/writing/market-analysis/"
-    ]
+    "all_writing": "All writing"
   },
   "fa": {
     "name": "محمد شجاعی",
     "role": "مهندس هوش مصنوعی",
     "tagline": "سیستم‌های هوش مصنوعی می‌سازم که بیرون از دمو هم کار کنند.",
-    "intro": "سیستم‌های مبتنی بر LLM می‌سازم و دربارهٔ بخش‌هایی می‌نویسم که بیرون از دمو دردسرساز می‌شوند: ایجنتی که وضعیت مکالمه را گم می‌کند، بازیابی‌ای که متن قانع‌کننده اما نادرست برمی‌گرداند، Evalهایی که جای حدس و گمان را می‌گیرند و هزینهٔ اجرای مدل که آخر ماه غافلگیرمان می‌کند.",
-    "about_label": "دربارهٔ من و سوابق کاری",
+    "intro": "روی ساخت سیستم‌های مبتنی بر LLM کار می‌کنم و از بخش‌هایی می‌نویسم که در محیط واقعی دردسرساز می‌شوند: ایجنت‌هایی که وضعیت مکالمه را گم می‌کنند، بازیابیِ متن قانع‌کننده اما نادرست، ارزیابی به‌جای حدس و گمان و هزینهٔ اجرای مدل‌ها.",
+    "about_label": "دربارهٔ من",
     "about_url": "/fa/about/",
     "actions": [
       {
@@ -42,43 +35,15 @@
       },
       {
         "url": "/fa/roadmap/",
-        "label": "نقشهٔ راه توسعهٔ LLM"
+        "label": "نقشهٔ راه مهندسی هوش مصنوعی"
       }
     ],
-    "notebook": "اینجا دفترچهٔ یادداشت مهندسی من است.",
-    "focus": "سیستم‌های LLM در محیط واقعی · ارزیابی · هوش مصنوعی چندزبانه، به‌ویژه فارسی",
+    "notebook": "اینجا دفترچهٔ یادداشت مهندسی من است؛ از آزمایش تا Production.",
+    "focus": "سیستم‌های LLM در محیط واقعی · ارزیابی · هوش مصنوعی فارسی و چندزبانه",
     "latest": "تازه‌ترین نوشته‌ها",
-    "all_writing": "همهٔ نوشته‌ها",
-    "featured": "نوشتهٔ پیشنهادی",
-    "read_article": "خواندن نوشته",
-    "open_roadmap": "مشاهدهٔ نقشهٔ راه",
-    "featured_routes": [
-      "/fa/writing/vector-databases/",
-      "/fa/writing/market-analysis/"
-    ]
+    "all_writing": "همهٔ نوشته‌ها"
   },
   "sections": [
-    {
-      "key": "start",
-      "en": "Start here",
-      "fa": "از اینجا شروع کنید",
-      "items": [
-        {
-          "en": {
-            "tag": "Study path",
-            "url": "/roadmap.html",
-            "title": "LLM Development Roadmap",
-            "desc": "A practical path through LLMs. Not a sacred curriculum. More like a map with coffee stains and warning labels."
-          },
-          "fa": {
-            "tag": "مسیر یادگیری",
-            "url": "/fa/roadmap/",
-            "title": "نقشهٔ راه توسعهٔ مدل‌های زبانی",
-            "desc": "مسیری عملی از مبانی LLM تا Production. نه یک برنامهٔ درسی مقدس؛ بیشتر شبیه نقشه‌ای با لکه‌های قهوه و چند علامت هشدار."
-          }
-        }
-      ]
-    },
     {
       "key": "elsewhere",
       "en": "Connect",
@@ -95,7 +60,7 @@
             "tag": "کد و آزمایش",
             "url": "https://github.com/mshojaei77",
             "title": "مخازن GitHub",
-            "desc": "ابزارها، آزمایش‌ها و کدهای مهندسی؛ بعضی کاربردی‌اند، بعضی هنوز دارند جان می‌گیرند."
+            "desc": "کدها، ابزارها و آزمایش‌های مهندسی؛ از پروژه‌های جدی تا ایده‌هایی که هنوز در حال شکل‌گیری‌اند."
           }
         },
         {
@@ -109,7 +74,7 @@
             "tag": "مدل و داده",
             "url": "https://huggingface.co/mshojaei77",
             "title": "Hugging Face",
-            "desc": "مدل‌ها، دیتاست‌ها، آداپترها و نتیجهٔ آزمایش‌هایی که در مسیر ساخت و ارزیابی باقی مانده‌اند."
+            "desc": "مدل‌ها، دیتاست‌ها، آداپترها و نتایج آزمایش‌های ارزیابی مدل."
           }
         },
         {
