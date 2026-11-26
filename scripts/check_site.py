@@ -8,7 +8,7 @@ root = Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
 routes = ["index.html", "writing/index.html", "research/index.html", "projects/index.html",
           "newsletter/index.html", "about.html", "roadmap.html", "resources.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
-          "vector_dbs.html",
+          "vector_dbs.html", "writing/document-parsing/index.html",
           "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
 fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "newsletter", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
@@ -63,6 +63,7 @@ class Locale(HTMLParser):
 
 pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research", "newsletter")]
 pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/open_source_ai.html", "/fa/open-source-ai/"), ("/vector_dbs.html", "/fa/vector-databases/"), ("/resources.html", "/fa/resources/"), ("/mini_roadmap.html", "/fa/mini-roadmap/"), ("/interview.html", "/fa/interview/"), ("/market_analysis.html", "/fa/market-analysis/")]
+pairs.append(("/writing/document-parsing/", "/fa/writing/document-parsing/"))
 def inspect_route(route):
     p = root / route.lstrip("/")
     if route.endswith("/"):
@@ -84,21 +85,18 @@ for en, fa in pairs:
             errors.append(f"{en}: missing English LTR metadata")
         if f.alternates.get("fa") != fa or f.alternates.get("en") != en:
             errors.append(f"{en}: missing language alternates")
-article_route = "/fa/writing/document-parsing/"
-for path in ("fa/index.html", "fa/writing/index.html"):
-    parser = Links()
-    if (root / path).is_file():
+article_routes = {"fa": "/fa/writing/document-parsing/", "en": "/writing/document-parsing/"}
+for lang, own in article_routes.items():
+    other = article_routes["en" if lang == "fa" else "fa"]
+    prefix = "fa/" if lang == "fa" else ""
+    for path in (prefix + "index.html", prefix + "writing/index.html"):
+        parser = Links()
         parser.feed((root / path).read_text(encoding="utf-8"))
-        if article_route not in parser.links:
-            errors.append(f"{path}: missing published article")
-for path in ("feed.xml", "sitemap.xml"):
-    if (root / path).is_file() and article_route not in (root / path).read_text(encoding="utf-8"):
-        errors.append(f"{path}: missing published article")
-for path in ("index.html", "writing/index.html"):
-    parser = Links()
-    parser.feed((root / path).read_text(encoding="utf-8"))
-    if article_route in parser.links:
-        errors.append(f"{path}: Persian-only article leaked into English archive")
+        if own not in parser.links or other in parser.links:
+            errors.append(f"{path}: article language isolation failed")
+    for path in ("feed.xml", "sitemap.xml"):
+        if (root / path).is_file() and own not in (root / path).read_text(encoding="utf-8"):
+            errors.append(f"{path}: missing {own}")
 for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
     html = (root / path).read_text(encoding="utf-8")
     if any(x in html for x in ("Living book", "Selected open-source work", "کتاب در حال نگارش", "پروژه‌های متن‌باز منتخب")):

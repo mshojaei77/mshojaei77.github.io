@@ -52,3 +52,8 @@
   en_label: "Market analysis"
   fa_label: "تحلیل بازار"
   hidden: true
+- en: "/writing/document-parsing/"
+  fa: "/fa/writing/document-parsing/"
+  en_label: "Document parsing"
+  fa_label: "پردازش سند"
+  hidden: true

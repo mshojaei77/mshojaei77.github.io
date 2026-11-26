@@ -86,25 +86,27 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await p.locator('body').getAttribute('data-layout-version'),'publication-4');
     }
     const articleRoute = '/fa/writing/document-parsing/';
+    const englishRoute = '/writing/document-parsing/';
     for (const route of ['/', '/fa/', '/writing/', '/fa/writing/']) {
       assert((await p.goto(origin+route)).ok());
       assert.equal(await p.locator('a[href="'+articleRoute+'"]').count(), route.startsWith('/fa/') ? 1 : 0);
+      assert.equal(await p.locator('a[href="'+englishRoute+'"]').count(), route.startsWith('/fa/') ? 0 : 1);
     }
-    for (const width of [375, 1440]) {
+    for (const lang of ['fa','en']) for (const width of [375, 1440]) {
       const ctx = await browser.newContext({viewport:{width,height:900},colorScheme:'dark',acceptDownloads:true});
       const a = await ctx.newPage();
       const failures = [];
       a.on('pageerror', err => failures.push(err.message));
-      assert((await a.goto(origin+articleRoute)).ok());
+      assert((await a.goto(origin+(lang==='fa'?articleRoute:englishRoute))).ok());
       await a.evaluate(()=>document.fonts.ready);
-      assert.equal(await a.locator('html').getAttribute('lang'),'fa');
-      assert.equal(await a.locator('html').getAttribute('dir'),'rtl');
+      assert.equal(await a.locator('html').getAttribute('lang'),lang);
+      assert.equal(await a.locator('html').getAttribute('dir'),lang==='fa'?'rtl':'ltr');
       assert.equal(await a.locator('main svg').count(),13);
       assert.equal(await a.locator('main table').count(),24);
       assert.equal(await a.locator('.issue-table tbody tr').count(),37);
       assert.equal(await a.locator('.notebook textarea').count(),10);
       assert(await a.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'article horizontal overflow '+width);
-      assert(await a.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
+      if (lang==='fa') assert(await a.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
       assert.equal(await a.locator('html').getAttribute('data-theme'),'light');
       await a.locator('#site-theme').click();
       assert.equal(await a.locator('html').getAttribute('data-theme'),'dark');
@@ -124,9 +126,11 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await a.locator('#note0').inputValue(),'یادداشت آزمایشی');
       assert.equal(await a.locator('html').getAttribute('data-theme'),'dark');
       const [download] = await Promise.all([a.waitForEvent('download'),a.locator('#exportNotes').click()]);
-      assert.equal(download.suggestedFilename(),'weekend-notes-fa.txt');
+      assert.equal(download.suggestedFilename(),'weekend-notes-'+lang+'.txt');
       assert.deepEqual(failures,[]);
-      await a.screenshot({path:out+'/document-parsing-'+width+'.png',fullPage:false});
+      await a.screenshot({path:out+'/document-parsing-'+lang+'-'+width+'.png',fullPage:false});
+      await a.locator('.language-switch a').click();
+      await a.waitForURL(origin+(lang==='fa'?englishRoute:articleRoute));
       await ctx.close();
     }
     console.log('Verified article discovery, diagrams, tables, RTL, theme, issue filtering, simulator and notes export.');
