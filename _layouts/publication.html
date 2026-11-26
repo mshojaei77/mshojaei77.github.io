@@ -26,10 +26,11 @@
   <link rel="icon" href="/assets/img/favicon.ico">
   {% if language == 'fa' %}<link rel="preload" href="/assets/fonts/Vazirmatn-variable.woff2" as="font" type="font/woff2" crossorigin>{% endif %}
   <link rel="stylesheet" href="/assets/css/publication.css?v=4">
+  {% if page.url == '/' or page.url == '/fa/' %}<link rel="stylesheet" href="/assets/css/homepage.css?v=1">{% endif %}
   {% feed_meta %}
   {% if page.article_widgets %}<script defer src="/assets/js/document-parsing.js"></script>{% endif %}
 </head>
-<body data-layout-version="publication-4">
+<body data-layout-version="publication-4"{% if page.url == '/' or page.url == '/fa/' %} class="publication-home"{% endif %}>
   <a class="skip-link" href="#main-content">{% if language == 'fa' %}رفتن به محتوا{% else %}Skip to content{% endif %}</a>
   <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
     <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">

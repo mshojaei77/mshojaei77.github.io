@@ -1,25 +1,49 @@
 {% assign copy = site.data.home[page.lang] %}
-<section class="intro" aria-labelledby="intro-title">
-  <p class="eyebrow">{{ copy.role | escape }}</p>
+{% assign local_posts = site.posts | where: 'lang', page.lang %}
+{% assign featured_post = nil %}
+{% for route in copy.featured_routes %}
+  {% assign candidate = local_posts | where: 'url', route | first %}
+  {% if candidate %}{% assign featured_post = candidate %}{% break %}{% endif %}
+{% endfor %}
+{% assign start = site.data.home.sections | where: 'key', 'start' | first %}
+{% assign roadmap = start.items.first[page.lang] %}
+{% assign connect = site.data.home.sections | where: 'key', 'elsewhere' | first %}
+<section class="intro home-hero" aria-labelledby="intro-title">
+  <p class="eyebrow"><span class="home-role-mark" aria-hidden="true"></span>{{ copy.role | escape }}</p>
   <h1 id="intro-title">{{ copy.name | escape }}</h1>
   <p class="hero-tagline">{{ copy.tagline | escape }}</p>
   <p class="lede">{{ copy.intro | escape }}</p>
-  <p class="lede">{{ copy.about_before | escape }} <a href="{{ copy.about_url }}">{{ copy.about_label | escape }}</a>{{ copy.about_after | escape }}</p>
+  <p class="lede home-notebook">{{ copy.notebook | escape }}</p>
   <div class="quick-links">
-    {% for action in copy.actions %}<a class="action{% if forloop.first %} primary{% endif %}" href="{{ action.url }}">{{ action.label | escape }}</a>{% endfor %}
+    {% for action in copy.actions %}<a class="action{% if forloop.first %} primary{% endif %}" href="{{ action.url }}">{{ action.label | escape }}{% if forloop.first %}<span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>{% endif %}</a>{% endfor %}
+  </div>
+  <div class="home-focus"><span>{{ copy.focus | escape }}</span><a href="{{ copy.about_url }}">{{ copy.about_label | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span></a></div>
+</section>
+<section class="home-start" data-home-section="start" aria-labelledby="start-title">
+  <div class="section-heading"><h2 id="start-title">{{ start[page.lang] | escape }}</h2></div>
+  <div class="home-start-grid{% unless featured_post %} single{% endunless %}">
+    <article class="entry-card home-roadmap">
+      <div class="home-card-top"><span class="meta">{{ roadmap.tag | escape }}</span><svg class="icon" aria-hidden="true"><use href="#i-map"></use></svg></div>
+      <h3><a href="{{ roadmap.url }}">{{ roadmap.title | escape }}</a></h3>
+      <p>{{ roadmap.desc | escape }}</p>
+      <span class="home-card-cta" aria-hidden="true">{{ copy.open_roadmap | escape }} {% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>
+    </article>
+    {% if featured_post %}
+    <article class="entry-card home-featured" data-featured-post="{{ featured_post.url | escape }}">
+      <div class="home-card-top"><span class="meta">{{ copy.featured | escape }}</span><svg class="icon" aria-hidden="true"><use href="#i-book"></use></svg></div>
+      <h3><a href="{{ featured_post.url | relative_url }}">{{ featured_post.title | escape }}</a></h3>
+      <p>{{ featured_post.description | escape }}</p>
+      <span class="home-card-cta" aria-hidden="true">{{ copy.read_article | escape }} {% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>
+    </article>
+    {% endif %}
   </div>
 </section>
-{% include published-posts.html limit=3 %}
-{% for section in site.data.home.sections %}
-<section data-home-section="{{ section.key }}" aria-labelledby="{{ section.key }}-title">
-  <div class="section-heading">
-    <h2 id="{{ section.key }}-title">{{ section[page.lang] | escape }}</h2>
-    {% if section.link %}{% assign link = section.link[page.lang] %}<a class="section-link" href="{{ link.url }}">{{ link.label | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span></a>{% endif %}
-  </div>
-  <div class="section-grid{% if section.items.size == 3 %} three{% endif %}">
-  {% for item in section.items %}{% assign entry = item[page.lang] %}
-    <article class="entry-card"><div class="meta">{{ entry.tag | escape }}</div><h3><a href="{{ entry.url }}">{{ entry.title | escape }}</a></h3><p>{{ entry.desc | escape }}</p></article>
+{% include published-posts.html limit=3 home=true exclude_url=featured_post.url %}
+<section class="home-connect" data-home-section="elsewhere" aria-labelledby="elsewhere-title">
+  <div class="section-heading"><h2 id="elsewhere-title">{{ connect[page.lang] | escape }}</h2></div>
+  <div class="home-connect-grid">
+  {% for item in connect.items %}{% assign entry = item[page.lang] %}
+    <article class="entry-card"><div class="home-card-top"><span class="meta">{{ entry.tag | escape }}</span><span aria-hidden="true">↗</span></div><h3><a href="{{ entry.url }}">{{ entry.title | escape }}</a></h3><p>{{ entry.desc | escape }}</p></article>
   {% endfor %}
   </div>
 </section>
-{% endfor %}

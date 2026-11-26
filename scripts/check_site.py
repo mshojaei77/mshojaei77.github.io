@@ -9,7 +9,7 @@ routes = ["index.html", "writing/index.html", "projects/index.html",
           "about.html", "roadmap.html", "resources.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
           "vector_dbs.html", "writing/document-parsing/index.html",
-          "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
+          "404.html", "assets/css/publication.css", "assets/css/homepage.css", "feed.xml", "sitemap.xml"]
 fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
 fa_routes += ["fa/writing/document-parsing/index.html", "fa/writing/market-analysis/index.html", "fa/writing/vector-databases/index.html"]

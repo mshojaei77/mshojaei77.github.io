@@ -32,7 +32,7 @@ fs.mkdirSync(out, { recursive: true });
           const nav = $('header nav').getBoundingClientRect();
           const toggle = switcher.getBoundingClientRect();
           const intersects = nav.left < toggle.right && nav.right > toggle.left && nav.top < toggle.bottom && nav.bottom > toggle.top;
-          const sections = $$('[data-home-section]').map(s => [s.dataset.homeSection, s.querySelectorAll('.entry-card').length]);
+          const sections = $('[data-home-section]').map(s => [s.dataset.homeSection, s.querySelectorAll('.entry-card').length]);
           const grid = $$('[data-home-section="writing"] .entry-card').map(x => x.getBoundingClientRect().top);
           return {
             lang: document.documentElement.lang, dir: document.documentElement.dir,
@@ -45,7 +45,10 @@ fs.mkdirSync(out, { recursive: true });
             cardUnderline: computed('.entry-card h3 a').textDecorationLine,
             fonts: ['body','h1','.eyebrow','.lede','header nav','.action','.entry-card h3','.entry-card p'].map(s=>computed(s).fontFamily),
             fontLoaded: [...document.fonts].some(f=>f.family === 'Vazirmatn' && f.status === 'loaded'),
-            sections, grid, rss: !!$('footer a[href="/feed.xml"]'),
+            sections, grid, featured: $('[data-featured-post]').map(x=>x.dataset.featuredPost),
+            latest: $('.home-latest .entry-card h3 a').map(a=>a.getAttribute('href')),
+            heroLinks: $('.home-hero .quick-links a').map(a=>a.getAttribute('href')),
+            pageErrors: [], rss: !!$('footer a[href="/feed.xml"]'),
             internal: $$('main .entry-card a').map(a=>a.getAttribute('href')).filter(x=>x.startsWith('/')),
             og: $('meta[property="og:image"]').content,
             json: JSON.parse($('script[type="application/ld+json"]').textContent)
@@ -58,7 +61,13 @@ fs.mkdirSync(out, { recursive: true });
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
         assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 2); assert(facts.rss);
-        assert.deepEqual(facts.sections, [['start',1],['elsewhere',4]]);
+        assert.deepEqual(facts.sections.map(x=>x[0]), ['start','latest','elsewhere']);
+        assert.equal(facts.sections[0][1],facts.featured.length+1);
+        assert.equal(facts.sections[1][1],3);assert.equal(facts.sections[2][1],4);
+        assert.equal(facts.latest.length,new Set(facts.latest).size);
+        assert(!facts.latest.some(x=>facts.featured.includes(x)),'featured post repeated in latest');
+        assert.deepEqual(facts.heroLinks,lang==='fa'?['/fa/writing/','/fa/roadmap/']:['/writing/','/roadmap.html']);
+        assert(facts.featured.concat(facts.latest).every(x=>x.startsWith(lang==='fa'?'/fa/writing/':'/writing/')));
         if (lang === 'fa') {
           assert(facts.fontLoaded, 'self-hosted Persian font did not load');
           assert(facts.fonts.every(x=>x.startsWith('Vazirmatn')), JSON.stringify(facts.fonts));
@@ -69,12 +78,15 @@ fs.mkdirSync(out, { recursive: true });
         assert(facts.og.endsWith('/assets/img/social-card.png'));
         const img = await page.evaluate(async () => { const i = new Image(); i.src='/assets/img/social-card.png'; await i.decode(); return [i.naturalWidth,i.naturalHeight]; });
         assert.deepEqual(img, [1200,630]);
+        if(colorScheme==='dark'){await page.locator('#site-theme').click();assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');}
+        assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'theme overflow');
         await page.screenshot({path:out+'/'+lang+'-'+width+'-'+colorScheme+'.png',fullPage:true});
         await page.locator('.language-switch a').click();
         await page.waitForURL(origin+(lang==='en'?'/fa/':'/'));
+        if(colorScheme==='dark')await page.locator('#site-theme').click();
         results.push(facts.sections); count++;
       }
-      assert.deepEqual(results[0], results[1]);
+      assert.deepEqual(results[0].map(x=>x[0]), results[1].map(x=>x[0]));
       await context.close();
     }
     const p = await browser.newPage();
