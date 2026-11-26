@@ -10,7 +10,7 @@
   {% else %}
     {% seo %}
   {% endif %}
-  {% if pair and pair.en != '/roadmap.html' %}
+  {% if pair %}
     <link rel="alternate" hreflang="en" href="{{ pair.en | absolute_url }}">
     <link rel="alternate" hreflang="fa" href="{{ pair.fa | absolute_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ pair.en | absolute_url }}">

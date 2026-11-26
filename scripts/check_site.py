@@ -77,9 +77,9 @@ for en, fa in pairs:
         errors.append(f"{fa}: missing Persian RTL metadata")
     if en not in g.anchors or fa not in f.anchors:
         errors.append(f"{en} / {fa}: missing reciprocal language navigation")
-    if en not in ("/roadmap.html",) and (g.alternates.get("en") != en or g.alternates.get("fa") != fa):
+    if (g.alternates.get("en") != en or g.alternates.get("fa") != fa):
         errors.append(f"{fa}: missing language alternates")
-    if en not in ("/roadmap.html",):
+    if True:
         if f.html.get("lang") != "en" or f.html.get("dir") != "ltr":
             errors.append(f"{en}: missing English LTR metadata")
         if f.alternates.get("fa") != fa or f.alternates.get("en") != en:
