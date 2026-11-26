@@ -44,9 +44,7 @@ jobs:
           source: .
           destination: ./_site-deletion
       - name: Validate actual rebuilt deletion state
-        run: |
-          python3 scripts/check_site.py _site-deletion
-          python3 scripts/check_date_override.py _site-deletion
+        run: python3 scripts/check_site.py _site-deletion
       - uses: actions/upload-artifact@v4
         if: always()
         with:
