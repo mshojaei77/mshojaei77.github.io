@@ -9,6 +9,7 @@
     {% for action in copy.actions %}<a class="action{% if forloop.first %} primary{% endif %}" href="{{ action.url }}">{{ action.label | escape }}</a>{% endfor %}
   </div>
 </section>
+{% include published-posts.html limit=3 %}
 {% for section in site.data.home.sections %}
 <section data-home-section="{{ section.key }}" aria-labelledby="{{ section.key }}-title">
   <div class="section-heading">
