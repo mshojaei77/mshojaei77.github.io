@@ -53,6 +53,7 @@
   en_label: "Document parsing"
   fa_label: "پردازش سند"
   hidden: true
+  different_editions: true
 - en: "/materials/Data_Preparation/"
   fa: "/fa/materials/Data_Preparation/"
   en_label: "Data Preparation"

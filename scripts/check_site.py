@@ -81,12 +81,12 @@ for en, fa in pairs:
         errors.append(f"{fa}: missing Persian RTL metadata")
     if en not in g.anchors or fa not in f.anchors:
         errors.append(f"{en} / {fa}: missing reciprocal language navigation")
-    if (g.alternates.get("en") != en or g.alternates.get("fa") != fa):
+    if fa != "/fa/writing/document-parsing/" and (g.alternates.get("en") != en or g.alternates.get("fa") != fa):
         errors.append(f"{fa}: missing language alternates")
     if True:
         if f.html.get("lang") != "en" or f.html.get("dir") != "ltr":
             errors.append(f"{en}: missing English LTR metadata")
-        if f.alternates.get("fa") != fa or f.alternates.get("en") != en:
+        if fa != "/fa/writing/document-parsing/" and (f.alternates.get("fa") != fa or f.alternates.get("en") != en):
             errors.append(f"{en}: missing language alternates")
 article_routes = {"fa": "/fa/writing/document-parsing/", "en": "/writing/document-parsing/"}
 for lang, own in article_routes.items():
@@ -123,8 +123,9 @@ for path in root.rglob("*"):
 for path in ("newsletter/index.html", "fa/newsletter/index.html"):
     if (root / path).exists():
         errors.append(f"Retired newsletter published: {path}")
-# The Persian-only engineering guide must remain separate from the bilingual tutorial.
-guide_route = "/fa/writing/document-parsing-engineering/"
+# V6 replaces the earlier Persian tutorial at its canonical public URL.
+guide_route = "/fa/writing/document-parsing/"
+obsolete_route = "/fa/writing/document-parsing-engineering/"
 guide_file = root / guide_route.lstrip("/") / "index.html"
 class Guide(HTMLParser):
     def __init__(self):
@@ -171,11 +172,17 @@ else:
 for name in ("fa/index.html", "fa/writing/index.html", "index.html", "writing/index.html"):
     parser = Links()
     parser.feed((root / name).read_text(encoding="utf-8"))
-    if (guide_route in parser.links) != name.startswith("fa/"):
-        errors.append(f"{name}: engineering guide language isolation failed")
+    if parser.links.count(guide_route) != int(name.startswith("fa/")) or obsolete_route in parser.links:
+        errors.append(f"{name}: canonical article listing must be unique")
 for name in ("feed.xml", "sitemap.xml"):
-    if guide_route not in (root / name).read_text(encoding="utf-8"):
-        errors.append(f"{name}: missing engineering guide")
+    html = (root / name).read_text(encoding="utf-8")
+    if guide_route not in html or obsolete_route in html:
+        errors.append(f"{name}: wrong canonical article listing")
+redirect = root / obsolete_route.lstrip("/") / "index.html"
+if not redirect.is_file() or f"url={guide_route}" not in redirect.read_text(encoding="utf-8"):
+    errors.append("Missing redirect from accidentally published duplicate URL")
+if inspect_route("/writing/document-parsing/").alternates:
+    errors.append("Older English tutorial incorrectly advertised as translation of v6")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)
