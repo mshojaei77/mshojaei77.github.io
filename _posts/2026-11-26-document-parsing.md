@@ -6,11 +6,10 @@ show_article_header: false
 title: "مهندسی Document Parsing؛ از یک سند خام تا داده‌ای که بتوان به آن اعتماد کرد"
 description: "راهنمای تصمیم‌گیری و طراحی Pipeline پردازش اسناد؛ از انتخاب بین PDF Parser، OCR و VLM تا ساخت محصول، با تمرکز ویژه بر فارسی"
 excerpt: "راهنمای تصمیم‌گیری و طراحی Pipeline پردازش اسناد؛ از انتخاب بین PDF Parser، OCR و VLM تا ساخت محصول، با تمرکز ویژه بر فارسی"
-date: 2026-11-26 12:00:00 +0000
-permalink: /fa/writing/document-parsing-engineering/
+date: 2026-11-26 00:00:00 +0000
+permalink: /fa/writing/document-parsing/
 nav_exclude: true
 image: /assets/img/social-card.png
-english_source: /writing/
 feed:
   excerpt_only: true
 tags: [document-parsing, OCR, VLM, PDF, RAG]

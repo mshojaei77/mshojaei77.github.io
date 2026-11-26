@@ -91,9 +91,9 @@ fs.mkdirSync(out, { recursive: true });
       assert((await p.goto(origin+route)).ok());
       assert.equal(await p.locator('a[href="'+articleRoute+'"]').count(), route.startsWith('/fa/') ? 1 : 0);
       assert.equal(await p.locator('a[href="'+englishRoute+'"]').count(), route.startsWith('/fa/') ? 0 : 1);
+      assert.equal(await p.locator('a[href="/fa/writing/document-parsing-engineering/"]').count(),0);
     }
-    const tutorialCode = {};
-    for (const lang of ['fa','en']) for (const width of [375, 1440]) {
+    for (const lang of ['en']) for (const width of [375, 1440]) {
       const ctx = await browser.newContext({viewport:{width,height:900},colorScheme:'dark',acceptDownloads:true});
       const a = await ctx.newPage();
       const failures = [];
@@ -111,7 +111,6 @@ fs.mkdirSync(out, { recursive: true });
       for (let i=1;i<=57;i++) assert(ids.includes('section-'+i), 'legacy section anchor '+i);
       assert.equal(await a.locator('main .issue-table, main .notebook, main .sliders').count(),0);
       assert.equal(await a.locator('main pre code').count(),14);
-      tutorialCode[lang] = await a.locator('main pre code').allTextContents();
       for(const file of ['requirements.txt','make_demo.py','parse_pdf.py']) {
         const path='/assets/examples/document-parsing/'+file;
         assert.equal(await a.locator('main a[href="'+path+'"][download]').count(),1);
@@ -135,12 +134,14 @@ fs.mkdirSync(out, { recursive: true });
       const guide = await ctx.newPage();
       const failures = [];
       guide.on('pageerror', err => failures.push(err.message));
-      assert((await guide.goto(origin+'/fa/writing/document-parsing-engineering/')).ok());
+      assert((await guide.goto(origin+articleRoute)).ok());
       await guide.evaluate(()=>document.fonts.ready);
       assert.equal(await guide.locator('html').getAttribute('lang'),'fa');
       assert.equal(await guide.locator('html').getAttribute('dir'),'rtl');
       assert.equal(await guide.locator('main article h1').count(),1);
       assert.equal(await guide.locator('main figure svg').count(),25);
+      assert.equal(await guide.locator('.language-switch a').getAttribute('href'),englishRoute);
+      assert.equal(await guide.locator('link[hreflang]').count(),0);
       assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'engineering guide horizontal overflow '+width);
       assert(await guide.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
       await guide.locator('#site-theme').click();
@@ -149,7 +150,8 @@ fs.mkdirSync(out, { recursive: true });
       await guide.screenshot({path:out+'/document-parsing-engineering-fa-'+width+'.png'});
       await ctx.close();
     }
-    assert.deepEqual(tutorialCode.en, tutorialCode.fa, 'code examples must match across languages');
+    assert((await p.goto(origin+'/fa/writing/document-parsing-engineering/')).ok());
+    await p.waitForURL(origin+articleRoute);
     console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 6 localized resource routes.');
   } finally { await browser.close(); }
