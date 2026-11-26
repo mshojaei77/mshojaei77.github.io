@@ -5,6 +5,9 @@ description: "Professional portfolio, experience, open-source work and technical
 permalink: /about.html
 nav_order: 6
 ---
+
+[فارسی — Persian overview](/fa/about/)
+
 # Portfolio
 
 ## Mohammad Shojaei

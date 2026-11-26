@@ -1,9 +1,16 @@
+{% assign language = page.lang | default: 'en' %}
+{% assign pair = site.data.languages | where: language, page.url | first %}
 <!doctype html>
-<html lang="en">
+<html lang="{{ language }}" dir="{% if language == 'fa' %}rtl{% else %}ltr{% endif %}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% seo %}
+  {% if pair and pair.en != '/book/' and pair.en != '/roadmap.html' and pair.en != '/about.html' %}
+    <link rel="alternate" hreflang="en" href="{{ pair.en | absolute_url }}">
+    <link rel="alternate" hreflang="fa" href="{{ pair.fa | absolute_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ pair.en | absolute_url }}">
+  {% endif %}
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="/assets/img/favicon.ico">
   <link rel="stylesheet" href="/assets/css/publication.css">
@@ -43,7 +50,7 @@
   {% endif %}
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#main-content">{% if language == 'fa' %}رفتن به محتوا{% else %}Skip to content{% endif %}</a>
   <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
     <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
       <path d="m7 8 4 4-4 4" /><path d="M13 16h4" />
@@ -94,16 +101,16 @@
   </svg>
   <header>
     <div class="wrap nav">
-      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"><svg class="icon"><use href="#i-terminal"></use></svg></span>Mohammad Shojaei</a>
-      <nav aria-label="Main navigation"><ul>
-          <li><a href="/writing/"{% if page.url == '/writing/' %} aria-current="page"{% endif %}>Writing</a></li>
-          <li><a href="/research/"{% if page.url == '/research/' %} aria-current="page"{% endif %}>Research</a></li>
-          <li><a href="/projects/"{% if page.url == '/projects/' %} aria-current="page"{% endif %}>Projects</a></li>
-          <li><a href="/book/"{% if page.url == '/book/' %} aria-current="page"{% endif %}>Book</a></li>
-          <li><a href="/roadmap.html"{% if page.url == '/roadmap.html' %} aria-current="page"{% endif %}>Roadmap</a></li>
-          <li><a href="/newsletter/"{% if page.url == '/newsletter/' %} aria-current="page"{% endif %}>Newsletter</a></li>
-          <li><a href="/about.html"{% if page.url == '/about.html' %} aria-current="page"{% endif %}>About</a></li>
+      <a class="brand" href="{% if language == 'fa' %}/fa/{% else %}/{% endif %}"><span class="brand-mark" aria-hidden="true"><svg class="icon"><use href="#i-terminal"></use></svg></span>{% if language == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}</a>
+      <nav aria-label="{% if language == 'fa' %}ناوبری اصلی{% else %}Main navigation{% endif %}"><ul>
+      {% for item in site.data.languages %}
+        {% unless forloop.first %}
+          {% if language == 'fa' %}{% assign target = item.fa %}{% assign label = item.fa_label %}{% else %}{% assign target = item.en %}{% assign label = item.en_label %}{% endif %}
+          <li><a href="{{ target }}"{% if page.url == target %} aria-current="page"{% endif %}>{{ label }}</a></li>
+        {% endunless %}
+      {% endfor %}
       </ul></nav>
+      {% include language-switch.html %}
     </div>
   </header>
   <main class="wrap" id="main-content" tabindex="-1">
@@ -111,13 +118,13 @@
   </main>
   <footer>
     <div class="wrap foot">
-      <div>© {{ site.time | date: '%Y' }} Mohammad Shojaei</div>
+      <div>© {{ site.time | date: '%Y' }} {% if language == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}</div>
       <div class="socials"><a href="/feed.xml">RSS</a>
-        <a href="mailto:shojaei.dev@gmail.com"><svg class="icon"><use href="#i-mail"></use></svg>email</a>
-        <a href="https://www.linkedin.com/in/mshojaei77/"><svg class="brand-icon"><use href="#brand-linkedin"></use></svg>linkedin</a>
-        <a href="https://github.com/mshojaei77"><svg class="brand-icon"><use href="#brand-github"></use></svg>github</a>
-        <a href="https://huggingface.co/mshojaei77"><span class="brand-emoji" aria-hidden="true">🤗</span>hf</a>
-        <a href="https://medium.com/@mshojaei77"><svg class="brand-icon"><use href="#brand-medium"></use></svg>medium</a>
+        <a href="mailto:shojaei.dev@gmail.com"><svg class="icon"><use href="#i-mail"></use></svg>{% if language == 'fa' %}ایمیل{% else %}email{% endif %}</a>
+        <a href="https://www.linkedin.com/in/mshojaei77/"><svg class="brand-icon"><use href="#brand-linkedin"></use></svg>LinkedIn</a>
+        <a href="https://github.com/mshojaei77"><svg class="brand-icon"><use href="#brand-github"></use></svg>GitHub</a>
+        <a href="https://huggingface.co/mshojaei77"><span class="brand-emoji" aria-hidden="true">🤗</span>Hugging Face</a>
+        <a href="https://medium.com/@mshojaei77"><svg class="brand-icon"><use href="#brand-medium"></use></svg>Medium</a>
         <a href="https://x.com/realshojaei"><svg class="brand-icon"><use href="#brand-x"></use></svg>x</a>
       </div>
     </div>
