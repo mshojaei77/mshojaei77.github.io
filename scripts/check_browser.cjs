@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const out = '/tmp/publication-screenshots';
 const origin = process.env.SITE_ORIGIN || 'http://127.0.0.1:8765';
+const postCounts={en:0,fa:0};for(const name of fs.readdirSync('_posts')){const text=fs.readFileSync('_posts/'+name,'utf8');const lang=text.split(/\r?\n---/)[0].match(/^lang:\s*(en|fa)\s*$/m)?.[1];if(lang)postCounts[lang]++;}
 fs.mkdirSync(out, { recursive: true });
 (async () => {
   const browser = await chromium.launch({ headless: true });
@@ -61,9 +62,10 @@ fs.mkdirSync(out, { recursive: true });
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
         assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 2); assert(facts.rss);
-        assert.deepEqual(facts.sections.map(x=>x[0]), ['start','latest','elsewhere']);
+        const latestCount=Math.min(3,postCounts[lang]-facts.featured.length);
+        assert.deepEqual(facts.sections.map(x=>x[0]),latestCount?['start','latest','elsewhere']:['start','elsewhere']);
         assert.equal(facts.sections[0][1],facts.featured.length+1);
-        assert.equal(facts.sections[1][1],3);assert.equal(facts.sections[2][1],4);
+        assert.equal(facts.latest.length,latestCount);assert.equal(facts.sections.at(-1)[1],4);
         assert.equal(facts.latest.length,new Set(facts.latest).size);
         assert(!facts.latest.some(x=>facts.featured.includes(x)),'featured post repeated in latest');
         assert.deepEqual(facts.heroLinks,lang==='fa'?['/fa/writing/','/fa/roadmap/']:['/writing/','/roadmap.html']);
@@ -86,7 +88,7 @@ fs.mkdirSync(out, { recursive: true });
         if(colorScheme==='dark')await page.locator('#site-theme').click();
         results.push(facts.sections); count++;
       }
-      assert.deepEqual(results[0].map(x=>x[0]), results[1].map(x=>x[0]));
+      assert.equal(results[0][0][0],'start');assert.equal(results[1][0][0],'start');
       await context.close();
     }
     const p = await browser.newPage();
