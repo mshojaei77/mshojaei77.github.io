@@ -34,7 +34,7 @@ fs.mkdirSync(out, { recursive: true });
           const toggle = switcher.getBoundingClientRect();
           const intersects = nav.left < toggle.right && nav.right > toggle.left && nav.top < toggle.bottom && nav.bottom > toggle.top;
           const sections = $$('[data-home-section]').map(s => [s.dataset.homeSection, s.querySelectorAll('.entry-card').length]);
-          const grid = $$('[data-home-section="latest"] .entry-card').map(x => x.getBoundingClientRect().top);
+          const grid = $$('[data-home-section="latest"] .entry-card').map(x => Math.round(x.getBoundingClientRect().top));
           return {
             lang: document.documentElement.lang, dir: document.documentElement.dir,
             version: document.body.dataset.layoutVersion, title: document.title,
