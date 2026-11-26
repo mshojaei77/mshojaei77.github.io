@@ -40,3 +40,24 @@ Publish authored articles directly in the bilingual blog; do not link to Medium 
 ## Document parsing tutorial
 
 The Persian article at `/fa/writing/document-parsing/` is the v6 engineering guide. The English route retains the earlier practical tutorial and downloadable code in `assets/examples/document-parsing/`. The routes remain cross-linked but are not advertised as equivalent translations. The accidentally published `/fa/writing/document-parsing-engineering/` route redirects to the canonical Persian article and is excluded from publication indexes. The Python fixture test exercises native text, a simple digital table, scan routing and English OCR. Optional external tools are documented extensions, not part of that smoke test. Keep source links, stable language routes, the English tutorial’s legacy section anchors, and the complete Persian v6 manuscript. Do not reintroduce project-specific benchmarks or claim production quality from the synthetic fixture.
+## Publication Studio (Sveltia CMS)
+
+Open https://mshojaei77.github.io/admin/ after deployment. The static login page is public, but Sveltia's GitHub backend requires repository write access. Open authoring and OAuth are disabled; no credential is embedded in the site. Keep repository write access limited to your owner account. Verify this in repository Settings → Collaborators. This is GitHub-backed authorization, not a separate server-side username allowlist.
+
+### First sign-in (owner only)
+
+1. While signed in as `mshojaei77`, open https://github.com/settings/personal-access-tokens/new and create a **fine-grained** token, e.g. Publication Studio.
+2. Select resource owner `mshojaei77`, **Only select repositories**, and `mshojaei77.github.io` only. Set Contents and Pull requests to Read and write (Metadata read is automatic). Use a short expiration; do not grant Administration, Actions, Workflows, or access to other repositories.
+3. Open /admin/ and use Sign In with Token. Paste the token only into the CMS login dialog. Never commit it, send it in chat, or enter it in a document. The CMS stores the token in browser local storage; use a trusted browser profile, sign out on shared devices, and revoke it from GitHub if compromised.
+
+Sveltia's official documentation: https://sveltiacms.app/docs/backends/github and https://sveltiacms.app/docs/workflows/editorial. The exact upstream CMS version (0.273.1) is pinned to avoid silent upgrades. The static application is served from UNPKG; review and test new versions before changing the pin.
+
+### Editing and publishing
+
+- Existing articles are separate file entries to protect their original filenames and permalinks. The Persian v6 guide and English HTML tutorial are deliberately raw-mode-only to preserve SVGs, HTML, anchors and code blocks. Raw mode still provides Markdown editing tools. Update both the article title and the existing H1 when appropriate. New Persian and English posts support visual editing, raw Markdown, sanitized live preview, metadata and media uploads. Switch the CMS UI language to Persian in user settings for RTL editing.
+- Create a new post in the appropriate language collection. Choose a unique ASCII permalink once, for example `/fa/writing/my-new-post/` or `/writing/my-new-post/`. The Jekyll post filename uses the publication date. Do not edit an existing permalink or create another post to replace one. The original article paths remain fixed.
+- Use Save to create a draft branch/PR, move the entry to Ready, then review the PR diff on GitHub and merge only after the Validate publication checks pass. **Direct publication from the CMS is deliberately disabled** until required branch checks are enforced at GitHub. No production branch protection or auto-merge was changed by this installation. The existing Pages build deploys the merge. Git history is the revision history.
+- The repository is public; saved CMS drafts and their uploaded assets may be publicly readable in branches or PRs even before deployment. Keep confidential drafts and images outside the repository until ready for publication.
+- About, Roadmap and Research pages can be edited in the Pages collection. Their route and layout metadata stay fixed. Avoid changing Liquid templates from the raw editor unless intentional. For changes to the number of v6 figures/references or tutorial code examples, update the matching regression tests in a separate reviewed PR rather than bypassing CI.
+- Uploaded media goes under `assets/uploads/`, separate from existing theme assets. Preview is a content preview, not a complete Jekyll build; inspect the public site after deployment. Deletion of articles is intentionally disabled in the CMS to protect stable URLs.
+

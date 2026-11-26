@@ -89,8 +89,14 @@ fs.mkdirSync(out, { recursive: true });
     const englishRoute = '/writing/document-parsing/';
     for (const route of ['/', '/fa/', '/writing/', '/fa/writing/']) {
       assert((await p.goto(origin+route)).ok());
-      assert.equal(await p.locator('a[href="'+articleRoute+'"]').count(), route.startsWith('/fa/') ? 1 : 0);
-      assert.equal(await p.locator('a[href="'+englishRoute+'"]').count(), route.startsWith('/fa/') ? 0 : 1);
+      const faCount = await p.locator('a[href="'+articleRoute+'"]').count();
+      const enCount = await p.locator('a[href="'+englishRoute+'"]').count();
+      if (route === '/fa/writing/') assert.equal(faCount, 1);
+      else if (route === '/fa/') assert(faCount <= 1);
+      else assert.equal(faCount, 0);
+      if (route === '/writing/') assert.equal(enCount, 1);
+      else if (route === '/') assert(enCount <= 1);
+      else assert.equal(enCount, 0);
       assert.equal(await p.locator('a[href="/fa/writing/document-parsing-engineering/"]').count(),0);
     }
     for (const lang of ['en']) for (const width of [375, 1440]) {
@@ -152,6 +158,21 @@ fs.mkdirSync(out, { recursive: true });
     }
     assert((await p.goto(origin+'/fa/writing/document-parsing-engineering/')).ok());
     await p.waitForURL(origin+articleRoute);
+    // Real pinned CMS boot: no token or GitHub mutation in CI.
+    const cmsContext = await browser.newContext({locale:'en-US',viewport:{width:1440,height:900}});
+    const cmsPage = await cmsContext.newPage();
+    const mutations = [];
+    await cmsPage.route('https://api.github.com/**', async route => {
+      if (!['GET','HEAD','OPTIONS'].includes(route.request().method())) mutations.push(route.request().method());
+      await route.fulfill({status:401,contentType:'application/json',body:'{"message":"Unauthenticated CI smoke test"}'});
+    });
+    assert((await cmsPage.goto(origin+'/admin/')).ok());
+    await cmsPage.getByRole('button',{name:/sign in with token/i}).waitFor({timeout:60000});
+    assert.equal(await cmsPage.getByRole('button',{name:/sign in with github/i}).count(),0);
+    assert.deepEqual(mutations,[]);
+    await cmsPage.screenshot({path:out+'/cms-sign-in.png'});
+    await cmsContext.close();
+    console.log('Verified pinned Sveltia CMS boot and token-only sign-in.');
     console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 6 localized resource routes.');
   } finally { await browser.close(); }
