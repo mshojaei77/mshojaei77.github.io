@@ -10,7 +10,7 @@
   {% else %}
     {% seo %}
   {% endif %}
-  {% if pair and pair.en != '/roadmap.html' and pair.en != '/about.html' %}
+  {% if pair and pair.en != '/roadmap.html' %}
     <link rel="alternate" hreflang="en" href="{{ pair.en | absolute_url }}">
     <link rel="alternate" hreflang="fa" href="{{ pair.fa | absolute_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ pair.en | absolute_url }}">
@@ -78,7 +78,7 @@
       <a class="brand" href="{% if language == 'fa' %}/fa/{% else %}/{% endif %}"><span class="brand-mark" aria-hidden="true"><svg class="icon"><use href="#i-terminal"></use></svg></span>{% if language == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}</a>
       <nav aria-label="{% if language == 'fa' %}ناوبری اصلی{% else %}Main navigation{% endif %}"><ul>
       {% for item in site.data.languages %}
-        {% unless forloop.first %}
+        {% unless forloop.first or item.hidden %}
           {% if language == 'fa' %}{% assign target = item.fa %}{% assign label = item.fa_label %}{% else %}{% assign target = item.en %}{% assign label = item.en_label %}{% endif %}
           <li><a href="{{ target }}"{% if page.url == target %} aria-current="page"{% endif %}>{{ label }}</a></li>
         {% endunless %}

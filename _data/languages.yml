@@ -22,3 +22,8 @@
   fa: "/fa/about/"
   en_label: "About"
   fa_label: "دربارهٔ من"
+- en: "/vector_dbs.html"
+  fa: "/fa/vector-databases/"
+  en_label: "Vector databases"
+  fa_label: "پایگاه‌های دادهٔ برداری"
+  hidden: true

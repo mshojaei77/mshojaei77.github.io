@@ -1,12 +1,12 @@
 ---
-layout: default
+layout: article
+lang: en
 title: "About — Mohammad Shojaei"
 description: "Professional portfolio, experience, open-source work and technical skills."
 permalink: /about.html
 nav_order: 6
 ---
 
-[فارسی — Persian overview](/fa/about/)
 
 # Portfolio
 
@@ -80,12 +80,9 @@ Remote - 2023 - Present
 
 ---
 
-## Selected Open-Source Work
+## Code and models
 
-- [ReActMCP](https://github.com/mshojaei77/ReActMCP): MCP web-search server/client that connects Exa-powered search to AI assistants.
-- [pytsetmc-api](https://github.com/mshojaei77/pytsetmc-api): typed Python client for Tehran Stock Exchange Market Center data retrieval with Pydantic validation, retries, logging, fallbacks, CLI usage, tests, and documentation.
-- [Hugging Face](https://huggingface.co/mshojaei77): 14+ models, Persian NLP datasets, and leaderboard spaces focused on low-resource evaluation, tokenizer training, LoRA adapters, model cards, dataset cards, and Persian benchmark workflows.
-- Broader GitHub portfolio: 50+ public repositories across LLM tooling, local AI apps, RAG, MCP clients, prompt engineering, web scraping, browser extensions, subtitle translation, VRAM estimation, Persian LLM evaluation, and AI learning resources.
+Browse my public repositories on [GitHub](https://github.com/mshojaei77) and model artifacts on [Hugging Face](https://huggingface.co/mshojaei77).
 
 ---
 
