@@ -14,6 +14,7 @@ fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing",
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
 fa_routes += ["fa/writing/document-parsing/index.html"]
 routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/js/theme.js", "assets/js/document-parsing.js"]
+routes += ["materials/Data_Preparation/index.html","fa/materials/Data_Preparation/index.html","materials/Embeddings/index.html","fa/materials/Embeddings/index.html","materials/Intro/index.html","fa/materials/Intro/index.html","materials/Neural_Networks/index.html","fa/materials/Neural_Networks/index.html","materials/Tokenization/index.html","fa/materials/Tokenization/index.html","materials/Traditional_LMs/index.html","fa/materials/Traditional_LMs/index.html","materials/Transformers/index.html","fa/materials/Transformers/index.html"]
 errors = [f"Missing output: {p}" for p in routes if not (root / p).is_file()]
 
 class Links(HTMLParser):
@@ -64,6 +65,7 @@ class Locale(HTMLParser):
 pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research", "newsletter")]
 pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/open_source_ai.html", "/fa/open-source-ai/"), ("/vector_dbs.html", "/fa/vector-databases/"), ("/resources.html", "/fa/resources/"), ("/mini_roadmap.html", "/fa/mini-roadmap/"), ("/interview.html", "/fa/interview/"), ("/market_analysis.html", "/fa/market-analysis/")]
 pairs.append(("/writing/document-parsing/", "/fa/writing/document-parsing/"))
+pairs += [["/materials/Data_Preparation/","/fa/materials/Data_Preparation/"],["/materials/Embeddings/","/fa/materials/Embeddings/"],["/materials/Intro/","/fa/materials/Intro/"],["/materials/Neural_Networks/","/fa/materials/Neural_Networks/"],["/materials/Tokenization/","/fa/materials/Tokenization/"],["/materials/Traditional_LMs/","/fa/materials/Traditional_LMs/"],["/materials/Transformers/","/fa/materials/Transformers/"]]
 def inspect_route(route):
     p = root / route.lstrip("/")
     if route.endswith("/"):

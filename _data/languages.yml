@@ -57,3 +57,38 @@
   en_label: "Document parsing"
   fa_label: "پردازش سند"
   hidden: true
+- en: "/materials/Data_Preparation/"
+  fa: "/fa/materials/Data_Preparation/"
+  en_label: "Data Preparation"
+  fa_label: "آماده‌سازی داده برای مدل‌های زبانی"
+  hidden: true
+- en: "/materials/Embeddings/"
+  fa: "/fa/materials/Embeddings/"
+  en_label: "Embeddings"
+  fa_label: "آموزش Embedding؛ بردارهای واژه در LLM"
+  hidden: true
+- en: "/materials/Intro/"
+  fa: "/fa/materials/Intro/"
+  en_label: "Intro"
+  fa_label: "آشنایی با مدل‌های زبانی بزرگ (LLM)"
+  hidden: true
+- en: "/materials/Neural_Networks/"
+  fa: "/fa/materials/Neural_Networks/"
+  en_label: "Neural Networks"
+  fa_label: "آموزش شبکه‌های عصبی؛ مبانی LLM"
+  hidden: true
+- en: "/materials/Tokenization/"
+  fa: "/fa/materials/Tokenization/"
+  en_label: "Tokenization"
+  fa_label: "آموزش Tokenization؛ تبدیل متن به توکن"
+  hidden: true
+- en: "/materials/Traditional_LMs/"
+  fa: "/fa/materials/Traditional_LMs/"
+  en_label: "Traditional LMs"
+  fa_label: "مدل‌های زبانی سنتی؛ پیش از Transformer"
+  hidden: true
+- en: "/materials/Transformers/"
+  fa: "/fa/materials/Transformers/"
+  en_label: "Transformers"
+  fa_label: "آموزش Transformer؛ سازوکار Attention"
+  hidden: true

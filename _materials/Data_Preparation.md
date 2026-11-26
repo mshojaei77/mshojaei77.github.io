@@ -2,7 +2,10 @@
 title: "Data Preparation for LLMs: Cleaning Guide"
 nav_order: 7
 parent: Tutorials
-layout: default
+layout: article
+lang: en
+permalink: /materials/Data_Preparation/
+nav_exclude: true
 ---
 
 # Data Preparation for LLMs 🧹: Garbage In, Garbage Out – Clean Text Feast
