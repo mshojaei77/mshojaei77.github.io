@@ -15,6 +15,7 @@
     <link rel="alternate" hreflang="fa" href="{{ pair.fa | absolute_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ pair.en | absolute_url }}">
   {% endif %}
+  {% if page.retired_post %}<meta name="robots" content="noindex,nofollow">{% endif %}
   <meta name="color-scheme" content="light">
   <script src="/assets/js/theme.js"></script>
   <link rel="icon" href="/assets/img/favicon.ico">
