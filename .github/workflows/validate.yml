@@ -36,6 +36,15 @@ jobs:
           for i in {1..20}; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
           node scripts/check_studio.cjs
           node scripts/check_browser.cjs
+      - name: Simulate independent English and Persian deletions in the CI checkout
+        run: |
+          python3 scripts/simulate_deletion.py
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: .
+          destination: ./_site-deletion
+      - name: Validate actual rebuilt deletion state
+        run: python3 scripts/check_site.py _site-deletion
       - uses: actions/upload-artifact@v4
         if: always()
         with:
