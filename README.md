@@ -48,7 +48,7 @@ Open https://mshojaei77.github.io/admin/ after deployment. The static login page
 
 1. While signed in as `mshojaei77`, open https://github.com/settings/personal-access-tokens/new and create a **fine-grained** token, e.g. Publication Studio.
 2. Select resource owner `mshojaei77`, **Only select repositories**, and `mshojaei77.github.io` only. Set Contents and Pull requests to Read and write (Metadata read is automatic). Use a short expiration; do not grant Administration, Actions, Workflows, or access to other repositories.
-3. Open /admin/ and use Sign In with Token. Paste the token only into the CMS login dialog. Never commit it, send it in chat, or enter it in a document. The CMS stores the token in browser local storage; use a trusted browser profile, sign out on shared devices, and revoke it from GitHub if compromised.
+3. Open /admin/ and use Sign In Using Access Token. Paste the token only into the CMS login dialog. Never commit it, send it in chat, or enter it in a document. The CMS stores the token in browser local storage; use a trusted browser profile, sign out on shared devices, and revoke it from GitHub if compromised.
 
 Sveltia's official documentation: https://sveltiacms.app/docs/backends/github and https://sveltiacms.app/docs/workflows/editorial. The exact upstream CMS version (0.273.1) is pinned to avoid silent upgrades. The static application is served from UNPKG; review and test new versions before changing the pin.
 
