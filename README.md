@@ -3,9 +3,9 @@
 Hosted at https://mshojaei77.github.io/. Existing URLs are public contracts: preserve them when editing or moving content.
 
 - The homepage and editorial indexes use `_layouts/publication.html` and `assets/css/publication.css`.
-- Book chapters and existing long-form Markdown use Just the Docs.
+- Long-form writing uses the shared publication layout.
 - Add an article to the writing index only after it exists; link external articles to their original URLs.
-- Mark unfinished chapters as planned; retain their outlines.
+- The book was canceled and retired; do not restore it to navigation. Public project discovery belongs on GitHub.
 - For research, disclose sampling, versions, methods, results and limitations. Do not invent benchmarks or issue dates.
 
 ## Local validation
@@ -28,4 +28,4 @@ Write as an AI engineer talking to engineering peers: conversational, native, te
 
 ## Published posts
 
-Add new articles to `_posts/` with explicit `lang`, title, description, date and stable permalink. The homepage and writing indexes automatically list published posts; Persian-only work is labeled as such. The document-parsing weekend reading preserves its original interactive article design in a dedicated layout and local assets. Its source upload Git blob was verified as `263ade133398d50ee20f5ffe57b6ae96e603fc58`. The article is available at `/fa/writing/document-parsing/` and included in the feed and sitemap. Do not mark an English translation as published until it exists.
+Add new articles to `_posts/` with explicit `lang`, title, description, date and stable permalink. The homepage and writing indexes automatically list published posts; Only posts in the current locale are listed; do not list untranslated posts in the other language. The document-parsing weekend reading preserves its original interactive article design in a dedicated layout and local assets. Its source upload Git blob was verified as `263ade133398d50ee20f5ffe57b6ae96e603fc58`. The article is available at `/fa/writing/document-parsing/` and included in the feed and sitemap. Do not mark an English translation as published until it exists.
