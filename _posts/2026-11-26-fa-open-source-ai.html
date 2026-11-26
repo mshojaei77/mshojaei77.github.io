@@ -1,0 +1,68 @@
+---
+layout: article
+lang: fa
+title: "هوش مصنوعی متن‌باز؛ آزادی و آینده"
+description: "معنای Open Source AI، چهار آزادی، طیف باز بودن مدل‌ها، نمونه‌ها و ابزارها."
+permalink: /fa/writing/open-source-ai/
+nav_exclude: true
+date: 2026-11-26 00:00:00 +0000
+article_kind: essay
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
+---
+
+<h1>هوش مصنوعی متن‌باز؛ آزادی و آینده</h1><p class="meta">محمد شجاعی، مهندس هوش مصنوعی کاربردی · ۱۱ سپتامبر ۲۰۲۵</p>
+<p class="lede">اصلاً وقتی می‌گوییم هوش مصنوعی متن‌باز، منظورمان چیست؟</p>
+<p class="language-note">این متن ترجمهٔ محتوای ارائهٔ ۱۱ سپتامبر ۲۰۲۵ است. توصیف مدل‌ها، مجوزها، رتبه‌بندی‌ها و اعداد به زمان ارائه مربوط‌اند و مقایسهٔ مستقل یا به‌روز محسوب نمی‌شوند.</p>
+<h2 id="slide-1">۱. یک مدل AI را به اجزایش بشکنیم</h2><p>چرخهٔ کامل ساخت مدل، از پیش‌نیازهای آموزش تا وزن‌های نهایی:</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">مرحله</th><th scope="col">اجزا</th><th scope="col">نقش</th></tr></thead><tbody><tr><td>پیش‌نیاز</td><td>دادهٔ آموزشی</td><td>دانش خامی که مدل از آن یاد می‌گیرد</td></tr>
+<tr><td>پیش‌نیاز</td><td>معماری</td><td>نقشهٔ شبکه</td></tr>
+<tr><td>پیش‌نیاز</td><td>کد آموزش</td><td>دستور پخت فرایند یادگیری</td></tr>
+<tr><td>آموزش</td><td>فرایند آموزش</td><td>الگوریتم‌های یادگیری پارامترها را بهینه می‌کنند</td></tr>
+<tr><td>خروجی</td><td>وزن‌های مدل</td><td>دانش یادگرفته‌شده که به‌صورت عدد ذخیره شده است</td></tr></tbody></table></div>
+<p>آموزش مواد خام را به دانش یادگرفته‌شده تبدیل می‌کند.</p>
+<h2 id="slide-2">۲. چهار آزادی در هوش مصنوعی</h2><p>چهار آزادی بنیاد نرم‌افزار آزاد (Free Software Foundation) چارچوب مفیدی برای فهم باز بودن AI به ما می‌دهند.</p>
+<h3>آزادی اول: اجرا</h3><p>بتوانیم سیستم AI را برای هر هدفی، بدون محدودیت، اجرا کنیم.</p><ul><li>دسترسی بدون محدودیت به وزن‌ها و کد Inference.</li><li>مجوز روشن برای استفادهٔ تجاری و غیرتجاری.</li><li>حداقل مانع فنی برای استقرار.</li><li>نیازمندی‌های سیستمی و وابستگی‌های شفاف.</li></ul>
+<h3>آزادی دوم: مطالعه</h3><p>بفهمیم سیستم چگونه کار می‌کند و آن را برای نیاز خودمان تغییر دهیم.</p><ul><li>دسترسی کامل به کد و روش آموزش.</li><li>مستندات جامع معماری و تصمیم‌های طراحی.</li><li>دسترسی به دادهٔ آموزشی، یا توضیح دقیق آن اگر امکان انتشار داده نیست.</li><li>معیارهای ارزیابی و روش Benchmark شفاف.</li></ul>
+<h3>آزادی سوم: بازتوزیع</h3><p>بتوانیم نسخه‌هایی از سیستم را منتشر کنیم تا دیگران هم از آن استفاده کنند.</p><ul><li>مجوز سهل‌گیرانه برای وزن‌ها و کد همراه.</li><li>راهنمای روشن انتساب و بازتوزیع.</li><li>فرمت فنی مناسب اشتراک‌گذاری و استقرار.</li><li>زیرساخت جامعه برای توزیع و پیدا کردن مدل‌ها.</li></ul>
+<h3>آزادی چهارم: انتشار نسخه‌های تغییریافته</h3><p>بتوانیم نسخهٔ تغییرکرده را به نفع جامعه منتشر کنیم.</p><ul><li>دسترسی به زیرساخت و روش آموزش.</li><li>مجوز سهل‌گیرانه برای آثار مشتق‌شده.</li><li>استانداردهای جامعه برای مستندسازی تغییرات.</li><li>چارچوب فنی و حقوقی پشتیبان نوآوری.</li></ul><p>این آزادی‌ها کمک می‌کنند سیستم‌های AI برای همه قابل‌دسترسی، شفاف، قابل‌اشتراک و قابل‌بهبود بمانند.</p>
+<h2 id="slide-3">۳. طیف باز بودن؛ از مدل بسته تا باز واقعی</h2><p>چهار سطح شفافیت و چیزهایی که در هر سطح در اختیارمان قرار می‌گیرند. در میانهٔ این طیف، خطر Openwashing (معرفی محصول به‌عنوان باز، بدون آزادی‌های لازم) وجود دارد.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">سطح</th><th scope="col">نمونه‌های ارائه</th><th scope="col">آنچه دریافت می‌کنیم</th></tr></thead><tbody><tr><td>بسته / فقط API</td><td>GPT-5، Claude 4.1، Gemini 2.5، Midjourney</td><td>هیچ‌کدام از داده، معماری، کد آموزش، فرایند آموزش یا وزن‌ها</td></tr>
+<tr><td>وزن‌باز (Open Weight)</td><td>Llama 3/4، DeepSeek-R1، Falcon، BLOOM، Whisper</td><td>فقط وزن‌ها؛ سایر اجزا در این دسته‌بندی در دسترس نیستند</td></tr>
+<tr><td>هوش مصنوعی متن‌باز</td><td>Mistral، DBRX، Pythia، Phi-3</td><td>معماری، کد آموزش و وزن‌ها؛ دادهٔ آموزشی اغلب محدود</td></tr>
+<tr><td>باز بودن حداکثری</td><td>SmolLM، OLMo (AI2)، Open Thinker 7B</td><td>همهٔ اجزا: داده، معماری، کد، فرایند آموزش و وزن‌ها</td></tr></tbody></table></div>
+<p>برداشت ارائه این بود که بسیاری از مدل‌هایی که باز نامیده می‌شوند، عملاً Openwashing هستند. باز بودن واقعی فقط دانلود وزن نیست؛ شفافیت کامل، مجوز مناسب و روش قابل‌بازتولید هم لازم‌اند. این دسته‌بندی ساده‌شده است؛ وضعیت هر نسخه و مجوزش را جداگانه بررسی کنید.</p>
+<h2 id="slide-4">۴. نمونه‌های باز بودن واقعی</h2>
+<div class="tablewrap"><table><thead><tr><th scope="col">مدل و مجوز</th><th scope="col">داده</th><th scope="col">معماری</th><th scope="col">کد آموزش</th><th scope="col">فرایند</th><th scope="col">وزن و خروجی</th></tr></thead><tbody><tr><td>Pythia (EleutherAI)؛ ۷۰ میلیون تا ۱۲ میلیارد، Apache-2.0</td><td>دادهٔ عمومی با همان ترتیب</td><td>۱۶ گونهٔ مدل</td><td>بازسازی دقیق DataLoader</td><td>۱۵۴ Checkpoint میانی</td><td>بازتولیدپذیری در سطح مرجع</td></tr>
+<tr><td>OLMo (AI2)؛ ۱ تا ۳۲ میلیارد، Apache-2.0</td><td>مجموعهٔ Dolma با چند تریلیون توکن</td><td>وزن‌های کامل و ترکیب داده‌ها</td><td>کد آموزش و ارزیابی عمومی</td><td>Checkpointهای میانی</td><td>مجموعهٔ Artifact عمومی</td></tr>
+<tr><td>SmolLM (Hugging Face)؛ ۱۳۵ و ۳۶۰ میلیون و ۱٫۷ میلیارد، مجوز سهل‌گیرانه</td><td>SmolLM-Corpus (FineWeb-Edu)</td><td>LLM کوچک از صفر</td><td>جزئیات آموزش مستند</td><td>Recipe یازده تریلیون توکنی SmolLM2</td><td>پیکربندی Eval Harness</td></tr>
+<tr><td>TinyLlama؛ ۱٫۱ میلیارد، وزن و کد باز</td><td>حدود یک تریلیون توکن از صفر</td><td>طراحی کوچک و کارآمد</td><td>کد و Recipe عمومی</td><td>استفاده از ابزار باز Lit-GPT</td><td>مقاله و Checkpoint عمومی</td></tr></tbody></table></div>
+<h2 id="slide-5">۵. واکنش شرکت‌های بزرگ به فشار متن‌باز</h2><p>چطور جامعهٔ متن‌باز باعث تغییر جهت شرکت‌ها به سمت انتشار مدل‌های وزن‌باز شد؟ نمونه‌های ارائه:</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">شرکت</th><th scope="col">مدل</th><th scope="col">اجزای باز و مجوز</th></tr></thead><tbody><tr><td>OpenAI</td><td>GPT-OSS 20B/120B</td><td>وزن، Apache-2.0</td></tr>
+<tr><td>Google</td><td>Gemma 1–3</td><td>وزن، شرایط استفادهٔ Gemma</td></tr>
+<tr><td>xAI</td><td>Grok 1–2</td><td>وزن و معماری، Apache-2.0</td></tr>
+<tr><td>Meta</td><td>Llama 1–4</td><td>وزن، Llama Community License</td></tr>
+<tr><td>Microsoft</td><td>Phi 3/3.5/4</td><td>وزن، MIT</td></tr>
+<tr><td>Apple</td><td>OpenELM</td><td>وزن و کد آموزش، Apple License</td></tr>
+<tr><td>NVIDIA</td><td>Nemotron/Minitron</td><td>معماری، کد و فرایند آموزش، وزن، NVIDIA Open Model License</td></tr>
+<tr><td>Alibaba</td><td>Qwen 2/2.5/3</td><td>وزن، Apache-2.0</td></tr></tbody></table></div>
+<p>استدلال ارائه این بود که فشار جامعهٔ متن‌باز شرکت‌های بزرگ را به انتشار وزن‌ها نزدیک کرد و اکوسیستم را از APIهای بسته به سمت نوآوری بدون نیاز به مجوز موردی سوق داد.</p>
+<h2 id="slide-6">۶. اکوسیستم ابزارهای باز</h2><p>ابزارها و Frameworkهای اصلی در هر مرحله از توسعه:</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">مرحله</th><th scope="col">ابزارها</th></tr></thead><tbody><tr><td>توزیع و آموزش</td><td>PyTorch، TensorFlow، Megatron، Unsloth، Hugging Face Transformers</td></tr>
+<tr><td>Inference محلی</td><td>llama.cpp، Ollama، LM Studio، MLX، ComfyUI</td></tr>
+<tr><td>Inference در Production</td><td>vLLM، SGLang، TGI، Diffusers، ONNX</td></tr>
+<tr><td>ساخت اپلیکیشن</td><td>LangChain، LlamaIndex، OpenAI Agents SDK، Haystack، Agno</td></tr></tbody></table></div>
+<p>ابزارهای متن‌باز موانع توسعهٔ AI را از پژوهش تا Production کم می‌کنند و امکان مشارکت افراد بیشتری را فراهم می‌کنند.</p>
+<h2 id="slide-7">۷. چه کسانی بیشترین مدل باز را منتشر کرده‌اند؟</h2><p>نمودار شماتیک ارائه به‌ترتیب چین، اروپا، آمریکا و سایر مناطق را نشان می‌داد. تعداد مدل‌ها یا منبع داده برای نمودار مشخص نشده بود؛ بنابراین نمی‌توان آن را رتبه‌بندی آماری تأییدشده دانست.</p>
+<h3>مدل‌های باز مطرح چین در زمان ارائه</h3>
+<div class="tablewrap"><table><thead><tr><th scope="col">مدل</th><th scope="col">مجوز یا نوع انتشار</th><th scope="col">توضیح</th></tr></thead><tbody><tr><td>DeepSeek-R1/V3</td><td>MIT</td><td>مدل‌های استدلالی با وزن‌های قابل‌دانلود و نسخه‌های Distill</td></tr>
+<tr><td>Qwen3</td><td>Apache-2.0</td><td>خانوادهٔ مدل پایهٔ Alibaba برای متن، کد و Vision-Language</td></tr>
+<tr><td>Kimi K2</td><td>وزن‌باز</td><td>مدل MoE یک‌تریلیون پارامتری Moonshot در Hugging Face</td></tr>
+<tr><td>GLM-4.5</td><td>MIT</td><td>تمرکز Zhipu بر ایجنت‌ها و کدنویسی با حالت‌های Thinking</td></tr></tbody></table></div>
+<p>برداشت ارائه این بود که محدودیت‌های صادراتی در چرخش چین به سمت AI متن‌باز و دسترسی جهانی نقش داشتند.</p>
+<h2 id="slide-8">۸. هوش مصنوعی چندزبانه</h2><p>متن‌باز بودن به توسعه‌دهندگان سراسر جهان اجازه می‌دهد مدل‌ها را آزادانه در دسترس داشته باشند، تغییر دهند و در توسعهٔ مدل برای زبان‌های کم‌نماینده مشارکت کنند؛ با دیتاست مشترک و Pipelineهای Fine-tuning.</p>
+<h3>روش‌های سازگار کردن مدل با زبان</h3><ul><li><strong>گسترش واژگان:</strong> افزودن توکن‌های مخصوص زبان به مدل پایه.</li><li><strong>Continual Pre-training:</strong> ادامهٔ پیش‌آموزش با پیکرهٔ زبانی موردنظر.</li><li><strong>Instruction Fine-tuning:</strong> سازگارسازی برای وظیفه با توجه به زمینهٔ فرهنگی.</li><li><strong>LoRA:</strong> تنظیم دقیق کم‌رتبه و کارآمد روی سخت‌افزار مصرفی.</li></ul>
+<p>دیدگاه ارائه این بود که توسعهٔ جامعه‌محور به جلوگیری از حذف دیجیتال زبان‌ها و حفظ تنوع زبانی کمک می‌کند. در متن اصلی به کاهش ۴۰ تا ۵۰ درصدی شکاف عملکرد در زبان‌های کم‌منبع اشاره شده بود؛ چون شرایط اندازه‌گیری یا منبع آن مشخص نیست، این عدد را نباید نتیجهٔ عمومی اثبات‌شده در نظر گرفت.</p>
+<h2 id="slide-9">در ارتباط باشیم</h2><p>محمد شجاعی — مهندس هوش مصنوعی کاربردی</p><p><a href="https://t.me/LLMEngineers">کانال تلگرام @LLMEngineers</a> · <a href="https://t.me/AI_LLMs">گروه تلگرام</a> · <a href="https://github.com/mshojaei77">GitHub</a> · <a href="https://huggingface.co/mshojaei77">Hugging Face</a> · <a href="/fa/">وب‌سایت</a></p>

@@ -3,8 +3,8 @@
 Hosted at https://mshojaei77.github.io/. Existing URLs are public contracts: preserve them when editing or moving content.
 
 - The homepage and editorial indexes use `_layouts/publication.html` and `assets/css/publication.css`.
-- Public articles and long-form Markdown use the shared article layout. The canceled book is excluded from publication; original source remains in the repository and Git history.
-- Add an article to the writing index only after it exists; link external articles to their original URLs.
+- Public articles and long-form Markdown use the shared article layout. The canceled book is excluded from publication; original source remains recoverable from Git history.
+- Add articles to _posts; the writing archive is generated automatically. Link external articles to their original URLs.
 - For research, disclose sampling, versions, methods, results and limitations. Do not invent benchmarks or issue dates.
 
 ## Local validation
@@ -15,7 +15,7 @@ Do not configure analytics with placeholder measurement IDs. GitHub Pages deploy
 
 ## Languages
 
-English remains at its original URLs; Persian uses `/fa/`. The route mapping is in `_data/languages.yml`. Persian pages have explicit `lang: fa` and use the shared RTL-aware publication layout. Only publish actual translations or clearly labeled summaries; do not silently substitute English material. Long-form pages use the same publication shell. Add the paired route and reciprocal language links when a full translation becomes available.
+English articles use `/writing/<slug>/`; Persian articles use `/fa/writing/<slug>/`. Legacy article URLs redirect. The route mapping is in `_data/languages.yml`. Persian pages have explicit `lang: fa` and use the shared RTL-aware publication layout. Only publish actual translations or clearly labeled summaries; do not silently substitute English material. Long-form pages use the same publication shell. Add the paired route and reciprocal language links when a full translation becomes available.
 
 ## Bilingual layout and verification
 
@@ -62,3 +62,9 @@ Delete post stages removal locally; Cancel deletion reverses it before submissio
 ## Writing consolidation
 
 The standalone Research section is removed in both languages and from Studio. Market analysis and vector database comparison are regular bilingual posts under `/writing/` and `/fa/writing/`. Their previous article URLs redirect to their canonical writing URLs. The migrated editions retain their original article bodies and use the November 26 edition commit dates for archive ordering; no new research or benchmark update is implied.
+
+## Unified content structure
+
+The only standalone editorial pages are Home, Roadmap and About in each language. Writing is a generated archive, not a separate content category. All published articles, guides and tutorials live in `_posts/` under `/writing/<slug>/` or `/fa/writing/<slug>/`. Use filenames `YYYY-MM-DD-en-slug.md` or `YYYY-MM-DD-fa-slug.md` (HTML is also supported); the two original Document Parsing filenames remain valid. The migrated content uses the November 26 consolidation edition date, not a newly researched or verified publication date. `redirects/` contains noindex compatibility redirects. The retired book source, scratch image note, unused styles and unused logo were removed from the current branch; Git history preserves them. Downloadable lab files, licenses, and live assets are retained.
+
+Studio has an EN/FA switch in its header. Each mode shows only posts and editable About/Roadmap pages in that language, including local drafts. The choice is stored locally; switching flushes unsaved edits before closing the current editor. New drafts default to the selected language, and importing or creating a draft in the other language switches to its matching view. The Persian interface uses RTL and localized main controls; raw API diagnostics may remain in English. Filename locale is checked against front matter by CI and Studio, including the two legacy Document Parsing filenames.

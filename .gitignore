@@ -6,3 +6,16 @@ book/mini_projects
 /book/chapters_draft.txt
 /book/Curriculum_Design.md
 /book/AGENTS.md
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/bundle/
+node_modules/
+__pycache__/
+*.py[cod]
+.playwright/
+test-results/
+playwright-report/
+.DS_Store
+Thumbs.db
