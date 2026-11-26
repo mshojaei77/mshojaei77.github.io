@@ -5,6 +5,9 @@ description: "Curated resources organized by LLM development stage."
 permalink: /resources.html
 nav_order: 8
 ---
+
+[فارسی — Persian overview](/fa/resources/) · [Home](/)
+
 # Learning Resources
 
 A comprehensive collection of learning resources organized to match the LLM development roadmap structure.
