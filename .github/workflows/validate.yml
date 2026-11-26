@@ -7,7 +7,7 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/jekyll-build-pages@v1
@@ -15,3 +15,20 @@ jobs:
           source: .
           destination: ./_site
       - run: python3 scripts/check_site.py _site
+      - name: Install browser test dependencies
+        run: |
+          npm install --prefix /tmp/publication-browser --no-audit --no-fund playwright@1.58.2
+          /tmp/publication-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Browser layout and localization regression checks
+        env:
+          NODE_PATH: /tmp/publication-browser/node_modules
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory _site > /tmp/site-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
+          node scripts/check_browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bilingual-browser-screenshots
+          path: /tmp/publication-screenshots/
+          if-no-files-found: ignore

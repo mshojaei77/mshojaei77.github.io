@@ -1,0 +1,26 @@
+{% assign canonical = page.url | absolute_url %}
+{% assign social_image = '/assets/img/social-card.png' | absolute_url %}
+<title>{{ page.title | escape }}</title>
+<meta name="description" content="{{ page.description | escape }}">
+<link rel="canonical" href="{{ canonical }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page.title | escape }}">
+<meta property="og:description" content="{{ page.description | escape }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:locale" content="{% if page.lang == 'fa' %}fa_IR{% else %}en_US{% endif %}">
+<meta property="og:image" content="{{ social_image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mohammad Shojaei — Production AI Engineering">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title | escape }}">
+<meta name="twitter:description" content="{{ page.description | escape }}">
+<meta name="twitter:image" content="{{ social_image }}">
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@graph":[
+ {"@type":"WebPage","@id":{{ canonical | append: '#webpage' | jsonify }},"url":{{ canonical | jsonify }},"name":{{ page.title | jsonify }},"headline":{{ page.title | jsonify }},"description":{{ page.description | jsonify }},"inLanguage":{{ page.lang | jsonify }},"image":{{ social_image | jsonify }},"about":{"@id":"https://mshojaei77.github.io/#person"}},
+ {"@type":"Person","@id":"https://mshojaei77.github.io/#person","name":"{% if page.lang == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}","alternateName":"{% if page.lang == 'fa' %}Mohammad Shojaei{% else %}محمد شجاعی{% endif %}","url":"https://mshojaei77.github.io/","image":"https://github.com/mshojaei77.png","jobTitle":"{% if page.lang == 'fa' %}مهندس هوش مصنوعی{% else %}AI Engineer{% endif %}","sameAs":["https://github.com/mshojaei77","https://huggingface.co/mshojaei77","https://medium.com/@mshojaei77","https://www.linkedin.com/in/mshojaei77/","https://www.linkedin.com/newsletters/building-production-ai-7479436427496243200","https://x.com/realshojaei"],"knowsAbout":["Large Language Models","AI Agents","Retrieval-Augmented Generation","LLM Evaluation","LLMOps","Model Serving","LangGraph","vLLM","Hugging Face","FastAPI"]}
+ ]}
+</script>

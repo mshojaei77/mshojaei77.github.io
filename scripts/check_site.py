@@ -12,7 +12,8 @@ routes = ["index.html", "writing/index.html", "research/index.html", "projects/i
           "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
 routes += [f"book/ch{i}.html" for i in range(1, 7)]
 fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "newsletter", "book", "roadmap", "about")]
-routes += fa_routes
+fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
+routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png"]
 errors = [f"Missing output: {p}" for p in routes if not (root / p).is_file()]
 
 class Links(HTMLParser):
