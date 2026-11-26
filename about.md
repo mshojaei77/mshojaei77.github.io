@@ -1,3 +1,10 @@
+---
+layout: default
+title: "About — Mohammad Shojaei"
+description: "Professional portfolio, experience, open-source work and technical skills."
+permalink: /about.html
+nav_order: 6
+---
 # Portfolio
 
 ## Mohammad Shojaei

@@ -1,5 +1,5 @@
-title: "LLMs: From Foundation to Production"
-description: "A comprehensive tutorial for mastering Large Language Models (LLMs) – from core mathematics and computing principles to production deployment, advanced applications, and emerging research trends."
+title: "Mohammad Shojaei"
+description: "Production AI engineering, research, open-source projects and LLM Engineering in Action."
 
 # Theme
 remote_theme: just-the-docs/just-the-docs
@@ -27,17 +27,13 @@ social:
 tags: ["machine learning", "LLM", "AI", "deep learning", "transformers", "neural networks", "NLP", "artificial intelligence", "production ML", "MLOps"]
 keywords: "LLM tutorial, Large Language Models, Transformer architecture, Machine Learning, AI development, Production ML, Deep Learning book"
 
-# Google Analytics 4 (Add your measurement ID)
-google_analytics: G-XXXXXXXXXX # Replace with your actual GA4 measurement ID
-ga_tracking: G-XXXXXXXXXX # Just the Docs format
-ga_tracking_anonymize_ip: true
+# Analytics intentionally disabled until a real measurement ID is configured.
 
 # Site verification (add these after setting up)
 google_site_verification: "" # Google Search Console
 bing_site_verification: "" # Bing Webmaster Tools
 
 # Site logo and branding
-logo: "/assets/img/logo.png"
 favicon_ico: "/assets/img/favicon.ico"
 
 # Navigation
@@ -72,7 +68,11 @@ gh_edit_branch: "main"
 
 # Aux links for the upper right navigation
 aux_links:
-  "📚 Read The Book": "/book/"
+  "Home": "/"
+  "Writing": "/writing/"
+  "Research": "/research/"
+  "Projects": "/projects/"
+  "Book": "/book/"
   "🐙 GitHub": "https://github.com/mshojaei77"
   "💬 Community": "https://t.me/AI_LLMs"
 
@@ -98,7 +98,7 @@ plugins:
   - jekyll-seo-tag
 
 # Footer content
-footer_content: "Copyright &copy; 2025 Mohammad Shojaei. All rights reserved. You may copy and distribute this work, but please note that it may contain other authors' works which must be properly cited. Any redistribution must maintain appropriate attributions and citations."
+footer_content: "Copyright &copy; Mohammad Shojaei. All rights reserved. You may copy and distribute this work, but please note that it may contain other authors' works which must be properly cited. Any redistribution must maintain appropriate attributions and citations."
 
 # Callouts configuration
 callouts_level: quiet
@@ -126,3 +126,5 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - /labs
+  - scripts
+  - README.md

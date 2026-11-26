@@ -1,4 +1,12 @@
-**Introduction: Modern LLM Engineering**
+---
+layout: default
+title: "Introduction: Modern LLM Engineering"
+description: "LLM Engineering in Action — Modern LLM Engineering."
+permalink: /book/intro.html
+parent: "LLM Engineering In Action"
+nav_order: 1
+---
+# Introduction: Modern LLM Engineering
 
 A few years ago, many "AI applications" were thin wrappers around an LLM API. You sent a string of text to a model, waited for a response, and put the result inside a simple chat interface.
 
@@ -172,3 +180,8 @@ The models will change. The fashionable frameworks will change. The job titles w
 The engineering principles will remain: understand the model's behavior, control context, ground outputs, measure quality, manage cost, secure the workflow, and build systems that can be operated after the demo ends.
 
 Let's get to work. Open your terminal, fire up your IDE, and turn to Chapter 1.
+
+
+---
+
+[Book contents](/book/) · [All chapters](/book/) · [Next chapter](/book/ch1.html)

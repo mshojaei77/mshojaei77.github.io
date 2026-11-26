@@ -1,4 +1,12 @@
-**Chapter 3: Streaming Chatbot Applications**
+---
+layout: default
+title: "Chapter 3: Streaming Chatbot Applications"
+description: "LLM Engineering in Action — Streaming Chatbot Applications."
+permalink: /book/ch3.html
+parent: "LLM Engineering In Action"
+nav_order: 4
+---
+# Chapter 3: Streaming Chatbot Applications
 
 A lot of beginners assume the model somehow "remembers" the conversation on its own. In the message-array pattern used in this chapter, that is not how it works. Every request is effectively stateless. If your app does not resend the earlier conversation, the model has no idea what was said a few seconds ago. On top of that, if you wait for a long answer to finish before showing anything, the app feels frozen.
 
@@ -479,3 +487,8 @@ Optional upgrades:
 *   Add a `/model` command that prints the current configured model.
 
 Right now, the chatbot is still generic. If you ask it to behave like a narrow domain expert, or to produce strict JSON for another system, it will often drift or hallucinate. In the next chapter, we will look at prompt engineering, context engineering, and techniques for getting more structured outputs.
+
+
+---
+
+[Previous chapter](/book/ch2.html) · [All chapters](/book/) · [Next chapter](/book/ch4.html)

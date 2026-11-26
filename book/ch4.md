@@ -1,4 +1,12 @@
-**Chapter 4: Prompting and Structured Outputs**
+---
+layout: default
+title: "Chapter 4: Prompting and Structured Outputs"
+description: "LLM Engineering in Action — Prompting and Structured Outputs."
+permalink: /book/ch4.html
+parent: "LLM Engineering In Action"
+nav_order: 5
+---
+# Chapter 4: Prompting and Structured Outputs
 
 Prompt engineering used to sound like a bag of tricks: add a dramatic role, ask the model to "think step by step," or wrap the request in a clever phrase.
 
@@ -987,3 +995,8 @@ Expected behavior:
 *   Your code should reject outputs that violate business rules.
 
 The core lesson is simple: prompt engineering becomes production engineering when the prompt is structured, the output is typed, the result is validated, and every failure is observable.
+
+
+---
+
+[Previous chapter](/book/ch3.html) · [All chapters](/book/) · [Next chapter](/book/ch5.html)

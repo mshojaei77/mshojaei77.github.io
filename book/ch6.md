@@ -1,4 +1,12 @@
-**Chapter 6: Retrieval-Augmented Generation**
+---
+layout: default
+title: "Chapter 6: Retrieval-Augmented Generation"
+description: "LLM Engineering in Action — Retrieval-Augmented Generation."
+permalink: /book/ch6.html
+parent: "LLM Engineering In Action"
+nav_order: 7
+---
+# Chapter 6: Retrieval-Augmented Generation
 
 In Chapter 5, you built semantic search: a system that takes a user question and returns relevant passages. That is useful, but it is not the same as answering the question. A user rarely wants five chunks and five similarity scores. They want a direct answer, and they want to know which document supports it.
 
@@ -1175,3 +1183,8 @@ Out of scope:
 ```
 
 The core lesson is that RAG is not a chatbot trick. It is an evidence pipeline. Once you can retrieve the right chunks, build a clean context, generate from that context, and return verifiable citations, you have the foundation for serious document-grounded AI systems.
+
+
+---
+
+[Previous chapter](/book/ch5.html) · [All chapters](/book/) · [View planned chapters](/book/)
