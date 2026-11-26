@@ -5,7 +5,7 @@ title: "نمونه سؤالات مصاحبه شغلی"
 description: "آمادگی مصاحبه بر اساس موضوع و عمق فنی."
 permalink: /fa/writing/interview/
 nav_exclude: true
-date: 2026-11-26 00:00:00 +0000
+date: "2025-07-09 00:00:00 +0000"
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
