@@ -37,3 +37,8 @@
   en_label: "Resources"
   fa_label: "منابع"
   hidden: true
+- en: "/mini_roadmap.html"
+  fa: "/fa/mini-roadmap/"
+  en_label: "Compact roadmap"
+  fa_label: "نقشهٔ راه فشرده"
+  hidden: true
