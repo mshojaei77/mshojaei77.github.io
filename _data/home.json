@@ -14,10 +14,6 @@
         "label": "Explore writing"
       },
       {
-        "url": "/research/",
-        "label": "Research & experiments"
-      },
-      {
         "url": "https://github.com/mshojaei77",
         "label": "GitHub"
       }
@@ -38,10 +34,6 @@
         "label": "خواندن نوشته‌ها"
       },
       {
-        "url": "/fa/research/",
-        "label": "پژوهش و آزمایش‌ها"
-      },
-      {
         "url": "https://github.com/mshojaei77",
         "label": "GitHub"
       }
@@ -50,8 +42,8 @@
   "sections": [
     {
       "key": "writing",
-      "en": "Featured writing & research",
-      "fa": "نوشته‌ها و پژوهش‌های منتخب",
+      "en": "Featured writing",
+      "fa": "نوشته‌های منتخب",
       "link": {
         "en": {
           "url": "/writing/",
@@ -75,34 +67,6 @@
             "url": "/fa/open-source-ai/",
             "title": "هوش مصنوعی متن‌باز؛ آزادی و آینده",
             "desc": "وزن‌باز بودن یک مدل با متن‌باز بودنش یکی نیست. اینجا تفاوتشان و تأثیرش بر کار مهندسی را مرور می‌کنم."
-          }
-        },
-        {
-          "en": {
-            "tag": "Reference",
-            "url": "/vector_dbs.html",
-            "title": "Vector Database Comparison",
-            "desc": "An overview of vector database options."
-          },
-          "fa": {
-            "tag": "مرجع فنی · فارسی",
-            "url": "/fa/vector-databases/",
-            "title": "مقایسهٔ پایگاه‌های دادهٔ برداری",
-            "desc": "برای انتخاب Vector DB از کجا شروع کنیم؟ نگاهی به گزینه‌ها و معیارهایی که در یک پروژهٔ واقعی مهم‌اند."
-          }
-        },
-        {
-          "en": {
-            "tag": "Research report",
-            "url": "/market_analysis.html",
-            "title": "LLM Engineering Market Analysis",
-            "desc": "A look at demand for production LLM engineering skills."
-          },
-          "fa": {
-            "tag": "گزارش پژوهشی · فارسی",
-            "url": "/fa/market-analysis/",
-            "title": "تحلیل بازار مهندسی مدل‌های زبانی",
-            "desc": "شرکت‌ها از مهندس LLM چه می‌خواهند و رزومه‌ها چه مهارت‌هایی را نشان می‌دهند؟ یک نگاه به فاصلهٔ این دو."
           }
         }
       ]

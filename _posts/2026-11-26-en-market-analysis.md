@@ -3,8 +3,14 @@ layout: article
 lang: en
 title: "LLM Engineering Market Analysis"
 description: "Directional analysis of AI engineering job demand and skill supply."
-permalink: /market_analysis.html
-nav_order: 10
+permalink: /writing/market-analysis/
+nav_exclude: true
+date: 2026-11-26 16:35:12 +0000
+article_kind: essay
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 

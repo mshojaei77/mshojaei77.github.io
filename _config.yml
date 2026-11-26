@@ -1,6 +1,6 @@
 title: "Mohammad Shojaei"
 lang: en
-description: "Production AI engineering, research, learning resources and community."
+description: "Production AI engineering, writing, learning resources and community."
 
 # Theme
 remote_theme: just-the-docs/just-the-docs
@@ -72,7 +72,6 @@ aux_links:
   "فارسی / FA": "/fa/"
   "Home": "/"
   "Writing": "/writing/"
-  "Research": "/research/"
   "🐙 GitHub": "https://github.com/mshojaei77"
   "Telegram channel": "https://t.me/LLMEngineers"
   "💬 Community": "https://t.me/AI_LLMs"
