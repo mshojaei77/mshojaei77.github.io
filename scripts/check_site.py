@@ -13,7 +13,8 @@ routes = ["index.html", "writing/index.html", "research/index.html", "projects/i
 routes += [f"book/ch{i}.html" for i in range(1, 7)]
 fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "newsletter", "book", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
-routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png"]
+fa_routes += ["fa/writing/document-parsing/index.html"]
+routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/css/document-parsing.css", "assets/js/document-parsing.js"]
 errors = [f"Missing output: {p}" for p in routes if not (root / p).is_file()]
 
 class Links(HTMLParser):
@@ -84,6 +85,16 @@ for en, fa in pairs:
             errors.append(f"{en}: missing English LTR metadata")
         if f.alternates.get("fa") != fa or f.alternates.get("en") != en:
             errors.append(f"{en}: missing language alternates")
+article_route = "/fa/writing/document-parsing/"
+for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
+    parser = Links()
+    if (root / path).is_file():
+        parser.feed((root / path).read_text(encoding="utf-8"))
+        if article_route not in parser.links:
+            errors.append(f"{path}: missing published article")
+for path in ("feed.xml", "sitemap.xml"):
+    if (root / path).is_file() and article_route not in (root / path).read_text(encoding="utf-8"):
+        errors.append(f"{path}: missing published article")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)
