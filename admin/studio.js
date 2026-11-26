@@ -1,9 +1,9 @@
-import {GitHub,OWNER,SITE,LABELS,allowed,documentLanguage,meta,splitSource,setScalar,utcToday,releaseDay,publicationDate,bodyWithLineEndings,createPost,parseImport,retirement,drafts,bytes,to64,blobSha,MAX_BYTES} from './studio-core.js?v=6';
+import {GitHub,OWNER,SITE,LABELS,allowed,documentLanguage,meta,splitSource,setScalar,utcToday,releaseDay,publicationDate,bodyWithLineEndings,createPost,parseImport,retirement,drafts,bytes,to64,blobSha,MAX_BYTES} from './studio-core.js?v=7';
 const $=id=>document.getElementById(id);
 let api=null,items=[],local=new Map(),d=null,timer=null,saving=Promise.resolve(),version=0,stored=0,busy=false,worker=null,previewId=0,releaseTab=null;
 async function acquireTab(){if(!navigator.locks)return;await new Promise((resolve,reject)=>{navigator.locks.request('publication-studio-owner',{ifAvailable:true},async lock=>{if(!lock){reject(Error('Studio is already open in another tab. Close it before editing.'));return;}resolve();await new Promise(done=>{releaseTab=done;});}).catch(reject);});}
 let importMode='new',imported=null;
-const editor=$('source');const status=(s,error=false)=>{$('status').dataset.message=s;$('status').textContent=tr(s);$('status').classList.toggle('error',error);};
+const editor=$('source');const status=(s,error=false)=>{for(const id of ['status','dashboard-status']){const el=$(id);el.dataset.message=s;el.textContent=tr(s);el.classList.toggle('error',error);} $('dashboard-status').hidden=!s;};
 const theme=()=>document.documentElement.dataset.theme=localStorage.getItem('studio-theme')||'light';theme();$('theme').onclick=()=>{localStorage.setItem('studio-theme',document.documentElement.dataset.theme==='dark'?'light':'dark');theme();};
 
 let locale=localStorage.getItem('studio-locale')==='fa'?'fa':'en';
@@ -11,6 +11,7 @@ const faCopy={
  'Posts':'نوشته‌ها','Pages':'صفحه‌ها','Deletion pending':'در انتظار حذف','PR submitted':'PR ثبت شده','Local draft':'پیش‌نویس محلی','Published post':'منتشر شده','Page':'صفحه','Submit PR':'ثبت PR','Submit deletion PR':'ثبت PR حذف','Delete post':'حذف نوشته','Cancel deletion':'لغو حذف','Import article':'وارد کردن نوشته','New article':'نوشتهٔ جدید','Saved locally':'ذخیره شد','No local changes':'بدون تغییر محلی','Saving locally…':'در حال ذخیرهٔ محلی…','Local save FAILED — download now':'ذخیره ناموفق بود؛ فایل را دانلود کنید','Refresh preview':'به‌روزرسانی پیش‌نمایش','Refresh preview •':'به‌روزرسانی پیش‌نمایش •','Local draft created.':'پیش‌نویس محلی ساخته شد.','Loaded from GitHub. No changes.':'نوشته از GitHub بارگیری شد؛ بدون تغییر.','Recovered local draft.':'پیش‌نویس محلی بازیابی شد.','Draft saved on this device.':'پیش‌نویس روی این دستگاه ذخیره شد.','Local draft. Nothing published.':'پیش‌نویس محلی؛ هنوز منتشر نشده است.','Checking version and preparing pull request…':'در حال بررسی نسخه و آماده‌سازی PR…','File imported into the existing article. Original URL preserved.':'فایل در نوشتهٔ موجود وارد شد و آدرس اصلی حفظ شد.','Deletion staged locally. Submit deletion PR to request removal.':'حذف به صورت محلی آماده شد. برای درخواست حذف، PR ثبت کنید.','Deletion cancelled. Article remains unchanged.':'حذف لغو شد؛ نوشته بدون تغییر است.','Image staged locally. It will be committed with the article.':'تصویر محلی آماده شد و همراه نوشته ثبت می‌شود.','Merged. Ready for your next edit.':'PR ادغام شد؛ آمادهٔ ویرایش بعدی.','PR is open. Review it on GitHub.':'PR باز است؛ آن را در GitHub بررسی کنید.'};
 Object.assign(faCopy,{'Publish':'انتشار','Retry publish':'بررسی و انتشار مجدد','Retry deletion':'بررسی و حذف مجدد','Publishing to GitHub…':'در حال انتشار در GitHub…','Deleting from GitHub…':'در حال حذف از GitHub…','Committed to GitHub. Site deployment is pending.':'در GitHub ثبت شد؛ انتشار سایت در انتظار است.','Deleted from GitHub. Site deployment is pending.':'از GitHub حذف شد؛ انتشار سایت در انتظار است.','No changes to publish.':'تغییری برای انتشار وجود ندارد.'});
 Object.assign(faCopy,{'Choose a valid publication date no later than today (UTC).':'تاریخ انتشار معتبر و حداکثر امروز (UTC) را انتخاب کنید.'});
+Object.assign(faCopy,{'Persian edition':'نسخهٔ فارسی','English edition':'نسخهٔ انگلیسی','Edit date':'تغییر تاریخ','Open article':'باز کردن نوشته','Unpublished changes':'تغییرات منتشرنشده','Pending operation':'عملیات در انتظار','New draft':'پیش‌نویس جدید','Date saved locally. Publish to update the blog.':'تاریخ به‌صورت محلی ذخیره شد؛ برای اعمال در سایت، انتشار را بزنید.','Saving publication date…':'در حال ذخیرهٔ تاریخ انتشار…','Publication date could not be saved locally. Download the draft.':'ذخیرهٔ محلی تاریخ ناموفق بود. پیش‌نویس را دانلود کنید.'});
 const tr=s=>locale==='fa'?(faCopy[s]||s):s;
 function applyLocale(next){
  locale=next==='fa'?'fa':'en';localStorage.setItem('studio-locale',locale);
@@ -33,7 +34,7 @@ async function switchLocale(next){
  try{
   if(d&&version!==stored)await saveSnapshot();
   d=null;version=stored=0;previewId++;$('preview').hidden=true;$('preview').srcdoc='';$('editor-pane').hidden=true;$('empty').hidden=false;
-  editor.value='';$('search').value='';applyLocale(next);renderList();
+  editor.value='';$('search').value='';applyLocale(next);dashboardFilter='all';showDashboard();
  }catch(e){status(e.message,true);}
  finally{lock(false);}
 }
@@ -76,15 +77,80 @@ async function hydrateTitles(){
 
 function saveSnapshot(){clearTimeout(timer);timer=null;if(!d)return saving;const snapshot=structuredClone(d),n=version;const promise=saving.catch(()=>{}).then(()=>drafts.put(snapshot));saving=promise;promise.then(()=>{local.set(snapshot.path,snapshot);if(d?.path===snapshot.path&&n===version){stored=n;$('local-status').textContent=tr('Saved locally');}renderList();},()=>{$('local-status').textContent=tr('Local save FAILED — download now');});return promise;}
 function changed(){version++;$('local-status').textContent=tr('Saving locally…');clearTimeout(timer);timer=setTimeout(()=>saveSnapshot().catch(()=>{}),250);$('metrics').textContent=editor.value.length.toLocaleString()+' characters';if(!$('preview').hidden)$('preview-refresh').textContent=tr('Refresh preview •');}
-function lock(on){busy=on;const editing=on||!!d?.pr||!!d?.deleting||!!d?.directAttempt;for(const id of ['source','title','description','excerpt'])$(id).readOnly=editing;$('post-date').disabled=editing||!d?.path.startsWith('_posts/');for(const el of document.querySelectorAll('[data-format],#media,#submit,#discard'))el.disabled=editing;$('new').disabled=on;$('import-new').disabled=on;$('import-replace').disabled=editing||!d;$('delete-post').disabled=on||!!d?.pr||!d||!d.path.startsWith('_posts/');$('delete-post').hidden=!d?.path.startsWith('_posts/')||!d?.baseSha;$('submit').disabled=on||!!d?.pr;$('discard').disabled=on||!!d?.pr||!!d?.deleting&&!d?.directAttempt;$('delete-post').disabled=on||!!d?.pr||!!d?.directAttempt||!d?.baseSha||!d?.path.startsWith('_posts/');$('logout').disabled=on;$('local-save').disabled=on;$('unlock').disabled=on;for(const el of document.querySelectorAll('[data-locale]'))el.disabled=on;}
+function lock(on){busy=on;const editing=on||!!d?.pr||!!d?.deleting||!!d?.directAttempt;for(const id of ['source','title','description','excerpt'])$(id).readOnly=editing;$('post-date').disabled=editing||!d?.path.startsWith('_posts/');for(const el of document.querySelectorAll('[data-format],#media,#submit,#discard'))el.disabled=editing;$('new').disabled=on;for(const id of ['dashboard-home','dashboard-new','dashboard-import'])$(id).disabled=on;$('post-date-locked').hidden=!d?.path.startsWith('_posts/')||!(d?.pr||d?.attempt||d?.directAttempt||d?.deleting);$('import-new').disabled=on;$('import-replace').disabled=editing||!d;$('delete-post').disabled=on||!!d?.pr||!d||!d.path.startsWith('_posts/');$('delete-post').hidden=!d?.path.startsWith('_posts/')||!d?.baseSha;$('submit').disabled=on||!!d?.pr;$('discard').disabled=on||!!d?.pr||!!d?.deleting&&!d?.directAttempt;$('delete-post').disabled=on||!!d?.pr||!!d?.directAttempt||!d?.baseSha||!d?.path.startsWith('_posts/');$('logout').disabled=on;$('local-save').disabled=on;$('unlock').disabled=on;for(const el of document.querySelectorAll('[data-locale]'))el.disabled=on;}
 function sidebarDay(path,record){
  if(!path.startsWith('_posts/'))return '';
  const source=d?.path===path?d.source:record.source;
  if(source){try{return releaseDay(meta(source).date)||path.slice(7,17);}catch{}}
  return (titles[path]?.sha===record.sha?titles[path].date:null)||path.slice(7,17);
 }
-function renderList(){const q=$('search').value.toLowerCase();const map=new Map(items.map(x=>[x.path,x]));for(const [path,l] of local)if(allowed(path))map.set(path,{...map.get(path),...l});const node=$('documents');node.replaceChildren();for(const group of ['Posts','Pages']){const label=document.createElement('span');label.className='nav-label';label.textContent=tr(group);node.append(label);for(const [path,x,day] of [...map].map(([path,x])=>[path,x,sidebarDay(path,x)]).sort((a,b)=>b[2].localeCompare(a[2])||b[0].localeCompare(a[0]))){if((path.startsWith('_posts/')?'Posts':'Pages')!==group||!matchesLocale(path,x))continue;const published=items.find(item=>item.path===path);let title=(titles[path]?.sha===published?.sha?titles[path]?.title:null)||(!path.startsWith('_posts/')?LABELS[path]:null)||path.split('/').pop().replace(/^\d{4}-\d{2}-\d{2}-(?:(en|fa)-)?/,'').replace(/\.[^.]+$/,'').replace(/-/g,' ');const source=d?.path===path?d.source:x.source;if(source){try{title=meta(source).title||title;}catch{}}if(!(path+' '+title).toLowerCase().includes(q))continue;const button=document.createElement('button');button.className='doc'+(d?.path===path?' active':'');button.dataset.path=path;const name=document.createElement('span');name.dir='auto';name.textContent=title;const sub=document.createElement('small');sub.textContent=tr(x.deleting?'Deletion pending':x.pr?'PR submitted':local.has(path)?'Local draft':path.startsWith('_posts/')?'Published post':'Page');if(day){const time=document.createElement('time');time.dateTime=day;time.textContent=day;time.dir='ltr';sub.append(' · ',time);}button.append(name,sub);button.onclick=()=>open(path);node.append(button);}}}
-function showDraft(){const m=meta(d.source),parts=splitSource(d.source);$('empty').hidden=true;$('editor-pane').hidden=false;$('title').value=m.title;$('description').value=m.description;$('excerpt').value=m.excerpt;$('post-date-field').hidden=!d.path.startsWith('_posts/');$('post-date').max=utcToday();$('post-date').value=releaseDay(m.date)|| (d.path.startsWith('_posts/')?d.path.slice(7,17):'');$('current-title').textContent=m.title;$('current-title').dir='auto';$('kind').textContent=(m.lang==='fa'?'FA · Persian':'EN · English')+' / '+(d.path.endsWith('.html')?'HTML':'MARKDOWN');$('route').textContent=m.permalink;$('live').href=SITE+m.permalink;$('live').hidden=!d.baseSha;editor.value=parts.body;editor.dir=m.lang==='fa'?'rtl':'ltr';$('metrics').textContent=editor.value.length.toLocaleString()+' characters';$('local-status').textContent=tr(local.has(d.path)?'Saved locally':'No local changes');$('pending').hidden=!d.pr;$('submit').textContent=tr(d.directAttempt||d.deleting?(d.deleting?'Retry deletion':'Retry publish'):'Publish');$('delete-post').textContent=tr(d.deleting&&!d.directAttempt?'Cancel deletion':'Delete post');$('commit-result').hidden=true;if(d.pr)$('pr').href='https://github.com/'+OWNER+'/mshojaei77.github.io/pull/'+d.pr.number;$('preview').hidden=true;$('preview').srcdoc='';$('preview-toggle').setAttribute('aria-pressed','false');$('preview-refresh').hidden=true;previewId++;version=stored=0;lock(false);renderList();}
+
+let dashboardFilter='all';
+function documentRows(){
+ const live=new Map(items.map(x=>[x.path,x])),map=new Map(live);
+ for(const [path,l] of local)if(allowed(path))map.set(path,{...map.get(path),...l});
+ if(d&&allowed(d.path))map.set(d.path,{...map.get(d.path),...d});
+ const rows=[];
+ for(const [path,x] of map){
+  if(!matchesLocale(path,x))continue;
+  const published=live.get(path),post=path.startsWith('_posts/'),pending=!!(x.pr||x.attempt||x.directAttempt||x.deleting),draft=local.has(path)||d?.path===path&&version!==stored;
+  let title=(published?.sha&&titles[path]?.sha===published.sha?titles[path].title:null)||(!post?LABELS[path]:null)||path.split('/').pop().replace(/^\d{4}-\d{2}-\d{2}-(?:(en|fa)-)?/,'').replace(/\.[^.]+$/,'').replace(/-/g,' ');
+  const source=d?.path===path?d.source:x.source;
+  let actualDate='';
+  if(source){try{const m=meta(source);title=m.title||title;actualDate=releaseDay(m.date);}catch{}}
+  else if(published?.sha&&titles[path]?.sha===published.sha)actualDate=titles[path].date||'';
+  const day=post?actualDate||path.slice(7,17):'';
+  rows.push({path,title,day,actualDate,post,published:!!published,draft,pending,deleting:!!x.deleting,pr:!!x.pr});
+ }
+ return rows.sort((a,b)=>b.day.localeCompare(a.day)||b.path.localeCompare(a.path));
+}
+function rowStatus(row){
+ return row.deleting?'Deletion pending':row.pr?'PR submitted':row.pending?'Pending operation':row.draft?(row.published?'Unpublished changes':'New draft'):row.post?'Published post':'Page';
+}
+function renderDashboard(rows=documentRows()){
+ if($('empty').hidden)return;
+ const posts=rows.filter(x=>x.post);
+ $('dashboard-edition').textContent=tr(locale==='fa'?'Persian edition':'English edition');
+ $('dash-published').textContent=posts.filter(x=>x.published).length;
+ $('dash-drafts').textContent=posts.filter(x=>x.draft).length;
+ $('dash-pending').textContent=posts.filter(x=>x.pending).length;
+ for(const el of document.querySelectorAll('[data-dashboard-filter]'))el.setAttribute('aria-pressed',String(el.dataset.dashboardFilter===dashboardFilter));
+ const shown=posts.filter(x=>dashboardFilter==='all'||dashboardFilter==='published'&&x.published||dashboardFilter==='drafts'&&x.draft);
+ const container=$('dashboard-posts');container.replaceChildren();$('dashboard-no-posts').hidden=shown.length>0;
+ for(const row of shown){
+  const item=document.createElement('div');item.className='dashboard-row';item.dataset.path=row.path;
+  const title=document.createElement('button');title.type='button';title.className='dash-title';title.dir='auto';title.textContent=row.title;title.onclick=()=>open(row.path);
+  const date=document.createElement('time');date.dir='ltr';date.textContent=row.actualDate||'—';if(row.actualDate)date.dateTime=row.actualDate;
+  const state=document.createElement('span');state.className='dash-state';state.dataset.state=row.pending?'pending':row.draft?'draft':'published';state.textContent=tr(rowStatus(row));
+  const edit=document.createElement('button');edit.type='button';edit.className='dash-edit';edit.textContent=tr('Edit date');edit.onclick=async()=>{if(busy)return;await open(row.path);if(d?.path===row.path&&!$('post-date').disabled)$('post-date').focus();};
+  item.append(title,date,state,edit);container.append(item);
+ }
+}
+function renderList(){
+ const q=$('search').value.toLowerCase(),rows=documentRows(),node=$('documents');node.replaceChildren();
+ for(const group of ['Posts','Pages']){
+  const label=document.createElement('span');label.className='nav-label';label.textContent=tr(group);node.append(label);
+  for(const row of rows){
+   const {path,title,actualDate}=row;if((row.post?'Posts':'Pages')!==group||!(path+' '+title).toLowerCase().includes(q))continue;
+   const button=document.createElement('button');button.className='doc'+(d?.path===path?' active':'');button.dataset.path=path;
+   const name=document.createElement('span');name.dir='auto';name.textContent=title;
+   const sub=document.createElement('small');sub.textContent=tr(rowStatus(row));
+   if(actualDate){const time=document.createElement('time');time.dateTime=actualDate;time.textContent=actualDate;time.dir='ltr';sub.append(' · ',time);}
+   button.append(name,sub);button.onclick=()=>open(path);node.append(button);
+  }
+ }
+ if(!d)$('dashboard-home').setAttribute('aria-current','page');else $('dashboard-home').removeAttribute('aria-current');
+ renderDashboard(rows);
+}
+function showDashboard(message=''){
+ d=null;version=stored=0;previewId++;$('preview').hidden=true;$('preview').srcdoc='';$('preview-toggle').setAttribute('aria-pressed','false');$('preview-refresh').hidden=true;editor.value='';
+ $('editor-pane').hidden=true;$('empty').hidden=false;status(message);renderList();
+}
+$('dashboard-home').onclick=async()=>{if(busy)return;lock(true);try{if(d&&version!==stored)await saveSnapshot();showDashboard();}catch(e){status(e.message,true);}finally{lock(false);}};
+$('dashboard-new').onclick=()=>{if(!busy)$('new').click();};
+$('dashboard-import').onclick=()=>{if(!busy)$('import-new').click();};
+for(const el of document.querySelectorAll('[data-dashboard-filter]'))el.onclick=()=>{dashboardFilter=el.dataset.dashboardFilter;renderDashboard();};
+function showDraft(){const m=meta(d.source),parts=splitSource(d.source);$('empty').hidden=true;$('editor-pane').hidden=false;$('title').value=m.title;$('description').value=m.description;$('excerpt').value=m.excerpt;$('post-date-bar').hidden=$('post-date-field').hidden=!d.path.startsWith('_posts/');$('post-date').max=utcToday();$('post-date').value=releaseDay(m.date)|| (d.path.startsWith('_posts/')?d.path.slice(7,17):'');$('current-title').textContent=m.title;$('current-title').dir='auto';$('kind').textContent=(m.lang==='fa'?'FA · Persian':'EN · English')+' / '+(d.path.endsWith('.html')?'HTML':'MARKDOWN');$('route').textContent=m.permalink;$('live').href=SITE+m.permalink;$('live').hidden=!d.baseSha;editor.value=parts.body;editor.dir=m.lang==='fa'?'rtl':'ltr';$('metrics').textContent=editor.value.length.toLocaleString()+' characters';$('local-status').textContent=tr(local.has(d.path)?'Saved locally':'No local changes');$('pending').hidden=!d.pr;$('submit').textContent=tr(d.directAttempt||d.deleting?(d.deleting?'Retry deletion':'Retry publish'):'Publish');$('delete-post').textContent=tr(d.deleting&&!d.directAttempt?'Cancel deletion':'Delete post');$('commit-result').hidden=true;if(d.pr)$('pr').href='https://github.com/'+OWNER+'/mshojaei77.github.io/pull/'+d.pr.number;$('preview').hidden=true;$('preview').srcdoc='';$('preview-toggle').setAttribute('aria-pressed','false');$('preview-refresh').hidden=true;previewId++;version=stored=0;lock(false);renderList();}
 async function open(path){if(busy||!allowed(path)||!matchesLocale(path,local.get(path)))return;lock(true);try{if(d&&version!==stored)await saveSnapshot();const cached=local.get(path);let remote=null,offline=false;if(cached&&cached.baseSha===null&&!cached.attempt&&!cached.pr&&!cached.directAttempt){d=structuredClone(cached);showDraft();status('Local draft. Nothing published.');return;}try{remote=await api.read(path);if(remote&&meta(remote.source).lang!==locale)throw Error('Document language does not match the selected edition.');if(remote){const item=items.find(x=>x.path===path);if(item)item.sha=remote.sha;recordTitle(path,remote.sha,remote.source);persistTitles();}}catch(e){if(!cached)throw e;offline=true;}if(cached&&remote?.source===cached.source&&!cached.pr&&!cached.deleting&&!cached.attempt&&!cached.directAttempt&&!cached.assets?.length){await drafts.remove(path);local.delete(path);}const retained=local.get(path);if(retained&&!matchesLocale(path,retained))throw Error('Local draft language does not match the selected edition.');if(retained?.pr&&!retained.deleting&&remote?.source===retained.source){await drafts.remove(path);local.delete(path);}else if(retained&&(retained.pr||retained.attempt)){try{const result=await api.resolveLegacy(retained);if(result==='deleted'){await drafts.remove(path);local.delete(path);items=await api.list();renderList();return;}await drafts.put(retained);local.set(path,retained);}catch(e){if(!retained.pr)throw e;}}if(local.has(path)){d=structuredClone(local.get(path));showDraft();status(offline?'Offline: recovered local draft.':remote&&remote.sha!==d.baseSha?'Main changed. Download and reconcile before submission.':'Recovered local draft.',!!(remote&&remote.sha!==d.baseSha));}else{if(!remote)throw Error('Article no longer exists on main.');d={path,source:remote.source,baseSha:remote.sha,assets:[],attempt:null,pr:null};showDraft();status('Loaded from GitHub. No changes.');}}catch(e){status(e.message,true);if(!d)alert(e.message);}finally{lock(false);}}
 $('search').oninput=renderList;
 
@@ -106,7 +172,7 @@ async function signIn(token,remember,restoring=false){
    else if(!restoring&&!storageSet(SESSION_KEY,{token,expires:Date.now()+SESSION_TTL}))warning=locale==='fa'?'ذخیرهٔ ورود در مرورگر ناموفق بود.':'Browser could not remember your login.';
   }else storageRemove(SESSION_KEY);
   $('token').value='';$('login').hidden=true;$('workspace').hidden=false;$('logout').hidden=false;$('identity').textContent=OWNER;
-  renderList();void hydrateTitles();if(warning)$('session-note').textContent=warning;
+  showDashboard();void hydrateTitles();if(warning)$('session-note').textContent=warning;
  }catch(e){
   candidate.clear();releaseTab?.();releaseTab=null;
   if(e.status===401||/Access denied:|does not have confirmed write access/.test(e.message)){storageRemove(SESSION_KEY);$('remember').checked=false;$('token').value='';}
@@ -131,8 +197,18 @@ function renderPreview(){if(!d)return;if(!worker){worker=new Worker('/admin/prev
 $('preview-toggle').onclick=()=>{const show=$('preview').hidden;$('preview').hidden=!show;$('preview-refresh').hidden=!show;$('preview-toggle').setAttribute('aria-pressed',String(show));if(show)renderPreview();else{previewId++;$('preview').srcdoc='';}};
 $('preview-refresh').onclick=renderPreview;
 $('download').onclick=()=>{if(!d)return;const u=URL.createObjectURL(new Blob([d.source],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=u;a.download=d.path.split('/').pop();a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
-$('discard').onclick=async()=>{if(!d||busy||d.pr||d.deleting&&!d.directAttempt)return;if(d.attempt){status('A submission may exist on GitHub. Retry it or inspect branch '+d.attempt.branch+' before discarding.',true);return;}if(d.directAttempt&&!confirm('An earlier operation may have reached GitHub. Discard only the local copy and reload the current repository state? Download your draft first if you need it.'))return;if(!confirm('Discard this local draft? The live site will not change.'))return;clearTimeout(timer);const path=d.path;try{await saving.catch(()=>{});await drafts.remove(path);local.delete(path);d=null;version=stored=0;$('editor-pane').hidden=true;$('empty').hidden=false;items=await api.list();renderList();if(items.some(x=>x.path===path))await open(path);}catch(e){status(e.message,true);}};
-$('post-date').addEventListener('change',()=>{if(!d||busy||d.pr||d.deleting||d.directAttempt||!d.path.startsWith('_posts/'))return;const field=$('post-date'),old=meta(d.source).date;try{const next=publicationDate(field.value);if(field.value===releaseDay(old))return;const p=splitSource(d.source);d.source=setScalar(p.header,'date',next)+p.body;changed();renderList();}catch(e){field.value=releaseDay(old)||d.path.slice(7,17);status(e.message,true);}});
+$('discard').onclick=async()=>{if(!d||busy||d.pr||d.deleting&&!d.directAttempt)return;if(d.attempt){status('A submission may exist on GitHub. Retry it or inspect branch '+d.attempt.branch+' before discarding.',true);return;}if(d.directAttempt&&!confirm('An earlier operation may have reached GitHub. Discard only the local copy and reload the current repository state? Download your draft first if you need it.'))return;if(!confirm('Discard this local draft? The live site will not change.'))return;clearTimeout(timer);const path=d.path;try{await saving.catch(()=>{});await drafts.remove(path);local.delete(path);d=null;version=stored=0;$('editor-pane').hidden=true;$('empty').hidden=false;items=await api.list();showDashboard();if(items.some(x=>x.path===path))await open(path);}catch(e){status(e.message,true);}};
+$('post-date').addEventListener('change',()=>{
+ if(!d||busy||d.pr||d.deleting||d.directAttempt||!d.path.startsWith('_posts/'))return;
+ const field=$('post-date'),old=meta(d.source).date;
+ try{
+  const next=publicationDate(field.value);if(field.value===releaseDay(old))return;
+  const p=splitSource(d.source);d.source=setScalar(p.header,'date',next)+p.body;
+  changed();renderList();status('Saving publication date…');
+  const current=d,revision=version;
+  void saveSnapshot().then(()=>{if(d===current&&version===revision&&!busy)status('Date saved locally. Publish to update the blog.');},()=>{if(d===current&&!busy)status('Publication date could not be saved locally. Download the draft.',true);});
+ }catch(e){field.value=releaseDay(old)||d.path.slice(7,17);status(e.message,true);}
+});
 function newDialog(data=null){imported=data;$('new-form').reset();$('new-date').max=utcToday();$('new-date').value=utcToday();$('new-lang').value=locale;$('new-error').textContent='';$('new-heading').textContent=tr(data?'Import article':'New article');$('import-info').hidden=!data;$('import-info').textContent=data?'Imported '+data.name+' · '+data.extension.toUpperCase()+' · review title, language and URL.':'';if(data){$('new-title').value=data.title;$('new-description').value=data.description;$('new-slug').value=data.slug;$('new-lang').value=data.lang;}$('new-dialog').showModal();}
 $('new').onclick=()=>newDialog();$('cancel-new').onclick=()=>$('new-dialog').close();
 $('new-form').onsubmit=async e=>{e.preventDefault();try{const n=createPost({title:$('new-title').value,description:$('new-description').value,slug:$('new-slug').value,lang:$('new-lang').value,date:$('new-date').value,extension:imported?.extension||'md',body:imported?.body??null});if(bytes(n.source).length>MAX_BYTES)throw Error('Imported article plus metadata exceeds the source limit.');if(items.some(x=>x.path===n.path)||local.has(n.path))throw Error('This post already exists. Open it instead.');if(d&&version!==stored)await saveSnapshot();await drafts.put(n);local.set(n.path,n);d=n;$('new-dialog').close();e.target.reset();imported=null;applyLocale(meta(n.source).lang);$('search').value='';showDraft();status('Local draft created.');}catch(e){$('new-error').textContent=e.message;}};
@@ -151,13 +227,13 @@ async function publishNow(){
   try{await drafts.remove(path);local.delete(path);}catch{if(next){await drafts.put(next);local.set(path,next);}else throw Error('Deletion committed; local draft cleanup failed. Reload and retry to reconcile.');}
   items=items.filter(x=>x.path!==path);if(next){items.push({path,sha:result.sourceSha});recordTitle(path,result.sourceSha,next.source);}else delete titles[path];persistTitles();
   d=next;version=stored=0;
-  if(deleting){$('editor-pane').hidden=true;$('empty').hidden=false;$('empty').querySelector('h1').textContent=tr('Deleted from GitHub. Site deployment is pending.');renderList();}
+  if(deleting){showDashboard('Deleted from GitHub. Site deployment is pending.');}
   else{showDraft();status('Committed to GitHub. Site deployment is pending.');showCommit(result);}
  }catch(e){status(e.message,true);if(d){$('submit').textContent=tr(d.deleting?'Retry deletion':d.directAttempt?'Retry publish':'Publish');$('delete-post').textContent=tr(d.deleting&&!d.directAttempt?'Cancel deletion':'Delete post');}}
  finally{lock(false);}
 }
 $('submit').onclick=async()=>{if(!d||busy||d.pr)return;if(!d.directAttempt&&!d.deleting&&!confirm(locale==='fa'?'تغییرات مستقیماً در مخزن عمومی منتشر شوند؟':'Publish changes directly to the public repository?'))return;await publishNow();};
-$('unlock').onclick=async()=>{if(!d||busy)return;lock(true);try{const resolved=await api.resolveLegacy(d);if(resolved==='deleted'){await drafts.remove(d.path);local.delete(d.path);items=await api.list();d=null;version=stored=0;$('editor-pane').hidden=true;$('empty').hidden=false;renderList();return;}await saveSnapshot();showDraft();status(d.pr?'PR is open. Review it on GitHub.':'Previous PR resolved. Ready to edit or publish.');}catch(e){status(e.message,true);}finally{lock(false);}};
+$('unlock').onclick=async()=>{if(!d||busy)return;lock(true);try{const resolved=await api.resolveLegacy(d);if(resolved==='deleted'){await drafts.remove(d.path);local.delete(d.path);items=await api.list();showDashboard('Deleted from GitHub. Site deployment is pending.');return;}await saveSnapshot();showDraft();status(d.pr?'PR is open. Review it on GitHub.':'Previous PR resolved. Ready to edit or publish.');}catch(e){status(e.message,true);}finally{lock(false);}};
 $('import-new').onclick=()=>{importMode='new';$('import-file').click();};
 $('import-replace').onclick=()=>{if(!d||busy||d.pr||d.deleting||d.directAttempt)return;importMode='replace';$('import-file').click();};
 $('import-file').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file||busy)return;const mode=importMode,current=d;try{if(file.size>MAX_BYTES)throw Error('File exceeds the 950 KB source limit.');const data=parseImport(file.name,await file.arrayBuffer());if(busy||d!==current)return;if(mode==='new'){newDialog(data);return;}if(!d||d.pr||d.deleting||d.directAttempt)return;const format=d.path.endsWith('.html')?'html':'md';if(data.extension!==format)throw Error('Replacement must match the existing source format. Import as a new article or convert the file first.');if(!confirm('Replace the article body with '+file.name+'? Its title, date, permalink and other metadata will be preserved.'))return;const p=splitSource(d.source),next=p.header+data.body;if(bytes(next).length>MAX_BYTES)throw Error('Imported source exceeds the size limit.');d.source=next;editor.value=data.body;changed();await saveSnapshot();status('File imported into the existing article. Original URL preserved.');}catch(e){if(d)status(e.message,true);else alert(e.message);}};

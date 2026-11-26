@@ -74,3 +74,7 @@ Published sidebar titles come from actual GitHub front matter, cached by path an
 ## Editorial homepage
 
 Both homepages share `_includes/home.html` and localized `_data/home.json`. Home-only CSS lives in `assets/css/homepage.css`. The hero links directly to Writing and the AI Engineering Roadmap. There is no separate Start here section. The three latest live posts are shown without pinning; English uses a card grid and Persian uses spacious RTL editorial rows. Existing URLs and archive styling are preserved. Roadmap references use the new AI Engineering Roadmap name (نقشهٔ راه مهندسی هوش مصنوعی); the curriculum remains unchanged.
+
+### Studio dashboard and publication dates
+
+After sign-in and language switching, Studio opens a dashboard for the selected edition. Counts and rows are computed from the existing repository directory and local drafts; they are not deployment or traffic analytics. Filter published posts and drafts, open articles, or use Edit date to focus the always-visible UTC date field above the source editor. The date field is not inside the collapsible metadata panel. Date changes autosave immediately; Publish commits the metadata change without changing the source body, path, or permalink. Return to Dashboard to flush edits locally. Pending operations must be resolved first. Dates with no verified metadata display as unknown until hydration completes. Reload Studio if an older browser-cached version is visible; no site-data clearing is required.
