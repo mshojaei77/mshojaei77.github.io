@@ -41,37 +41,6 @@
   },
   "sections": [
     {
-      "key": "writing",
-      "en": "Featured writing",
-      "fa": "نوشته‌های منتخب",
-      "link": {
-        "en": {
-          "url": "/writing/",
-          "label": "All writing"
-        },
-        "fa": {
-          "url": "/fa/writing/",
-          "label": "همهٔ نوشته‌ها"
-        }
-      },
-      "items": [
-        {
-          "en": {
-            "tag": "Essay",
-            "url": "/open_source_ai.html",
-            "title": "Open Source AI: Driving Freedom and Shaping the Future",
-            "desc": "A perspective on the open-source AI ecosystem."
-          },
-          "fa": {
-            "tag": "مقاله · فارسی",
-            "url": "/fa/open-source-ai/",
-            "title": "هوش مصنوعی متن‌باز؛ آزادی و آینده",
-            "desc": "وزن‌باز بودن یک مدل با متن‌باز بودنش یکی نیست. اینجا تفاوتشان و تأثیرش بر کار مهندسی را مرور می‌کنم."
-          }
-        }
-      ]
-    },
-    {
       "key": "start",
       "en": "Start here",
       "fa": "از اینجا شروع کنید",
@@ -88,48 +57,6 @@
             "url": "/fa/roadmap/",
             "title": "نقشهٔ راه توسعهٔ مدل‌های زبانی",
             "desc": "مسیر یادگیری LLM از مبانی تا Production. قرار نیست نسخهٔ واحدی برای همه باشد؛ بر اساس هدف و تجربه‌تان مسیر را انتخاب کنید."
-          }
-        },
-        {
-          "en": {
-            "tag": "Study guide",
-            "url": "/resources.html",
-            "title": "Learning resources",
-            "desc": "Curated material organized by learning stage."
-          },
-          "fa": {
-            "tag": "منابع · فارسی",
-            "url": "/fa/resources/",
-            "title": "منابع یادگیری",
-            "desc": "اگر نمی‌دانید بعد از هر مبحث چه بخوانید، منابع را به ترتیب مراحل یادگیری کنار هم گذاشته‌ام."
-          }
-        },
-        {
-          "en": {
-            "tag": "Career guide",
-            "url": "/interview.html",
-            "title": "Interview questions",
-            "desc": "Questions organized by role and technical depth."
-          },
-          "fa": {
-            "tag": "آمادگی شغلی · فارسی",
-            "url": "/fa/interview/",
-            "title": "سؤالات مصاحبه",
-            "desc": "از مبانی مدل تا طراحی سیستم و سناریوهای واقعی؛ برای اینکه ببینید کدام بخش‌ها را باید بیشتر تمرین کنید."
-          }
-        },
-        {
-          "en": {
-            "tag": "Quick reference",
-            "url": "/mini_roadmap.html",
-            "title": "Compact roadmap",
-            "desc": "A visual overview of the LLM development path."
-          },
-          "fa": {
-            "tag": "مرجع · فارسی",
-            "url": "/fa/mini-roadmap/",
-            "title": "نقشهٔ راه فشرده",
-            "desc": "نمای تصویری مسیر یادگیری؛ وقتی می‌خواهید قبل از ورود به جزئیات، یک تصویر کلی از راه داشته باشید."
           }
         }
       ]

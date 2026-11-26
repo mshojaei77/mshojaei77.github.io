@@ -78,17 +78,9 @@ aux_links:
 
 aux_links_new_tab: false
 
-# Collections for better organization
-collections:
-  chapters:
-    output: true
-    permalink: /:collection/:name/
-  materials:
-    output: true
-    permalink: /:collection/:name/
-  tutorials:
-    output: true
-    permalink: /:collection/:name/
+# All editorial content is published through _posts.
+feed:
+  posts_limit: 100
 
 # Plugins
 plugins:
@@ -129,8 +121,4 @@ exclude:
   - Gemfile.lock
   - /labs
   - scripts
-  - book
-  - fa/book
-  - assets/css/document-parsing.css
-  - assets/css/home.css
   - README.md

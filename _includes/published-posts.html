@@ -1,9 +1,10 @@
 {% assign published_posts = site.posts | where: 'lang', page.lang %}
+{% assign post_limit = include.limit | default: published_posts.size %}
 {% if published_posts.size > 0 %}
 <section aria-labelledby="latest-posts-title">
   <h2 id="latest-posts-title">{% if page.lang == 'fa' %}تازه‌ترین نوشته‌ها{% else %}Latest writing{% endif %}</h2>
   <div class="section-grid">
-    {% for post in published_posts limit:include.limit %}
+    {% for post in published_posts limit:post_limit %}
     <article class="entry-card">
       <div class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time> · {% if post.lang == 'fa' %}{% if page.lang == 'fa' %}متن فارسی{% else %}In Persian{% endif %}{% else %}English{% endif %}</div>
       <h3 lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'fa' %}rtl{% else %}ltr{% endif %}"><a href="{{ post.url | relative_url }}" hreflang="{{ post.lang | default: 'en' }}">{{ post.title | escape }}</a></h3>

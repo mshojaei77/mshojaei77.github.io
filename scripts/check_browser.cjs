@@ -58,8 +58,7 @@ fs.mkdirSync(out, { recursive: true });
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
         assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 2); assert(facts.rss);
-        assert.deepEqual(facts.sections, [['writing',1],['start',4],['elsewhere',4]]);
-        if (width > 680) assert.equal(new Set(facts.grid).size, 1, 'featured cards should share a row');
+        assert.deepEqual(facts.sections, [['start',1],['elsewhere',4]]);
         if (lang === 'fa') {
           assert(facts.fontLoaded, 'self-hosted Persian font did not load');
           assert(facts.fonts.every(x=>x.startsWith('Vazirmatn')), JSON.stringify(facts.fonts));
@@ -79,10 +78,11 @@ fs.mkdirSync(out, { recursive: true });
       await context.close();
     }
     const p = await browser.newPage();
-    for (const [slug, original] of [['open-source-ai','open_source_ai.html'],['resources','resources.html'],['interview','interview.html'],['mini-roadmap','mini_roadmap.html']]) {
-      assert((await p.goto(origin+'/fa/'+slug+'/')).ok());
-      assert.equal(await p.locator('html').getAttribute('dir'),'rtl');
-      assert.equal(await p.locator('.language-switch a').getAttribute('href'),'/'+original);
+    for (const [old,route,other,lang] of [["/open_source_ai.html","/writing/open-source-ai/","/fa/writing/open-source-ai/","en"],["/fa/open-source-ai/","/fa/writing/open-source-ai/","/writing/open-source-ai/","fa"],["/resources.html","/writing/resources/","/fa/writing/resources/","en"],["/fa/resources/","/fa/writing/resources/","/writing/resources/","fa"],["/interview.html","/writing/interview/","/fa/writing/interview/","en"],["/fa/interview/","/fa/writing/interview/","/writing/interview/","fa"],["/mini_roadmap.html","/writing/mini-roadmap/","/fa/writing/mini-roadmap/","en"],["/fa/mini-roadmap/","/fa/writing/mini-roadmap/","/writing/mini-roadmap/","fa"],["/materials/Data_Preparation/","/writing/data-preparation/","/fa/writing/data-preparation/","en"],["/fa/materials/Data_Preparation/","/fa/writing/data-preparation/","/writing/data-preparation/","fa"],["/materials/Embeddings/","/writing/embeddings/","/fa/writing/embeddings/","en"],["/fa/materials/Embeddings/","/fa/writing/embeddings/","/writing/embeddings/","fa"],["/materials/Intro/","/writing/intro-to-llms/","/fa/writing/intro-to-llms/","en"],["/fa/materials/Intro/","/fa/writing/intro-to-llms/","/writing/intro-to-llms/","fa"],["/materials/Neural_Networks/","/writing/neural-networks/","/fa/writing/neural-networks/","en"],["/fa/materials/Neural_Networks/","/fa/writing/neural-networks/","/writing/neural-networks/","fa"],["/materials/Tokenization/","/writing/tokenization/","/fa/writing/tokenization/","en"],["/fa/materials/Tokenization/","/fa/writing/tokenization/","/writing/tokenization/","fa"],["/materials/Traditional_LMs/","/writing/traditional-language-models/","/fa/writing/traditional-language-models/","en"],["/fa/materials/Traditional_LMs/","/fa/writing/traditional-language-models/","/writing/traditional-language-models/","fa"],["/materials/Transformers/","/writing/transformers/","/fa/writing/transformers/","en"],["/fa/materials/Transformers/","/fa/writing/transformers/","/writing/transformers/","fa"]]) {
+      assert((await p.goto(origin+old)).ok());
+      await p.waitForURL(origin+route);
+      assert.equal(await p.locator('html').getAttribute('dir'),lang==='fa'?'rtl':'ltr');
+      assert.equal(await p.locator('.language-switch a').getAttribute('href'),other);
       assert.equal(await p.locator('body').getAttribute('data-layout-version'),'publication-4');
     }
     for(const [old,route,other,lang] of [["/fa/market-analysis/","/fa/writing/market-analysis/","/writing/market-analysis/","fa"],["/market_analysis.html","/writing/market-analysis/","/fa/writing/market-analysis/","en"],["/fa/vector-databases/","/fa/writing/vector-databases/","/writing/vector-databases/","fa"],["/vector_dbs.html","/writing/vector-databases/","/fa/writing/vector-databases/","en"]]){
@@ -171,6 +171,6 @@ fs.mkdirSync(out, { recursive: true });
     await p.waitForURL(origin+articleRoute);
     for(const [route,removed] of [[articleRoute,faRetired],[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
     console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
-    console.log('Verified '+count+' locale / viewport / theme browser combinations and 4 localized resource routes and 4 migrated article redirects.');
+    console.log('Verified '+count+' locale / viewport / theme browser combinations and 26 migrated article redirects.');
   } finally { await browser.close(); }
 })().catch(err => { console.error(err); process.exitCode = 1; });

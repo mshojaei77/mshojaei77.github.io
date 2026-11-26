@@ -10,7 +10,7 @@ routes = ["index.html", "writing/index.html", "projects/index.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
           "vector_dbs.html", "writing/document-parsing/index.html",
           "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
-fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "projects", "roadmap", "about")]
+fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
 fa_routes += ["fa/writing/document-parsing/index.html", "fa/writing/market-analysis/index.html", "fa/writing/vector-databases/index.html"]
 routes += ["writing/market-analysis/index.html", "writing/vector-databases/index.html"]
@@ -31,7 +31,7 @@ class Links(HTMLParser):
 
 indexes = ["index.html", "writing/index.html", "projects/index.html",
            "newsletter/index.html", "404.html"]
-indexes += [p for p in fa_routes if p not in ("fa/market-analysis/index.html", "fa/vector-databases/index.html")]
+indexes += [p for p in fa_routes if p in ("fa/index.html", "fa/writing/index.html", "fa/roadmap/index.html", "fa/about/index.html") or p.startswith("fa/writing/")]
 for name in indexes:
     path = root / name
     if not path.is_file():
@@ -65,9 +65,9 @@ class Locale(HTMLParser):
             self.anchors.append(a.get("href"))
 
 pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing",)]
-pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/open_source_ai.html", "/fa/open-source-ai/"), ("/writing/vector-databases/", "/fa/writing/vector-databases/"), ("/resources.html", "/fa/resources/"), ("/mini_roadmap.html", "/fa/mini-roadmap/"), ("/interview.html", "/fa/interview/"), ("/writing/market-analysis/", "/fa/writing/market-analysis/")]
+pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/writing/open-source-ai/", "/fa/writing/open-source-ai/"), ("/writing/vector-databases/", "/fa/writing/vector-databases/"), ("/writing/resources/", "/fa/writing/resources/"), ("/writing/mini-roadmap/", "/fa/writing/mini-roadmap/"), ("/writing/interview/", "/fa/writing/interview/"), ("/writing/market-analysis/", "/fa/writing/market-analysis/")]
 pairs.append(("/writing/document-parsing/", "/fa/writing/document-parsing/"))
-pairs += [["/materials/Data_Preparation/","/fa/materials/Data_Preparation/"],["/materials/Embeddings/","/fa/materials/Embeddings/"],["/materials/Intro/","/fa/materials/Intro/"],["/materials/Neural_Networks/","/fa/materials/Neural_Networks/"],["/materials/Tokenization/","/fa/materials/Tokenization/"],["/materials/Traditional_LMs/","/fa/materials/Traditional_LMs/"],["/materials/Transformers/","/fa/materials/Transformers/"]]
+pairs += [["/writing/data-preparation/","/fa/writing/data-preparation/"],["/writing/embeddings/","/fa/writing/embeddings/"],["/writing/intro-to-llms/","/fa/writing/intro-to-llms/"],["/writing/neural-networks/","/fa/writing/neural-networks/"],["/writing/tokenization/","/fa/writing/tokenization/"],["/writing/traditional-language-models/","/fa/writing/traditional-language-models/"],["/writing/transformers/","/fa/writing/transformers/"]]
 def inspect_route(route):
     p = root / route.lstrip("/")
     if route.endswith("/"):
@@ -284,6 +284,67 @@ for old, route, archive in [["fa/market-analysis/index.html","/fa/writing/market
         errors.append(f"Wrong migrated sitemap state: {route}")
     if listed_xml("sitemap.xml", "/" + old.replace("index.html", "")):
         errors.append(f"Legacy redirect indexed: {old}")
+
+# All articles must be regular posts under their language's writing namespace.
+for path in Path("_posts").iterdir():
+    if path.suffix not in (".md", ".markdown", ".html"):
+        continue
+    text = path.read_text(encoding="utf-8")
+    front = re.match(r"^---\n(.*?)\n---(?:\n|$)", text, re.S)
+    if not front:
+        errors.append(f"Invalid front matter: {path}")
+        continue
+    fields = front.group(1)
+    match = re.search(r"^lang:\s*(fa|en)\s*$", fields, re.M)
+    route_match = re.search(r"^permalink:\s*(/[^\s]+/)\s*$", fields, re.M)
+    if not match or not route_match:
+        errors.append(f"Missing post language or permalink: {path}")
+        continue
+    lang, route = match.group(1), route_match.group(1)
+    prefix = "/fa/writing/" if lang == "fa" else "/writing/"
+    if not re.fullmatch(re.escape(prefix) + r"[a-z0-9]+(?:-[a-z0-9]+)*/", route):
+        errors.append(f"Post outside canonical writing namespace: {path}: {route}")
+    legacy = {"2026-11-26-document-parsing.md": "fa", "2026-11-26-document-parsing-en.html": "en"}
+    filename_lang = re.match(r"^\d{4}-\d{2}-\d{2}-(fa|en)-", path.name)
+    if legacy.get(path.name, filename_lang.group(1) if filename_lang else None) != lang:
+        errors.append(f"Post filename language does not match metadata: {path}")
+    if not (root / route.lstrip("/") / "index.html").is_file():
+        errors.append(f"Post not built: {route}")
+    for archive_lang in ("fa", "en"):
+        archive = root / ("fa/writing/index.html" if archive_lang == "fa" else "writing/index.html")
+        parser = Links()
+        parser.feed(archive.read_text(encoding="utf-8"))
+        if parser.links.count(route) != int(archive_lang == lang):
+            errors.append(f"Post missing, duplicate or wrong language in archive: {route}")
+    if not listed_xml("sitemap.xml", route):
+        errors.append(f"Post missing in sitemap: {route}")
+
+# Home, roadmap and about are the only standalone editorial pages.
+allowed_pages = {"index.html", "fa/index.html", "roadmap.html", "fa/roadmap/index.html",
+                 "about.html", "fa/about/index.html", "writing/index.html", "fa/writing/index.html"}
+for page in root.rglob("*.html"):
+    name = page.relative_to(root).as_posix()
+    html = page.read_text(encoding="utf-8")
+    if 'data-layout-version="publication-4"' not in html:
+        continue
+    if name in allowed_pages or name == "404.html":
+        continue
+    if re.fullmatch(r"(?:fa/)?writing/[a-z0-9]+(?:-[a-z0-9]+)*/index\.html", name):
+        continue
+    errors.append(f"Editorial page outside writing: {name}")
+for path in Path("redirects").glob("*.html"):
+    source = path.read_text(encoding="utf-8")
+    old = re.search(r"^permalink:\s*(/\S+)\s*$", source, re.M)
+    new = re.search(r"^redirect_to:\s*(\S+)\s*$", source, re.M)
+    if not old or not new:
+        errors.append(f"Invalid compatibility redirect: {path}")
+        continue
+    route, target = old.group(1), new.group(1)
+    page = root / (route.lstrip("/") + ("index.html" if route.endswith("/") else ""))
+    if not page.is_file() or f"url={target}" not in page.read_text(encoding="utf-8") or listed_xml("sitemap.xml", route):
+        errors.append(f"Missing or indexed legacy redirect: {route}")
+    if target.startswith("/") and not (root / (target.lstrip("/") + ("index.html" if target.endswith("/") else ""))).is_file():
+        errors.append(f"Broken redirect target: {target}")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)
