@@ -29,7 +29,7 @@ Dive into embeddings guide – dense vectors for words that capture semantics. K
 Transform text to math! How do you use embeddings in your projects? Tell me! 🔍
 
 ## My Embeddings Notes
-- [Medium: Embeddings Basics](https://medium.com/@mshojaei77/understanding-embeddings-in-large-language-models-5a22d5c2b5f0)
+- Embeddings Basics
 - [Colab: Embeddings Playground](https://colab.research.google.com/drive/1y0KnCFZvGVf_odSfcNAws6kcDD7HsI0L?usp=sharing)
 
 ## Top Embeddings Resources

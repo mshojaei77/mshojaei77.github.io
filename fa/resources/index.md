@@ -25,7 +25,7 @@ nav_exclude: true
 **ریاضی و آمار:**
 - [3Blue1Brown - Essence of Linear Algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 - [StatQuest - Statistics Fundamentals](https://www.youtube.com/watch?v=qBigTkBLU6g&list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9)
-- [AP Statistics Intuition](https://automata88.medium.com/list/cacc224d5e7d)
+- AP Statistics Intuition
 - [Immersive Linear Algebra](https://immersivemath.com/ila/learnmore.html)
 - [Khan Academy - Linear Algebra](https://www.khanacademy.org/math/linear-algebra)
 - [Khan Academy - Calculus](https://www.khanacademy.org/math/calculus-1)
@@ -109,7 +109,7 @@ nav_exclude: true
 
 **مقاله‌های ضروری:**
 - [Learning Representations by Backpropagating Errors](http://www.iro.umontreal.ca/~vincentp/ift3395/lectures/backprop_old.pdf)
-- [Yes You Should Understand Backprop](https://medium.com/@karpathy/yes-you-should-understand-backprop-e2f06eab496b)
+- Yes You Should Understand Backprop
 - [Natural Language Processing (Almost) from Scratch](http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf)
 
 ## 2. مدل‌های زبانی سنتی
@@ -156,9 +156,9 @@ nav_exclude: true
 **سطح:** مقدماتی | **پیش‌نیاز:** مبانی Python  
 
 **مفاهیم اصلی و نوشته‌ها:**
-- [Introduction to Tokenization: A Theoretical Perspective](https://medium.com/@mshojaei77/introduction-to-tokenization-a-theoretical-perspective-b1cc22fe98c5)
-- [Understanding BPE Tokenization](https://medium.com/@mshojaei77/understanding-bpe-tokenization-a-hands-on-tutorial-80570314b12f)
-- [Fast Tokenizers: How Rust is Turbocharging NLP](https://medium.com/@mshojaei77/fast-tokenizers-how-rust-is-turbocharging-nlp-dd12a1d13fa9)
+- Introduction to Tokenization: A Theoretical Perspective
+- Understanding BPE Tokenization
+- Fast Tokenizers: How Rust is Turbocharging NLP
 - [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE)
 - [minbpe](https://github.com/karpathy/minbpe/blob/master/lecture.md)
 - [minbpe](https://www.youtube.com/watch?v=zduSFxRajkE&t=1157s)
@@ -192,9 +192,9 @@ nav_exclude: true
 **سطح:** مقدماتی تا متوسط | **پیش‌نیاز:** جبر خطی و Python  
 
 **مفاهیم اصلی و نوشته‌ها:**
-- [Word Embeddings Deep Dive](https://medium.com/@mshojaei77/from-words-to-vectors-a-gentle-introduction-to-word-embeddings-eaadb1654778)
-- [Contextual Embedding Guide](https://medium.com/@mshojaei77/beyond-one-word-one-meaning-contextual-embeddings-187b48c6fc27)
-- [Sentence Embedding Techniques](https://medium.com/@mshojaei77/beyond-words-mastering-sentence-embeddings-for-semantic-nlp-dc852b1382ba)
+- Word Embeddings Deep Dive
+- Contextual Embedding Guide
+- Sentence Embedding Techniques
 - [Illustrated Word2Vec](https://jalammar.github.io/illustrated-word2vec/)
 - [The Illustrated BERT, ELMo, and co.](https://jalammar.github.io/illustrated-bert/)
 - [CS224N Lecture 1 - Word Vectors](https://www.youtube.com/watch?v=rmVRLeJRkl4)
@@ -317,7 +317,7 @@ nav_exclude: true
 **سطح:** تخصصی | **پیش‌نیاز:** Transformer و سیستم‌های توزیع‌شده  
 
 **درک مبانی:**
-- [Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)
+- Understanding Language Models
 - [LLMs Overview](https://arxiv.org/pdf/2307.06435)
 - [LLMs Survey](https://arxiv.org/abs/2402.06196)
 
@@ -533,7 +533,7 @@ nav_exclude: true
 - [4-bit LLM Quantization with GPTQ](https://mlabonne.github.io/blog/posts/4_bit_Quantization_with_GPTQ.html)
 - [Quantize Llama models with llama.cpp](https://mlabonne.github.io/blog/posts/Quantize_Llama_2_models_using_ggml.html)
 - [ExLlamaV2: Fastest Library to Run LLMs](https://mlabonne.github.io/blog/posts/ExLlamaV2_The_Fastest_Library_to_Run%C2%A0LLMs.html)
-- [Understanding AWQ](https://medium.com/friendliai/understanding-activation-aware-weight-quantization-awq-boosting-inference-serving-efficiency-in-10bb0faf63a8)
+- Understanding AWQ
 - [SmoothQuant on Llama 2](https://github.com/mit-han-lab/smoothquant/blob/main/examples/smoothquant_llama_demo.ipynb)
 - [DeepSpeed Model Compression](https://www.deepspeed.ai/tutorials/model-compression/)
 - [GPTQ Paper](https://arxiv.org/abs/2210.17323)

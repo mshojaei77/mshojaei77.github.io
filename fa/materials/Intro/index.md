@@ -26,7 +26,7 @@ nav_exclude: true
 
 ### یادداشت‌های من دربارهٔ LLM
 
-- **[📄 Article: Understanding Language Models](https://medium.com/@mshojaei77/1ac0e05ca1f3)**
+- **📄 Article: Understanding Language Models**
   - بررسی سازوکار مدل‌های زبانی با مثال‌های واقعی برای فهم مفاهیم پایه.
 
 ### منابع پیشنهادی

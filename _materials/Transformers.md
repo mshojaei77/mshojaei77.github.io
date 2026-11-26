@@ -29,7 +29,7 @@ Hack into transformers guide – the powerhouse behind modern large language mod
 Parallel processing FTW! How has attention changed your ML game? Spill! 🧩
 
 ## My Transformers Notes
-- [Medium: Attention Basics](https://medium.com/@mshojaei77/attention-mechanisms-in-large-language-models-5a0b3b2b2f0e)
+- Attention Basics
 - [Colab: Transformer Implementation](https://colab.research.google.com/drive/1y0KnCFZvGVf_odSfcNAws6kcDD7HsI0L?usp=sharing)
 
 ## Top Transformers Resources

@@ -28,7 +28,7 @@ Explore traditional LMs guide – from n-grams to RNNs. Foundation for modern LL
 Understand the evolution to transformers! What's your take on RNNs vs. Transformers? Comment! 💬
 
 ## My Traditional LMs Notes
-- [Medium: N-Gram Basics](https://medium.com/@mshojaei77/understanding-n-gram-language-models-a-building-block-of-modern-nlp-3e4f3f0e1d3d)
+- N-Gram Basics
 - [Colab: N-Gram Playground](https://colab.research.google.com/drive/1y0KnCFZvGVf_odSfcNAws6kcDD7HsI0L?usp=sharing)
 
 ## Top Traditional LMs Resources

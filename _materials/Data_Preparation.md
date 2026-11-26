@@ -27,7 +27,7 @@ Master dataset cleaning guide for training powerful large language models.
 Bad data kills models! What's your go-to data cleaning hack? Drop it! 📊
 
 ## My Data Prep Notes
-- [Medium: Data Preparation Guide](https://medium.com/@mshojaei77/data-preparation-for-large-language-models-a-practical-guide-5a0b3b2b2f0e)
+- Data Preparation Guide
 - [Colab: Data Hacks](https://colab.research.google.com/drive/1y0KnCFZvGVf_odSfcNAws6kcDD7HsI0L?usp=sharing)
 
 ## Top Data Preparation Resources

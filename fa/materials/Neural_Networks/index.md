@@ -21,7 +21,7 @@ nav_exclude: true
 
 ## یادداشت‌های من دربارهٔ شبکه‌های عصبی
 
-- [Medium: Demystifying Neural Networks A-Z](https://medium.com/@m.shojaei77/demystifying-neural-networks-a-z-b982235b595f)
+- Demystifying Neural Networks A-Z
 
 ## منابع پیشنهادی شبکه‌های عصبی
 
