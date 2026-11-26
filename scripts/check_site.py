@@ -123,6 +123,59 @@ for path in root.rglob("*"):
 for path in ("newsletter/index.html", "fa/newsletter/index.html"):
     if (root / path).exists():
         errors.append(f"Retired newsletter published: {path}")
+# The Persian-only engineering guide must remain separate from the bilingual tutorial.
+guide_route = "/fa/writing/document-parsing-engineering/"
+guide_file = root / guide_route.lstrip("/") / "index.html"
+class Guide(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.ids = []
+        self.refs = []
+        self.figures = 0
+        self.svgs = 0
+        self.in_article = False
+        self.h1 = 0
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        if tag == "article" and "article-content" in a.get("class", "").split():
+            self.in_article = True
+        if not self.in_article:
+            return
+        if a.get("id"):
+            self.ids.append(a["id"])
+        if tag == "a" and a.get("href", "").startswith("#ref-"):
+            self.refs.append(a["href"][1:])
+        if tag == "figure":
+            self.figures += 1
+        if tag == "svg":
+            self.svgs += 1
+        if tag == "h1":
+            self.h1 += 1
+    def handle_endtag(self, tag):
+        if tag == "article":
+            self.in_article = False
+if not guide_file.is_file():
+    errors.append(f"Missing output: {guide_route}")
+else:
+    guide = Guide()
+    guide.feed(guide_file.read_text(encoding="utf-8"))
+    locale = inspect_route(guide_route)
+    if locale.html.get("lang") != "fa" or locale.html.get("dir") != "rtl" or locale.alternates:
+        errors.append("Engineering guide locale/translation metadata is invalid")
+    if guide.figures != 25 or guide.svgs != 25 or guide.h1 != 1:
+        errors.append(f"Engineering guide content missing: {guide.figures} figures, {guide.svgs} SVGs, {guide.h1} titles")
+    if len(guide.ids) != len(set(guide.ids)) or not guide.refs or set(guide.refs) - set(guide.ids):
+        errors.append("Engineering guide contains duplicate IDs or unresolved references")
+    if not {f"ref-{i}" for i in range(1, 52)}.issubset(guide.ids):
+        errors.append("Engineering guide references are incomplete")
+for name in ("fa/index.html", "fa/writing/index.html", "index.html", "writing/index.html"):
+    parser = Links()
+    parser.feed((root / name).read_text(encoding="utf-8"))
+    if (guide_route in parser.links) != name.startswith("fa/"):
+        errors.append(f"{name}: engineering guide language isolation failed")
+for name in ("feed.xml", "sitemap.xml"):
+    if guide_route not in (root / name).read_text(encoding="utf-8"):
+        errors.append(f"{name}: missing engineering guide")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)
