@@ -5,7 +5,7 @@ title: "تحلیل مارکت مهندسی هوش مصنوعی 2026"
 description: "تحلیل جهت‌نمای تقاضای کارفرما و مهارت‌های مهندسان هوش مصنوعی."
 permalink: /fa/writing/market-analysis/
 nav_exclude: true
-date: 2026-11-26 16:45:17 +0000
+date: "2026-05-21 00:00:00 +0000"
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
