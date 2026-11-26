@@ -39,13 +39,12 @@ jobs:
       - name: Simulate independent English and Persian deletions in the CI checkout
         run: |
           python3 scripts/simulate_deletion.py
-          rm -rf _site
       - uses: actions/jekyll-build-pages@v1
         with:
           source: .
-          destination: ./_site
+          destination: ./_site-deletion
       - name: Validate actual rebuilt deletion state
-        run: python3 scripts/check_site.py _site
+        run: python3 scripts/check_site.py _site-deletion
       - uses: actions/upload-artifact@v4
         if: always()
         with:
