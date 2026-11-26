@@ -1,3 +1,10 @@
+---
+layout: default
+title: "LLM Engineering Market Analysis"
+description: "Directional analysis of AI engineering job demand and skill supply."
+permalink: /market_analysis.html
+nav_order: 10
+---
 # Market Analysis
 
 ## Executive Summary

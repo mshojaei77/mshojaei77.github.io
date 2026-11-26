@@ -1,4 +1,12 @@
-**Chapter 1: LLM Text Generation**
+---
+layout: default
+title: "Chapter 1: LLM Text Generation"
+description: "LLM Engineering in Action — LLM Text Generation."
+permalink: /book/ch1.html
+parent: "LLM Engineering In Action"
+nav_order: 2
+---
+# Chapter 1: LLM Text Generation
 
 For the first year of the generative AI boom, most developers treated large language models (LLMs) like a magical REST API: you send a string of text, wait a few seconds, and an intelligent response comes back.
 
@@ -489,3 +497,8 @@ Expected lesson: playgrounds are fast laboratories, but engineering evidence com
 - NVIDIA NIM Benchmarking: TTFT, end-to-end latency, ITL/TPOT, TPS , https://docs.nvidia.com/nim/benchmarking/llm/latest/metrics.html
 - OpenAI API Docs: Structured Outputs , https://developers.openai.com/api/docs/guides/structured-outputs
 - Lost in the Middle paper , https://arxiv.org/abs/2307.03172
+
+
+---
+
+[Previous chapter](/book/intro.html) · [All chapters](/book/) · [Next chapter](/book/ch2.html)

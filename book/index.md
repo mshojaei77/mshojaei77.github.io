@@ -2,6 +2,7 @@
 title: "LLM Engineering In Action"
 nav_order: 1
 has_children: true
+layout: default
 permalink: /book/
 description: "A practical, market-aligned guide to building, evaluating, securing, and operating LLM products."
 keywords: "LLM, GenAI, RAG, Agents, Fine-Tuning, LLMOps, Evaluation, AI Security, Inference"
@@ -29,7 +30,9 @@ By the end of the book, readers should be able to build and explain:
 
 ## Table of Contents
 
-### [Introduction: Modern LLM Engineering](intro.md)
+**Publication status:** Introduction and chapters 1–6 are available. Chapters 7–20 are planned; their outlines are retained below.
+
+### [Introduction: Modern LLM Engineering](intro.html)
 
 - The LLM Engineer Role
 - The Production AI Mindset
@@ -40,7 +43,7 @@ By the end of the book, readers should be able to build and explain:
 
 ## Part 1: Foundations and First Applications
 
-### [Chapter 1: LLM Text Generation](ch1.md)
+### [Chapter 1: LLM Text Generation](ch1.html)
 
 - Generation Loop
 - Tokenization and Subwords
@@ -52,7 +55,7 @@ By the end of the book, readers should be able to build and explain:
 - Chat Playgrounds
 - Hands-On Exercise
 
-### [Chapter 2: Production Model Selection](ch2.md)
+### [Chapter 2: Production Model Selection](ch2.html)
 
 - Model Selection Criteria
 - Closed and Open Models
@@ -64,7 +67,7 @@ By the end of the book, readers should be able to build and explain:
 - Model Decision Records
 - Hands-On Exercise
 
-### [Chapter 3: Streaming Chatbot Applications](ch3.md)
+### [Chapter 3: Streaming Chatbot Applications](ch3.html)
 
 - Chat API Structure
 - Roles and Message History
@@ -77,7 +80,7 @@ By the end of the book, readers should be able to build and explain:
 
 ## Part 2: Context, Retrieval, and Enterprise Grounding
 
-### [Chapter 4: Prompting and Structured Outputs](ch4.md)
+### [Chapter 4: Prompting and Structured Outputs](ch4.html)
 
 - System and User Prompts
 - Production Prompt Anatomy
@@ -95,7 +98,7 @@ By the end of the book, readers should be able to build and explain:
 - Pydantic Validation Contracts
 - Hands-On Exercise
 
-### [Chapter 5: Embeddings and Semantic Search](ch5.md)
+### [Chapter 5: Embeddings and Semantic Search](ch5.html)
 
 - What is an Embedding?
 - Practical Chunking Strategies
@@ -107,7 +110,7 @@ By the end of the book, readers should be able to build and explain:
 - Common Pitfalls and Failure Scenarios
 - Hands-On Exercise
 
-### [Chapter 6: Retrieval-Augmented Generation](ch6.md)
+### [Chapter 6: Retrieval-Augmented Generation](ch6.html)
 
 - Search Is Not an Answer
 - The Basic RAG Loop
@@ -119,7 +122,7 @@ By the end of the book, readers should be able to build and explain:
 - Minimal Smoke Tests
 - Hands-On Exercise: PDF Q&A Bot with Citations
 
-### [Chapter 7: Hybrid Retrieval, Reranking, and RAG Evaluation](ch7.md)
+### Chapter 7: Hybrid Retrieval, Reranking, and RAG Evaluation — Planned
 
 - Why Basic Vector Search Fails
 - BM25 and Sparse Retrieval
@@ -133,7 +136,7 @@ By the end of the book, readers should be able to build and explain:
 - RAGAS, DeepEval, and Custom RAG Evaluation
 - Hands-On Exercise: Support Search System with Measured Retrieval Lift
 
-### [Chapter 8: Enterprise Data Integration and Permission-Aware RAG](ch8.md)
+### Chapter 8: Enterprise Data Integration and Permission-Aware RAG — Planned
 
 - Document Ingestion Pipelines
 - Parser Selection and Metadata Contracts
@@ -148,7 +151,7 @@ By the end of the book, readers should be able to build and explain:
 
 ## Part 3: Tools, State, and Agents
 
-### [Chapter 9: Tool-Connected LLM Apps and MCP-Style Interfaces](ch9.md)
+### Chapter 9: Tool-Connected LLM Apps and MCP-Style Interfaces — Planned
 
 - Function Calling and Tool Schemas
 - Argument Validation
@@ -160,7 +163,7 @@ By the end of the book, readers should be able to build and explain:
 - Tool-Call Logging and Audit Trails
 - Hands-On Exercise: Customer-Support Copilot with Docs, Order Lookup, and Approval Gates
 
-### [Chapter 10: Stateful Agent Workflows](ch10.md)
+### Chapter 10: Stateful Agent Workflows — Planned
 
 - State Machines and Workflow Graphs
 - Planning Loops
@@ -171,7 +174,7 @@ By the end of the book, readers should be able to build and explain:
 - Basic Agent Observability
 - Hands-On Exercise: Resumable Research Assistant Workflow
 
-### [Chapter 11: Multi-Agent Systems and Agent Evaluation](ch11.md)
+### Chapter 11: Multi-Agent Systems and Agent Evaluation — Planned
 
 - When Multi-Agent Systems Help
 - Supervisor and Router Patterns
@@ -185,7 +188,7 @@ By the end of the book, readers should be able to build and explain:
 
 ## Part 4: Open Models and Customization
 
-### [Chapter 12: Local LLM Inference](ch12.md)
+### Chapter 12: Local LLM Inference — Planned
 
 - Open-Weight Model Families
 - Licensing and Deployment Constraints
@@ -197,7 +200,7 @@ By the end of the book, readers should be able to build and explain:
 - Privacy, Cost, and Offline Use Cases
 - Hands-On Exercise: Local Private Document Assistant
 
-### [Chapter 13: LLM Fine-Tuning with LoRA, QLoRA, and PEFT](ch13.md)
+### Chapter 13: LLM Fine-Tuning with LoRA, QLoRA, and PEFT — Planned
 
 - When Fine-Tuning Helps
 - When RAG or Prompting Is Better
@@ -210,7 +213,7 @@ By the end of the book, readers should be able to build and explain:
 - Model Cards and Dataset Cards
 - Hands-On Exercise: Fine-Tuned Support-Response Model
 
-### [Chapter 14: Preference Tuning, Distillation, and Training Judgment](ch14.md)
+### Chapter 14: Preference Tuning, Distillation, and Training Judgment — Planned
 
 - DPO, RLHF, and RLAIF Concepts
 - Synthetic Data Generation
@@ -224,7 +227,7 @@ By the end of the book, readers should be able to build and explain:
 
 ## Part 5: Production, Reliability, and Governance
 
-### [Chapter 15: Production LLM Serving and LLMOps](ch15.md)
+### Chapter 15: Production LLM Serving and LLMOps — Planned
 
 - API Design and Authentication
 - Queues, Rate Limits, and Caching
@@ -236,7 +239,7 @@ By the end of the book, readers should be able to build and explain:
 - Autoscaling and Health Checks
 - Hands-On Exercise: Productionized RAG/Agent API
 
-### [Chapter 16: Observability, Cost, and Reliability Engineering](ch16.md)
+### Chapter 16: Observability, Cost, and Reliability Engineering — Planned
 
 - Structured Logs and Traces
 - Prompt and Model Versioning
@@ -248,7 +251,7 @@ By the end of the book, readers should be able to build and explain:
 - Load Tests and Reliability Reports
 - Hands-On Exercise: LLMOps Dashboard
 
-### [Chapter 17: Evaluation, AI Security, and Governance](ch17.md)
+### Chapter 17: Evaluation, AI Security, and Governance — Planned
 
 - Golden Datasets and Regression Tests
 - LLM-as-Judge and Human Review
@@ -263,7 +266,7 @@ By the end of the book, readers should be able to build and explain:
 
 ## Part 6: Multimodal, Voice, and Domain Products
 
-### [Chapter 18: Vision-Language and Document Intelligence Applications](ch18.md)
+### Chapter 18: Vision-Language and Document Intelligence Applications — Planned
 
 - Image Inputs and Document Screenshots
 - OCR vs Vision-Language Models
@@ -274,7 +277,7 @@ By the end of the book, readers should be able to build and explain:
 - Visual Evidence Checking
 - Hands-On Exercise: Invoice or Form Intelligence Assistant
 
-### [Chapter 19: Speech and Voice Agents](ch19.md)
+### Chapter 19: Speech and Voice Agents — Planned
 
 - Speech-to-Text and Text-to-Speech
 - Real-Time Audio Streaming
@@ -286,7 +289,7 @@ By the end of the book, readers should be able to build and explain:
 - Transcript Storage and Consent
 - Hands-On Exercise: Voice Appointment Assistant
 
-### [Chapter 20: Domain LLM Product and Portfolio Capstone](ch20.md)
+### Chapter 20: Domain LLM Product and Portfolio Capstone — Planned
 
 - Domain Discovery and Workflow Mapping
 - User Roles and Data Access

@@ -1,4 +1,12 @@
-**Chapter 2: Production Model Selection**
+---
+layout: default
+title: "Chapter 2: Production Model Selection"
+description: "LLM Engineering in Action — Production Model Selection."
+permalink: /book/ch2.html
+parent: "LLM Engineering In Action"
+nav_order: 3
+---
+# Chapter 2: Production Model Selection
 
 LLM engineering is a logistics problem as much as it is a modeling problem. A few years ago, model selection was relatively simple: pick the strongest proprietary API you could afford and build around it.
 
@@ -447,3 +455,8 @@ Requirements:
    * when you would revisit the decision
 
 Expected lesson: leaderboards are useful for shortlisting, especially when they include cost and latency. They do not replace your own evals on real support questions, private documents, and product constraints.
+
+
+---
+
+[Previous chapter](/book/ch1.html) · [All chapters](/book/) · [Next chapter](/book/ch3.html)

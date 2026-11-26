@@ -1,3 +1,10 @@
+---
+layout: default
+title: "LLM Development Roadmap"
+description: "A hands-on learning path from neural networks to production LLM systems."
+permalink: /roadmap.html
+nav_order: 7
+---
 # LLM development Roadmap
 
 A hands-on roadmap to master LLM development from neural networks to production deployment. Build, train, and deploy language models with practical implementations and real-world examples.

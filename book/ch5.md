@@ -1,4 +1,12 @@
-﻿**Chapter 5: Embeddings and Semantic Search**
+---
+layout: default
+title: "Chapter 5: Embeddings and Semantic Search"
+description: "LLM Engineering in Action — Embeddings and Semantic Search."
+permalink: /book/ch5.html
+parent: "LLM Engineering In Action"
+nav_order: 6
+---
+# Chapter 5: Embeddings and Semantic Search
 
 In Chapter 4, you learned how to control what the model sees and how it formats its output. But as your application grows, you will quickly hit a wall: you cannot fit your entire database, document library, or chat history into the model’s context window. You need a way to find exactly the right information to show it.
 
@@ -507,3 +515,8 @@ When debugging a bad retrieval, follow this strict checklist:
 *   Do not optimize the vector index settings until your chunking strategy is stable.
 
 By completing this exercise, you will have built the foundational engine of modern AI memory. Once you can reliably chunk, store, and evaluate semantic retrieval, RAG transforms from a guessing game into a predictable engineering problem.
+
+
+---
+
+[Previous chapter](/book/ch4.html) · [All chapters](/book/) · [Next chapter](/book/ch6.html)

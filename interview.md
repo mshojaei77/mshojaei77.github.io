@@ -1,3 +1,10 @@
+---
+layout: default
+title: "LLM Interview Questions"
+description: "Interview preparation by topic and technical depth."
+permalink: /interview.html
+nav_order: 9
+---
 # Interview Questions
 
 This comprehensive guide contains LLM interview questions organized by role level and technical depth. Each section progresses from foundational concepts to advanced implementation challenges, with questions sorted from simple to hard within each topic area.
