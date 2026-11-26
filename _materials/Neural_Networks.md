@@ -21,7 +21,7 @@ Hack into neural networks guide – vectors to backprop, no fluff. Essential for
 Dive deep into how neural nets power LLMs. Got questions? What's your biggest backprop struggle? 🤔
 
 ## My Neural Networks Notes
-- [Medium: Demystifying Neural Networks A-Z](https://medium.com/@m.shojaei77/demystifying-neural-networks-a-z-b982235b595f)
+- Demystifying Neural Networks A-Z
 
 ## Top Neural Networks Resources
 - [Deep Learning Book](https://www.deeplearningbook.org/)

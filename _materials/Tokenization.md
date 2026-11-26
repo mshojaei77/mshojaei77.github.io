@@ -34,7 +34,7 @@ Master tokenization guide – the bottleneck for AI language models. Turn text i
 - Repeat until vocabulary size reached.
 
 ## My Tokenization Notes
-- [Medium: Token Theory](https://medium.com/@mshojaei77/introduction-to-tokenization-a-theoretical-perspective-b1cc22fe98c5)
+- Token Theory
 - [Colab: Tokenization Techniques](https://colab.research.google.com/drive/1RwrtINbHTPBSRIoW8Zn9BRabxXguRRf0?usp=sharing)
 
 ## Top Tokenization Resources
@@ -45,7 +45,7 @@ Master tokenization guide – the bottleneck for AI language models. Turn text i
 - [Airbyte LLM Tokenization Guide](https://airbyte.com/data-engineering-resources/llm-tokenization)
 - [Tiktokenizer](https://tiktokenizer.vercel.app/)
 - [MIT Paper on Tokenization](https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00557/128327)
-- [Medium: BPE Tutorial](https://medium.com/@mshojaei77/understanding-bpe-tokenization-a-hands-on-tutorial-80570314b12f)
+- BPE Tutorial
 - [BPE Original Paper](https://arxiv.org/abs/1508.07909)
 - [Karpathy Video on Tokenization](https://www.youtube.com/watch?v=zduSFxRajkE)
 - [MinBPE GitHub Repo](https://github.com/karpathy/minbpe)
