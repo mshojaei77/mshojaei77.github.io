@@ -27,3 +27,8 @@
   en_label: "Vector databases"
   fa_label: "پایگاه‌های دادهٔ برداری"
   hidden: true
+- en: "/open_source_ai.html"
+  fa: "/fa/open-source-ai/"
+  en_label: "Open Source AI"
+  fa_label: "هوش مصنوعی متن‌باز"
+  hidden: true
