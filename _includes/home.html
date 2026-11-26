@@ -11,11 +11,18 @@
   <p class="home-focus">{{ copy.focus | escape }}</p>
 </section>
 <section class="home-work" data-home-section="work" aria-labelledby="work-title">
-  <div class="section-heading"><h2 id="work-title">{{ copy.work_heading | escape }}</h2></div>
-  <article class="entry-card featured-work">
-    <div class="work-copy"><div class="meta">{{ copy.work_tag | escape }}</div><h3><a href="https://github.com/mshojaei77/SURFEX" dir="ltr">{{ copy.work_title | escape }}</a></h3><p>{{ copy.work_desc | escape }}</p><span class="work-link" aria-hidden="true">{{ copy.work_link | escape }} ↗</span></div>
-    <svg class="work-icon" aria-hidden="true"><use href="#i-code"></use></svg>
-  </article>
+  <div class="section-heading"><h2 id="work-title">{{ copy.work_heading | escape }}</h2><a class="section-link" href="https://github.com/mshojaei77?tab=repositories">{{ copy.work_all | escape }}</a></div>
+  <div class="home-work-grid">
+  {% for project in site.data.home.selected_work %}{% assign entry = project[page.lang] %}
+    <article class="entry-card featured-work" data-project="{{ project.repo | escape }}">
+      <div class="project-meta"><span class="meta">{{ entry.tag | escape }}</span><span class="project-stars" aria-label="{{ project.stars }} {{ copy.work_stars | escape }}"><span aria-hidden="true">★</span> <bdi>{% if page.lang == 'fa' %}{% include persian-digits.html value=project.stars %}{% else %}{{ project.stars }}{% endif %}</bdi></span></div>
+      <h3><a href="https://github.com/mshojaei77/{{ project.repo }}" dir="ltr">{{ entry.title | escape }}</a></h3>
+      <p>{{ entry.desc | escape }}</p>
+      <span class="work-link" aria-hidden="true">{{ copy.work_link | escape }} ↗</span>
+    </article>
+  {% endfor %}
+  </div>
+  <p class="project-snapshot">{{ copy.work_snapshot | escape }}</p>
 </section>
 {% include published-posts.html limit=3 home=true %}
 <section class="home-connect" data-home-section="elsewhere" aria-labelledby="elsewhere-title">

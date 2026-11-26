@@ -18,6 +18,14 @@ fs.mkdirSync(out, { recursive: true });
         const response = await page.goto(origin + route, { waitUntil: 'networkidle' });
         assert(response.ok(), route);
         await page.evaluate(() => document.fonts.ready);
+        // Assert both theme changes synchronously, before any animation could settle.
+        const immediate=await page.evaluate(()=>{
+          const root=document.documentElement,button=document.querySelector('#site-theme'),cards=[...document.querySelectorAll('.featured-work,.home-connect .entry-card')];
+          const states=[];
+          for(let i=0;i<2;i++){button.click();const dark=root.dataset.theme==='dark';states.push({mode:root.dataset.theme,correct:cards.every(c=>getComputedStyle(c).backgroundColor===(dark?'rgb(22, 22, 22)':'rgb(255, 253, 248)')&&getComputedStyle(c.querySelector('.meta')).color===(dark?'rgb(184, 178, 168)':'rgb(98, 96, 90)')),transitions:cards.map(c=>getComputedStyle(c).transitionProperty)});}
+          return states;
+        });
+        assert(immediate.every(s=>s.correct&&s.transitions.every(t=>!t.includes('background-color')&&t!=='all')),JSON.stringify(immediate));
         assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
         await page.locator('#site-theme').click();
         assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
@@ -46,7 +54,7 @@ fs.mkdirSync(out, { recursive: true });
             cardUnderline: computed('.entry-card h3 a').textDecorationLine,
             fonts: ['body','h1','.eyebrow','.lede','header nav','.action','.entry-card h3','.entry-card p'].map(s=>computed(s).fontFamily),
             fontLoaded: [...document.fonts].some(f=>f.family === 'Vazirmatn' && f.status === 'loaded'),
-            sections, grid, startPresent: !!$('.home-start, [data-home-section="start"]'), work: !!$('.featured-work a[href="https://github.com/mshojaei77/SURFEX"]'), email: !!$('.home-connect a[href^="mailto:"]'), labels: [...switcher.children].map(x=>x.textContent.trim()), topBorder: getComputedStyle($('.site-header')).borderTopWidth,
+            sections, grid, startPresent: !!$('.home-start, [data-home-section="start"]'), work: $$('.featured-work h3 a').map(a=>a.getAttribute('href')), email: !!$('.home-connect a[href^="mailto:"]'), labels: [...switcher.children].map(x=>x.textContent.trim()), topBorder: getComputedStyle($('.site-header')).borderTopWidth,
             latest: $$('.home-latest .entry-card h3 a').map(a=>a.getAttribute('href')),
             heroLinks: $$('.home-hero .quick-links a').map(a=>a.getAttribute('href')),
             rss: !!$('footer a[href="/feed.xml"]'),
@@ -68,7 +76,7 @@ fs.mkdirSync(out, { recursive: true });
         assert.equal(facts.latest.length,latestCount);
         if(width>760&&latestCount>1&&lang==='en')assert.equal(new Set(facts.grid).size,1,'English desktop cards must align');
         if(latestCount>1&&lang==='fa')assert.equal(new Set(facts.grid).size,latestCount,'Persian editorial rows must stack');
-        assert.equal(facts.sections.at(-1)[1],8);assert(facts.work&&facts.email);assert.deepEqual(facts.labels,['English','فارسی']);assert.equal(facts.topBorder,'0px');
+        assert.equal(facts.sections.at(-1)[1],8);assert.deepEqual(facts.work,['ReActMCP','ParsiEval','invoice-to-pay-agent','SubTrans-Ollama'].map(n=>'https://github.com/mshojaei77/'+n));assert.equal(facts.sections[0][1],4);assert(facts.email);assert.deepEqual(facts.labels,['English','فارسی']);assert.equal(facts.topBorder,'0px');
         assert.equal(facts.latest.length,new Set(facts.latest).size);
         assert.deepEqual(facts.heroLinks,lang==='fa'?['/fa/writing/']:['/writing/']);
         assert(facts.latest.every(x=>x.startsWith(lang==='fa'?'/fa/writing/':'/writing/')));
@@ -88,15 +96,15 @@ fs.mkdirSync(out, { recursive: true });
           const rgb=c=>c.match(/[\d.]+/g).slice(0,3).map(Number);
           const lum=c=>rgb(c).map(n=>n/255).map(n=>n<=.04045?n/12.92:((n+.055)/1.055)**2.4).reduce((a,n,i)=>a+n*[.2126,.7152,.0722][i],0);
           const bg=el=>{for(let p=el;p;p=p.parentElement){const c=getComputedStyle(p).backgroundColor;if(c!=='rgba(0, 0, 0, 0)'&&c!=='transparent')return c;}return getComputedStyle(document.documentElement).backgroundColor;};
-          const meta=[...document.querySelectorAll('.home-hero .eyebrow,.home-focus,.entry-card .meta,footer,footer a')].map(e=>{const s=getComputedStyle(e),a=lum(s.color),b=lum(bg(e));return [parseFloat(s.fontSize),(Math.max(a,b)+.05)/(Math.min(a,b)+.05)];});
-          const contacts=[...document.querySelectorAll('.home-connect-grid .entry-card')].map(e=>{const r=e.getBoundingClientRect();return [Math.round(r.top),Math.round(r.height)];});
+          const meta=[...document.querySelectorAll('.home-hero .eyebrow,.home-focus,.entry-card .meta,.project-stars,.project-snapshot,footer,footer a')].map(e=>{const s=getComputedStyle(e),back=bg(e),a=lum(s.color),b=lum(back);return {text:e.textContent.trim().slice(0,80),size:parseFloat(s.fontSize),contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),fg:s.color,bg:back};});
+          const contacts=[...document.querySelectorAll('.home-connect-grid .entry-card,.home-work-grid .entry-card')].map(e=>{const r=e.getBoundingClientRect();return [Math.round(r.top),Math.round(r.height),e.parentElement.className];});
           return {meta,contacts,footerTargets:[...document.querySelectorAll('footer a')].map(a=>a.getBoundingClientRect().height),dates:[...document.querySelectorAll('.home-latest time')].map(t=>[t.textContent.trim(),t.dateTime]),themeLabel:document.querySelector('#site-theme').getAttribute('aria-label'),background:getComputedStyle(document.documentElement).backgroundColor,bodyBg:getComputedStyle(document.body).backgroundColor,footerText:document.querySelector('footer .foot>div').textContent};
         });
-        assert(visual.meta.every(([size,contrast])=>size>=13&&contrast>=4.5),JSON.stringify(visual.meta));
+        assert(visual.meta.every(({size,contrast})=>size>=13&&contrast>=4.5),JSON.stringify(visual.meta.filter(({size,contrast})=>size<13||contrast<4.5)));
         assert(visual.footerTargets.every(h=>h>=44),'footer target too small');
         assert.equal(visual.background,visual.bodyBg);assert(visual.themeLabel.includes(lang==='fa'?(colorScheme==='dark'?'روشن':'تاریک'):(colorScheme==='dark'?'light':'dark')));
         if(lang==='fa'){assert(visual.dates.every(([s,d])=>/^[۰-۹]{4}-[۰-۹]{2}-[۰-۹]{2}$/.test(s)&&/^\d{4}-\d{2}-\d{2}/.test(d)));assert(/[۰-۹]{4}/.test(visual.footerText));}
-        for(const y of new Set(visual.contacts.map(r=>r[0])))assert.equal(new Set(visual.contacts.filter(r=>r[0]===y).map(r=>r[1])).size,1,'contact cards must stretch equally');
+        for(const grid of ['home-connect-grid','home-work-grid']){const cards=visual.contacts.filter(r=>r[2]===grid);for(const y of new Set(cards.map(r=>r[0])))assert.equal(new Set(cards.filter(r=>r[0]===y).map(r=>r[1])).size,1,'cards must stretch equally: '+grid);}
         await page.screenshot({path:out+'/'+lang+'-'+width+'-'+colorScheme+'.png',fullPage:true});
         await page.locator('.language-switch a').click();
         await page.waitForURL(origin+(lang==='en'?'/fa/':'/'));

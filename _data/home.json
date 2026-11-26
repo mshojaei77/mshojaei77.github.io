@@ -14,10 +14,10 @@
     "latest": "Latest writing",
     "all_writing": "All writing",
     "work_heading": "Selected work",
-    "work_tag": "Public project",
-    "work_title": "SURFEX",
-    "work_desc": "A research agent that turns requests into structured research tasks, collects evidence, checks citations, and produces traceable reports and artifacts.",
-    "work_link": "View source and documentation"
+    "work_link": "View repository",
+    "work_stars": "GitHub stars",
+    "work_all": "All repositories →",
+    "work_snapshot": "GitHub stars as of 2026-11-27"
   },
   "fa": {
     "name": "محمد شجاعی",
@@ -34,10 +34,10 @@
     "latest": "تازه‌ترین نوشته‌ها",
     "all_writing": "همهٔ نوشته‌ها",
     "work_heading": "کارهای منتخب",
-    "work_tag": "پروژهٔ عمومی",
-    "work_title": "SURFEX",
-    "work_desc": "ایجنت پژوهشی برای تعریف مسئله، گردآوری شواهد، بررسی ارجاع‌ها و تولید گزارش‌ها و خروجی‌های قابل‌ردیابی.",
-    "work_link": "مشاهدهٔ کد و مستندات"
+    "work_link": "مشاهدهٔ مخزن",
+    "work_stars": "ستارهٔ GitHub",
+    "work_all": "همهٔ مخازن ←",
+    "work_snapshot": "تعداد ستاره‌ها در تاریخ ۲۰۲۶-۱۱-۲۷"
   },
   "sections": [
     {
@@ -158,6 +158,64 @@
           }
         }
       ]
+    }
+  ],
+  "selected_work": [
+    {
+      "repo": "ReActMCP",
+      "stars": 144,
+      "en": {
+        "tag": "Agent tooling · MCP",
+        "title": "ReActMCP",
+        "desc": "An MCP server for web search, with advanced Exa filters and structured Markdown results for AI assistants."
+      },
+      "fa": {
+        "tag": "ابزار ایجنت · MCP",
+        "title": "ReActMCP",
+        "desc": "سرور MCP برای جست‌وجوی وب با فیلترهای پیشرفتهٔ Exa و خروجی Markdown برای دستیارهای هوش مصنوعی."
+      }
+    },
+    {
+      "repo": "ParsiEval",
+      "stars": 42,
+      "en": {
+        "tag": "LLM evaluation · Persian AI",
+        "title": "ParsiEval",
+        "desc": "A Persian LLM evaluation suite covering knowledge, multimodal exam questions, and formal versus conversational language fluency."
+      },
+      "fa": {
+        "tag": "ارزیابی LLM · هوش مصنوعی فارسی",
+        "title": "ParsiEval",
+        "desc": "مجموعهٔ بنچمارک‌های فارسی برای سنجش دانش، پرسش‌های چندوجهی و روانی زبان در گفتار و نوشتار رسمی."
+      }
+    },
+    {
+      "repo": "invoice-to-pay-agent",
+      "stars": 9,
+      "en": {
+        "tag": "Enterprise AI · Finance",
+        "title": "Invoice-to-Pay Agent",
+        "desc": "An accounts-payable automation prototype with document parsing, three-way matching, human approval, mock ERP posting and audit logs."
+      },
+      "fa": {
+        "tag": "هوش مصنوعی سازمانی · مالی",
+        "title": "Invoice-to-Pay Agent",
+        "desc": "نمونهٔ اولیهٔ اتوماسیون حساب‌های پرداختنی با پردازش اسناد، تطبیق سه‌طرفه، تأیید انسانی، ثبت آزمایشی در ERP و لاگ ممیزی."
+      }
+    },
+    {
+      "repo": "SubTrans-Ollama",
+      "stars": 24,
+      "en": {
+        "tag": "Local AI · Product engineering",
+        "title": "SubTrans-Ollama",
+        "desc": "A local Persian subtitle translator with format preservation, glossary, translation memory, quality checks and resumable processing."
+      },
+      "fa": {
+        "tag": "هوش مصنوعی محلی · مهندسی محصول",
+        "title": "SubTrans-Ollama",
+        "desc": "مترجم محلی زیرنویس به فارسی با حفظ قالب، واژه‌نامه، حافظهٔ ترجمه، کنترل کیفیت و قابلیت ادامهٔ پردازش."
+      }
     }
   ]
 }
