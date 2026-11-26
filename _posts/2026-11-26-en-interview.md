@@ -3,8 +3,14 @@ layout: article
 lang: en
 title: "LLM Interview Questions"
 description: "Interview preparation by topic and technical depth."
-permalink: /interview.html
-nav_order: 9
+permalink: /writing/interview/
+nav_exclude: true
+date: 2026-11-26 00:00:00 +0000
+article_kind: essay
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 

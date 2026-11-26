@@ -1,28 +1,34 @@
 ---
 layout: article
-lang: en
-title: "Learning Resources"
-description: "Curated resources organized by LLM development stage."
-permalink: /resources.html
-nav_order: 8
+lang: fa
+title: "منابع یادگیری"
+description: "مجموعهٔ منابع یادگیری بر اساس مراحل توسعهٔ LLM."
+permalink: /fa/writing/resources/
+nav_exclude: true
+date: 2026-11-26 00:00:00 +0000
+article_kind: essay
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 
 
-# Learning Resources
+# منابع یادگیری
 
-A comprehensive collection of learning resources organized to match the LLM development roadmap structure.
+مجموعه‌ای جامع از منابع یادگیری که بر اساس ساختار نقشهٔ راه توسعهٔ LLM مرتب شده‌اند. عنوان منابع و لینک‌های اصلی را برای پیدا کردن آسان‌تر به زبان اصلی نگه داشته‌ام.
 
 ---
 
-# Part 1: The Foundations 🔍
+# بخش 1: مبانی
 
-**🎯 Focus:** Core ML concepts, neural networks, traditional models, tokenization, embeddings, transformers  
-**📈 Difficulty:** Beginner to Intermediate  
-**🎓 Outcome:** Solid foundation in ML/NLP fundamentals and transformer architecture
+**تمرکز:** مفاهیم اصلی ML، شبکه‌های عصبی، مدل‌های سنتی، توکن‌سازی، Embedding و Transformer  
+**سطح:** مقدماتی تا متوسط  
+**خروجی مورد انتظار:** درک محکم مبانی ML/NLP و معماری Transformer
 
-## Prerequisites
+## پیش‌نیازها
 
-**Mathematics & Statistics:**
+**ریاضی و آمار:**
 - [3Blue1Brown - Essence of Linear Algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 - [StatQuest - Statistics Fundamentals](https://www.youtube.com/watch?v=qBigTkBLU6g&list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9)
 - AP Statistics Intuition
@@ -34,12 +40,12 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Review of Differential Calculus](https://web.stanford.edu/class/cs224n/readings/review-differential-calculus.pdf)
 - [Derivatives, Backpropagation, and Vectorization](http://cs231n.stanford.edu/handouts/derivatives.pdf)
 
-**Programming & Python:**
+**برنامه‌نویسی و Python:**
 - [Real Python](https://realpython.com/)
 - [freeCodeCamp - Learn Python](https://www.youtube.com/watch?v=rfscVS0vtbw)
 - [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
 
-**Books:**
+**کتاب‌ها:**
 - [Speech and Language Processing (2024 pre-release)](https://web.stanford.edu/~jurafsky/slp3/)
 - [Natural Language Processing](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
 - [A Primer on Neural Network Models for Natural Language Processing](http://u.cs.biu.ac.il/~yogo/nnlp.pdf)
@@ -52,7 +58,7 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Hands-On Large Language Models](https://www.llm-book.com/)
 - [The Chinese Book for Large Language Models](http://aibox.ruc.edu.cn/zws/index.htm)
 
-**Machine Learning Fundamentals:**
+**مبانی یادگیری ماشین:**
 - [Machine Learning for Everybody](https://youtu.be/i_LwzRVP7bg)
 - [Udacity - Intro to Machine Learning](https://www.udacity.com/course/intro-to-machine-learning--ud120)
 - [A Course in Machine Learning](https://web.archive.org/web/20250114002202/http://ciml.info/dl/v0_99/ciml-v0_99-all.pdf)
@@ -69,7 +75,7 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [MIT 6.S897: Machine Learning for Healthcare (2019)](https://www.youtube.com/playlist?list=PLUl4u3cNGP60B0PQXVQyGNdCyCTDU1Q5j)
 - [Machine Learning with Graphs (Stanford)](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
 
-**Deep Learning Basics:**
+**مبانی یادگیری عمیق:**
 - [3Blue1Brown - But What is a Neural Network?](https://www.youtube.com/watch?v=aircAruvnKk)
 - [Deep Learning Crash Course](https://www.youtube.com/watch?v=VyWAvY2CF9c)
 - [Fast.ai - Practical Deep Learning](https://course.fast.ai/)
@@ -94,37 +100,37 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Introduction to Deep Learning and Deep Generative Models](https://www.youtube.com/watch?v=1nqCZqDYPp0&list=PLTKMiZHVd_2KJtIXOW0zFhFfBaJJilH51)
 - [Parallel Computing and Scientific Machine Learning](https://www.youtube.com/playlist?list=PLCAl7tjCwWyGjdzOOnlbGnVNZk0kB8VSa)
 
-## 1. Neural Networks Foundations for LLMs
+## 1. مبانی شبکه‌های عصبی
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Calculus, linear algebra
+**سطح:** متوسط | **پیش‌نیاز:** حسابان و جبر خطی  
 
-**Core Textbooks & Courses:**
+**کتاب‌ها و دوره‌های اصلی:**
 - [Deep Learning Book](https://www.deeplearningbook.org/)
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
 - [Stanford CS231n](http://cs231n.stanford.edu/)
 
-**Mathematical Foundations:**
+**مبانی ریاضی:**
 - [CS231n Notes on Network Architectures](http://cs231n.github.io/neural-networks-1/)
 - [CS231n Notes on Backpropagation](http://cs231n.github.io/optimization-2/)
 
-**Essential Papers & Articles:**
+**مقاله‌های ضروری:**
 - [Learning Representations by Backpropagating Errors](http://www.iro.umontreal.ca/~vincentp/ift3395/lectures/backprop_old.pdf)
 - Yes You Should Understand Backprop
 - [Natural Language Processing (Almost) from Scratch](http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf)
 
-## 2. Traditional Language Models
+## 2. مدل‌های زبانی سنتی
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Probability, statistics
+**سطح:** متوسط | **پیش‌نیاز:** احتمال و آمار  
 
-**Core Textbooks:**
+**کتاب‌های اصلی:**
 - [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/)
 - [Statistical Language Models](https://www.cambridge.org/core/books/statistical-language-models)
 - [Deep Learning Book - RNNs](https://www.deeplearningbook.org/contents/rnn.html)
 
-**N-gram Models:**
+**مدل‌های N-gram:**
 - [N-gram Language Models](https://web.stanford.edu/~jurafsky/slp3/3.pdf)
 
-**RNN & LSTM Resources:**
+**منابع RNN و LSTM:**
 - [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 - [The Unreasonable Effectiveness of Recurrent Neural Networks](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
 - [Sequence Modeling: Recurrent and Recursive Neural Nets](http://www.deeplearningbook.org/contents/rnn.html)
@@ -133,16 +139,16 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Kaggle - NLP Guide](https://www.kaggle.com/learn-guide/natural-language-processing)
 - [Jake Tae - PyTorch RNN from Scratch](https://jaketae.github.io/study/pytorch-rnn/)
 
-**Foundational Papers:**
+**مقاله‌های پایه:**
 - [Neural Probabilistic Language Models](http://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf)
 - [Empirical Evaluation of Gated RNNs](https://arxiv.org/abs/1412.3555)
 - [Learning Long-term Dependencies with Gradient Descent is Difficult](https://ieeexplore.ieee.org/document/279181)
 - [On the Difficulty of Training Recurrent Neural Networks](https://arxiv.org/pdf/1211.5063.pdf)
 
-**Historical Context:**
+**زمینهٔ تاریخی:**
 - [On Chomsky and the Two Cultures of Statistical Learning](http://norvig.com/chomsky.html)
 
-**Dependency Parsing:**
+**تجزیهٔ وابستگی:**
 - [Dependency Parsing](https://link.springer.com/book/10.1007/978-3-031-02131-2)
 - [Jurafsky & Martin Chapter 19](https://web.stanford.edu/~jurafsky/slp3/19.pdf)
 - [Incrementality in Deterministic Dependency Parsing](https://www.aclweb.org/anthology/W/W04/W04-0308.pdf)
@@ -151,11 +157,11 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Universal Stanford Dependencies](http://nlp.stanford.edu/~manning/papers/USD_LREC14_UD_revision.pdf)
 - [Universal Dependencies Website](http://universaldependencies.org/)
 
-## 3. Tokenization
+## 3. توکن‌سازی
 
-**📈 Difficulty:** Beginner | **🎯 Prerequisites:** Python basics
+**سطح:** مقدماتی | **پیش‌نیاز:** مبانی Python  
 
-**Core Concepts & Posts:**
+**مفاهیم اصلی و نوشته‌ها:**
 - Introduction to Tokenization: A Theoretical Perspective
 - Understanding BPE Tokenization
 - Fast Tokenizers: How Rust is Turbocharging NLP
@@ -163,7 +169,7 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [minbpe](https://github.com/karpathy/minbpe/blob/master/lecture.md)
 - [minbpe](https://www.youtube.com/watch?v=zduSFxRajkE&t=1157s)
 
-**Hands-On Implementations:**
+**پیاده‌سازی‌های عملی:**
 - [Tokenization Techniques](https://colab.research.google.com/drive/1RwrtINbHTPBSRIoW8Zn9BRabxXguRRf0?usp=sharing)
 - [GPT Tokenizer Implementation](https://colab.research.google.com/drive/1y0KnCFZvGVf_odSfcNAws6kcDD7HsI0L?usp=sharing)
 - [Build and Push a Tokenizer](https://colab.research.google.com/drive/1uYFoxwCKwshkchBgQ4y4z9cDfKRlwZ-e?usp=sharing)
@@ -171,27 +177,27 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Hugging Face Tokenizers](https://colab.research.google.com/drive/1mcFgQ9PX1TFyEAsFOnoS1ozeSz3vM6A1?usp=sharing)
 - [New Tokenizer Training](https://colab.research.google.com/drive/1452WFn66MZzYylTNcL6hV5Zd45sskzs7?usp=sharing)
 
-**Interactive Tools:**
+**ابزارهای تعاملی:**
 - [TikTokenizer](https://tiktokenizer.vercel.app/)
 - [Hugging Face Tokenizer Playground](https://huggingface.co/spaces/Xenova/the-tokenizer-playground)
 - [OpenAI Tokenizer](https://platform.openai.com/tokenizer)
 - [Tokenizer Arena](https://huggingface.co/spaces/Cognitive-Lab/Tokenizer_Arena)
 
-**Libraries & Documentation:**
+**کتابخانه‌ها و مستندات:**
 - [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/mastering-tokenizers)
 - [SentencePiece](https://github.com/google/sentencepiece)
 
-**Research Papers:**
+**مقاله‌های پژوهشی:**
 - [BPE Research Paper](https://arxiv.org/abs/1508.07909)
 - [RadarLLM: Cross-Modal Tokenization](https://arxiv.org/abs/2504.09862)
 - [CoreMatching: Token-Neuron Synergy](https://arxiv.org/abs/2505.19235)
 - [MOM: Memory-Efficient Token Handling](https://arxiv.org/abs/2504.12526)
 
-## 4. Embeddings
+## 4. Embedding
 
-**📈 Difficulty:** Beginner-Intermediate | **🎯 Prerequisites:** Linear algebra, Python
+**سطح:** مقدماتی تا متوسط | **پیش‌نیاز:** جبر خطی و Python  
 
-**Core Concepts & Posts:**
+**مفاهیم اصلی و نوشته‌ها:**
 - Word Embeddings Deep Dive
 - Contextual Embedding Guide
 - Sentence Embedding Techniques
@@ -200,34 +206,34 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [CS224N Lecture 1 - Word Vectors](https://www.youtube.com/watch?v=rmVRLeJRkl4)
 - [Lena Voita - Word Embeddings](https://lena-voita.github.io/nlp_course/word_embeddings.html)
 
-**Hands-On Implementations:**
+**پیاده‌سازی‌های عملی:**
 - [Interactive Word2Vec Posts](https://colab.research.google.com/drive/1dVkCRF0RKWWSP_QQq79LHNYGhead14d0?usp=sharing)
 - [Word2vec from Scratch](https://jaketae.github.io/study/word2vec/)
 - [Training Sentence Transformers](https://huggingface.co/blog/train-sentence-transformers)
 - [Sentence Transformers](https://www.sbert.net/)
 - [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard)
 
-**Foundational Papers:**
+**مقاله‌های پایه:**
 - [BERT Paper](https://arxiv.org/abs/1810.04805)
 - [GloVe Paper](https://www.semanticscholar.org/paper/67b692bbfd29c5a30cfd1046efd5f85eecd1ea86)
 - [FastText Paper](https://www.semanticscholar.org/paper/d23e59abcae6ba653ba45dcc0ef975438890a3a4)
 - [Distributed Representations of Words and Phrases](http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)
 
-**Advanced Topics:**
+**موضوعات پیشرفته:**
 - [Multilingual BERT](https://www.semanticscholar.org/paper/0b0bc70b48aebe608d53a955990cb08f73de5a7d)
 - [Bias in Embeddings](https://www.semanticscholar.org/paper/5ea2104a039921633f75a9f4b986b515ddbe96d7)
 - [Contextual Word Representations: A Contextual Introduction](https://arxiv.org/abs/1902.06006)
 - [Evaluation Methods for Unsupervised Word Embeddings](http://www.aclweb.org/anthology/D15-1036)
 - [Improving Distributional Similarity with Lessons Learned from Word Embeddings](http://www.aclweb.org/anthology/Q15-1016)
 
-## 5. The Transformer Architecture
+## 5. معماری Transformer
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Neural networks, linear algebra
+**سطح:** پیشرفته | **پیش‌نیاز:** شبکه‌های عصبی و جبر خطی  
 
-**Foundational Paper:**
+**مقالهٔ پایه:**
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 
-**Visual Explanations:**
+**توضیحات تصویری:**
 - [The Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)
 - [The Annotated Transformer](http://nlp.seas.harvard.edu/2018/04/03/attention.html)
 - [Transformer (Google AI Posts)](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)
@@ -253,58 +259,58 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Multilingual NLP 2022](https://www.youtube.com/playlist?list=PL8PYTP1V4I8BhCpzfdKKdd1OnTfLcyZr7)
 - [Advanced NLP](https://www.youtube.com/playlist?list=PLWnsVgP6CzadmQX6qevbar3_vDBioWHJL)
 
-**Technical Deep Dives:**
+**بررسی فنی عمیق:**
 - [Transformer Positional Encoding](https://kazemnejad.com/blog/transformer_architecture_positional_encoding/)
 - [Understanding Layer Normalization](https://arxiv.org/abs/1607.06450)
 - [Layer Normalization](https://arxiv.org/pdf/1607.06450.pdf)
 
-**Implementation Posts:**
+**نوشته‌های پیاده‌سازی:**
 - [PyTorch Transformer Posts](https://pytorch.org/tutorials/beginner/transformer_tutorial.html)
 - [TensorFlow Transformer Posts](https://www.tensorflow.org/tutorials/text/transformer)
 
-**Textbook Resources:**
+**منابع کتاب درسی:**
 - [Jurafsky and Martin Chapter 9](https://web.stanford.edu/~jurafsky/slp3/9.pdf)
 
-**Applications & Extensions:**
+**کاربردها و توسعه‌ها:**
 - [Image Transformer](https://arxiv.org/pdf/1802.05751.pdf)
 - [Music Transformer](https://arxiv.org/pdf/1809.04281.pdf)
 
-# Part 2: Building & Training Models 🧬
+# بخش 2: ساخت و آموزش مدل‌ها
 
-**🎯 Focus:** Data preparation, pre-training, fine-tuning, preference alignment  
-**📈 Difficulty:** Intermediate to Advanced  
-**🎓 Outcome:** Ability to train and fine-tune language models from scratch
+**تمرکز:** آماده‌سازی داده، پیش‌آموزش، Fine-tuning و هم‌ترازی ترجیحات  
+**سطح:** متوسط تا پیشرفته  
+**خروجی مورد انتظار:** توانایی آموزش و تنظیم دقیق مدل‌های زبانی از صفر
 
-**🎯 Learning Objectives:** Learn to prepare high-quality datasets, implement distributed pre-training, create instruction datasets, perform supervised fine-tuning, and align models with human preferences using advanced techniques like RLHF and DPO.
+**اهداف یادگیری:** آماده‌سازی دیتاست باکیفیت، پیش‌آموزش توزیع‌شده، ساخت دیتاست دستور، Fine-tuning نظارت‌شده و هم‌ترازی مدل با ترجیحات انسان با روش‌هایی مانند RLHF و DPO.
 
-## 6. Data Preparation
+## 6. آماده‌سازی داده
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Python, SQL
+**سطح:** متوسط | **پیش‌نیاز:** Python و SQL  
 
-**Data Collection & Scraping:**
+**جمع‌آوری داده و Scraping:**
 - [Common Crawl Documentation](https://commoncrawl.org/the-data/)
 - [Beautiful Soup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 - [Scrapy Documentation](https://scrapy.org/)
 - [Hugging Face Datasets Guide](https://huggingface.co/docs/datasets/)
 
-**Data Processing Libraries:**
+**کتابخانه‌های پردازش داده:**
 - [Pandas Documentation](https://pandas.pydata.org/)
 - [Apache Beam](https://beam.apache.org/)
 - [Elasticsearch](https://www.elastic.co/elasticsearch/)
 
-**Data Quality & Ethics:**
+**کیفیت داده و اخلاق:**
 - [Data Quality for Machine Learning](https://www.amazon.com/Data-Quality-Machine-Learning-Practices/dp/1492094964)
 - [Data Ethics Framework](https://www.gov.uk/government/publications/data-ethics-framework)
 - [Responsible AI Practices](https://ai.google/responsibilities/responsible-ai-practices/)
 
-**Text Preprocessing:**
+**پیش‌پردازش متن:**
 - [Stanford Text Preprocessing](https://nlp.stanford.edu/IR-book/html/htmledition/text-preprocessing-1.html)
 - [Google's Data Preparation](https://cloud.google.com/architecture/data-preprocessing-for-ml-with-tf-transform-pt1)
 
-**Version Control & Management:**
+**کنترل نسخه و مدیریت:**
 - [DVC (Data Version Control)](https://dvc.org/)
 
-**LLM-Specific Resources:**
+**منابع مخصوص LLM:**
 - [FineWeb](https://huggingface.co/spaces/HuggingFaceFW/blogpost-fineweb-v1)
 - [RedPajama v2](https://www.together.ai/blog/redpajama-data-v2)
 - [NeMo-Curator](https://github.com/NVIDIA/NeMo-Curator)
@@ -312,25 +318,25 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Semhash](https://github.com/MinishLab/semhash)
 - [LLM Datasets](https://github.com/mlabonne/llm-datasets)
 
-## 7. Pre-Training Large Language Models
+## 7. پیش‌آموزش LLM
 
-**📈 Difficulty:** Expert | **🎯 Prerequisites:** Transformers, distributed systems
+**سطح:** تخصصی | **پیش‌نیاز:** Transformer و سیستم‌های توزیع‌شده  
 
-**Foundational Understanding:**
+**درک مبانی:**
 - Understanding Language Models
 - [LLMs Overview](https://arxiv.org/pdf/2307.06435)
 - [LLMs Survey](https://arxiv.org/abs/2402.06196)
 
-**Video Resources:**
+**منابع ویدئویی:**
 - [LLMs Explained Briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs)
 - [Deep Dive into LLMs](https://www.youtube.com/watch?v=7xTGNNLPyMI)
 - [Intro to LLMs](https://www.youtube.com/watch?v=zjkBMFhNj_g)
 - [Open Pretrained Transformers](https://www.youtube.com/watch?v=p9IxoSkvZ-M&t=4s)
 
-**Key Research Papers:**
+**مقاله‌های پژوهشی کلیدی:**
 - [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
 
-**Training Frameworks & Tools:**
+**Frameworkها و ابزارهای آموزش:**
 - [DeepSpeed](https://www.deepspeed.ai/)
 - [Ray](https://ray.io/)
 - [Triton](https://triton-lang.org/)
@@ -341,46 +347,46 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [OLMo 2](https://allenai.org/olmo)
 - [LLM360](https://www.llm360.ai/)
 
-## 8. Post-Training Datasets (for Fine-Tuning)
+## 8. دیتاست‌های پس‌آموزش (برای Fine-tuning)
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Data preparation
+**سطح:** متوسط | **پیش‌نیاز:** آماده‌سازی داده  
 
-**Instruction Datasets:**
+**دیتاست‌های Instruction:**
 - [Alpaca Dataset](https://github.com/tatsu-lab/stanford_alpaca)
 - [Dolly Dataset](https://huggingface.co/datasets/databricks/databricks-dolly-15k)
 - [OpenAssistant Conversations](https://huggingface.co/datasets/OpenAssistant/oasst1)
 
-**Conversation Datasets:**
+**دیتاست‌های مکالمه:**
 - [ShareGPT Dataset](https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered)
 
-**Preference & RLHF Datasets:**
+**دیتاست‌های ترجیحات و RLHF:**
 - [Anthropic HH-RLHF](https://huggingface.co/datasets/Anthropic/hh-rlhf)
 
-**Question Answering:**
+**پرسش‌وپاسخ:**
 - [SQuAD](https://arxiv.org/abs/1606.05250)
 
-**Resources:**
+**منابع:**
 - [Synthetic Data Generator](https://huggingface.co/spaces/argilla/synthetic-data-generator)
 - [Chat Template](https://huggingface.co/docs/transformers/main/en/chat_templating)
 
-## 9. Supervised Fine-Tuning (SFT)
+## 9. تنظیم دقیق نظارت‌شده (SFT)
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Pre-training basics
+**سطح:** پیشرفته | **پیش‌نیاز:** مبانی پیش‌آموزش  
 
-**Libraries & Tools:**
+**کتابخانه‌ها و ابزارها:**
 - [PEFT Library](https://github.com/huggingface/peft)
 - [Unsloth](https://github.com/unslothai/unsloth)
 - [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)
 - [Axolotl Documentation](https://axolotl-ai-cloud.github.io/axolotl/)
 
-**Research Papers:**
+**مقاله‌های پژوهشی:**
 - [LoRA Paper](https://arxiv.org/abs/2106.09685)
 - [QLoRA Paper](https://arxiv.org/abs/2305.14314)
 
-**Implementation Examples:**
+**نمونه‌های پیاده‌سازی:**
 - [Alpaca Fine-tuning](https://github.com/tatsu-lab/stanford_alpaca)
 
-**Posts:**
+**نوشته‌ها:**
 - [Fine-tune Llama 3.1 with Unsloth](https://mlabonne.github.io/blog/posts/2024-07-29_Finetune_Llama31.html)
 - [Fine-tune Llama 3 with ORPO](https://mlabonne.github.io/blog/posts/2024-04-19_Fine_tune_Llama_3_with_ORPO.html)
 - [Fine-tune Mistral-7b with DPO](https://mlabonne.github.io/blog/posts/Fine_tune_Mistral_7b_with_DPO.html)
@@ -391,37 +397,37 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [LoRA Insights](https://lightning.ai/pages/community/lora-insights/)
 - [ChatGPT Prompt Engineering](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
 
-**Parameter-Efficient Methods:**
+**روش‌های کم‌هزینه از نظر پارامتر:**
 - [Parameter-Efficient Transfer Learning for NLP](https://arxiv.org/abs/1902.00751)
 - [The Lottery Ticket Hypothesis](https://arxiv.org/abs/1803.03635)
 - [Few-Shot Learning](https://arxiv.org/abs/2005.14165)
 - [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903)
 - [Practical Methodology](https://www.deeplearningbook.org/contents/guidelines.html)
 
-## 10. Preference Alignment (RL Fine-Tuning)
+## 10. هم‌ترازی ترجیحات (RL Fine-tuning)
 
-**📈 Difficulty:** Expert | **🎯 Prerequisites:** Reinforcement learning basics
+**سطح:** تخصصی | **پیش‌نیاز:** مبانی یادگیری تقویتی  
 
-**Libraries & Frameworks:**
+**کتابخانه‌ها و Frameworkها:**
 - [TRL (Transformer Reinforcement Learning)](https://github.com/huggingface/trl)
 - [Ray RLlib](https://docs.ray.io/en/latest/rllib/)
 
-**Core RLHF Papers:**
+**مقاله‌های اصلی RLHF:**
 - [InstructGPT Paper](https://arxiv.org/abs/2203.02155)
 - [PPO Paper](https://arxiv.org/abs/1707.06347)
 - [DPO Paper](https://arxiv.org/abs/2305.18290)
 
-**Constitutional AI & Safety:**
+**Constitutional AI و ایمنی:**
 - [Constitutional AI Paper](https://arxiv.org/abs/2212.08073)
 - [RLAIF Paper](https://arxiv.org/abs/2309.00267)
 - [Aligning Language Models to Follow Instructions](https://openai.com/research/instruction-following)
 
-**Scaling & Evaluation:**
+**مقیاس‌دهی و ارزیابی:**
 - [Scaling Instruction-Finetuned Language Models](https://arxiv.org/abs/2210.11416)
 - [AlpacaFarm: A Simulation Framework](https://arxiv.org/abs/2305.14387)
 - [How Far Can Camels Go?](https://arxiv.org/abs/2306.04751)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [Illustrating RLHF](https://huggingface.co/blog/rlhf)
 - [LLM Training: RLHF and Alternatives](https://magazine.sebastianraschka.com/p/llm-training-rlhf-and-its-alternatives)
 - [Preference Tuning LLMs](https://huggingface.co/blog/pref-tuning)
@@ -437,26 +443,26 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Advanced Robotics: UC Berkeley](https://www.youtube.com/playlist?list=PLwRJQ4m4UJjNBPJdt8WamRAt4XKc639wF)
 - [Stanford CS330: Deep Multi-Task and Meta Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rMC6zfYmnD7UG3LVvwaITY5)
 
-# Part 3: Advanced Topics & Specialization ⚙️
+# بخش 3: موضوعات پیشرفته و تخصص
 
-**🎯 Focus:** Evaluation, reasoning, optimization, architectures, enhancement  
-**📈 Difficulty:** Expert/Research Level  
-**🎓 Outcome:** Research credentials, publications, and ability to lead theoretical advances
+**تمرکز:** ارزیابی، استدلال، بهینه‌سازی، معماری‌ها و بهبود مدل  
+**سطح:** تخصصی / پژوهشی  
+**خروجی مورد انتظار:** توان پژوهشی، انتشار مقاله و مشارکت در پیشرفت نظری
 
-**🎯 Learning Objectives:** This advanced track develops research-grade expertise in LLM evaluation, reasoning enhancement, model optimization, novel architectures, and model enhancement techniques for cutting-edge research and development.
+**اهداف یادگیری:** این مسیر پیشرفته برای توسعهٔ تخصص پژوهشی در ارزیابی LLM، تقویت استدلال، بهینه‌سازی، معماری‌های جدید و روش‌های بهبود مدل برای پژوهش و توسعهٔ پیشرو است.
 
-## 11. Model Evaluation
+## 11. ارزیابی مدل
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Statistics, model training
+**سطح:** متوسط | **پیش‌نیاز:** آمار و آموزش مدل  
 
-**Standard Benchmarks:**
+**Benchmarkهای استاندارد:**
 - [GLUE](https://gluebenchmark.com/)
 - [SuperGLUE](https://super.gluebenchmark.com/)
 - [BigBench](https://github.com/google/BIG-bench)
 - [MMLU](https://github.com/hendrycks/test)
 - [HellaSwag](https://rowanzellers.com/hellaswag/)
 
-**Evaluation Frameworks:**
+**Frameworkهای ارزیابی:**
 - [HELM](https://crfm.stanford.edu/helm/)
 - [EleutherAI Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness)
 - [AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/)
@@ -468,68 +474,68 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Ragas](https://github.com/explodinggradients/ragas/tree/main)
 - [DeepEval](https://github.com/confident-ai/deepeval)
 
-**Specialized Evaluation:**
+**ارزیابی تخصصی:**
 - [TruthfulQA](https://github.com/sylinrl/TruthfulQA)
 - [OpenBookQA](https://allenai.org/data/open-book-qa)
 - [WebShop: Scalable Real-World Web Interaction](https://arxiv.org/pdf/2207.01206)
 - [SWE-bench: GitHub Issues Resolution](https://arxiv.org/abs/2310.06770)
 - [Tau-bench: Tool-Agent-User Interaction](https://arxiv.org/abs/2406.12045)
 
-**LLM-as-Judge:**
+**LLM به‌عنوان داور:**
 - [Judging LLM-as-a-Judge with MT-Bench](https://proceedings.neurips.cc/paper_files/paper/2023/file/91f18a1287b398d378ef22505bf41832-Paper-Datasets_and_Benchmarks.pdf)
 
-**Research & Methodology:**
+**پژوهش و روش‌شناسی:**
 - [Challenges and Opportunities in NLP Benchmarking](https://www.ruder.io/nlp-benchmarking/)
 - [Measuring Massive Multitask Language Understanding](https://arxiv.org/abs/2009.03300)
 - [Holistic Evaluation of Language Models](https://arxiv.org/abs/2211.09110)
 
-## 12. Reasoning
+## 12. استدلال
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Prompt engineering
+**سطح:** متوسط | **پیش‌نیاز:** مهندسی پرامپت  
 
-**Core Reasoning Papers:**
+**مقاله‌های اصلی استدلال:**
 - [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903)
 - [Tree of Thoughts](https://arxiv.org/abs/2305.10601)
 - [Self-Consistency](https://arxiv.org/abs/2203.11171)
 
-**Tool Use & Action:**
+**استفاده از ابزار و عمل:**
 - [ReAct Paper](https://arxiv.org/abs/2210.03629)
 - [Program-Aided Language Models](https://arxiv.org/abs/2211.10435)
 - [Tool Learning with LLMs](https://arxiv.org/abs/2304.08354)
 
-**Evaluation Datasets:**
+**دیتاست‌های ارزیابی:**
 - [GSM8K Dataset](https://github.com/openai/grade-school-math)
 - [MATH Dataset](https://github.com/hendrycks/math)
 - [HumanEval](https://github.com/openai/human-eval)
 
-**Advanced Reasoning Systems:**
+**سیستم‌های استدلال پیشرفته:**
 - [Learning to Reason with LLMs](https://openai.com/index/learning-to-reason-with-llms/)
 - [OpenAI o1 System Card](https://cdn.openai.com/o1-system-card-20241205.pdf)
 - [DeepSeek-R1: Reinforcement Learning for Reasoning](https://arxiv.org/pdf/2501.12948)
 
-**Resources:**
+**منابع:**
 - [Intuitive Explanation of SAEs](https://adamkarvonen.github.io/machine_learning/2024/06/11/sae-intuitions.html)
 - [Scaling Test-time Compute](https://huggingface.co/spaces/HuggingFaceH4/blogpost-scaling-test-time-compute)
 
-## 13. Quantization
+## 13. کوانتیزه‌سازی
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Model optimization
+**سطح:** متوسط | **پیش‌نیاز:** بهینه‌سازی مدل  
 
-**Quantization Libraries:**
+**کتابخانه‌های کوانتیزه‌سازی:**
 - [llama.cpp](https://github.com/ggerganov/llama.cpp)
 - [BitsAndBytes](https://github.com/TimDettmers/bitsandbytes)
 
-**Advanced Quantization Methods:**
+**روش‌های پیشرفتهٔ کوانتیزه‌سازی:**
 - [GPTQ](https://github.com/IST-DASLab/gptq)
 - [AWQ](https://github.com/mit-han-lab/llm-awq)
 - [SmoothQuant](https://arxiv.org/abs/2211.10438)
 - [ZeroQuant](https://arxiv.org/abs/2206.01861)
 
-**Formats & Standards:**
+**فرمت‌ها و استانداردها:**
 - [GGUF Format](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md)
 - [EXL2](https://github.com/turboderp/exllamav2)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [4-bit LLM Quantization with GPTQ](https://mlabonne.github.io/blog/posts/4_bit_Quantization_with_GPTQ.html)
 - [Quantize Llama models with llama.cpp](https://mlabonne.github.io/blog/posts/Quantize_Llama_2_models_using_ggml.html)
 - [ExLlamaV2: Fastest Library to Run LLMs](https://mlabonne.github.io/blog/posts/ExLlamaV2_The_Fastest_Library_to_Run%C2%A0LLMs.html)
@@ -539,11 +545,11 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [GPTQ Paper](https://arxiv.org/abs/2210.17323)
 - [AWQ Paper](https://arxiv.org/abs/2306.00978)
 
-## 14. Inference Optimization
+## 14. بهینه‌سازی Inference
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Model deployment
+**سطح:** پیشرفته | **پیش‌نیاز:** استقرار مدل  
 
-**High-Performance Inference Engines:**
+**موتورهای Inference پربازده:**
 - [vLLM](https://github.com/vllm-project/vllm)
 - [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)
 - [DeepSpeed-Inference](https://github.com/microsoft/DeepSpeed)
@@ -551,85 +557,85 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [MLC LLM](https://github.com/mlc-ai/mlc-llm)
 - [mnn-llm](https://github.com/wangzhaode/mnn-llm/blob/master/README_en.md)
 
-**Attention Optimization:**
+**بهینه‌سازی Attention:**
 - [Flash Attention](https://github.com/Dao-AILab/flash-attention)
 - [PagedAttention](https://arxiv.org/abs/2309.06180)
 
-**Advanced Techniques:**
+**روش‌های پیشرفته:**
 - [Speculative Decoding](https://arxiv.org/abs/2211.17192)
 - [Continuous Batching](https://www.anyscale.com/blog/continuous-batching-llm-inference)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [Optimizing Latency](https://hamel.dev/notes/llm/inference/03_inference.html)
 - [GPU Inference](https://huggingface.co/docs/transformers/main/en/perf_infer_gpu_one)
 - [LLM Inference Best Practices](https://www.databricks.com/blog/llm-inference-performance-engineering-best-practices)
 - [Optimizing LLMs for Speed and Memory](https://huggingface.co/docs/transformers/main/en/llm_tutorial_optimization)
 - [Assisted Generation](https://huggingface.co/blog/assisted-generation)
 
-## 15. Model Architecture Variants
+## 15. انواع معماری مدل
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Transformer architecture
+**سطح:** پیشرفته | **پیش‌نیاز:** معماری Transformer  
 
-**Sparse & Efficient Architectures:**
+**معماری‌های Sparse و کارآمد:**
 - [Mixture of Experts](https://arxiv.org/abs/1701.06538)
 - [Flash Attention Paper](https://arxiv.org/abs/2205.14135)
 
-**State Space Models:**
+**مدل‌های فضای حالت:**
 - [Mamba Paper](https://arxiv.org/abs/2312.00752)
 - [RWKV Paper](https://arxiv.org/abs/2305.13048)
 
-**Long Context Models:**
+**مدل‌های زمینهٔ طولانی:**
 - [Longformer Paper](https://arxiv.org/abs/2004.05150)
 - [BigBird Paper](https://arxiv.org/abs/2007.14062)
 
-**Positional Encodings:**
+**کدگذاری موقعیت:**
 - [RoPE Paper](https://arxiv.org/abs/2104.09864)
 - [ALiBi Paper](https://arxiv.org/abs/2108.12409)
 
-## 16. Model Enhancement
+## 16. بهبود مدل
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Model training, optimization
+**سطح:** پیشرفته | **پیش‌نیاز:** آموزش و بهینه‌سازی مدل  
 
-**Context Window Extension:**
+**گسترش Context Window:**
 - [YaRN](https://arxiv.org/abs/2309.00071)
 - [Position Interpolation](https://arxiv.org/abs/2306.15595)
 
-**Model Merging & Composition:**
+**ادغام و ترکیب مدل:**
 - [Model Merging](https://arxiv.org/abs/2203.05482)
 - [SLERP Merging](https://arxiv.org/abs/2306.01708)
 - [TIES-Merging](https://arxiv.org/abs/2306.01708)
 - [DARE](https://arxiv.org/abs/2311.03099)
 
-**Knowledge Transfer:**
+**انتقال دانش:**
 - [Knowledge Distillation](https://arxiv.org/abs/1503.02531)
 - [Continual Learning](https://arxiv.org/abs/1909.08383)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [Merge LLMs with MergeKit](https://mlabonne.github.io/blog/posts/2024-01-08_Merge_LLMs_with_mergekit.html)
 - [Create MoEs with MergeKit](https://mlabonne.github.io/blog/posts/2024-03-28_Create_Mixture_of_Experts_with_MergeKit.html)
 - [Uncensor any LLM with Abliteration](https://mlabonne.github.io/blog/posts/2024-06-04_Uncensor_any_LLM_with_abliteration.html)
 - [Smol Vision](https://github.com/merveenoyan/smol-vision)
 - [Large Multimodal Models](https://huyenchip.com/2023/10/10/multimodal.html)
 
-# Part 4: Engineering & Applications 🚀
+# بخش 4: مهندسی و کاربردها
 
-**🎯 Focus:** Production deployment, RAG, agents, multimodal, security, ops  
-**📈 Difficulty:** Intermediate to Advanced  
-**🎓 Outcome:** Production-ready LLM applications and systems at scale
+**تمرکز:** استقرار Production، RAG، ایجنت، چندوجهی، امنیت و عملیات  
+**سطح:** متوسط تا پیشرفته  
+**خروجی مورد انتظار:** اپلیکیشن‌ها و سیستم‌های LLM آمادهٔ Production در مقیاس
 
-**🎯 Learning Objectives:** This production-focused track teaches deployment optimization, inference acceleration, application development with RAG systems and agents, multimodal integration, LLMOps implementation, and responsible AI practices for scalable LLM solutions.
+**اهداف یادگیری:** این مسیر با تمرکز بر Production، بهینه‌سازی استقرار، تسریع Inference، ساخت اپلیکیشن با RAG و ایجنت، یکپارچه‌سازی چندوجهی، پیاده‌سازی LLMOps و AI مسئولانه برای راهکارهای مقیاس‌پذیر را پوشش می‌دهد.
 
-## 17. Running LLMs & Building Applications
+## 17. اجرای LLM و ساخت اپلیکیشن
 
-**📈 Difficulty:** Intermediate | **🎯 Prerequisites:** Web development, APIs
+**سطح:** متوسط | **پیش‌نیاز:** توسعهٔ وب و APIها  
 
-**Web Frameworks:**
+**Frameworkهای وب:**
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [Flask](https://flask.palletsprojects.com/)
 - [Streamlit](https://streamlit.io/)
 - [Gradio](https://gradio.app/)
 
-**LLM APIs:**
+**APIهای LLM:**
 - [OpenAI API](https://platform.openai.com/docs/api-reference)
 - [Anthropic API](https://docs.anthropic.com/claude/reference/getting-started-with-the-api)
 - [Hugging Face Inference API](https://huggingface.co/docs/api-inference/index)
@@ -639,13 +645,13 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Hugging Face Hub](https://huggingface.co/models)
 - [Hugging Face Spaces](https://huggingface.co/spaces)
 
-**Local LLM Tools:**
+**ابزارهای LLM محلی:**
 - [Ollama](https://ollama.ai/)
 - [LM Studio](https://lmstudio.ai/)
 - [Text Generation WebUI](https://github.com/oobabooga/text-generation-webui)
 - [kobold.cpp](https://github.com/LostRuins/koboldcpp)
 
-**Development Tools:**
+**ابزارهای توسعه:**
 - [LLM AutoEval](https://github.com/mlabonne/llm-autoeval)
 - [LazyMergekit](https://colab.research.google.com/drive/1obulZ1ROXHjYLn6PPZJwRR6GzgQogxxb?usp=sharing)
 - [LazyAxolotl](https://colab.research.google.com/drive/1TsDKNo2riwVmU55gjuBgB1AXVtRRfRHW?usp=sharing)
@@ -655,24 +661,24 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [AutoAbliteration](https://colab.research.google.com/drive/1RmLv-pCMBBsQGXQIM8yF-OdCNyoylUR1?usp=sharing)
 - [AutoDedup](https://colab.research.google.com/drive/1o1nzwXWAa8kdkEJljbJFW1VuI-3VZLUn?usp=sharing)
 
-**Technologies:**
-- [Supabase](https://supabase.com/) - Database, authentication, storage, and realtime
-- [LangChain](https://langchain.com/) - Building RAG pipelines
-- [PostHog](https://posthog.com/) - Analytics
-- [FastAPI](https://fastapi.tiangolo.com/) - Backend framework
-- [Next.js](https://nextjs.org/) - Frontend framework
-- [Resend](https://resend.com/) - Email service
-- [LiteLLM](https://litellm.ai/) - LLM compatibility layer
-- [Ollama](https://ollama.ai/) - Local LLM serving
-- [Mistral AI](https://mistral.ai/) - Open source LLMs
+**فناوری‌ها:**
+- [Supabase](https://supabase.com/) — پایگاه داده، احراز هویت، ذخیره‌سازی و ارتباط بلادرنگ
+- [LangChain](https://langchain.com/) — ساخت Pipelineهای RAG
+- [PostHog](https://posthog.com/) — تحلیل رفتار
+- [FastAPI](https://fastapi.tiangolo.com/) — Framework بک‌اند
+- [Next.js](https://nextjs.org/) — Framework فرانت‌اند
+- [Resend](https://resend.com/) — سرویس ایمیل
+- [LiteLLM](https://litellm.ai/) — لایهٔ سازگاری LLM
+- [Ollama](https://ollama.ai/) — Serving محلی LLM
+- [Mistral AI](https://mistral.ai/) — LLMهای متن‌باز
 
-**Educational Platforms:**
+**پلتفرم‌های آموزشی:**
 - [Gradescope](https://www.gradescope.com/)
 - [Stanford Canvas](https://canvas.stanford.edu/)
 - [Ed Forum](https://edstem.org/)
 - [Stanford CS224N Project Reports](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/project.html)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [Run LLM with LM Studio](https://www.kdnuggets.com/run-an-llm-locally-with-lm-studio)
 - [Prompt Engineering Guide](https://www.promptingguide.ai/)
 - [Outlines - Quickstart](https://dottxt-ai.github.io/outlines/latest/quickstart/)
@@ -702,16 +708,16 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Test Yourself On Build a Large Language Model (From Scratch)](https://www.manning.com/books/test-yourself-on-build-a-large-language-model-from-scratch)
 - [PyTorch in One Hour: From Tensors to Training Neural Networks on Multiple GPUs](https://sebastianraschka.com/teaching/pytorch-1h/)
 
-## 18. Retrieval Augmented Generation (RAG)
+## 18. RAG (تولید با کمک بازیابی)
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Embeddings, databases
+**سطح:** پیشرفته | **پیش‌نیاز:** Embedding و پایگاه داده  
 
-**RAG Frameworks:**
+**Frameworkهای RAG:**
 - [LangChain](https://python.langchain.com/docs/get_started/introduction)
 - [LlamaIndex](https://docs.llamaindex.ai/en/stable/)
 - [Haystack](https://haystack.deepset.ai/)
 
-**Vector Databases:**
+**پایگاه‌های دادهٔ برداری:**
 - [Pinecone](https://www.pinecone.io/)
 - [Weaviate](https://weaviate.io/)
 - [Chroma](https://www.trychroma.com/)
@@ -723,23 +729,23 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Neo4j](https://neo4j.com/)
 - [Graph RAG](https://arxiv.org/abs/2404.16130)
 
-**Foundational RAG Papers:**
+**مقاله‌های پایهٔ RAG:**
 - [Dense Passage Retrieval (DPR)](https://arxiv.org/abs/2004.04906)
 - [REALM](https://arxiv.org/abs/2002.08909)
 - [Reading Wikipedia to Answer Open-Domain Questions](https://arxiv.org/abs/1704.00051)
 
-**Advanced RAG Research:**
+**پژوهش پیشرفتهٔ RAG:**
 - [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)
 - [In-Context Retrieval-Augmented Language Models](https://arxiv.org/abs/2302.00083)
 - [Scaling Retrieval-Based Language Models](https://arxiv.org/abs/2407.12854)
 - [SILO Language Models](https://arxiv.org/abs/2308.04430)
 
-**Question Answering:**
+**پرسش‌وپاسخ:**
 - [SQuAD: 100,000+ Questions for Machine Comprehension](https://arxiv.org/abs/1606.05250)
 - [Bidirectional Attention Flow for Machine Comprehension](https://arxiv.org/abs/1611.01603)
 - [Adversarial Examples for Evaluating Reading Comprehension](https://aclanthology.org/D17-1215/)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [LangChain Text Splitters](https://python.langchain.com/docs/how_to/#text-splitters)
 - [Top 7 Vector Databases](https://www.datacamp.com/blog/the-top-5-vector-databases)
 - [LlamaIndex High-level Concepts](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html)
@@ -756,11 +762,11 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [RAG-Fusion](https://github.com/Raudaschl/rag-fusion)
 - [DSPy](https://github.com/stanfordnlp/dspy)
 
-## 19. Tool Use & AI Agents
+## 19. استفاده از ابزار و ایجنت‌های AI
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Function calling, planning
+**سطح:** پیشرفته | **پیش‌نیاز:** فراخوانی تابع و برنامه‌ریزی  
 
-**Agent Frameworks:**
+**Frameworkهای ایجنت:**
 - [LangGraph](https://langchain-ai.github.io/langgraph/concepts/why-langgraph/)
 - [AutoGen](https://github.com/microsoft/autogen)
 - [CrewAI](https://github.com/joaomdmoura/crewai)
@@ -768,44 +774,44 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [LlamaIndex Agents](https://docs.llamaindex.ai/en/stable/use_cases/agents/)
 - [smolagents](https://huggingface.co/docs/smolagents/index)
 
-**Function Calling & Tools:**
+**فراخوانی تابع و ابزار:**
 - [OpenAI Function Calling](https://platform.openai.com/docs/guides/function-calling)
 - [ReAct Implementation](https://github.com/ysymyth/ReAct)
 - [OpenAI Agents SDK](https://github.com/openai/openai-agents-python)
 
-**Microsoft Frameworks:**
+**Frameworkهای Microsoft:**
 - [Semantic Kernel](https://github.com/microsoft/semantic-kernel)
 - [TaskWeaver](https://github.com/microsoft/TaskWeaver)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction)
 - [AI Agents Comparison](https://langfuse.com/blog/2025-03-19-ai-agent-comparison)
 - [Pinecone LLM Agents](https://www.pinecone.io/learn/series/langchain/langchain-agents/)
 - [LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/)
 
-## 20. Multimodal LLMs
+## 20. LLMهای چندوجهی
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Computer vision, audio processing
+**سطح:** پیشرفته | **پیش‌نیاز:** بینایی ماشین و پردازش صوت  
 
-**Vision-Language Models:**
+**مدل‌های بینایی-زبان:**
 - [CLIP](https://github.com/openai/CLIP)
 - [LLaVA](https://github.com/haotian-liu/LLaVA)
 - [Flamingo](https://arxiv.org/abs/2204.14198)
 - [BLIP](https://arxiv.org/abs/2201.12086)
 
-**Audio Processing:**
+**پردازش صوت:**
 - [Whisper](https://github.com/openai/whisper)
 - [torchaudio](https://pytorch.org/audio/)
 
-**Image Generation:**
+**تولید تصویر:**
 - [Stable Diffusion](https://github.com/CompVis/stable-diffusion)
 - [DALL-E](https://openai.com/dall-e-2)
 
-**Processing Libraries:**
+**کتابخانه‌های پردازش:**
 - [OpenCV](https://opencv.org/)
 - [Pillow](https://pillow.readthedocs.io/)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [Large Multimodal Models](https://huyenchip.com/2023/10/multimodal.html)
 - [Smol Vision](https://github.com/merveenoyan/smol-vision)
 - [CS231N: Convolutional Neural Networks for Visual Recognition](https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv)
@@ -814,63 +820,63 @@ A comprehensive collection of learning resources organized to match the LLM deve
 - [Deep Learning for Computer Vision (neuralearn.ai)](https://www.youtube.com/watch?v=IA3WxTTPXqQ)
 - [AMMI Geometric Deep Learning Course](https://www.youtube.com/playlist?list=PLn2-dEmQeTfSLXW8yXP4q_Ii58wFdxb3C)
 
-## 21. Securing LLMs & Responsible AI (Optional)
+## 21. امنیت LLM و AI مسئولانه (اختیاری)
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** Security fundamentals, ethical AI
+**سطح:** پیشرفته | **پیش‌نیاز:** مبانی امنیت و AI اخلاقی  
 
-**Security Frameworks:**
+**چارچوب‌های امنیتی:**
 - [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
-**Attack Vectors & Defense:**
+**مسیرهای حمله و دفاع:**
 - [Prompt Injection](https://arxiv.org/abs/2310.12815)
 - [Jailbreaking LLMs](https://arxiv.org/abs/2307.15043)
 - [Red Teaming LLMs](https://arxiv.org/abs/2209.07858)
 
-**Safety & Evaluation:**
+**ایمنی و ارزیابی:**
 - [Alignment Tax](https://arxiv.org/abs/2211.15006)
 - [AI Safety Benchmarks](https://arxiv.org/abs/2404.12241)
 
-**Privacy Protection:**
+**حفظ حریم خصوصی:**
 - [Differential Privacy](https://arxiv.org/abs/1909.01917)
 - [Federated Learning](https://arxiv.org/abs/1602.05629)
 
-**Learning Resources:**
+**منابع یادگیری:**
 - [Prompt Injection Primer](https://github.com/jthack/PIPE)
 - [LLM Security](https://llmsecurity.net/)
 - [Red Teaming LLMs](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/red-teaming)
 - [garak](https://github.com/leondz/garak/)
 - [langfuse](https://github.com/langfuse/langfuse)
 
-**Interpretability Research:**
+**پژوهش تفسیرپذیری:**
 - [BERT Rediscovers the Classical NLP Pipeline](https://aclanthology.org/P19-1452/)
 - [Axiomatic Attribution for Deep Networks](https://proceedings.mlr.press/v70/sundararajan17a/sundararajan17a.pdf)
 - [Faithful, Interpretable Model Explanations via Causal Abstraction](https://ai.stanford.edu/blog/causal-abstraction/)
 - [Investigating Gender Bias Using Causal Mediation Analysis](https://proceedings.neurips.cc/paper/2020/file/92650b2e92217715fe312e6fa7b90d82-Paper.pdf)
 
-## 22. Large Language Model Operations (LLMOps)
+## 22. عملیات مدل‌های زبانی (LLMOps)
 
-**📈 Difficulty:** Advanced | **🎯 Prerequisites:** DevOps, MLOps, cloud platforms
+**سطح:** پیشرفته | **پیش‌نیاز:** DevOps، MLOps و پلتفرم ابری  
 
-**MLOps Platforms:**
+**پلتفرم‌های MLOps:**
 - [MLflow](https://mlflow.org/)
 - [Weights & Biases](https://wandb.ai/)
 - [Kubeflow](https://www.kubeflow.org/)
 
-**Infrastructure & Orchestration:**
+**زیرساخت و Orchestration:**
 - [Docker](https://www.docker.com/)
 - [Kubernetes](https://kubernetes.io/)
 - [Terraform](https://www.terraform.io/)
 - [Apache Airflow](https://airflow.apache.org/)
 
-**Monitoring & Observability:**
+**پایش و مشاهده‌پذیری:**
 - [Prometheus](https://prometheus.io/)
 - [Grafana](https://grafana.com/)
 - [langfuse](https://github.com/langfuse/langfuse)
 
-**Data Processing:**
+**پردازش داده:**
 - [Apache Spark](https://spark.apache.org/)
 - [Databricks](https://databricks.com/)
 
-**CI/CD & Model Management:**
+**CI/CD و مدیریت مدل:**
 - [GitHub Actions](https://github.com/features/actions)
 - [Hugging Face Hub](https://huggingface.co/docs/hub/index)
