@@ -6,11 +6,11 @@ from urllib.parse import urlsplit, unquote
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
 routes = ["index.html", "writing/index.html", "research/index.html", "projects/index.html",
-          "newsletter/index.html", "about.html", "roadmap.html", "resources.html",
+          "about.html", "roadmap.html", "resources.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
           "vector_dbs.html", "writing/document-parsing/index.html",
           "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
-fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "newsletter", "roadmap", "about")]
+fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
 fa_routes += ["fa/writing/document-parsing/index.html"]
 routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/js/theme.js", "assets/js/document-parsing.js"]
@@ -62,7 +62,7 @@ class Locale(HTMLParser):
         if tag == "a":
             self.anchors.append(a.get("href"))
 
-pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research", "newsletter")]
+pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research")]
 pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/open_source_ai.html", "/fa/open-source-ai/"), ("/vector_dbs.html", "/fa/vector-databases/"), ("/resources.html", "/fa/resources/"), ("/mini_roadmap.html", "/fa/mini-roadmap/"), ("/interview.html", "/fa/interview/"), ("/market_analysis.html", "/fa/market-analysis/")]
 pairs.append(("/writing/document-parsing/", "/fa/writing/document-parsing/"))
 pairs += [["/materials/Data_Preparation/","/fa/materials/Data_Preparation/"],["/materials/Embeddings/","/fa/materials/Embeddings/"],["/materials/Intro/","/fa/materials/Intro/"],["/materials/Neural_Networks/","/fa/materials/Neural_Networks/"],["/materials/Tokenization/","/fa/materials/Tokenization/"],["/materials/Traditional_LMs/","/fa/materials/Traditional_LMs/"],["/materials/Transformers/","/fa/materials/Transformers/"]]
@@ -109,6 +109,18 @@ for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/in
 for path in ("book/index.html", "fa/book/index.html", "book/ch1.html"):
     if (root / path).exists():
         errors.append(f"Retired book published: {path}")
+for path in root.rglob("*.html"):
+    parser = Links()
+    parser.feed(path.read_text(encoding="utf-8"))
+    for link in parser.links:
+        url = urlsplit(link)
+        if url.hostname and (url.hostname == "medium.com" or url.hostname.endswith(".medium.com")):
+            errors.append(f"{path}: retired Medium link {link}")
+        if url.path.startswith(("/newsletter/", "/fa/newsletter/", "/newsletters/")):
+            errors.append(f"{path}: retired newsletter link {link}")
+for path in ("newsletter/index.html", "fa/newsletter/index.html"):
+    if (root / path).exists():
+        errors.append(f"Retired newsletter published: {path}")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)

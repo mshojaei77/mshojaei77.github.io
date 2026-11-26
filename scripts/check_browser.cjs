@@ -57,8 +57,8 @@ fs.mkdirSync(out, { recursive: true });
         assert(!facts.intersects, width + ' ' + lang + ' nav overlap');
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
-        assert.equal(facts.navLinks, 5); assert.equal(facts.ctas, 3); assert(facts.rss);
-        assert.deepEqual(facts.sections, [['writing',3],['start',5],['elsewhere',5]]);
+        assert.equal(facts.navLinks, 4); assert.equal(facts.ctas, 3); assert(facts.rss);
+        assert.deepEqual(facts.sections, [['writing',3],['start',4],['elsewhere',4]]);
         if (width > 680) assert.equal(new Set(facts.grid).size, 1, 'featured cards should share a row');
         if (lang === 'fa') {
           assert(facts.fontLoaded, 'self-hosted Persian font did not load');

@@ -32,3 +32,5 @@ Add new articles to `_posts/` with explicit `lang`, title, description, date and
 Light is the first-visit default; the shared theme toggle saves the preference. Public code is linked directly to GitHub. Telegram channel and community links are shared across both languages.
 
 All internal tutorials and articles have paired English and Persian routes. Resource links retain their original publication titles; Persian OCR examples retain source characters. The theme starts in light mode and remembers explicit user selection.
+
+The newsletter and Medium profile are no longer part of the publication. Existing Medium article references in the resource catalog remain as plain-text titles until native posts are available; do not link to Medium or advertise unpublished imports.
