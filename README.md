@@ -13,3 +13,7 @@ Hosted at https://mshojaei77.github.io/. Existing URLs are public contracts: pre
 Install Ruby and Bundler, run `bundle install`, then `bundle exec jekyll build` and `python3 scripts/check_site.py _site`. Preview using `bundle exec jekyll serve`.
 
 Do not configure analytics with placeholder measurement IDs. GitHub Pages deployment remains unchanged.
+
+## Languages
+
+English remains at its original URLs; Persian uses `/fa/`. The route mapping is in `_data/languages.yml`. Persian pages have explicit `lang: fa` and use the shared RTL-aware publication layout. Only publish actual translations or clearly labeled summaries; do not silently substitute English material. Existing long-form English pages retain the docs theme. Add the paired route and reciprocal language links when a full translation becomes available.

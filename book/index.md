@@ -10,6 +10,9 @@ author: "Mohammad Shojaei"
 date: 2026-05-21
 ---
 
+[فارسی — Persian overview](/fa/book/)
+
+
 # LLM Engineering in Action
 
 This book teaches the production skills that appear repeatedly in 2026 LLM engineering job postings and strong real-world resumes: RAG, agentic workflows, fine-tuning, LLMOps, evaluation, security, cloud deployment, and portfolio-ready product work.

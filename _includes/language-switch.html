@@ -1,0 +1,9 @@
+{% assign current_language = page.lang | default: 'en' %}
+{% assign language_pair = site.data.languages | where: current_language, page.url | first %}
+<div class="language-switch" role="group" aria-label="{% if current_language == 'fa' %}زبان سایت{% else %}Site language{% endif %}" dir="ltr">
+{% if current_language == 'fa' %}
+  <a lang="en" hreflang="en" href="{{ language_pair.en | default: '/' }}">EN</a><span lang="fa" aria-current="true">FA</span>
+{% else %}
+  <span lang="en" aria-current="true">EN</span><a lang="fa" hreflang="fa" href="{{ language_pair.fa | default: '/fa/' }}" aria-label="فارسی">FA</a>
+{% endif %}
+</div>

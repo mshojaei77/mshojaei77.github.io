@@ -1,4 +1,5 @@
 title: "Mohammad Shojaei"
+lang: en
 description: "Production AI engineering, research, open-source projects and LLM Engineering in Action."
 
 # Theme
@@ -68,6 +69,7 @@ gh_edit_branch: "main"
 
 # Aux links for the upper right navigation
 aux_links:
+  "فارسی / FA": "/fa/"
   "Home": "/"
   "Writing": "/writing/"
   "Research": "/research/"
