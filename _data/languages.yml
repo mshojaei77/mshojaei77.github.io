@@ -42,3 +42,8 @@
   en_label: "Compact roadmap"
   fa_label: "نقشهٔ راه فشرده"
   hidden: true
+- en: "/interview.html"
+  fa: "/fa/interview/"
+  en_label: "Interview questions"
+  fa_label: "سؤالات مصاحبه"
+  hidden: true
