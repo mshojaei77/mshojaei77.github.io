@@ -1,6 +1,6 @@
 title: "Mohammad Shojaei"
 lang: en
-description: "Production AI engineering, research, open-source projects and LLM Engineering in Action."
+description: "Production AI engineering, research, learning resources and community."
 
 # Theme
 remote_theme: just-the-docs/just-the-docs
@@ -73,9 +73,8 @@ aux_links:
   "Home": "/"
   "Writing": "/writing/"
   "Research": "/research/"
-  "Projects": "/projects/"
-  "Book": "/book/"
   "🐙 GitHub": "https://github.com/mshojaei77"
+  "Telegram channel": "https://t.me/LLMEngineers"
   "💬 Community": "https://t.me/AI_LLMs"
 
 aux_links_new_tab: false
@@ -131,4 +130,7 @@ exclude:
   - Gemfile.lock
   - /labs
   - scripts
+  - book
+  - fa/book
+  - assets/css/document-parsing.css
   - README.md
