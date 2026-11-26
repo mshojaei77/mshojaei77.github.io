@@ -3,10 +3,8 @@
     "name": "Mohammad Shojaei",
     "role": "AI engineer",
     "tagline": "Building AI systems that survive production.",
-    "intro": "I build LLM systems and write about the weird parts: agents that lose state, retrieval that sounds right until it isn't, evals that replace vibes, and model-serving bills that quietly become a plot twist.",
-    "about_before": "This is my engineering notebook and publication. The longer biography and work history live on",
-    "about_label": "/about",
-    "about_after": ".",
+    "intro": "I build LLM systems and write about the parts that break outside demos: agents that lose state, retrieval that sounds right until it isn’t, evals that replace vibes, and the serving bills that quietly become a plot twist.",
+    "about_label": "About & work history",
     "about_url": "/about.html",
     "actions": [
       {
@@ -14,19 +12,28 @@
         "label": "Explore writing"
       },
       {
-        "url": "https://github.com/mshojaei77",
-        "label": "GitHub"
+        "url": "/roadmap.html",
+        "label": "LLM Development Roadmap"
       }
+    ],
+    "notebook": "This is my engineering notebook.",
+    "focus": "Production LLM systems · Evaluation · Multilingual AI, especially Persian",
+    "latest": "Latest writing",
+    "all_writing": "All writing",
+    "featured": "Selected reading",
+    "read_article": "Read article",
+    "open_roadmap": "Explore the roadmap",
+    "featured_routes": [
+      "/writing/vector-databases/",
+      "/writing/market-analysis/"
     ]
   },
   "fa": {
     "name": "محمد شجاعی",
     "role": "مهندس هوش مصنوعی",
     "tagline": "سیستم‌های هوش مصنوعی می‌سازم که بیرون از دمو هم کار کنند.",
-    "intro": "روی سیستم‌های مبتنی بر LLM کار می‌کنم و اینجا دربارهٔ بخش‌هایی می‌نویسم که معمولاً در دموها نمی‌بینیم: ایجنتی که وضعیت مکالمه را گم می‌کند، سیستم بازیابی‌ای که متن مرتبط برمی‌گرداند اما سند درست را پیدا نمی‌کند، Evalهایی (آزمون‌های ارزیابی) که به‌جای حدس زدن، کیفیت را می‌سنجند و هزینهٔ اجرای مدل که آخر ماه غافلگیرمان می‌کند.",
-    "about_before": "این سایت دفترچهٔ یادداشت مهندسی من است. از چیزهایی که می‌سازم، می‌خوانم و یاد می‌گیرم می‌نویسم. برای آشنایی بیشتر با کارها و تجربه‌هایم، صفحهٔ",
-    "about_label": "دربارهٔ من",
-    "about_after": " را ببینید.",
+    "intro": "سیستم‌های مبتنی بر LLM می‌سازم و دربارهٔ بخش‌هایی می‌نویسم که بیرون از دمو دردسرساز می‌شوند: ایجنتی که وضعیت مکالمه را گم می‌کند، بازیابی‌ای که متن قانع‌کننده اما نادرست برمی‌گرداند، Evalهایی که جای حدس و گمان را می‌گیرند و هزینهٔ اجرای مدل که آخر ماه غافلگیرمان می‌کند.",
+    "about_label": "دربارهٔ من و سوابق کاری",
     "about_url": "/fa/about/",
     "actions": [
       {
@@ -34,9 +41,20 @@
         "label": "خواندن نوشته‌ها"
       },
       {
-        "url": "https://github.com/mshojaei77",
-        "label": "GitHub"
+        "url": "/fa/roadmap/",
+        "label": "نقشهٔ راه توسعهٔ LLM"
       }
+    ],
+    "notebook": "اینجا دفترچهٔ یادداشت مهندسی من است.",
+    "focus": "سیستم‌های LLM در محیط واقعی · ارزیابی · هوش مصنوعی چندزبانه، به‌ویژه فارسی",
+    "latest": "تازه‌ترین نوشته‌ها",
+    "all_writing": "همهٔ نوشته‌ها",
+    "featured": "نوشتهٔ پیشنهادی",
+    "read_article": "خواندن نوشته",
+    "open_roadmap": "مشاهدهٔ نقشهٔ راه",
+    "featured_routes": [
+      "/fa/writing/vector-databases/",
+      "/fa/writing/market-analysis/"
     ]
   },
   "sections": [
@@ -56,7 +74,7 @@
             "tag": "مسیر یادگیری",
             "url": "/fa/roadmap/",
             "title": "نقشهٔ راه توسعهٔ مدل‌های زبانی",
-            "desc": "مسیر یادگیری LLM از مبانی تا Production. قرار نیست نسخهٔ واحدی برای همه باشد؛ بر اساس هدف و تجربه‌تان مسیر را انتخاب کنید."
+            "desc": "مسیری عملی از مبانی LLM تا Production. نه یک برنامهٔ درسی مقدس؛ بیشتر شبیه نقشه‌ای با لکه‌های قهوه و چند علامت هشدار."
           }
         }
       ]
@@ -77,7 +95,7 @@
             "tag": "کد و آزمایش",
             "url": "https://github.com/mshojaei77",
             "title": "مخازن GitHub",
-            "desc": "کدها، ابزارها و آزمایش‌هایم؛ از پروژه‌های جدی‌تر تا ایده‌هایی که هنوز مشغول ور رفتن با آن‌ها هستم."
+            "desc": "ابزارها، آزمایش‌ها و کدهای مهندسی؛ بعضی کاربردی‌اند، بعضی هنوز دارند جان می‌گیرند."
           }
         },
         {
@@ -91,7 +109,7 @@
             "tag": "مدل و داده",
             "url": "https://huggingface.co/mshojaei77",
             "title": "Hugging Face",
-            "desc": "مدل‌ها، دیتاست‌ها، آداپترها و کارهای ارزیابی، از جمله آزمایش‌های مرتبط با پردازش زبان فارسی."
+            "desc": "مدل‌ها، دیتاست‌ها، آداپترها و نتیجهٔ آزمایش‌هایی که در مسیر ساخت و ارزیابی باقی مانده‌اند."
           }
         },
         {
@@ -99,7 +117,7 @@
             "tag": "Telegram channel",
             "url": "https://t.me/LLMEngineers",
             "title": "LLM Engineers",
-            "desc": "Follow engineering notes, articles and practical AI discussions."
+            "desc": "Field notes, articles, and practical AI discussions."
           },
           "fa": {
             "tag": "کانال تلگرام",
