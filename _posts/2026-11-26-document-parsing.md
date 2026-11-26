@@ -14,7 +14,7 @@ feed:
   excerpt_only: true
 tags: [document-parsing, OCR, VLM, PDF, RAG]
 ---
-# مهندسی Document Parsing؛ از یک سند خام تا داده‌ای که بتوان به آن اعتماد کرد
+# تجزیه اسناد Document Parsing؛ از یک سند خام تا داده‌ای که بتوان به آن اعتماد کرد
 
 **راهنمای تصمیم‌گیری و طراحی Pipeline پردازش اسناد؛ از انتخاب بین PDF Parser، OCR و VLM تا ساخت محصول، با تمرکز ویژه بر فارسی**
 
