@@ -5,7 +5,7 @@ title: "منابع یادگیری"
 description: "مجموعهٔ منابع یادگیری بر اساس مراحل توسعهٔ LLM."
 permalink: /fa/writing/resources/
 nav_exclude: true
-date: 2026-11-26 00:00:00 +0000
+date: "2025-07-13 00:00:00 +0000"
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
