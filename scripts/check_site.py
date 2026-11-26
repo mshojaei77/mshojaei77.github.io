@@ -15,6 +15,7 @@ fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-dat
 fa_routes += ["fa/writing/document-parsing/index.html"]
 routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/js/theme.js", "assets/js/document-parsing.js"]
 routes += ["materials/Data_Preparation/index.html","fa/materials/Data_Preparation/index.html","materials/Embeddings/index.html","fa/materials/Embeddings/index.html","materials/Intro/index.html","fa/materials/Intro/index.html","materials/Neural_Networks/index.html","fa/materials/Neural_Networks/index.html","materials/Tokenization/index.html","fa/materials/Tokenization/index.html","materials/Traditional_LMs/index.html","fa/materials/Traditional_LMs/index.html","materials/Transformers/index.html","fa/materials/Transformers/index.html"]
+routes += ["assets/examples/document-parsing/" + name for name in ("parse_pdf.py", "make_demo.py", "requirements.txt")]
 errors = [f"Missing output: {p}" for p in routes if not (root / p).is_file()]
 
 class Links(HTMLParser):

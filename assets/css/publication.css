@@ -464,3 +464,5 @@ nav a {min-height:36px;align-items:center;}
 @media print{header,footer,.article-content .toolbar,.theme-switch,.article-toc{display:none!important}}
 
 .article-content :is(div,section,header,aside){min-width:0;max-width:100%}.article-content header{border:0;background:transparent}.article-content .tablewrap{max-width:100%}.article-content section{padding:0;border:0}.article-content table{overflow-wrap:normal}.article-content td{min-width:90px}.article-content .issue-table td{overflow-wrap:anywhere}.article-content .metricgrid{grid-template-columns:repeat(auto-fit,minmax(min(120px,100%),1fr))}
+
+.article-content .article-toc a{padding-block:3px}.article-content pre{max-width:100%;tab-size:4}.article-content pre code{white-space:pre;overflow-wrap:normal}.article-content [data-tutorial-step]{scroll-margin-top:1rem}

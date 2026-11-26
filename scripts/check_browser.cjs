@@ -92,6 +92,7 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await p.locator('a[href="'+articleRoute+'"]').count(), route.startsWith('/fa/') ? 1 : 0);
       assert.equal(await p.locator('a[href="'+englishRoute+'"]').count(), route.startsWith('/fa/') ? 0 : 1);
     }
+    const tutorialCode = {};
     for (const lang of ['fa','en']) for (const width of [375, 1440]) {
       const ctx = await browser.newContext({viewport:{width,height:900},colorScheme:'dark',acceptDownloads:true});
       const a = await ctx.newPage();
@@ -101,39 +102,36 @@ fs.mkdirSync(out, { recursive: true });
       await a.evaluate(()=>document.fonts.ready);
       assert.equal(await a.locator('html').getAttribute('lang'),lang);
       assert.equal(await a.locator('html').getAttribute('dir'),lang==='fa'?'rtl':'ltr');
-      assert.equal(await a.locator('main svg').count(),13);
-      assert.equal(await a.locator('main table').count(),24);
-      assert.equal(await a.locator('.issue-table tbody tr').count(),37);
-      assert.equal(await a.locator('.notebook textarea').count(),10);
+      const expectedSteps = ['contract','setup','native','ocr','tables','layout','structure','rtl','pipeline','evaluation','production','reading'];
+      const steps = await a.locator('main h2[data-tutorial-step]').evaluateAll(nodes=>nodes.map(n=>n.dataset.tutorialStep));
+      assert.deepEqual(steps, expectedSteps);
+      assert.equal(await a.locator('main .article-toc a').count(), expectedSteps.length);
+      const ids = await a.locator('main [id]').evaluateAll(nodes=>nodes.map(n=>n.id));
+      assert.equal(ids.length, new Set(ids).size);
+      for (let i=1;i<=57;i++) assert(ids.includes('section-'+i), 'legacy section anchor '+i);
+      assert.equal(await a.locator('main .issue-table, main .notebook, main .sliders').count(),0);
+      assert.equal(await a.locator('main pre code').count(),14);
+      tutorialCode[lang] = await a.locator('main pre code').allTextContents();
+      for(const file of ['requirements.txt','make_demo.py','parse_pdf.py']) {
+        const path='/assets/examples/document-parsing/'+file;
+        assert.equal(await a.locator('main a[href="'+path+'"][download]').count(),1);
+        assert((await ctx.request.get(origin+path)).ok(), path);
+      }
       assert(await a.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'article horizontal overflow '+width);
       if (lang==='fa') assert(await a.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
       assert.equal(await a.locator('html').getAttribute('data-theme'),'light');
       await a.locator('#site-theme').click();
       assert.equal(await a.locator('html').getAttribute('data-theme'),'dark');
-      await a.locator('[data-filter="open"]').click();
-      assert.equal(await a.locator('.issue-table tbody tr:visible').count(),19);
-      await a.locator('[data-filter="fixed"]').click();
-      assert.equal(await a.locator('.issue-table tbody tr:visible').count(),18);
-      await a.locator('[data-filter="all"]').click();
-      assert.equal(await a.locator('.issue-table tbody tr:visible').count(),37);
-      assert.equal(await a.locator('#overall').textContent(),'99.80%');
-      assert.equal(await a.locator('#sensitive').textContent(),'83.33%');
-      await a.locator('#errors').evaluate(el=>{el.value='0';el.dispatchEvent(new Event('input',{bubbles:true}));});
-      assert.equal(await a.locator('#overall').textContent(),'100.00%');
-      assert.equal(await a.locator('#sensitive').textContent(),'100.00%');
-      await a.locator('#note0').fill('یادداشت آزمایشی');
       await a.reload();
-      assert.equal(await a.locator('#note0').inputValue(),'یادداشت آزمایشی');
       assert.equal(await a.locator('html').getAttribute('data-theme'),'dark');
-      const [download] = await Promise.all([a.waitForEvent('download'),a.locator('#exportNotes').click()]);
-      assert.equal(download.suggestedFilename(),'weekend-notes-'+lang+'.txt');
       assert.deepEqual(failures,[]);
       await a.screenshot({path:out+'/document-parsing-'+lang+'-'+width+'.png',fullPage:false});
       await a.locator('.language-switch a').click();
       await a.waitForURL(origin+(lang==='fa'?englishRoute:articleRoute));
       await ctx.close();
     }
-    console.log('Verified article discovery, diagrams, tables, RTL, theme, issue filtering, simulator and notes export.');
+    assert.deepEqual(tutorialCode.en, tutorialCode.fa, 'code examples must match across languages');
+    console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 6 localized resource routes.');
   } finally { await browser.close(); }
 })().catch(err => { console.error(err); process.exitCode = 1; });

@@ -61,7 +61,9 @@ with pymupdf.open("demo.pdf") as doc:
         print(f"Page {page.number + 1}")
         print(page.get_text("text", sort=True))</code></pre>
 <p>Expect text on pages 1 and 2, and no meaningful text on page 3. A PDF may store text drawing operations in an order unrelated to the way people read it, and some scans contain an invisible OCR text layer that can itself be wrong. A non-empty string is therefore not proof of correct extraction. See the <a href="https://pypdf.readthedocs.io/en/stable/user/extract-text.html">pypdf explanation of PDF text extraction</a> and <a href="https://pymupdf.readthedocs.io/en/latest/recipes-text.html">PyMuPDF text recipes</a>.</p>
-<p>Use coordinates to debug reading order. A bounding box (BBox) tells you where a word or region is on a page; it is usually expressed as four coordinates. The example uses PyMuPDF's unrotated page coordinate space in points, not pixels.</p><pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+<p>Use coordinates to debug reading order. A bounding box (BBox) tells you where a word or region is on a page; it is usually expressed as four coordinates. The example uses PyMuPDF's unrotated page coordinate space in points, not pixels.</p><pre dir="ltr"><code class="language-python">import pymupdf
+
+with pymupdf.open("demo.pdf") as doc:
     page = doc[0]
     for x0, y0, x1, y1, text, block, line, word in page.get_text("words"):
         print(text, (x0, y0, x1, y1))
@@ -74,7 +76,9 @@ with pymupdf.open("demo.pdf") as doc:
 <p>Install Tesseract and the trained language data. For other operating systems follow the <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html">installation guide</a>. The language list should include <code>eng</code> for this synthetic exercise; <code>fas</code> is Persian, <code>ara</code> Arabic (<a href="https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html">supported language codes</a>).</p><pre dir="ltr"><code class="language-bash"># Ubuntu / Debian (install language data as needed):
 sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-fas
 tesseract --list-langs</code></pre>
-<pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+<pre dir="ltr"><code class="language-python">import pymupdf
+
+with pymupdf.open("demo.pdf") as doc:
     page = doc[2]  # 0-based index: page 3
     tp = page.get_textpage_ocr(language="eng", dpi=300, full=True)
     print(page.get_text("text", textpage=tp, sort=True))</code></pre>
@@ -88,7 +92,9 @@ tesseract --list-langs</code></pre>
 
 <p>In the demo, page 2 contains this table:</p><div class="tablewrap"><table><thead><tr><th scope="col">Item</th><th scope="col">Price</th></tr></thead><tbody><tr><td>Notebook</td><td>12.50</td></tr>
 <tr><td>Pen</td><td>2.00</td></tr></tbody></table></div>
-<p>Extracting a list of words is insufficient. We need to know that 12.50 belongs to Notebook, not Pen. Try PyMuPDF's table detector on the simple grid:</p><pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+<p>Extracting a list of words is insufficient. We need to know that 12.50 belongs to Notebook, not Pen. Try PyMuPDF's table detector on the simple grid:</p><pre dir="ltr"><code class="language-python">import pymupdf
+
+with pymupdf.open("demo.pdf") as doc:
     for table in doc[1].find_tables().tables:
         for row in table.extract():
             print(row)</code></pre>

@@ -61,7 +61,9 @@ with pymupdf.open("demo.pdf") as doc:
         print(f"Page {page.number + 1}")
         print(page.get_text("text", sort=True))</code></pre>
 <p>انتظار داریم در صفحات ۱ و ۲ متن بگیریم، اما صفحهٔ ۳ متن قابل‌استفاده نداشته باشد. PDF ممکن است دستورهای رسم متن را با ترتیبی ذخیره کرده باشد که با ترتیب مطالعهٔ انسان فرق دارد. بعضی اسکن‌ها هم یک لایهٔ نامرئی متن OCR دارند که خودش ممکن است اشتباه باشد. پس غیرخالی بودن متن، اثبات صحت استخراج نیست. توضیحات <a href="https://pypdf.readthedocs.io/en/stable/user/extract-text.html">pypdf دربارهٔ استخراج متن PDF</a> و <a href="https://pymupdf.readthedocs.io/en/latest/recipes-text.html">راهنمای استخراج متن PyMuPDF</a> را ببینید.</p>
-<p>برای دیباگ ترتیب خواندن از مختصات استفاده کنید. Bounding Box یا BBox چهار مختصات است که جای یک کلمه یا ناحیه را روی صفحه مشخص می‌کند. در این مثال مختصات PyMuPDF مربوط به صفحهٔ بدون چرخش و برحسب Point هستند، نه پیکسل.</p><pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+<p>برای دیباگ ترتیب خواندن از مختصات استفاده کنید. Bounding Box یا BBox چهار مختصات است که جای یک کلمه یا ناحیه را روی صفحه مشخص می‌کند. در این مثال مختصات PyMuPDF مربوط به صفحهٔ بدون چرخش و برحسب Point هستند، نه پیکسل.</p><pre dir="ltr"><code class="language-python">import pymupdf
+
+with pymupdf.open("demo.pdf") as doc:
     page = doc[0]
     for x0, y0, x1, y1, text, block, line, word in page.get_text("words"):
         print(text, (x0, y0, x1, y1))
@@ -74,7 +76,9 @@ with pymupdf.open("demo.pdf") as doc:
 <p>موتور Tesseract و فایل‌های زبان موردنیاز را نصب کنید. برای سیستم‌عامل‌های دیگر از <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html">راهنمای نصب</a> استفاده کنید. فهرست زبان‌ها باید برای تمرین مصنوعی ما شامل <code>eng</code> باشد؛ کد فارسی <code>fas</code> و کد عربی <code>ara</code> است (<a href="https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html">فهرست کد زبان‌ها</a>).</p><pre dir="ltr"><code class="language-bash"># Ubuntu / Debian (install language data as needed):
 sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-fas
 tesseract --list-langs</code></pre>
-<pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+<pre dir="ltr"><code class="language-python">import pymupdf
+
+with pymupdf.open("demo.pdf") as doc:
     page = doc[2]  # 0-based index: page 3
     tp = page.get_textpage_ocr(language="eng", dpi=300, full=True)
     print(page.get_text("text", textpage=tp, sort=True))</code></pre>
@@ -88,7 +92,9 @@ tesseract --list-langs</code></pre>
 
 <p>صفحهٔ دوم تمرین ما چنین جدولی دارد:</p><div class="tablewrap"><table><thead><tr><th scope="col">کالا (Item)</th><th scope="col">قیمت (Price)</th></tr></thead><tbody><tr><td>Notebook</td><td>12.50</td></tr>
 <tr><td>Pen</td><td>2.00</td></tr></tbody></table></div>
-<p>گرفتن یک لیست از کلمات کافی نیست. باید بدانیم عدد 12.50 مربوط به Notebook است، نه Pen. روی جدول سادهٔ تمرین، تشخیص جدول PyMuPDF را امتحان کنید:</p><pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+<p>گرفتن یک لیست از کلمات کافی نیست. باید بدانیم عدد 12.50 مربوط به Notebook است، نه Pen. روی جدول سادهٔ تمرین، تشخیص جدول PyMuPDF را امتحان کنید:</p><pre dir="ltr"><code class="language-python">import pymupdf
+
+with pymupdf.open("demo.pdf") as doc:
     for table in doc[1].find_tables().tables:
         for row in table.extract():
             print(row)</code></pre>
