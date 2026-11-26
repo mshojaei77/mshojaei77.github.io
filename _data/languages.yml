@@ -32,3 +32,8 @@
   en_label: "Open Source AI"
   fa_label: "هوش مصنوعی متن‌باز"
   hidden: true
+- en: "/resources.html"
+  fa: "/fa/resources/"
+  en_label: "Resources"
+  fa_label: "منابع"
+  hidden: true
