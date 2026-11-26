@@ -123,6 +123,8 @@ kramdown:
 
 # Exclude files
 exclude:
+  - vendor
+  - .bundle
   - Gemfile
   - Gemfile.lock
   - /labs
