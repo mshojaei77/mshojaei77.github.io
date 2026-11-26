@@ -6,11 +6,11 @@ from urllib.parse import urlsplit, unquote
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
 routes = ["index.html", "writing/index.html", "research/index.html", "projects/index.html",
-          "newsletter/index.html", "about.html", "roadmap.html", "resources.html",
+          "about.html", "roadmap.html", "resources.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
           "vector_dbs.html", "writing/document-parsing/index.html",
           "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
-fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "newsletter", "roadmap", "about")]
+fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
 fa_routes += ["fa/writing/document-parsing/index.html"]
 routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/js/theme.js", "assets/js/document-parsing.js"]
@@ -62,7 +62,7 @@ class Locale(HTMLParser):
         if tag == "a":
             self.anchors.append(a.get("href"))
 
-pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research", "newsletter")]
+pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research")]
 pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/open_source_ai.html", "/fa/open-source-ai/"), ("/vector_dbs.html", "/fa/vector-databases/"), ("/resources.html", "/fa/resources/"), ("/mini_roadmap.html", "/fa/mini-roadmap/"), ("/interview.html", "/fa/interview/"), ("/market_analysis.html", "/fa/market-analysis/")]
 pairs.append(("/writing/document-parsing/", "/fa/writing/document-parsing/"))
 pairs += [["/materials/Data_Preparation/","/fa/materials/Data_Preparation/"],["/materials/Embeddings/","/fa/materials/Embeddings/"],["/materials/Intro/","/fa/materials/Intro/"],["/materials/Neural_Networks/","/fa/materials/Neural_Networks/"],["/materials/Tokenization/","/fa/materials/Tokenization/"],["/materials/Traditional_LMs/","/fa/materials/Traditional_LMs/"],["/materials/Transformers/","/fa/materials/Transformers/"]]
@@ -109,6 +109,19 @@ for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/in
 for path in ("book/index.html", "fa/book/index.html", "book/ch1.html"):
     if (root / path).exists():
         errors.append(f"Retired book published: {path}")
+# Retired publication surfaces must not appear anywhere in the generated site.
+import re
+for path in root.rglob("*"):
+    if not path.is_file() or path.suffix not in (".html", ".xml"):
+        continue
+    html = path.read_text(encoding="utf-8")
+    if re.search(r'https?://(?:[\w-]+\.)*medium\.com(?:[/:?#]|$)', html, re.I):
+        errors.append(f"{path.relative_to(root)}: Medium URL remains")
+    if re.search(r'(?:(?:https?://mshojaei77\.github\.io)?/(?:fa/)?newsletter/|https?://(?:www\.)?linkedin\.com/newsletters/)', html, re.I):
+        errors.append(f"{path.relative_to(root)}: retired newsletter URL remains")
+for path in ("newsletter/index.html", "fa/newsletter/index.html"):
+    if (root / path).exists():
+        errors.append(f"Retired newsletter published: {path}")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)

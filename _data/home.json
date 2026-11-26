@@ -167,20 +167,6 @@
             "title": "نقشهٔ راه فشرده",
             "desc": "نمای تصویری مسیر یادگیری؛ وقتی می‌خواهید قبل از ورود به جزئیات، یک تصویر کلی از راه داشته باشید."
           }
-        },
-        {
-          "en": {
-            "tag": "Newsletter",
-            "url": "/newsletter/",
-            "title": "Building Production AI",
-            "desc": "Short field notes on agents, retrieval, evals, serving, debugging, and the boring glue that makes AI systems survive users."
-          },
-          "fa": {
-            "tag": "خبرنامه",
-            "url": "/fa/newsletter/",
-            "title": "Building Production AI",
-            "desc": "یادداشت‌های کوتاه دربارهٔ ایجنت‌ها، Retrieval، Evals، Serving و آن جزئیات کوچک مهندسی که در Production مهم می‌شوند."
-          }
         }
       ]
     },
@@ -201,20 +187,6 @@
             "url": "https://github.com/mshojaei77",
             "title": "مخازن GitHub",
             "desc": "کدها، ابزارها و آزمایش‌هایم؛ از پروژه‌های جدی‌تر تا ایده‌هایی که هنوز مشغول ور رفتن با آن‌ها هستم."
-          }
-        },
-        {
-          "en": {
-            "tag": "Essays",
-            "url": "https://medium.com/@mshojaei77",
-            "title": "Medium",
-            "desc": "Longer writeups when a bug, paper, or late-night experiment turns into something worth explaining."
-          },
-          "fa": {
-            "tag": "انتشار بیرونی",
-            "url": "https://medium.com/@mshojaei77",
-            "title": "مقاله‌های Medium",
-            "desc": "وقتی یک باگ، مقالهٔ پژوهشی یا آزمایش ارزش توضیح مفصل‌تر پیدا می‌کند، اینجا درباره‌اش می‌نویسم."
           }
         },
         {
