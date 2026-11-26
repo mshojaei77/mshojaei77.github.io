@@ -2,6 +2,6 @@
 layout: publication
 ---
 <article class="article-content">
-{% if page.show_article_header %}<div class="intro"><p class="eyebrow">{% if page.lang == 'fa' %}مطالعهٔ آخر هفته{% else %}Weekend reading{% endif %}</p><h1>{{ page.title | escape }}</h1><p class="lede">{{ page.description | escape }}</p>{% if page.date %}<p class="meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time></p>{% endif %}</div>{% endif %}
+{% if page.show_article_header %}<div class="intro"><p class="eyebrow">{% if page.article_kind == 'tutorial' %}{% if page.lang == 'fa' %}آموزش عملی{% else %}Hands-on tutorial{% endif %}{% else %}{% if page.lang == 'fa' %}مطالعهٔ آخر هفته{% else %}Weekend reading{% endif %}{% endif %}</p><h1>{{ page.title | escape }}</h1><p class="lede">{{ page.description | escape }}</p>{% if page.date %}<p class="meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time></p>{% endif %}</div>{% endif %}
 {{ content }}
 </article>

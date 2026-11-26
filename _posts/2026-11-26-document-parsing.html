@@ -1,1295 +1,220 @@
 ---
 layout: article
 show_article_header: true
-article_widgets: true
+article_kind: tutorial
 lang: fa
-title: "هنر استخراج اطلاعات از اسناد؛ از یک PDF ساده تا یک سیستم هوش مصنوعی قابل اعتماد"
-description: "یادداشت آخر هفته دربارهٔ Document Parsing فارسی، OCR، بازسازی جدول‌ها، تجربه‌های آزمایشگاهی و مهندسی سیستم‌های قابل‌اعتماد."
-excerpt: "یادداشت آخر هفته دربارهٔ Document Parsing فارسی، OCR، بازسازی جدول‌ها، تجربه‌های آزمایشگاهی و مهندسی سیستم‌های قابل‌اعتماد."
+title: "آموزش Document Parsing برای مهندسان هوش مصنوعی؛ از PDF تا دادهٔ ساختاریافته"
+description: "آموزش قدم‌به‌قدم ساخت Pipeline پردازش اسناد؛ استخراج متن PDF، OCR، بازسازی جدول، اسناد چندزبانه، ارزیابی و آماده‌سازی داده برای RAG."
+excerpt: "آموزش قدم‌به‌قدم ساخت Pipeline پردازش اسناد؛ استخراج متن PDF، OCR، بازسازی جدول، اسناد چندزبانه، ارزیابی و آماده‌سازی داده برای RAG."
 date: 2026-11-26 00:00:00 +0000
 permalink: /fa/writing/document-parsing/
 nav_exclude: true
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-tags: [document-parsing, OCR, Persian, RAG, weekend-reading]
+tags: [document-parsing, OCR, PDF, RAG, tutorial]
 ---
-<details class="article-toc"><summary>فهرست مطالب</summary><a href="#section-1">بخش اول: چرا خواندن یک PDF تا این اندازه پیچیده است؟</a><a href="#section-5">بخش دوم: شناخت ابزارها و معماری</a><a href="#section-10">بخش سوم: چرا اسناد فارسی دشوارتر هستند؟</a><a href="#section-19">بخش چهارم: مدل‌های بینایی و بازیابی اطلاعات</a><a href="#section-23">بخش پنجم: آزمایش‌هایی که انجام شدند و درس‌های آن‌ها</a><a href="#section-28">بخش ششم: مهندسی قابلیت اطمینان</a><a href="#section-34">بخش هفتم: مرور همه مشکلات تجربه‌شده</a><a href="#section-40">بخش هشتم: چگونه یک Parser بهتر بسازیم؟</a><a href="#section-46">بخش نهم: ایده‌هایی برای فکر کردن و آزمایش</a><a href="#section-54">بخش دهم: بزرگ‌ترین موانع فنی</a><a href="#section-55">چند سؤال برای فکر کردن در آخر هفته</a><a href="#section-56">جمع‌بندی: آنچه به‌عنوان یک AI Engineer باید یاد بگیریم</a><a href="#section-57">برای مطالعه بیشتر</a></details>
+<p>در پایان این آموزش یک Parser کوچک محلی با Python خواهید داشت، می‌دانید خروجی‌های میانی را چطور بررسی کنید و برای اسناد پیچیده‌تر یک مسیر آزمایش دارید. برای تمرین اصلی به آموزش مدل، GPU یا API پولی نیاز ندارید؛ آشنایی مقدماتی با Python کافی است.</p>
+<details class="article-toc" open><summary>مسیر آموزش</summary><a href="#contract">۱. اول مشخص کنید خروجی Parser چیست</a>
+<a href="#setup">۲. یک تمرین کوچک و قابل‌تکرار بسازید</a>
+<a href="#native">۳. از استخراج متن دیجیتال شروع کنید و مختصات را بررسی کنید</a>
+<a href="#ocr">۴. صفحات اسکن‌شده و ترکیبی را با OCR پردازش کنید</a>
+<a href="#tables">۵. جدول را بازسازی کنید، نه فقط کلماتش را</a>
+<a href="#layout">۶. وقتی Baseline کافی نیست، یک Parser آگاه از Layout اضافه کنید</a>
+<a href="#structure">۷. قبل از ساخت خروجی نهایی، داده و شواهد را ساختاریافته ذخیره کنید</a>
+<a href="#rtl">۸. متن چندزبانه و راست‌به‌چپ را درست مدیریت کنید</a>
+<a href="#pipeline">۹. مراحل را به یک Pipeline کوچک وصل کنید و خطاها را دیباگ کنید</a>
+<a href="#evaluation">۱۰. قبل از بهینه‌سازی، Parser را با پاسخ مرجع ارزیابی کنید</a>
+<a href="#production">۱۱. از تمرین محلی به یک اپلیکیشن واقعی برسید</a>
+<a href="#reading">برای مطالعه و تمرین بیشتر</a></details>
+<span id="section-1" aria-hidden="true"></span><span id="section-2" aria-hidden="true"></span><span id="section-3" aria-hidden="true"></span><span id="section-4" aria-hidden="true"></span>
+<h2 id="contract" data-tutorial-step="contract">۱. اول مشخص کنید خروجی Parser چیست</h2>
 
+<p>فرض کنید می‌خواهید برای دفترچه‌های راهنمای محصول، مقاله‌های پژوهشی یا اسناد یک شرکت، دستیار جست‌وجو بسازید. ورودی شما PDF، فایل Word و سند اسکن‌شده است. کاربر می‌خواهد قیمت یک کالا یا دستورالعمل مشخصی را پیدا کند. کار Parser این است که سند را به داده‌ای تبدیل کند که برنامهٔ بعدی بتواند از آن استفاده کند؛ هنوز قرار نیست به سؤال کاربر جواب بدهد.</p>
+<p>سه مسئولیت را از هم جدا کنید: <strong>Text Extraction</strong> نویسه‌ها را می‌خواند، <strong>Layout Analysis</strong> محل پاراگراف، عنوان، جدول و تصویر را تشخیص می‌دهد و <strong>Document Parsing</strong> محتوا و روابط بین این اجزا را بازسازی می‌کند. OCR (تشخیص نوری نویسه‌ها) متن را از روی پیکسل‌های تصویر می‌خواند؛ به‌خودی‌خود ساختار جدول یا سند را بازسازی نمی‌کند.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">هدف</th><th scope="col">حداقل خروجی مفید</th><th scope="col">خطای احتمالی</th></tr></thead><tbody><tr><td>جست‌وجو در یک دفترچهٔ راهنما</td><td>متن و شمارهٔ صفحه</td><td>ترتیب خواندن اشتباه</td></tr>
+<tr><td>استخراج فهرست قیمت</td><td>سطر، ستون، سرستون و متن خام سلول</td><td>عدد درست در سطر اشتباه</td></tr>
+<tr><td>ساخت RAG با استناد</td><td>اجزای مرتب سند و شواهد صفحه و ناحیه</td><td>جواب ظاهراً درست بدون منبع قابل‌پیگیری</td></tr></tbody></table></div>
+<p>قرارداد ورودی و خروجی این آموزش ساده است: PDF بگیریم و JSON شامل صفحات، متن پیشنهادی، کلمات همراه مختصات، سلول‌های جدول ساده و هشدارها بسازیم. بعد برای ساختارهای پیچیده از ابزار آگاه از Layout استفاده می‌کنیم و Markdown و HTML را برای مطالعهٔ انسان تولید می‌کنیم. این نقطهٔ شروع است، نه یک Parser همه‌کاره.</p>
+<p>چرا از همان اول PDF را به یک LLM ندهیم؟ این روش گاهی Baseline مناسبی است، ولی اگر مدل عددی را اشتباه خواند، همچنان باید بتوانید منبع آن را پیدا کنید، خروجی‌ها را مقایسه کنید و کیفیت را بسنجید. اول مسیر شواهد را بسازید.</p>
+<span id="section-5" aria-hidden="true"></span><span id="section-6" aria-hidden="true"></span>
+<h2 id="setup" data-tutorial-step="setup">۲. یک تمرین کوچک و قابل‌تکرار بسازید</h2>
 
-<p>در این مطلب، از تجربه‌های عملی پردازش اسناد فارسی استفاده می‌کنیم تا بفهمیم چرا تبدیل یک فایل PDF به دانش قابل اعتماد، مسئله‌ای بسیار فراتر از انتخاب یک مدل هوش مصنوعی است. اعداد و نتایج آزمایش‌ها به نمونه‌های محدود و ثبت‌شده مربوط‌اند؛ مثال‌های آموزشی و ایده‌های آینده نیز از نتایج اثبات‌شده جدا شده‌اند.</p>
-<hr/>
-<h2 id="section-1">بخش اول: چرا خواندن یک PDF تا این اندازه پیچیده است؟</h2>
-<h3 id="section-2">۱. مسئله‌ای فراتر از استخراج متن</h3>
-<p>در نگاه اول، مسئله خیلی ساده به نظر می‌رسد: یک فایل PDF داریم و می‌خواهیم متن آن را استخراج کنیم و در اختیار یک سیستم RAG یا AI Agent قرار دهیم.</p>
-<p>چند کتابخانه نصب می‌کنیم، متن را استخراج می‌کنیم، آن را به Chunk تبدیل می‌کنیم، Embedding می‌گیریم و داخل Vector Database قرار می‌دهیم.</p>
-<p>اما وقتی با اسناد واقعی فارسی، به‌خصوص اسناد مالی، بانکی، حقوقی و سازمانی سروکار داریم، متوجه می‌شویم که مسئله اصلاً به این سادگی نیست.</p>
-<p>فرض کن در یک سند مالی چنین جدولی وجود دارد:</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>نوع تسهیلات</th>
-<th>نرخ سود</th>
-<th>سقف مبلغ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>خرید کالا</td>
-<td>۱۸٪</td>
-<td>۵۰۰ میلیون ریال</td>
-</tr>
-<tr>
-<td>سرمایه در گردش</td>
-<td>۲۳٪</td>
-<td>۲ میلیارد ریال</td>
-</tr>
-<tr>
-<td>قرض‌الحسنه</td>
-<td>۴٪</td>
-<td>۳۰۰ میلیون ریال</td>
-</tr>
-</tbody>
-</table></div>
-<p>اگر Parser تمام کلمات و اعداد این جدول را استخراج کند، آیا کارش را درست انجام داده است؟</p>
-<p>نه لزوماً.</p>
-<p>ممکن است همه اعداد درست خوانده شده باشند، اما نرخ سود ۲۳ درصد به قرض‌الحسنه نسبت داده شود. ممکن است «میلیون» حذف شود یا عدد ۱۸ به ۸۱ تبدیل شود. حتی ممکن است تمام متن جدول درست استخراج شود، اما رابطه میان سطرها و ستون‌ها از بین برود.</p>
-<p>در هر کدام از این حالت‌ها، اطلاعات اشتباه وارد دیتابیس می‌شود و یک مدل زبانی قدرتمند می‌تواند با استناد به همان اطلاعات اشتباه، پاسخی کاملاً قانع‌کننده تولید کند.</p>
-<p><strong>مدل زبانی لزوماً مقصر نیست؛ اشتباه از همان لحظه ورود سند به سیستم شروع شده است.</strong></p>
-<p>این یکی از مهم‌ترین درس‌های مهندسی سیستم‌های RAG است: خطاهای دانش ورودی می‌توانند کیفیت پاسخ‌های خروجی را به‌شدت محدود کنند.</p>
-<h3 id="section-3">۲. PDF واقعاً چیست؟</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 285" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="95" y="12"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="171.0" y="30"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="54"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="66"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="78"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="90"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="110" y="112"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="110" y="112"></rect><path d="M110 129.5H270" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M110 147.0H270" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M110 164.5H270" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M163.33333333333334 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M216.66666666666669 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="194"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="110" y="204"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="110" y="214"></rect><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="435" y="12"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="511.0" y="30"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="54"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="66"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="78"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="90"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="450" y="112"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="450" y="112"></rect><path d="M450 129.5H610" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M450 147.0H610" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M450 164.5H610" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M503.3333333333333 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M556.6666666666666 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="194"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="450" y="204"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="450" y="214"></rect><rect fill="none" height="20" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="104.50000000000001" x="505.3" y="24"></rect><rect fill="none" height="55" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="170" x="445" y="47"></rect><rect fill="none" height="80" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="170" x="445" y="107"></rect><rect fill="none" height="35" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="170" x="445" y="190"></rect><path d="M300 120L420 120" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="420" cy="120" fill="var(--accent)" r="3"></circle><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="190" y="267">چیزی که انسان می‌بیند</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="530" y="267">آنچه Parser تحلیل می‌کند</text></svg><figcaption>مقایسه نمای سند و نواحی هندسی استخراج‌شده؛ تصویر آموزشی شماتیک.</figcaption></figure>
-<p>یکی از اشتباهات رایج این است که PDF را مانند یک فایل Word یا یک فایل متنی تصور کنیم. PDF در اصل برای نمایش و چاپ سند طراحی شده است، نه لزوماً برای استخراج مجدد ساختار منطقی آن.</p>
-<p>چیزی که انسان به‌عنوان عنوان، پاراگراف یا جدول می‌بیند، ممکن است در ساختار داخلی یک PDF صرفاً مجموعه‌ای از نویسه‌ها، خطوط و مختصات باشد. Parser باید روابط میان این اجزا را دوباره کشف کند.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>نوع PDF</th>
-<th>ویژگی</th>
-<th>چالش اصلی</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Born-digital</td>
-<td>دارای لایه متنی دیجیتال</td>
-<td>ترتیب خواندن و ساختار</td>
-</tr>
-<tr>
-<td>Scanned PDF</td>
-<td>صفحات تصویری اسکن‌شده</td>
-<td>تشخیص متن با OCR</td>
-</tr>
-<tr>
-<td>Hybrid PDF</td>
-<td>ترکیبی از متن، تصویر و اسکن</td>
-<td>انتخاب روش مناسب برای هر ناحیه</td>
-</tr>
-</tbody>
-</table></div>
-<p>ممکن است یک PDF صدصفحه‌ای، ۹۵ صفحه متن دیجیتال، سه صفحه اسکن‌شده و دو صفحه شامل جدول تصویری داشته باشد. بنابراین حتی انتخاب روش پردازش در سطح کل فایل هم همیشه تصمیم مناسبی نیست. شاید لازم باشد در سطح صفحه یا حتی یک ناحیه کوچک از صفحه تصمیم بگیریم.</p>
-<h3 id="section-4">۳. تفاوت OCR، Layout Analysis و Document Parsing</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 365" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="15" y="10"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="182" y="37">OCR</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="182" y="160">خواندن متن</text><rect fill="var(--page)" height="76" rx="8" stroke="var(--line)" width="205" x="80" y="55"></rect><text fill="var(--ink)" font-size="26" font-weight="500" text-anchor="middle" x="182" y="97">نرخ ۱۸٪</text><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="370" y="10"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="537" y="37">Layout Analysis</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="537" y="160">تشخیص ناحیه</text><rect fill="var(--page)" height="85" rx="8" stroke="var(--line)" width="110" x="482" y="52"></rect><rect fill="var(--tint)" height="15" rx="2" stroke="var(--accent)" width="88" x="493" y="61"></rect><rect fill="var(--tint)" height="43" rx="2" stroke="var(--accent)" width="88" x="493" y="81"></rect><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="15" y="190"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="182" y="217">Table Structure</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="182" y="340">بازسازی سلول</text><rect fill="var(--page)" height="82" rx="2" stroke="var(--line)" width="205" x="80" y="233"></rect><rect fill="var(--tint)" height="20.5" rx="1" stroke="none" width="205" x="80" y="233"></rect><path d="M80 253.5H285" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M148.33333333333331 274.0H285" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M148.33333333333331 294.5H285" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M148.33333333333331 233V315" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M216.66666666666666 233V315" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="370" y="190"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="537" y="217">Document Parsing</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="537" y="340">ساختار نهایی</text><text fill="var(--accent)" font-size="17" font-weight="500" text-anchor="middle" x="537" y="251">DocumentIR</text><path d="M537 258V274H459V284 M537 274H616V284" fill="none" stroke="var(--line)" stroke-width="2"></path><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="459" y="304">Text</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="616" y="304">TableIR</text></svg><figcaption>چهار مسئولیت متفاوت در پردازش سند.</figcaption></figure>
-<p>این اصطلاحات اغلب به‌جای یکدیگر استفاده می‌شوند، در حالی که مسئولیت‌های متفاوتی دارند.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>مرحله</th>
-<th>مسئولیت</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>OCR</td>
-<td>تشخیص حروف، کلمات و اعداد از تصویر</td>
-</tr>
-<tr>
-<td>Layout Analysis</td>
-<td>تشخیص ناحیه‌های عنوان، پاراگراف، جدول، تصویر، پاورقی و فرمول</td>
-</tr>
-<tr>
-<td>Table Structure Recognition</td>
-<td>تشخیص سطرها، ستون‌ها، سلول‌های ادغام‌شده و ارتباط با سرستون‌ها</td>
-</tr>
-<tr>
-<td>Reading Order</td>
-<td>بازسازی ترتیب منطقی خواندن عناصر</td>
-</tr>
-<tr>
-<td>Document Parsing</td>
-<td>ترکیب این اطلاعات و بازسازی ساختار منسجم سند</td>
-</tr>
-</tbody>
-</table></div>
-<p>ممکن است یک مدل در خواندن متن فارسی فوق‌العاده باشد، اما نتواند تشخیص دهد متن متعلق به کدام سلول جدول است یا یک تبصره مربوط به کدام ماده قانونی است.</p>
-<p><strong>بهترین OCR دنیا لزوماً بهترین Document Parser دنیا نیست.</strong> ارزیابی یک سیستم پردازش سند تنها براساس دقت OCR کافی نیست.</p>
-<hr/>
-<h2 id="section-5">بخش دوم: شناخت ابزارها و معماری</h2>
-<h3 id="section-6">۴. PyMuPDF چه کاری انجام می‌دهد؟</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 252" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="100" y="10"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="176.0" y="28"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="52"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="64"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="76"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="88"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="115" y="110"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="115" y="110"></rect><path d="M115 127.5H275" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M115 145.0H275" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M115 162.5H275" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M168.33333333333334 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M221.66666666666669 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="192"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="115" y="202"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="115" y="212"></rect><rect fill="var(--tint)" height="17.5" rx="2" stroke="var(--accent)" width="53.333333333333336" x="168.33333333333334" y="127.5"></rect><text fill="var(--ink)" font-size="12" font-weight="500" text-anchor="middle" x="195" y="140">۱۸٪</text><path d="M215 130L430 130" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="430" cy="130" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="75" rx="8" stroke="var(--accent)" width="220" x="435" y="93"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="545" y="119">Bounding Box</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="545" y="145">[120, 340, 165, 360]</text></svg><figcaption>مختصات سلول امکان بازگشت به ناحیه واقعی سند را فراهم می‌کند؛ مقادیر صرفاً آموزشی‌اند.</figcaption></figure>
-<p>PyMuPDF یکی از ابزارهایی است که در معماری مورد مطالعه برای دسترسی مستقیم به محتوای PDF استفاده شده است. کاربردهای آن شامل استخراج متن دیجیتال، مختصات نویسه‌ها، رندر صفحات به تصویر، شناسایی تصاویر و بررسی موقعیت عناصر صفحه است.</p>
-<p>به‌عنوان مثال، اگر بخواهیم بدانیم یک عدد در کدام قسمت صفحه قرار گرفته است، می‌توانیم اطلاعاتی مشابه این را نگه داریم:</p>
-<pre><code class="language-json">{
-  "text": "۱۸٪",
-  "page": 5,
-  "bbox": [120, 340, 165, 360]
+<p>به Python نسخهٔ ۳٫۱۰ یا جدیدتر و یک ترمینال نیاز دارید. این سه فایل را در یک پوشهٔ خالی ذخیره کنید: <a href="/assets/examples/document-parsing/requirements.txt" download>requirements.txt</a>، <a href="/assets/examples/document-parsing/make_demo.py" download>make_demo.py</a> و <a href="/assets/examples/document-parsing/parse_pdf.py" download>parse_pdf.py</a>. برای قابل‌تکرار بودن تمرین، نسخهٔ PyMuPDF را ثابت کرده‌ایم؛ برای استفاده در سرویس واقعی، نسخه‌های جدیدتر و اصلاحات امنیتی را بررسی کنید. PyMuPDF با مجوز AGPL یا مجوز تجاری عرضه می‌شود؛ قبل از استقرار، <a href="https://pymupdf.readthedocs.io/en/latest/about.html">شرایط مجوز</a> را بخوانید.</p>
+<pre dir="ltr"><code class="language-bash">python -m venv .venv
+# Linux / macOS:
+source .venv/bin/activate
+# Windows PowerShell (instead of the line above):
+# .\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python make_demo.py demo.pdf</code></pre>
+<p>فایل <code>make_demo.py</code> یک PDF کاملاً مصنوعی به نام <code>demo.pdf</code> با سه صفحه می‌سازد:</p>
+<ol><li>یک صفحهٔ متنی دیجیتال با عنوان Project guide.</li><li>یک جدول دیجیتال با سرستون‌های Item و Price و دو ردیف Notebook (12.50) و Pen (2.00).</li><li>یک صفحهٔ صرفاً تصویری با عبارت Scan example و کد مرجع AB123.</li></ol>
+<p>PDF را در یک برنامهٔ نمایش سند باز کنید و سعی کنید متن هر صفحه را انتخاب کنید. در دو صفحهٔ اول می‌توانید متن را انتخاب کنید؛ صفحهٔ سوم فقط تصویر است. از قبل می‌دانیم محتوای صحیح هر صفحه چیست، پس یک Ground Truth (پاسخ مرجع) کوچک برای دیباگ داریم. بهتر است تمرین را با اسناد محرمانهٔ مشتری شروع نکنید.</p>
+<span id="section-7" aria-hidden="true"></span><span id="section-8" aria-hidden="true"></span>
+<h2 id="native" data-tutorial-step="native">۳. از استخراج متن دیجیتال شروع کنید و مختصات را بررسی کنید</h2>
+
+<p>کد زیر را در فایل <code>inspect_pdf.py</code> قرار دهید و با Python اجرا کنید. این کد لایهٔ متن داخل PDF را می‌خواند، نه پیکسل‌های صفحه را.</p><pre dir="ltr"><code class="language-python">import pymupdf
+
+with pymupdf.open("demo.pdf") as doc:
+    for page in doc:
+        print(f"Page {page.number + 1}")
+        print(page.get_text("text", sort=True))</code></pre>
+<p>انتظار داریم در صفحات ۱ و ۲ متن بگیریم، اما صفحهٔ ۳ متن قابل‌استفاده نداشته باشد. PDF ممکن است دستورهای رسم متن را با ترتیبی ذخیره کرده باشد که با ترتیب مطالعهٔ انسان فرق دارد. بعضی اسکن‌ها هم یک لایهٔ نامرئی متن OCR دارند که خودش ممکن است اشتباه باشد. پس غیرخالی بودن متن، اثبات صحت استخراج نیست. توضیحات <a href="https://pypdf.readthedocs.io/en/stable/user/extract-text.html">pypdf دربارهٔ استخراج متن PDF</a> و <a href="https://pymupdf.readthedocs.io/en/latest/recipes-text.html">راهنمای استخراج متن PyMuPDF</a> را ببینید.</p>
+<p>برای دیباگ ترتیب خواندن از مختصات استفاده کنید. Bounding Box یا BBox چهار مختصات است که جای یک کلمه یا ناحیه را روی صفحه مشخص می‌کند. در این مثال مختصات PyMuPDF مربوط به صفحهٔ بدون چرخش و برحسب Point هستند، نه پیکسل.</p><pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+    page = doc[0]
+    for x0, y0, x1, y1, text, block, line, word in page.get_text("words"):
+        print(text, (x0, y0, x1, y1))
+    page.get_pixmap(dpi=150).save("page-1.png")</code></pre>
+<p>خروجی را با <code>page-1.png</code> مقایسه کنید. اگر سند دو ستون دارد، بلوک‌ها را با <code>page.get_text("blocks")</code> بگیرید، کادرشان را روی کپی یا تصویر صفحه رسم کنید و ببینید ترتیب خواندن بین ستون‌ها جابه‌جا شده یا نه. گزینهٔ <code>sort=True</code> یک روش هندسی کمکی است، نه راه‌حل قطعی همهٔ Layoutها یا اسناد راست‌به‌چپ. برای Layout ساده می‌توانید ابتدا بلوک‌ها را بر اساس ستون گروه‌بندی کنید و داخل هر ستون مرتبشان کنید؛ برای موارد پیچیده سراغ مرحلهٔ ۶ بروید.</p>
+<p>اگر PDF از ابتدا دیجیتال بوده و متن درست کدگذاری شده، استخراج Native نقطهٔ شروع خوبی است. صرفاً چون OCR داریم، لازم نیست آن را برای همهٔ صفحات اجرا کنیم.</p>
+<span id="section-19" aria-hidden="true"></span><span id="section-20" aria-hidden="true"></span><span id="section-21" aria-hidden="true"></span><span id="section-22" aria-hidden="true"></span><span id="section-47" aria-hidden="true"></span><span id="section-49" aria-hidden="true"></span>
+<h2 id="ocr" data-tutorial-step="ocr">۴. صفحات اسکن‌شده و ترکیبی را با OCR پردازش کنید</h2>
+
+<p>موتور Tesseract و فایل‌های زبان موردنیاز را نصب کنید. برای سیستم‌عامل‌های دیگر از <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html">راهنمای نصب</a> استفاده کنید. فهرست زبان‌ها باید برای تمرین مصنوعی ما شامل <code>eng</code> باشد؛ کد فارسی <code>fas</code> و کد عربی <code>ara</code> است (<a href="https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html">فهرست کد زبان‌ها</a>).</p><pre dir="ltr"><code class="language-bash"># Ubuntu / Debian (install language data as needed):
+sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-fas
+tesseract --list-langs</code></pre>
+<pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+    page = doc[2]  # 0-based index: page 3
+    tp = page.get_textpage_ocr(language="eng", dpi=300, full=True)
+    print(page.get_text("text", textpage=tp, sort=True))</code></pre>
+<p>انتظار داریم متن پیشنهادی شامل AB123 باشد. اگر Tesseract فایل زبانش را پیدا نکرد، مسیر پوشه‌ای که فایل‌های <code>.traineddata</code> در آن هستند را با پارامتر <code>tessdata</code> یا گزینهٔ <code>--tessdata</code> اسکریپت مشخص کنید. حتماً TextPage حاصل از OCR را به تابع استخراج بعدی بدهید؛ وگرنه دوباره همان لایهٔ Native را می‌خوانید.</p>
+<p>برای سند ترکیبی فارسی و انگلیسی، <code>language="fas+eng"</code> را امتحان کنید. از حدود ۳۰۰ DPI شروع کنید و روی نمونه‌های خودتان مقایسه بگیرید. رزولوشن بالاتر حافظه و زمان بیشتری مصرف می‌کند و جزئیاتی را که از ابتدا در اسکن وجود نداشته‌اند برنمی‌گرداند. با کمک <a href="https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html">راهنمای کیفیت Tesseract</a> اصلاح کجی، چرخش، کنتراست، حذف نویز یا تنظیم روش قطعه‌بندی صفحه را یکی‌یکی امتحان کنید. همیشه نتیجه را با تصویر اصلی مقایسه کنید؛ به‌خصوص نقطهٔ اعشار و نویسه‌های ریز را.</p>
+<p>اگر هدفتان ساخت PDF قابل‌جست‌وجو است، OCRmyPDF پس از نصب خود ابزار و وابستگی‌هایش یک مسیر جداگانه و کاربردی دارد:</p><pre dir="ltr"><code class="language-bash">ocrmypdf -l fas+eng --rotate-pages --deskew --skip-text input.pdf searchable.pdf</code></pre>
+<p>فایل اصلی <code>input.pdf</code> را دست‌نخورده نگه دارید. گزینهٔ <code>--skip-text</code> صفحات دارای متن را رد می‌کند؛ بنابراین ممکن است تصویرِ حاوی متن را در صفحه‌ای که یک عنوان دیجیتال دارد نخواند. قابل‌جست‌وجو شدن PDF هم به‌معنی بازسازی جدول نیست. حالت‌های مختلف OCR روی اسناد ترکیبی را در <a href="https://ocrmypdf.readthedocs.io/en/stable/cookbook.html">راهنمای OCRmyPDF</a> ببینید.</p>
+<p><strong>قاعدهٔ مسیریابی:</strong> متن Native خالی، نویسهٔ جایگزین، ناحیهٔ جاافتاده و ترتیب خواندن خراب، نشانه‌هایی برای بازبینی هستند؛ نه یک تشخیص‌دهندهٔ بی‌نقص اسکن. صفحهٔ سفید می‌تواند معتبر باشد؛ اما صفحه‌ای که یک عنوان دیجیتال و یک جدول اسکن‌شده دارد هنوز کامل Parse نشده است. در صفحات ترکیبی ناحیه‌های تصویری را بررسی کنید و در صورت نیاز فقط ناحیهٔ خوانده‌نشده را OCR کنید. اسکریپت آموزشی امکان OCR کامل صفحات انتخابی را دارد؛ بازیابی در سطح ناحیه قدم بعدی است و در Baseline پیاده نشده است.</p>
+<span id="section-14" aria-hidden="true"></span><span id="section-15" aria-hidden="true"></span><span id="section-16" aria-hidden="true"></span><span id="section-17" aria-hidden="true"></span><span id="section-18" aria-hidden="true"></span><span id="section-50" aria-hidden="true"></span>
+<h2 id="tables" data-tutorial-step="tables">۵. جدول را بازسازی کنید، نه فقط کلماتش را</h2>
+
+<p>صفحهٔ دوم تمرین ما چنین جدولی دارد:</p><div class="tablewrap"><table><thead><tr><th scope="col">کالا (Item)</th><th scope="col">قیمت (Price)</th></tr></thead><tbody><tr><td>Notebook</td><td>12.50</td></tr>
+<tr><td>Pen</td><td>2.00</td></tr></tbody></table></div>
+<p>گرفتن یک لیست از کلمات کافی نیست. باید بدانیم عدد 12.50 مربوط به Notebook است، نه Pen. روی جدول سادهٔ تمرین، تشخیص جدول PyMuPDF را امتحان کنید:</p><pre dir="ltr"><code class="language-python">with pymupdf.open("demo.pdf") as doc:
+    for table in doc[1].find_tables().tables:
+        for row in table.extract():
+            print(row)</code></pre>
+<p>خروجی مورد انتظار سه سطر <code>['Item', 'Price']</code>، <code>['Notebook', '12.50']</code> و <code>['Pen', '2.00']</code> است. <a href="https://pymupdf.readthedocs.io/en/latest/page.html">مستندات Page.find_tables</a> استراتژی‌های مبتنی بر خطوط و متن را توضیح می‌دهند. برای جدول بدون خطوط مرزی، روی چند صفحه <code>strategy="text"</code> را هم امتحان و مقایسه کنید. پیدا نشدن جدول، دلیل بر نبود جدول نیست.</p>
+<p>اسکن، سلول ادغام‌شده، سرستون چندسطحی و جدولی که بین صفحات شکسته شده، بیشتر از تشخیص خطوط نیاز دارند. شناسهٔ سطر و ستون، تعداد سطر و ستون پوشش‌داده‌شده توسط سلول ادغام‌شده (Span) در صورت معلوم بودن، ارتباط با سرستون و مختصات را ذخیره کنید. تفاوت سلول خالی، سلول ادغام‌شده و سلول ناخوانا را حفظ کنید. برای وصل کردن جدول بین دو صفحه، سرستون‌های تکراری، هم‌ترازی ستون‌ها، بخش سند و مرز صفحه را مقایسه کنید؛ صرف برابر بودن تعداد ستون‌ها دلیل ادغام دو جدول نیست.</p>
+<p>وقتی جدول عدد، واحد یا شناسه دارد، علاوه بر درستی متن، ارتباط آن با سطر و ستون درست را هم بررسی کنید. ممکن است موتور OCR همهٔ نویسه‌ها را درست خوانده باشد ولی بازسازی ساختار، مقدار را به سلول اشتباه نسبت دهد. برای Layout پیچیده، در مرحلهٔ بعد ابزار آگاه از ساختار را امتحان می‌کنیم.</p>
+<span id="section-9" aria-hidden="true"></span><span id="section-10" aria-hidden="true"></span><span id="section-23" aria-hidden="true"></span><span id="section-24" aria-hidden="true"></span><span id="section-25" aria-hidden="true"></span><span id="section-26" aria-hidden="true"></span><span id="section-27" aria-hidden="true"></span>
+<h2 id="layout" data-tutorial-step="layout">۶. وقتی Baseline کافی نیست، یک Parser آگاه از Layout اضافه کنید</h2>
+
+<p>حالا یک سند واقعی و مجاز را امتحان کنید؛ مثلاً یک گزارش عمومی که عنوان، جدول و متن دوستونه دارد. Docling به‌جای رشتهٔ متن ساده، نمایش ساختاریافته‌ای از سند ارائه می‌دهد. اگر به این مرحله نیاز دارید، آن را جداگانه نصب کنید؛ اولین تبدیل PDF ممکن است فایل‌های مدل را دانلود کند و بیشتر طول بکشد. مثال زیر بر اساس <a href="https://docling-project.github.io/docling/getting_started/quickstart/">Quickstart پایتون</a> و <a href="https://docling-project.github.io/docling/reference/docling_document/">API خروجی Docling</a> است:</p><pre dir="ltr"><code class="language-bash">python -m pip install docling</code></pre><pre dir="ltr"><code class="language-python">from pathlib import Path
+from docling.document_converter import DocumentConverter
+
+result = DocumentConverter().convert("input.pdf")
+doc = result.document
+doc.save_as_json(Path("document.json"))
+Path("document.md").write_text(
+    doc.export_to_markdown(), encoding="utf-8"
+)</code></pre>
+<p>JSON را برای بررسی اجزای ساختاریافته و Markdown را برای پیش‌نمایش خوانا استفاده کنید. <a href="https://docling-project.github.io/docling/concepts/docling_document/">مدل سند Docling</a> آیتم‌های متنی، جدول، تصویر، روابط درختی و اطلاعات منبع را توضیح می‌دهد. قبل از فعال کردن OCR، تشخیص ساختار جدول یا مدل خاص، <a href="https://docling-project.github.io/docling/reference/pipeline_options/">تنظیمات Pipeline</a> را بخوانید؛ پشتیبانی و تنظیمات بین نسخه‌ها فرق می‌کنند. فرض نکنید OCR پیش‌فرض حتماً روی زبان موردنیاز شما کیفیت خوبی دارد. این مثال اختیاری بر اساس مستندات نوشته شده و جزو تست تمرین کوچک PyMuPDF نیست.</p>
+<p>گزینه‌های دیگر هم داریم؛ مثلاً Unstructured که روش‌های مختلفی برای تقسیم PDF به اجزا دارد، یا خواننده‌های Native. ساده‌ترین ابزاری را انتخاب کنید که نیاز اندازه‌گیری‌شدهٔ شما را برآورده می‌کند. این جدول رتبه‌بندی قطعی نیست:</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">ابزار</th><th scope="col">چه زمانی سراغش برویم؟</th><th scope="col">چه چیزی را بررسی کنیم؟</th></tr></thead><tbody><tr><td>PyMuPDF / pypdf</td><td>متن دیجیتال PDF و شواهد پایه کافی است</td><td>ترتیب خواندن، Encoding، مجوز</td></tr>
+<tr><td>Tesseract / OCRmyPDF</td><td>تبدیل تصویر به متن یا PDF قابل‌جست‌وجو می‌خواهیم</td><td>فایل زبان، کیفیت اسکن، ناحیه‌های جاافتاده</td></tr>
+<tr><td>Docling</td><td>عنوان‌ها، ترتیب خواندن، جدول و فرمت‌های ساختاریافته مهم‌اند</td><td>پشتیبانی زبان OCR، دقت جدول، زمان اجرا</td></tr>
+<tr><td>Unstructured</td><td>اجزای دسته‌بندی‌شدهٔ سند و روش‌های جایگزین Partition لازم است</td><td>وابستگی‌ها، انتخاب استراتژی، ترتیب ستون‌ها</td></tr>
+<tr><td>مدل بینایی‌ـ‌زبانی (VLM)</td><td>برای یک ناحیهٔ دشوار به یک خوانش بصری دیگر نیاز داریم</td><td>Hallucination، سیاست دادهٔ حساس، هزینه، قابلیت بررسی</td></tr></tbody></table></div>
+<p>برای فهم Trade-off روش‌ها، <a href="https://docs.unstructured.io/open-source/core-functionality/partitioning">راهنمای Partitioning در Unstructured</a> را بخوانید. برای DOCX، XLSX، HTML و ورودی‌هایی که ذاتاً ساختار دارند، از خوانندهٔ مخصوص همان فرمت یا مبدلی مثل Docling با <a href="https://docling-project.github.io/docling/usage/supported_formats/">فهرست فرمت‌های پشتیبانی‌شده</a> استفاده کنید. لازم نیست همه‌چیز را PDF کنید تا به OCR بدهید؛ عنوان‌های Word و سلول‌های اکسل از ابتدا ساختار مفیدی دارند.</p>
+<p>VLM ممکن است برای اسکن غیرمعمول یا نمودار مفید باشد. فقط ناحیهٔ لازم را ارسال کنید، خوانش تحت‌اللفظی با Schema مشخص بخواهید، برای موارد نامعلوم مقدار null بگذارید، تصویر ناحیه را نگه دارید و خروجی را بررسی کنید. جواب مدل یک گزینهٔ پیشنهادی دیگر است؛ توافق دو مدل به‌تنهایی اثبات درستی نیست.</p>
+<span id="section-28" aria-hidden="true"></span><span id="section-31" aria-hidden="true"></span><span id="section-53" aria-hidden="true"></span>
+<h2 id="structure" data-tutorial-step="structure">۷. قبل از ساخت خروجی نهایی، داده و شواهد را ساختاریافته ذخیره کنید</h2>
+
+<p>حالا یک نمایش اصلی برای داده انتخاب کنید؛ همان نسخه‌ای که خروجی‌های دیگر از روی آن ساخته می‌شوند. می‌توانید Schema یک ابزار موجود را به کار بگیرید یا ساختار کوچکی برای خودتان تعریف کنید. DocumentIR (Intermediate Representation) صرفاً نمایش میانی ساختاریافتهٔ سند بین استخراج و خروجی است؛ فرمت اجباری یا استاندارد واحد صنعت نیست.</p><pre dir="ltr"><code class="language-json">{
+  "page": 2,
+  "kind": "table_cell",
+  "table_id": "p2-t0",
+  "row": 1,
+  "col": 1,
+  "header": "Price",
+  "text_raw": "12.50",
+  "value": "12.50",
+  "bbox": [200, 85, 360, 120],
+  "method": "native",
+  "status": "unverified"
+}</code></pre>
+<p>این یک Schema آموزشی برای سلول معلوم در تمرین است، نه رکورد عیناً تولیدشده توسط اسکریپت. اندیس‌ها از صفر و شمارهٔ صفحه از یک شروع می‌شوند؛ BBox مرز موردانتظار سلول در مختصات Point صفحهٔ بدون چرخش را نشان می‌دهد. در عمل هش سند، شناسهٔ صفحه و ناحیه، موتور و نسخه، تنظیمات و در صورت تغییر اندازه یا چرخش تصویر، تبدیل مختصات را هم ثبت کنید. اگر مقداری را نرمال کردید، متن خام را نگه دارید. برای مبلغی که به محاسبات اعشاری دقیق نیاز دارد از Decimal به‌جای Float دودویی استفاده کنید.</p>
+<p>خروجی Parser باید مشخص کند چه چیزی معلوم است، چه چیزی جا افتاده و کدام ناحیه هنوز حل نشده است. JSON برای اعتبارسنجی و نرم‌افزار بعدی مفید است؛ HTML از جدول‌های پیچیده‌تری پشتیبانی می‌کند؛ Markdown برای مطالعه یا پرامپت مدل راحت است، ولی ممکن است اطلاعات سلول ادغام‌شده یا منبع را از دست بدهد. Markdown را خروجی مشتق‌شده بدانید، نه تنها نسخهٔ شواهد. برای نمایش متن یا HTML استخراج‌شده در مرورگر هم Escaping یا Sanitization انجام دهید.</p>
+<span id="section-11" aria-hidden="true"></span><span id="section-12" aria-hidden="true"></span><span id="section-13" aria-hidden="true"></span><span id="section-51" aria-hidden="true"></span>
+<h2 id="rtl" data-tutorial-step="rtl">۸. متن چندزبانه و راست‌به‌چپ را درست مدیریت کنید</h2>
+
+<p>فارسی، عربی و عبری یک چالش دیگر دارند: ترتیب منطقی نویسه‌های Unicode با ترتیب نمایش آن‌ها روی صفحه یکی نیست. عبارت <bdi dir="rtl">مبلغ ۱۲٫۵۰ USD</bdi> را ببینید؛ کلمهٔ راست‌به‌چپ، عدد اعشاری و کد ارز چپ‌به‌راست کنار هم‌اند. معکوس کردن کل رشته با <code>text[::-1]</code> می‌تواند عدد و عبارت انگلیسی را خراب کند. <a href="https://www.unicode.org/reports/tr9/">الگوریتم دوجهتهٔ Unicode</a> ترتیب نمایش را توضیح می‌دهد؛ متن خراب استخراج‌شده را تعمیر نمی‌کند.</p>
+<p>رشتهٔ اصلی Unicode را نگه دارید. برای جست‌وجو یک نسخهٔ نرمال‌شدهٔ جدا با NFC و تبدیل‌های زبانی حساب‌شده بسازید. برای فارسی، اگر نیاز کاربرد جست‌وجو چنین است، می‌توان ی و ک عربی را به معادل فارسی تبدیل کرد:</p><pre dir="ltr"><code class="language-python">import unicodedata
+
+def normalize_for_search(text):
+    text = unicodedata.normalize("NFC", text)
+    return text.translate(str.maketrans({
+        "ي": "ی", "ك": "ک"
+    }))
+
+raw = "مبلغ ۱۲٫۵۰ USD"
+search_text = normalize_for_search(raw)
+# Keep raw as well; do not reverse or strip every symbol.</code></pre>
+<p>از <a href="https://docs.python.org/3/library/unicodedata.html">API نرمال‌سازی Unicode در Python</a> استفاده کنید. نیم‌فاصله، نشانه‌گذاری، منفی، درصد و جداکنندهٔ اعشار را کورکورانه حذف نکنید؛ ممکن است معنای متن به آن‌ها وابسته باشد. تبدیل ارقام را فقط در لایهٔ مشخص جست‌وجو یا پردازش عدد انجام دهید و صفرهای ابتدایی شناسه‌ها و رشتهٔ اصلی را حفظ کنید. روی ترکیب واژه‌های فارسی، عربی و انگلیسی، تاریخ، واحد پول، شناسه، پرانتز و سلول‌های چندجهتهٔ جدول تست بگیرید. در رابط نمایش از RTL و جداسازی جهت متن ترکیبی استفاده کنید. اگر استخراج خراب است، قبل از هر اصلاحی ترتیب خام نویسه‌ها، مختصات کلمات و تصویر صفحه را بررسی کنید.</p>
+<span id="section-29" aria-hidden="true"></span><span id="section-30" aria-hidden="true"></span><span id="section-32" aria-hidden="true"></span><span id="section-33" aria-hidden="true"></span><span id="section-34" aria-hidden="true"></span><span id="section-35" aria-hidden="true"></span><span id="section-36" aria-hidden="true"></span><span id="section-37" aria-hidden="true"></span><span id="section-38" aria-hidden="true"></span><span id="section-39" aria-hidden="true"></span><span id="section-46" aria-hidden="true"></span><span id="section-48" aria-hidden="true"></span><span id="section-52" aria-hidden="true"></span><span id="section-54" aria-hidden="true"></span>
+<h2 id="pipeline" data-tutorial-step="pipeline">۹. مراحل را به یک Pipeline کوچک وصل کنید و خطاها را دیباگ کنید</h2>
+
+<p>اسکریپت کامل تمرین، استخراج Native، مسیریابی در سطح صفحه، OCR اختیاری، مختصات کلمات، جدول دیجیتال ساده و هشدارها را کنار هم قرار می‌دهد. روی همان PDF تمرین دو بار با نام خروجی متفاوت اجرا کنید:</p><pre dir="ltr"><code class="language-bash">python parse_pdf.py demo.pdf native.json
+python parse_pdf.py demo.pdf with-ocr.json --ocr --lang eng
+# Optional: inspect and explicitly OCR a mixed/corrupted page:
+python parse_pdf.py input.pdf review.json --ocr --lang fas+eng --ocr-page 2</code></pre>
+<p>دو JSON را باز کنید. در <code>native.json</code>، صفحهٔ ۳ روش استخراج ندارد و نیازمند بازبینی است. در <code>with-ocr.json</code> برای همان اسکن یک متن پیشنهادی از OCR داریم، ولی لیست جدول‌ها خالی مانده چون OCR سلول‌های جدول را بازسازی نکرده است. صفحهٔ ۲ جدول دیجیتال تشخیص‌داده‌شده را دارد. کل سند همچنان <code>unverified</code> است؛ حتی صفحه‌ای با وضعیت <code>candidate</code> هنوز پذیرفته نشده است. گزینهٔ <code>--ocr-page</code> صریحاً درخواست OCR کامل صفحه را می‌دهد و متن Native اصلی را برای مقایسه نگه می‌دارد، اما استخراج جدول Native در آن صفحه انجام نمی‌شود.</p>
+<pre dir="ltr"><code class="language-text">Input file
+  -&gt; Detect format / inspect pages
+  -&gt; Native extraction OR OCR
+  -&gt; Layout + reading order + tables (when needed)
+  -&gt; Structured document + source coordinates
+  -&gt; Validate / review unresolved regions
+  -&gt; Export JSON / Markdown / HTML
+  -&gt; Chunk + index accepted content only</code></pre>
+<p>همهٔ مدل‌ها و تکنیک‌های پیشرفته را یک‌جا اضافه نکنید. وقتی نتیجه خراب است، خروجی میانی را با تصویر صفحه مقایسه کنید، مرحلهٔ خطادار را پیدا کنید و فقط همان مرحله را تغییر دهید. این جدول نقطهٔ شروع خوبی برای دیباگ است:</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">نشانه</th><th scope="col">چه چیزی را بررسی کنیم؟</th><th scope="col">راه آزمایش و اصلاح</th></tr></thead><tbody><tr><td>متن خالی</td><td>صفحهٔ تصویری، سفید یا لایهٔ متن خراب</td><td>رندر صفحه؛ اگر محتوا دارد OCR</td></tr>
+<tr><td>متن درهم یا معکوس</td><td>Encoding فونت، Bidi، ترتیب خواندن</td><td>بررسی مختصات و Unicode خام؛ مقایسهٔ OCR</td></tr>
+<tr><td>به‌هم‌ریختن دو ستون</td><td>ترتیب خواندن</td><td>گروه‌بندی ستون یا Layout Model؛ بررسی توالی</td></tr>
+<tr><td>عدد درست، سلول اشتباه</td><td>تشخیص و ساختار جدول</td><td>بازبینی مرز سلول و سرستون؛ مقایسهٔ Parser ساختاری</td></tr>
+<tr><td>اعشار یا درصد جاافتاده</td><td>کیفیت تصویر یا OCR</td><td>رندر Crop، مقایسهٔ DPI و زبان؛ بازبینی نشانهٔ حساس</td></tr>
+<tr><td>عنوان شکل یا متن داخل تصویر جا افتاده</td><td>Layout و استخراج تصویر</td><td>بررسی ناحیه و Caption؛ OCR ناحیهٔ لازم</td></tr>
+<tr><td>خروجی قدیمی بعد از تغییر کد</td><td>Cache Invalidation</td><td>کلید Cache شامل هش ورودی، نسخهٔ موتور/مدل، تنظیمات و Schema؛ اجرای تازه</td></tr>
+<tr><td>شکست یا Timeout صفحه</td><td>خرابی ورودی، کمبود منابع، Crash</td><td>ثبت شکست؛ Retry محدود؛ بازبینی یا تکرار روی ناحیهٔ مشخص</td></tr></tbody></table></div>
+<p>Retry باید محدود باشد. خروجی خام را جدا از اصلاحات نگه دارید و برای ناحیهٔ حل‌نشده صف بازبینی داشته باشید. شکست یک مرحله نباید بی‌صدا به خروجی خالی اما موفق تبدیل شود. در سرویس خودکار فقط عناصر تأییدشده را به بخش بعدی بدهید؛ اگر ناحیهٔ نامعلوم می‌تواند معنی سند را عوض کند، انتشار کل سند را متوقف کنید. این مثال عمداً پذیرش خودکار، مسیریابی کالیبره‌شده، بازسازی جدول ادغام‌شده و ایزوله‌سازی سطح سرویس ندارد.</p>
+<span id="section-40" aria-hidden="true"></span><span id="section-41" aria-hidden="true"></span><span id="section-42" aria-hidden="true"></span><span id="section-43" aria-hidden="true"></span><span id="section-44" aria-hidden="true"></span><span id="section-45" aria-hidden="true"></span>
+<h2 id="evaluation" data-tutorial-step="evaluation">۱۰. قبل از بهینه‌سازی، Parser را با پاسخ مرجع ارزیابی کنید</h2>
+
+<p>از یک تست کوچک روی تمرین مصنوعی شروع کنید. کد زیر را با نام <code>check_demo.py</code> ذخیره کنید و بعد از اجرای مثال OCR آن را اجرا کنید.</p><pre dir="ltr"><code class="language-python">import json
+
+with open("with-ocr.json", encoding="utf-8") as f:
+    parsed = json.load(f)
+assert parsed["page_count"] == 3
+assert len(parsed["pages"]) == 3
+
+cells = {
+    (cell["row"], cell["col"]): cell["text"]
+    for cell in parsed["pages"][1]["tables"][0]["cells"]
 }
-</code></pre>
-<p><code>bbox</code> یا Bounding Box محدوده مستطیلی یک عنصر روی صفحه است. این مختصات به سیستم اجازه می‌دهد بعداً به محل واقعی آن عنصر در سند برگردد.</p>
-<p>اما PyMuPDF هم محدودیت دارد. در یکی از آزمایش‌ها روی یک صفحه دشوار فارسی، از مجموع ۹۸۰ نویسه استخراج‌شده، ۳۰۸ نویسه متعلق به محدوده PUA بودند؛ حدود یک‌سوم نویسه‌ها.</p>
-<p>PUA مخفف Private Use Area است؛ محدوده‌ای از Unicode که برای استفاده خصوصی و نگاشت‌های سفارشی در نظر گرفته شده است. بعضی فونت‌ها و PDFها ممکن است از چنین نگاشت‌هایی استفاده کنند؛ در نتیجه ظاهر متن برای انسان کاملاً درست باشد، ولی متن استخراج‌شده معنای مورد انتظار را نداشته باشد.</p>
-<p>درس این آزمایش این نیست که PyMuPDF کتابخانه بدی است؛ بلکه این است که <strong>استخراج مستقیم متن PDF همیشه منبع حقیقت نیست.</strong></p>
-<h3 id="section-7">۵. Docling و TableFormer</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 230" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="140" rx="2" stroke="var(--line)" width="245" x="65" y="40"></rect><rect fill="var(--tint)" height="28.0" rx="1" stroke="none" width="245" x="65" y="40"></rect><path d="M65 68.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 96.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 124.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 152.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M228.33333333333334 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="140" rx="2" stroke="var(--line)" width="245" x="410" y="40"></rect><rect fill="var(--tint)" height="28.0" rx="1" stroke="none" width="245" x="410" y="40"></rect><path d="M410 68.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 96.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 124.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 152.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M573.3333333333334 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M325 110L395 110" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="395" cy="110" fill="var(--accent)" r="3"></circle><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="71"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="99"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="127"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="155"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="71"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="99"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="127"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="155"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="71"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="99"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="127"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="155"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="187" y="210">جدول اصلی</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="532" y="210">هندسه و سلول‌های تشخیص‌داده‌شده</text></svg><figcaption>تصویر شماتیک از وظیفه TableFormer؛ خروجی واقعی مدل نیست.</figcaption></figure>
-<p><a href="https://github.com/docling-project/docling">Docling</a> یک ابزار پردازش سند است که می‌تواند در تحلیل ساختار صفحات و تبدیل اسناد به نمایش ساختاریافته کمک کند. یکی از اجزای آن TableFormer است که برای تشخیص ساختار جدول استفاده می‌شود.</p>
-<p>در پیاده‌سازی مورد مطالعه، تنظیمات Docling به این شکل بوده‌اند (نمایش مفهومی تنظیمات، نه یک قطعه‌کد اجرایی کامل):</p>
-<pre><code class="language-python">do_table_structure = True
-table_structure_mode = ACCURATE
-do_cell_matching = True
-do_ocr = False
-</code></pre>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>گزینه</th>
-<th>معنی</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>do_table_structure</code></td>
-<td>تشخیص ساختار جدول</td>
-</tr>
-<tr>
-<td><code>ACCURATE</code></td>
-<td>حالت متمرکز بر دقت تشخیص ساختار</td>
-</tr>
-<tr>
-<td><code>do_cell_matching</code></td>
-<td>تطبیق متن PDF با سلول‌های تشخیص‌داده‌شده</td>
-</tr>
-<tr>
-<td><code>do_ocr</code></td>
-<td>OCR در این مسیر مشخص غیرفعال است</td>
-</tr>
-</tbody>
-</table></div>
-<p>حتی خاموش و روشن کردن <code>do_cell_matching</code> در آزمایش روی یک صفحه دشوار، مشکل نویسه‌های خراب فارسی را برطرف نکرد. همچنین یک فرمول تصویری به‌عنوان فرمول تشخیص داده نشد و ساختار جدول نیز ناقص بود.</p>
-<p>TableFormer در این معماری جزئی از Docling است، نه یک Parser مستقل که بعد از Docling تمام سند را مجدداً پردازش کند.</p>
-<p>انتخاب حالت <code>ACCURATE</code> تضمین دقت واقعی نیست. تنظیمات باید براساس خروجی آزمایش‌های واقعی انتخاب شوند، نه صرفاً نام آن‌ها.</p>
-<h3 id="section-8">۶. معماری یک Pipeline پردازش سند</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 590" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="12"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="360" y="40">PDF + Source Identity / Hash</text><path d="M360 56L360 74" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="74" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="74"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="360" y="102">PyMuPDF · Page evidence, text, geometry</text><path d="M360 118L360 136" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="136" fill="var(--accent)" r="3"></circle><path d="M360 136H120V151 M360 136V151 M360 136H600V151" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--tint)" height="62" rx="8" stroke="var(--accent)" width="220" x="10" y="151"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="120" y="176">Provider</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="120" y="197">+ Docling / TableFormer</text><rect fill="var(--tint)" height="62" rx="8" stroke="var(--accent)" width="220" x="250" y="151"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="360" y="176">Local Docling</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="360" y="197">TableFormer</text><rect fill="var(--tint)" height="62" rx="8" stroke="var(--accent)" width="220" x="490" y="151"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="600" y="176">Local + VLM</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="600" y="197">Selected crops</text><path d="M120 213V230H360 M360 213V245 M600 213V230H360" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="245"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="273">Structural Reconstruction</text><path d="M360 289L360 307" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="307" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="307"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="335">DocumentIR / TableIR</text><path d="M360 351L360 369" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="369" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="369"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="397">Quality Gates</text><path d="M360 413L360 431" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="431" fill="var(--accent)" r="3"></circle><path d="M360 431H180V448 M360 431H540V448" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--goodbg)" height="48" rx="8" stroke="var(--good)" width="320" x="20" y="448"></rect><text fill="var(--good)" font-size="18" font-weight="500" text-anchor="middle" x="180" y="478">Accepted content</text><rect fill="var(--warnbg)" height="48" rx="8" stroke="var(--warn)" width="320" x="380" y="448"></rect><text fill="var(--warn)" font-size="18" font-weight="500" text-anchor="middle" x="540" y="478">Review / Quarantine</text><path d="M180 496L180 520" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="180" cy="520" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="56" rx="8" stroke="var(--line)" width="320" x="20" y="520"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="180" y="543">JSON / HTML / Markdown</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="180" y="562">Eligible chunks</text></svg><figcaption>نقشه مفهومی جریان پردازش؛ فقط محتوای واجد شرایط به خروجی پایین‌دست می‌رود.</figcaption></figure>
-<p>در معماری مطالعه‌شده، چند مسیر استخراج وجود داشته است. مسیر پیش‌فرض ابتدا از یک Extraction Provider برای استخراج ساختاریافته استفاده می‌کرد و سپس Docling برای غنی‌سازی ساختار جدول‌ها وارد عمل می‌شد. مسیر دیگری نیز بر Docling محلی و مسیر انتخابی بازیابی تصویری متکی بود.</p>
-<pre><code class="language-text">PDF + Source Identity / Hash
-            |
-            v
-PyMuPDF: page evidence, text, geometry
-            |
-            v
-    Extraction strategy
-    |-- Provider + Docling / TableFormer
-    |-- Local Docling / TableFormer
-    `-- Local Docling + selected VLM crops
-            |
-            v
-    Structural reconstruction
-            |
-            v
-    DocumentIR / TableIR
-            |
-            v
-        Quality gates
-        |-- Accepted content
-        `-- Review / quarantine
-            |
-            v
-    Eligible derived outputs:
-    JSON / HTML / Markdown / Chunks
-</code></pre>
-<p>این نمودار نقشه مفهومی مسیرهای پردازش و نقاط تصمیم‌گیری است، نه ترتیب دقیق تمام فراخوانی‌های کد. محتوای قرنطینه‌شده باید گزارش شود و وارد خروجی قابل اعتماد پایین‌دست نشود.</p>
-<p>هدف نهایی، تولید متن ساده نیست؛ بلکه تولید یک نسخه ساختاریافته از سند است که بتوان صحت و منشأ اطلاعات آن را بررسی کرد. این همان تفاوت میان Text Extraction و Structural Reconstruction است.</p>
-<h3 id="section-9">۷. DocumentIR و TableIR؛ چرا Markdown کافی نیست؟</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 235" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="45" rx="8" stroke="var(--line)" width="350" x="185" y="8"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="36">Original Document</text><path d="M360 53L360 78" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="78" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="56" rx="8" stroke="var(--accent)" width="430" x="145" y="78"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="101">DocumentIR / TableIR</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="360" y="121">Canonical representation</text><path d="M360 134V157H90V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="10" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="90" y="206">JSON</text><path d="M360 134V157H270V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="190" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="270" y="206">HTML</text><path d="M360 134V157H450V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="370" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="450" y="206">Markdown</text><path d="M360 134V157H630V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="550" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="630" y="206">Chunks</text></svg><figcaption>تمام نمایش‌های مشتق‌شده از یک ساختار canonical تولید می‌شوند.</figcaption></figure>
-<p>Markdown برای خواندن توسط انسان و مدل زبانی بسیار مناسب است، اما برای ذخیره تمام جزئیات ساختاری یک سند محدودیت دارد.</p>
-<p>برای مثال، در یک جدول پیچیده ممکن است یک سلول هم‌زمان متعلق به سه سطر باشد. ممکن است جدول در صفحه بعد ادامه پیدا کند یا یک پاورقی تنها به یک ستون خاص مربوط باشد. اگر همه این اطلاعات را مستقیماً به Markdown تبدیل کنیم، احتمال دارد بخشی از روابط از دست بروند.</p>
-<p>راهکار معماری، استفاده از Intermediate Representation یا نمایش میانی است. DocumentIR ساختار کلی سند را نگه می‌دارد و TableIR مسئول نگهداری ساختار دقیق جدول‌هاست.</p>
-<p>یک نمونه ساده و مفهومی از TableIR:</p>
-<pre><code class="language-json">{
-  "type": "table",
-  "table_id": "table_001",
-  "page": 5,
-  "cells": [
-    {
-      "row": 1,
-      "column": 2,
-      "text": "۱۸٪",
-      "header": "نرخ سود",
-      "rowspan": 1,
-      "colspan": 1,
-      "bbox": [120, 340, 165, 360],
-      "status": "REVIEW_REQUIRED"
-    }
-  ]
-}
-</code></pre>
-<p>حالا سیستم علاوه بر عدد ۱۸ درصد، می‌داند که این عدد متعلق به چه ستونی است، در کدام صفحه قرار دارد، چه مختصاتی دارد و آیا صحت آن بررسی شده است یا خیر.</p>
-<pre><code class="language-text">Original document
-        |
-        v
-DocumentIR + TableIR
-(canonical representation)
-        |
-        +-- JSON
-        +-- HTML
-        +-- Markdown
-        `-- RAG chunks
-</code></pre>
-<p><strong>یک منبع حقیقت ساختاریافته داشته باش و تمام خروجی‌های دیگر را از آن تولید کن.</strong></p>
-<p>اگر جدول اصلی اصلاح شد، Markdown، HTML و Chunkها هم باید دوباره از همان ساختار ساخته شوند. در غیر این صورت، ممکن است اطلاعات در JSON اصلاح شده باشند ولی نسخه قدیمی و اشتباه همچنان در Vector Database باقی بماند. این اتفاق در سیستم‌های واقعی یکی از منابع خطاهای بسیار گمراه‌کننده است.</p>
-<hr/>
-<h2 id="section-10">بخش سوم: چرا اسناد فارسی دشوارتر هستند؟</h2>
-<h3 id="section-11">۸. کابوس RTL، Unicode و اعداد فارسی</h3>
-<p>فارسی راست‌به‌چپ است، اما همه اجزای یک متن فارسی راست‌به‌چپ نیستند. اعداد، بعضی فرمول‌ها، کلمات انگلیسی، تاریخ‌ها و عبارت‌های ترکیبی رفتار متفاوتی دارند.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>مقدار اصلی</th>
-<th>خروجی اشتباه احتمالی</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>۱۴۰۱</code></td>
-<td><code>۱۰۴۱</code></td>
-</tr>
-<tr>
-<td><code>۹٬۰۳۹٬۰۰۰</code></td>
-<td><code>۰۰۰٬۹۳۰٬۹</code></td>
-</tr>
-<tr>
-<td><code>+10</code></td>
-<td><code>10+</code></td>
-</tr>
-<tr>
-<td><code>≤ 20</code></td>
-<td><code>&lt; 20</code></td>
-</tr>
-<tr>
-<td><code>۱۸٪</code></td>
-<td><code>۱۸</code></td>
-</tr>
-<tr>
-<td><code>500 میلیون ریال</code></td>
-<td><code>500 ریال</code></td>
-</tr>
-</tbody>
-</table></div>
-<p>این‌ها فقط اشکالات ظاهری نیستند. در اسناد مالی، هر کدام می‌توانند معنی یک قانون یا محاسبه را تغییر دهند.</p>
-<h4 id="section-12">ترتیب دیداری و ترتیب منطقی</h4>
-<ul>
-<li><strong>Visual Order:</strong> ترتیبی که نویسه‌ها روی صفحه دیده می‌شوند.</li>
-<li><strong>Logical Order:</strong> ترتیبی که نویسه‌ها باید در حافظه و هنگام پردازش متن داشته باشند.</li>
-</ul>
-<p>الگوریتم <a href="https://www.unicode.org/reports/tr9/">Unicode Bidirectional یا BiDi</a> به مدیریت نمایش متن‌هایی کمک می‌کند که ترکیبی از جهت‌های مختلف دارند.</p>
-<p>در یک گزارش درباره موتور C++ کتابخانه Docling، مطرح شده بود که رفتار مربوط به نویسه‌های راست‌به‌چپ باعث معکوس‌شدن بعضی اعداد فارسی شده است. علت دقیق آن باگ بالادستی در بررسی مورد مطالعه مستقلاً تأیید نشده است، اما نمونه‌هایی از خطاهای مشابه در آزمایش‌های واقعی دیده شده‌اند.</p>
-<h4 id="section-13">آیا کافی است تمام اعداد را برعکس کنیم؟</h4>
-<p>خیر؛ این کار می‌تواند خطاهای جدید و حتی بدتری ایجاد کند. فرض کن Parser عدد <code>21</code> را استخراج کرده است. چگونه می‌فهمیم مقدار درست <code>21</code> بوده یا <code>12</code>؟</p>
-<p>یکی از راهکارهای آزمایش‌شده این بود که ابتدا متن native صفحه با PyMuPDF استخراج شود. اگر مقدار <code>12</code> در منبع وجود داشت، اما <code>21</code> وجود نداشت، سیستم می‌توانست با احتیاط ترتیب عدد را اصلاح کند. اگر هر دو مقدار در منبع وجود داشتند، سیستم نباید حدس می‌زد.</p>
-<p>این روش در تعدادی از نمونه‌ها مفید بوده است، اما برای PDFهای اسکن‌شده یا PDFهایی که لایه متنی خودشان خراب است، کافی نیست. حتی وجود مقدار معکوس در همان صفحه الزاماً تعلق آن به همان سلول را ثابت نمی‌کند.</p>
-<p><strong>اصلاح مبتنی بر شواهد بهتر از اصلاح مبتنی بر حدس است. ولی حتی شواهد باید از نظر اعتبار بررسی شوند.</strong></p>
-<h3 id="section-14">۹. سخت‌ترین مشکلات جدول‌ها</h3>
-<p>مشکل جدول تنها خواندن سلول‌ها نیست؛ تشخیص روابط میان سلول‌هاست.</p>
-<h4 id="section-15">سلول‌های ادغام‌شده</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 175" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="150" rx="2" stroke="var(--line)" width="550" x="85" y="10"></rect><rect fill="var(--tint)" height="37.5" rx="1" stroke="none" width="550" x="85" y="10"></rect><path d="M85 47.5H635" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M268.33333333333337 85.0H635" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M268.33333333333337 122.5H635" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M268.33333333333337 10V160" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M451.6666666666667 10V160" fill="none" stroke="var(--line)" stroke-width="1"></path><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="177" y="38">نوع قرارداد</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="38">مدت</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="38">نرخ سود</text><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="177" y="110">فروش اقساطی</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="76.0">۱۲ ماه</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="76.0">۱۸٪</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="113.5">۲۴ ماه</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="113.5">۲۰٪</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="151.0">۳۶ ماه</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="151.0">۲۳٪</text></svg><figcaption>یک سلول به سه سطر تعلق دارد (rowspan).</figcaption></figure>
-<p>فرض کن در یک جدول، عنوان «فروش اقساطی» در یک سلول عمودی ادغام‌شده قرار گرفته و به سه سطر تعلق دارد:</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>نوع قرارداد</th>
-<th>مدت</th>
-<th>نرخ سود</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>فروش اقساطی</td>
-<td>۱۲ ماه</td>
-<td>۱۸٪</td>
-</tr>
-<tr>
-<td>(ادامه همان سلول)</td>
-<td>۲۴ ماه</td>
-<td>۲۰٪</td>
-</tr>
-<tr>
-<td>(ادامه همان سلول)</td>
-<td>۳۶ ماه</td>
-<td>۲۳٪</td>
-</tr>
-</tbody>
-</table></div>
-<p>اگر Parser فقط متن سطر دوم و سوم را ذخیره کند، ممکن است رابطه آن‌ها با نوع قرارداد از بین برود. TableIR باید رابطه <code>rowspan</code> را حفظ کند.</p>
-<h4 id="section-16">ادامه جدول در صفحه بعد</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 205" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="145" rx="2" stroke="var(--line)" width="245" x="55" y="40"></rect><rect fill="var(--tint)" height="36.25" rx="1" stroke="none" width="245" x="55" y="40"></rect><path d="M55 76.25H300" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M55 112.5H300" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M55 148.75H300" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M136.66666666666669 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M218.33333333333334 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="145" rx="2" stroke="var(--line)" width="245" x="420" y="40"></rect><path d="M420 76.25H665" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M420 112.5H665" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M420 148.75H665" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M501.6666666666667 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M583.3333333333334 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="177" y="25">صفحه ۱۵</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="542" y="25">صفحه ۱۶</text><path d="M312 108L408 108" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="408" cy="108" fill="var(--accent)" r="3"></circle></svg><figcaption>جدول ادامه‌دار و سرستون ارث‌رسیده از صفحه قبل.</figcaption></figure>
-<pre><code class="language-text">Page 15                  Page 16
-+-------+-------+        +-------+-------+
-| Header A      |        | No header     |
-+-------+-------+        +-------+-------+
-| Row 1 | Value |        | Row 3 | Value |
-| Row 2 | Value |  ---&gt;  | Row 4 | Value |
-+-------+-------+        +-------+-------+
-</code></pre>
-<p>جدول صفحه دوم ممکن است سرستون نداشته باشد، اما همچنان از سرستون‌های صفحه قبل ارث ببرد. در یکی از نمونه‌های واقعی، اتصال احتمالی دو صفحه شناسایی شد ولی به دلیل سلول‌های تأییدنشده و سرستون‌های ناقص، جدول نهایی پذیرفته نشد.</p>
-<h4 id="section-17">دو جدول مجاور با معانی متفاوت</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 185" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="120" rx="2" stroke="var(--line)" width="300" x="30" y="40"></rect><rect fill="var(--tint)" height="30.0" rx="1" stroke="none" width="300" x="30" y="40"></rect><path d="M30 70.0H330" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M30 100.0H330" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M30 130.0H330" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M180.0 40V160" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="120" rx="2" stroke="var(--line)" width="300" x="390" y="40"></rect><rect fill="var(--tint)" height="30.0" rx="1" stroke="none" width="300" x="390" y="40"></rect><path d="M390 70.0H690" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M390 100.0H690" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M390 130.0H690" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M540.0 40V160" fill="none" stroke="var(--line)" stroke-width="1"></path><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="180" y="25">شرایط ضمانت</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="540" y="25">شرایط تسهیلات</text><path d="M360 10V170" fill="none" stroke="var(--warn)" stroke-width="2"></path></svg><figcaption>دو جدول مجاور باید از نظر ساختاری و معنایی جدا بمانند.</figcaption></figure>
-<p>فرض کن یک صفحه دو جدول مستقل درباره «شرایط ضمانت» و «شرایط دریافت تسهیلات» دارد. ادغام اشتباه این دو جدول می‌تواند شرایط ضمانت را به دریافت تسهیلات نسبت دهد، حتی اگر همه اعداد درست خوانده شده باشند.</p>
-<h4 id="section-18">فرم‌های خالی</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 280" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="2" stroke="var(--line)" width="235" x="70" y="10"></rect><path d="M70 22.77777777777778H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 35.55555555555556H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 48.333333333333336H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 61.111111111111114H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 73.88888888888889H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 86.66666666666667H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 99.44444444444444H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 112.22222222222223H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 125.0H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 137.77777777777777H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 150.55555555555554H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 163.33333333333334H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 176.11111111111111H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 188.88888888888889H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 201.66666666666666H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 214.44444444444446H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 227.22222222222223H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M117.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M164.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M211.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M258.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="35" rx="2" stroke="var(--line)" width="210" x="450" y="95"></rect><path d="M492.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M534.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M576.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M618.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M320 115L435 115" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="435" cy="115" fill="var(--accent)" r="3"></circle><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="187" y="262">۱۸ × ۵ = ۹۰ جایگاه</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="555" y="154">بازسازی ناقص</text></svg><figcaption>ساختار یک فرم خالی، حتی بدون متن، باید حفظ شود.</figcaption></figure>
-<p>در یک نمونه واقعی، فرم ۱۸ سطر و ۵ ستون داشت، یعنی ۹۰ جایگاه، ولی خروجی Parser تنها ساختار بسیار کوچک‌تری را بازسازی کرد. نبود متن در سلول‌ها به این معنی نیست که ساختار آن‌ها اهمیتی ندارد.</p>
-<p>پاورقی‌ها، عنوان جدول، واحد اندازه‌گیری، سطرهای شکسته‌شده در انتهای صفحه و جدول‌هایی با چند سطح سرستون نیز مسائل مستقل خودشان را دارند. برای همین، درصد کلمات درست یک جدول به‌تنهایی معیار خوبی برای ارزیابی کیفیت آن نیست.</p>
-<hr/>
-<h2 id="section-19">بخش چهارم: مدل‌های بینایی و بازیابی اطلاعات</h2>
-<h3 id="section-20">۱۰. چرا از Vision Language Model استفاده می‌کنیم؟</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 250" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="35" y="10"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="111.0" y="28"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="52"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="64"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="76"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="88"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="50" y="110"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="50" y="110"></rect><path d="M50 127.5H210" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M50 145.0H210" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M50 162.5H210" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M103.33333333333334 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M156.66666666666669 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="192"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="50" y="202"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="50" y="212"></rect><rect fill="none" height="34" rx="2" stroke="var(--warn)" width="160" x="50" y="108"></rect><path d="M225 126L290 126" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="290" cy="126" fill="var(--accent)" r="3"></circle><rect fill="var(--warnbg)" height="64" rx="8" stroke="var(--warn)" width="180" x="295" y="94"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="385" y="117">Region crop</text><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="385" y="140">نرخ ۱۸٪</text><path d="M475 126L530 126" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="530" cy="126" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="64" rx="8" stroke="var(--accent)" width="150" x="535" y="94"></rect><text fill="var(--ink)" font-size="22" font-weight="500" text-anchor="middle" x="610" y="132">VLM</text></svg><figcaption>فقط ناحیه مشکوک و مشخص برای رونویسی تصویری ارسال می‌شود.</figcaption></figure>
-<p>تصور کن متن native یک PDF خراب است، اما وقتی صفحه را باز می‌کنی، همه‌چیز به‌وضوح دیده می‌شود. در این شرایط می‌توانیم تصویر ناحیه موردنظر را استخراج کنیم و به یک مدل بینایی‌ـ‌زبانی مانند Gemini یا یک VLM متن‌باز بدهیم.</p>
-<p>اما یک تصمیم مهم معماری وجود دارد: آیا باید کل PDF را به مدل بدهیم یا فقط قسمت‌هایی را که نیاز به خواندن تصویری دارند؟</p>
-<p>در یکی از مسیرهای آزمایش‌شده، مسئولیت VLM عمداً محدود شده بود:</p>
-<pre><code class="language-text">Page image
-    |
-    v
-Select suspicious region
-    |
-    v
-Crop + stable region ID
-    |
-    v
-VLM transcription
-    |
-    v
-Validate and reconcile with source
-</code></pre>
-<p>مدل تصویر را دریافت می‌کند و خروجی‌ای مشابه این برمی‌گرداند:</p>
-<pre><code class="language-json">{
-  "region_id": "page_5_region_12",
-  "recognized_text": "نرخ ۱۸٪",
-  "unreadable_spans": []
-}
-</code></pre>
-<p>مدل نباید اطلاعات را تحلیل، ترجمه، خلاصه یا تکمیل کند. قرار نیست خودش تشخیص دهد که جدول چند سطر دارد یا یک عدد باید به چه ستونی تعلق بگیرد. در صورت مشخص‌بودن هندسه، این مسئولیت‌ها بر عهده بخش‌های دیگر Pipeline هستند.</p>
-<p>این معماری چند مزیت بالقوه دارد: هزینه پردازش کمتر، امکان جایگزینی مدل، قابلیت ردیابی خطا و محدودتر کردن دامنه‌ای که مدل در آن می‌تواند اطلاعات اضافه یا ساختگی تولید کند.</p>
-<p>البته اگر Crop اشتباه باشد یا Layout Model ناحیه‌ای را اصلاً تشخیص ندهد، بهترین VLM هم فرصتی برای خواندن آن نخواهد داشت.</p>
-<p>این نقش محدود VLM را نباید با مسیر دیگری که استخراج ساختاری کل صفحات PDF را به یک Provider می‌سپارد، اشتباه گرفت.</p>
-<h3 id="section-21">۱۱. از کجا می‌فهمیم کدام قسمت خراب است؟</h3>
-<p>این سؤال شاید از خود OCR مهم‌تر باشد. اگر سیستم بتواند همیشه تشخیص دهد کدام قسمت را اشتباه خوانده، می‌توانیم فقط همان قسمت را با روش دیگری پردازش کنیم. اما تشخیص خطا خودش یک مسئله دشوار مهندسی است.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>روش تشخیص</th>
-<th>چه چیزی را پیدا می‌کند؟</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Unicode Validation</td>
-<td>نویسه‌های خراب یا غیرمنتظره، مانند PUA و <code>�</code></td>
-</tr>
-<tr>
-<td>Layout Overlap</td>
-<td>متن یا تصویری که در ساختار سند جا افتاده</td>
-</tr>
-<tr>
-<td>Table Validation</td>
-<td>سلول، سطر یا سرستون ناقص</td>
-</tr>
-<tr>
-<td>Empty Cell Inspection</td>
-<td>سلول خالی‌ای که در تصویر محتوای قابل مشاهده دارد</td>
-</tr>
-<tr>
-<td>Page Coverage</td>
-<td>صفحات حذف‌شده یا پردازش‌نشده</td>
-</tr>
-<tr>
-<td>Numeric Cross-check</td>
-<td>بعضی تعارض‌ها در اعداد و علائم</td>
-</tr>
-<tr>
-<td>Formula Detection</td>
-<td>نواحی نیازمند تشخیص یا رونویسی فرمول</td>
-</tr>
-</tbody>
-</table></div>
-<p>مثلاً اگر Docling یک سلول را خالی تشخیص دهد، می‌توان با استفاده از مختصات همان سلول بررسی کرد که آیا واقعاً در آن ناحیه متن، تصویر یا محتوای ترسیمی وجود دارد یا خیر.</p>
-<p>اما مشکل مهم اینجاست: اگر عدد واقعی <code>۱۸</code> باشد و Parser عدد <code>۱۹</code> برگرداند، هر دو مقدار از نظر Unicode سالم‌اند. هر دو می‌توانند در یک سلول معتبر قرار بگیرند. هر دو نیز از نظر معنایی قابل قبول به نظر می‌رسند.</p>
-<p>در نتیجه، بسیاری از Quality Checkها ممکن است هیچ مشکلی پیدا نکنند.</p>
-<blockquote>
-<p><strong>تشخیص ندادن خطا با اثبات درستی متفاوت است.</strong></p>
-</blockquote>
-<h3 id="section-22">۱۲. آیا Confidence Score مشکل را حل می‌کند؟</h3>
-<p>فرض کنیم یک OCR Model به ما بگوید با اطمینان ۹۸ درصد، عددی را درست خوانده است. آیا می‌توانیم آن را مستقیماً قبول کنیم؟</p>
-<p>یکی از آزمایش‌های واقعی نشان داد مدل OCR حتی در مواردی با Confidence بالا، علامت‌ها و اعداد مهم را اشتباه خوانده است.</p>
-<p>برای اعتماد به Confidence Score ابتدا باید آن را کالیبره کنیم؛ یعنی با مجموعه‌ای از نمونه‌های دارای پاسخ معتبر بررسی کنیم که اطمینان گزارش‌شده مدل چقدر با دقت واقعی آن ارتباط دارد. حتی در آن صورت نیز ممکن است رفتار مدل روی سندی جدید، فونتی جدید یا کیفیت تصویری متفاوت تغییر کند.</p>
-<p>Confidence یک سیگنال مفید برای تصمیم‌گیری است، نه گواه قطعی صحت اطلاعات.</p>
-<hr/>
-<h2 id="section-23">بخش پنجم: آزمایش‌هایی که انجام شدند و درس‌های آن‌ها</h2>
-<h3 id="section-24">۱۳. مقایسه Parserها و مدل‌های مختلف</h3>
-<p>نتایج ثبت‌شده از آزمایش‌های محدود، تصویر جالبی از دشواری مسئله ارائه می‌کنند.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>ابزار یا مدل</th>
-<th>نتیجه ثبت‌شده</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PyMuPDF</td>
-<td>۳۰۸ نویسه PUA از ۹۸۰ نویسه در یک صفحه دشوار</td>
-</tr>
-<tr>
-<td>Docling / TableFormer</td>
-<td>مشکل Unicode، ساختار ناقص جدول و تشخیص ناموفق یک فرمول</td>
-</tr>
-<tr>
-<td>Gemini Flash 3</td>
-<td>خواندن دقیق ۱۷ مورد از ۲۶ متن سلول</td>
-</tr>
-<tr>
-<td>PageIndex Page Extract</td>
-<td>استخراج موفق چند سطر و یک فرمول در آزمایش هدایت‌شده با Schema</td>
-</tr>
-<tr>
-<td>Inkling 2 Mini</td>
-<td>شکست در غربال اولیه بینایی روی یک تصویر مالی مصنوعی</td>
-</tr>
-<tr>
-<td>Bina Rizeh</td>
-<td>خطاهای قابل توجه روی ۳۷ برش تصویری واقعی</td>
-</tr>
-</tbody>
-</table></div>
-<p>این‌ها آزمون‌های یکسان با شرایط یکسان نبودند. بنابراین نباید آن‌ها را به یک رتبه‌بندی قطعی تبدیل کرد.</p>
-<p>ابزارهایی مانند Marker، MinerU، Surya، PP-DocLayoutV3، PaddleOCR و LlamaParse نیز به‌عنوان گزینه‌های بررسی مطرح شده بودند، اما شواهد موجود برای تعیین برتری قطعی آن‌ها کافی نبود.</p>
-<h4 id="section-25">آزمایش Gemini</h4><figure class="visual"><div class="metricgrid"><div class="metric"><span>تطابق دقیق سلول</span><strong>17/26</strong></div><div class="metric bad"><span>سلول اضافه</span><strong>13</strong></div><div class="metric bad"><span>رخداد بحرانی ازدست‌رفته</span><strong>1/49</strong></div></div><div class="barrow"><div><span>تطابق متن سلول</span><b dir="ltr">17/26</b></div><div class="track"><i style="width:65.3846%"></i></div></div><figcaption>آزمون محدود؛ نه معیار عمومی عملکرد مدل.</figcaption></figure>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>معیار</th>
-<th style="text-align:right">نتیجه</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>متن سلول‌های کاملاً مطابق مرجع</td>
-<td style="text-align:right">۱۷ از ۲۶ (حدود ۶۵٪)</td>
-</tr>
-<tr>
-<td>سلول‌های اضافی تولیدشده</td>
-<td style="text-align:right">۱۳</td>
-</tr>
-<tr>
-<td>رخداد عددی یا علامت بحرانی ازدست‌رفته</td>
-<td style="text-align:right">۱ از ۴۹</td>
-</tr>
-</tbody>
-</table></div>
-<p>نکته مهم این آزمایش آن است که یک مدل می‌تواند خروجی JSON کاملاً معتبر تولید کند و در همان حال، متن اشتباه یا سلول‌های اضافی داشته باشد.</p>
-<p><strong>Structured Output تضمین می‌کند خروجی از یک ساختار مشخص پیروی کند؛ نه اینکه اطلاعات داخل ساختار لزوماً درست باشند.</strong></p>
-<h4 id="section-26">آزمایش Inkling 2 Mini</h4>
-<p>در یک تصویر مالی مصنوعی، این مدل فقط سه مورد از پنج رقم بحرانی و هیچ‌کدام از دو عبارت مالی کامل را درست استخراج کرد. بنابراین از غربال اولیه عبور نکرد.</p>
-<p>این نتیجه به معنای ضعیف‌بودن قطعی مدل در تمام کاربردهای بینایی نیست. تنها نشان می‌دهد برای ورود به مرحله بعدی همان کاربرد مالی، شواهد کافی ایجاد نکرده است. همچنین موفقیت احتمالی یک مدل در پاسخ‌گویی متنی به سؤال‌های مالی، به معنی موفقیت آن در OCR یا Vision نیست.</p>
-<h4 id="section-27">آزمایش OCR تخصصی فارسی</h4><figure class="visual"><div class="metricgrid"><div class="metric bad"><span>CER</span><strong>31.03%</strong></div><div class="metric bad"><span>WER</span><strong>51.69%</strong></div></div><div class="barrow warn"><div><span>تطابق کامل خط</span><b dir="ltr">9/37</b></div><div class="track"><i style="width:24.3243%"></i></div></div><div class="barrow warn"><div><span>تشخیص درصد</span><b dir="ltr">2/9</b></div><div class="track"><i style="width:22.2222%"></i></div></div><div class="barrow warn"><div><span>علامت جمع</span><b dir="ltr">3/9</b></div><div class="track"><i style="width:33.3333%"></i></div></div><div class="barrow warn"><div><span>علامت کوچک‌تر</span><b dir="ltr">2/7</b></div><div class="track"><i style="width:28.5714%"></i></div></div><figcaption>۳۷ Crop واقعی؛ ۲۱ نمونه از ۲۹ نمونه حساس از معیار آزمایش عبور نکردند.</figcaption></figure>
-<p>یکی از آزمایش‌های جالب روی مدل Bina Rizeh و ۳۷ Crop واقعی از چهار خانواده سند انجام شد.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>معیار</th>
-<th style="text-align:right">نتیجه</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Character Error Rate (CER)</td>
-<td style="text-align:right">۳۱٫۰۳٪</td>
-</tr>
-<tr>
-<td>Word Error Rate (WER)</td>
-<td style="text-align:right">۵۱٫۶۹٪</td>
-</tr>
-<tr>
-<td>تطابق کامل خط</td>
-<td style="text-align:right">۹ از ۳۷</td>
-</tr>
-<tr>
-<td>تشخیص علامت درصد</td>
-<td style="text-align:right">۲ از ۹</td>
-</tr>
-<tr>
-<td>تشخیص علامت جمع</td>
-<td style="text-align:right">۳ از ۹</td>
-</tr>
-<tr>
-<td>تشخیص علامت کوچک‌تر</td>
-<td style="text-align:right">۲ از ۷</td>
-</tr>
-<tr>
-<td>نمونه‌های حساس مردود طبق معیار آزمایش</td>
-<td style="text-align:right">۲۱ از ۲۹</td>
-</tr>
-</tbody>
-</table></div>
-<p>CER نرخ خطای نویسه و WER نرخ خطای کلمه است. هرچه این دو کمتر باشند، نتیجه بهتر است. بعضی شکست‌های معیار پذیرش مربوط به فاصله‌گذاری و مرزبندی متن بودند، نه الزاماً خطای معنایی مالی.</p>
-<p>این آزمایش یک درس مهم داشت: تخصصی‌بودن یک مدل برای زبان فارسی، لزوماً به معنای مناسب‌بودن آن برای اسناد مالی فارسی نیست. نوع فونت، اعداد، فرمول‌ها، نمادهای ریاضی، کیفیت اسکن و ساختار سند نیز اهمیت دارند.</p>
-<p>همچنین بعضی خطاهای علامت در خروجی خام مدل، پیش از انجام اصلاح RTL وجود داشتند. یعنی مشکل صرفاً در جهت نمایش متن نبود و بخشی از خطاها به خود Recognition مربوط می‌شد.</p>
-<hr/>
-<h2 id="section-28">بخش ششم: مهندسی قابلیت اطمینان</h2>
-<h3 id="section-29">۱۴. Cache؛ دوست یا دشمن؟</h3>
-<p>استفاده از Cache در پردازش اسناد بسیار جذاب است. ممکن است برای پردازش یک PDF صدصفحه‌ای، چندین مدل اجرا شوند و تعداد زیادی درخواست API ارسال شود. اگر قبلاً سند را پردازش کرده‌ایم، چرا دوباره همان هزینه را پرداخت کنیم؟</p>
-<p>اما در یکی از بررسی‌ها مشخص شد اجرای Parser با <code>force=True</code> الزاماً به معنای استخراج مجدد سند نیست. سیستم می‌توانست پاسخ قبلی Parser را از Cache بخواند و فقط خروجی‌های مشتق‌شده را دوباره بسازد.</p>
-<p>فرض کن مدل OCR را عوض کرده‌ای، یک باگ مهم در Docling را برطرف کرده‌ای یا Prompt جدیدی نوشته‌ای. سپس دوباره Pipeline را اجرا می‌کنی و از نتیجه راضی هستی؛ اما در واقع هنوز داری خروجی مدل قبلی را مشاهده می‌کنی!</p>
-<p>برای حل این مسئله، چهار عملیات مستقل تعریف شده بودند:</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>عملیات</th>
-<th>مسئولیت</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>verify-only</code></td>
-<td>بررسی خروجی موجود</td>
-</tr>
-<tr>
-<td><code>rebuild-derived</code></td>
-<td>ساخت مجدد خروجی‌ها از داده استخراج‌شده قبلی</td>
-</tr>
-<tr>
-<td><code>reparse-regions</code></td>
-<td>استخراج مجدد نواحی مشخص</td>
-</tr>
-<tr>
-<td><code>reparse-document-fresh</code></td>
-<td>استخراج مجدد واقعی کل سند</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="section-30">ایده‌ای برای Cache بهتر</h4>
-<p>به‌جای اینکه فقط نام فایل را کلید Cache قرار دهیم، می‌توانیم هویت Cache را از ترکیب عوامل مختلف بسازیم:</p>
-<pre><code class="language-text">Cache Key = hash(
-    Document Hash
-  + Region Identity
-  + Crop Hash
-  + Model Version
-  + Parser Configuration
-  + Prompt Version
-  + Schema Version
-)
-</code></pre>
-<p>اگر هر کدام از این عوامل تغییر کند، سیستم باید تشخیص دهد که آیا Cache قبلی همچنان معتبر است یا خیر. همچنین لازم نیست با تغییر یک مرحله، همیشه تمام مراحل قبل از آن دوباره اجرا شوند. اگر فقط نحوه ساخت Markdown تغییر کرده، استخراج تصویری مجدد منطقی نیست.</p>
-<p>این رویکرد می‌تواند زمینه‌ساز Incremental Processing و کاهش هزینه در اسناد بزرگ شود.</p>
-<h3 id="section-31">۱۵. Provenance؛ اطلاعات از کجا آمده‌اند؟</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 490" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--tint)" height="48" rx="8" stroke="var(--accent)" width="440" x="140" y="10"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="40">Source Document · Hash</text><path d="M360 58L360 77" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="77" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="78"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="108">Page · Physical / Printed</text><path d="M360 126L360 145" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="145" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="146"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="176">Region · Bounding Box</text><path d="M360 194L360 213" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="213" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="214"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="244">Table / Cell · Row / Column</text><path d="M360 262L360 281" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="281" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="282"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="312">Extracted Value · Status</text><path d="M360 330L360 349" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="349" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="350"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="380">Chunk · Evidence</text><path d="M360 398L360 417" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="417" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="48" rx="8" stroke="var(--accent)" width="440" x="140" y="418"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="448">AI Answer · Citation</text></svg><figcaption>زنجیره منشأ اطلاعات از فایل اصلی تا پاسخ هوش مصنوعی.</figcaption></figure>
-<p>فرض کن یک AI Agent به کاربر می‌گوید حداکثر مبلغ تسهیلات دو میلیارد ریال است. اگر کاربر بخواهد منبع این عدد را بررسی کند، سیستم باید بتواند تا محل دقیق آن در سند اصلی بازگردد.</p>
-<p>Provenance یعنی ثبت منشأ و تاریخچه تولید اطلاعات.</p>
-<pre><code class="language-text">Source Document (identity + hash)
-              |
-              v
-Page (physical + printed number)
-              |
-              v
-Region (bounding box + crop)
-              |
-              v
-Table / Cell (row + column)
-              |
-              v
-Extracted Value (method + status)
-              |
-              v
-Chunk / Retrieval Evidence
-              |
-              v
-AI Answer + Citation
-</code></pre>
-<p>در یکی از نمونه‌ها، صفحه فیزیکی هشتم PDF با صفحه هفتم چاپ‌شده سند مطابقت داشت. اگر سیستم این تفاوت را در نظر نگیرد، ممکن است ارجاع به منبع از همان ابتدا اشتباه باشد.</p>
-<p>Provenance علاوه بر ایجاد اعتماد، برای Debugging بسیار مهم است. وقتی یک عدد اشتباه پیدا می‌کنیم، باید بدانیم خطا در PDF Decoder ایجاد شده، OCR آن را اشتباه خوانده، Table Parser جابه‌جایش کرده یا در Chunking معنای آن از دست رفته است.</p>
-<h3 id="section-32">۱۶. Quarantine؛ هنر قبول نکردن اطلاعات مشکوک</h3><figure class="visual"><div class="metricgrid"><div class="metric"><span>ناحیه هدف</span><strong>231</strong></div><div class="metric"><span>نیازمند بررسی</span><strong>34</strong></div><div class="metric"><span>بدون پاسخ منطبق</span><strong>197</strong></div><div class="metric bad"><span>پذیرفته‌شده</span><strong>0</strong></div></div><div class="stack"><i style="width:14.7186%;background:var(--warn)"></i><i style="width:85.2814%;background:var(--muted)"></i></div><figcaption>نواحی شناسایی‌شده باید گزارش شوند، حتی اگر قابل انتشار نباشند.</figcaption></figure>
-<p>یک سیستم قابل اعتماد نباید مجبور باشد برای هر ورودی حتماً یک خروجی کامل تولید کند. گاهی بهترین رفتار سیستم این است که اعلام کند بخشی از سند را نتوانسته با اطمینان پردازش کند.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>وضعیت</th>
-<th>معنی</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ACCEPTED</code></td>
-<td>محتوا معیارهای پذیرش تعریف‌شده را پشت سر گذاشته است.</td>
-</tr>
-<tr>
-<td><code>REVIEW_REQUIRED</code></td>
-<td>محتوا استخراج شده، اما هنوز به بررسی نیاز دارد.</td>
-</tr>
-<tr>
-<td><code>QUARANTINED</code></td>
-<td>محتوا ناقص، نامعتبر یا مشکوک است و نباید به‌عنوان دانش معتبر منتشر شود.</td>
-</tr>
-</tbody>
-</table></div>
-<p>در یکی از گزارش‌های تاریخی، ۲۳۱ ناحیه نیازمند پردازش تصویری شناسایی شده بودند:</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>وضعیت</th>
-<th style="text-align:right">تعداد</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>دارای پاسخ ذخیره‌شده، نیازمند بررسی</td>
-<td style="text-align:right">۳۴</td>
-</tr>
-<tr>
-<td>بدون پاسخ منطبق</td>
-<td style="text-align:right">۱۹۷</td>
-</tr>
-<tr>
-<td>پذیرفته‌شده</td>
-<td style="text-align:right">صفر</td>
-</tr>
-</tbody>
-</table></div>
-<p>مشکل فقط این نبود که بعضی نواحی استخراج نشده بودند. مسئله مهم‌تر این بود که سیستم باید بتواند با دقت گزارش دهد چه چیزهایی را نمی‌داند.</p>
-<p>حذف بی‌سروصدای یک جدول مشکوک از خروجی ممکن است باعث شود سند ظاهراً تمیز به نظر برسد، اما ناقص باشد.</p>
-<p><strong>سیستم باید هم از انتشار اطلاعات اشتباه جلوگیری کند و هم وجود اطلاعات ازدست‌رفته را گزارش دهد.</strong></p>
-<h3 id="section-33">۱۷. مشکلاتی که هیچ ارتباط مستقیمی با مدل هوش مصنوعی ندارند</h3>
-<p>در ساخت سیستم‌های AI معمولاً تمرکز زیادی روی انتخاب مدل داریم. اما بسیاری از مشکلات ثبت‌شده، مسائل مهندسی نرم‌افزار بودند.</p>
-<p>برای مثال، در یک رخداد، مدل پاسخ موفقی شامل ۳۲ ناحیه پردازش‌شده تولید کرده بود. سپس مرحله Validation دچار خطا شد و پاسخ استخراج‌شده از دست رفت. مدل کار خودش را انجام داده بود، ولی معماری ذخیره‌سازی مناسب نبود.</p>
-<p>راهکار این بود که پاسخ خام مدل پیش از Validation به‌شکل پایدار ذخیره شود تا بتوان آن را بعداً بررسی یا Replay کرد.</p>
-<p>مسائل دیگری نیز وجود داشتند: اجرای هم‌زمان درخواست‌های تکراری، اعتبارسنجی فایل براساس پسوند به‌جای محتوای واقعی، باقی ماندن Chunkهای قدیمی، ناسازگاری خروجی Parser و ایندکس و اعلام اشتباه موفقیت برای اسنادی که فقط بخشی از آن‌ها پردازش شده بود.</p>
-<p>هیچ‌کدام از این مشکلات با تعویض Gemini با Qwen حل نمی‌شوند.</p>
-<p>یک Document Parsing Service علاوه بر AI، به مهندسی Backend، مدیریت Job، ذخیره‌سازی پایدار، Idempotency، Observability و کنترل چرخه انتشار نیاز دارد.</p>
-<hr/>
-<h2 id="section-34">بخش هفتم: مرور همه مشکلات تجربه‌شده</h2>
-<h3 id="section-35">۱۸. فهرست ۳۷ خانواده خطا</h3><div aria-label="فیلتر مسائل" class="toolbar issue-controls" role="group"><button class="active" aria-pressed="true" data-filter="all">همه (۳۷)</button><button aria-pressed="false" data-filter="open">باز (۱۹)</button><button aria-pressed="false" data-filter="fixed">اصلاح محدود (۱۸)</button></div>
-<p>در بررسی‌های انجام‌شده، ۳۷ خانواده مسئله شناسایی شده‌اند. این عدد به معنای وجود ۳۷ باگ فعال در نسخه فعلی نیست؛ بعضی مشکلات تاریخی بوده‌اند، بعضی اصلاح محدود شده‌اند و بعضی هنوز به آزمایش نیاز دارند.</p>
-<ul>
-<li><strong>◐ اصلاح محدود:</strong> برای یک رفتار یا چند نمونه شواهد اصلاح وجود دارد، نه تأیید جامع.</li>
-<li><strong>○ باز:</strong> مسئله همچنان باز، ناقص یا تأییدنشده است.</li>
-</ul>
-<h4 id="section-36">متن، اعداد و پردازش تصویری</h4>
-<div class="tablewrap"><table class="issue-table">
-<thead>
-<tr>
-<th>شناسه</th>
-<th>مسئله</th>
-<th>وضعیت</th>
-</tr>
-</thead>
-<tbody>
-<tr data-status="fixed">
-<td>EX-001</td>
-<td>خرابی Unicode و نویسه‌های PUA</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-002</td>
-<td>عبور متن خراب از کنترل کیفیت</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="open">
-<td>EX-003</td>
-<td>دقت ناکافی رونویسی تصویری فارسی</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-004</td>
-<td>از دست رفتن پاسخ مدل پس از خطای Validation</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="open">
-<td>EX-005</td>
-<td>نبود مرجع صحیح و مستقلاً بررسی‌شده</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-006</td>
-<td>پردازش تصویری ناقص سند</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-007</td>
-<td>از دست رفتن متن ریز در Crop</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-008</td>
-<td>ترتیب خواندن RTL و صفحات چندستونه</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-009</td>
-<td>معکوس‌شدن عددها و علامت‌ها</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-010</td>
-<td>حذف درصد، واحد پول و بازه‌ها</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-011</td>
-<td>از دست رفتن ساختار فرمول</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="open">
-<td>EX-012</td>
-<td>نادیده گرفتن تصویر و نمودار</td>
-<td class="status-open">○ باز</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="section-37">جدول، فرم و ساختار سند</h4>
-<div class="tablewrap"><table class="issue-table">
-<thead>
-<tr>
-<th>شناسه</th>
-<th>مسئله</th>
-<th>وضعیت</th>
-</tr>
-</thead>
-<tbody>
-<tr data-status="fixed">
-<td>EX-013</td>
-<td>هندسه اشتباه سلول‌ها و تعداد رکوردها</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="open">
-<td>EX-014</td>
-<td>ارتباط اشتباه مقدار با سرستون</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-015</td>
-<td>ادغام اشتباه جدول‌های مجاور</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-016</td>
-<td>اختلاط معنایی دو جدول متفاوت</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-017</td>
-<td>ادامه جدول در صفحات بعد</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-018</td>
-<td>سرستون تکراری و سطر شکسته</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-019</td>
-<td>اتصال عنوان به جدول اشتباه</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-020</td>
-<td>اتصال اشتباه پاورقی و واحدها</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="open">
-<td>EX-021</td>
-<td>تشخیص اشتباه فرم خالی</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-022</td>
-<td>اصلاح TableIR بدون اصلاح خروجی مشتق‌شده</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-023</td>
-<td>شکستن سلول‌های ادغام‌شده هنگام Chunking</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-024</td>
-<td>خرابی ساختار جدول در Markdown</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="open">
-<td>EX-025</td>
-<td>حذف یا سلسله‌مراتب اشتباه فهرست‌ها</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-026</td>
-<td>تفاوت شماره فیزیکی و چاپی صفحه</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="section-38">زیرساخت، ذخیره‌سازی و انتشار</h4>
-<div class="tablewrap"><table class="issue-table">
-<thead>
-<tr>
-<th>شناسه</th>
-<th>مسئله</th>
-<th>وضعیت</th>
-</tr>
-</thead>
-<tbody>
-<tr data-status="fixed">
-<td>EX-027</td>
-<td>شناسه‌های ناپایدار و Provenance ناقص</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-028</td>
-<td>ورود داده تشخیصی خراب به محتوای قابل جست‌وجو</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="open">
-<td>EX-029</td>
-<td>پنهان ماندن نواحی قرنطینه‌شده</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-030</td>
-<td>خطای Cache و Replay</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-031</td>
-<td>Job تکراری و از دست رفتن Artifact</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-032</td>
-<td>هویت مدل، Endpoint و گزارش خطا</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="open">
-<td>EX-033</td>
-<td>ناسازگاری خروجی Parser و ایندکس</td>
-<td class="status-open">○ باز</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-034</td>
-<td>پوشش ناقص ساختار DOCX</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-035</td>
-<td>اشتباه گرفتن Force با استخراج تازه</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-036</td>
-<td>اعتبارسنجی فایل فقط براساس پسوند</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-<tr data-status="fixed">
-<td>EX-037</td>
-<td>اعلام موفقیت برای پردازش ناقص</td>
-<td class="status-fixed">◐ اصلاح محدود</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="section-39">۱۹. فرق پیاده‌سازی با پذیرش نهایی</h3><figure class="visual"><div class="metricgrid"><div class="metric"><span>خانواده مسائل</span><strong>37</strong></div><div class="metric"><span>اصلاح محدود</span><strong>18</strong></div><div class="metric bad"><span>باز یا تأییدنشده</span><strong>19</strong></div><div class="metric bad"><span>تأیید نهایی</span><strong>0</strong></div></div><div class="stack"><i style="width:48.6486%;background:var(--warn)"></i><i style="width:51.3514%;background:var(--bad)"></i></div><div class="barrow warn"><div><span>بازبینی مستقل صفحات PDF</span><b dir="ltr">0/121</b></div><div class="track"><i style="width:0.0000%"></i></div></div></figure>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>معیار</th>
-<th style="text-align:right">تعداد</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>خانواده مسائل ثبت‌شده</td>
-<td style="text-align:right">۳۷</td>
-</tr>
-<tr>
-<td>اصلاح محدود</td>
-<td style="text-align:right">۱۸</td>
-</tr>
-<tr>
-<td>باز یا تأییدنشده</td>
-<td style="text-align:right">۱۹</td>
-</tr>
-<tr>
-<td>تأیید نهایی رفع مشکل</td>
-<td style="text-align:right">صفر</td>
-</tr>
-<tr>
-<td>بازبینی مستقل صفحات PDF در ممیزی مورد مطالعه</td>
-<td style="text-align:right">صفر از ۱۲۱</td>
-</tr>
-</tbody>
-</table></div>
-<p>فرض کن صدها Unit Test با موفقیت اجرا شده‌اند. این خبر خوبی است، اما چه چیزی را ثابت می‌کند؟</p>
-<p>ثابت می‌کند رفتارهایی که برای آن‌ها تست نوشته‌ایم، در شرایط مشخص‌شده درست کار می‌کنند. اما ثابت نمی‌کند یک سند مالی جدید با فونت متفاوت، فرمول پیچیده و جدول چندصفحه‌ای به‌درستی پردازش خواهد شد.</p>
-<p>در ممیزی مورد مطالعه، ۹ فایل PDF با مجموع ۱۲۱ صفحه وجود داشت، ولی بازبینی مستقل صفحات کامل نشده بود. بنابراین حتی با وجود تعداد زیادی اصلاح مهندسی، سیستم هنوز شرایط پذیرش نهایی را نداشت.</p>
-<p>این یکی از مهم‌ترین تفاوت‌ها میان یک Prototype موفق و یک محصول قابل اعتماد است.</p>
-<hr/>
-<h2 id="section-40">بخش هشتم: چگونه یک Parser بهتر بسازیم؟</h2>
-<h3 id="section-41">۲۰. به‌جای Benchmark کردن مدل، کل Pipeline را Benchmark کنیم</h3>
-<p>فرض کن می‌خواهیم یک سیستم تخصصی پردازش اسناد فارسی بسازیم. معمولاً اولین سؤال این است: Gemini بهتر است یا Qwen؟ Docling بهتر است یا Marker؟</p>
-<p>اما شاید بهتر باشد سؤال را تغییر دهیم:</p>
-<p><strong>بهترین ترکیب اجزای پردازش سند برای نوع اسناد موردنظر ما چیست؟</strong></p>
-<p>هر مرحله می‌تواند جداگانه مورد آزمایش قرار بگیرد.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>مرحله</th>
-<th>موارد قابل مقایسه</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Native Extraction</td>
-<td>PyMuPDF و سایر PDF Backendها</td>
-</tr>
-<tr>
-<td>Layout Detection</td>
-<td>Docling، Surya، PP-DocLayout</td>
-</tr>
-<tr>
-<td>Image Preprocessing</td>
-<td>تغییر رزولوشن، Deskew، حذف نویز، کنتراست</td>
-</tr>
-<tr>
-<td>OCR</td>
-<td>PaddleOCR، مدل‌های تخصصی فارسی و سایر OCRها</td>
-</tr>
-<tr>
-<td>Vision Recovery</td>
-<td>مدل‌های VLM محلی و API-based</td>
-</tr>
-<tr>
-<td>Table Recognition</td>
-<td>مدل‌های بازسازی هندسه و ساختار جدول</td>
-</tr>
-<tr>
-<td>Reading Order</td>
-<td>الگوریتم‌ها و مدل‌های ترتیب خواندن</td>
-</tr>
-<tr>
-<td>Reconciliation</td>
-<td>روش‌های تطبیق متن، تصویر و ساختار</td>
-</tr>
-<tr>
-<td>Serialization</td>
-<td>JSON، HTML، Markdown</td>
-</tr>
-<tr>
-<td>Quality Control</td>
-<td>قواعد ساختاری، مقایسه منابع، بررسی مستقل</td>
-</tr>
-</tbody>
-</table></div>
-<p>ممکن است پس از آزمایش متوجه شویم یکی از مراحل اصلاً ضروری نیست. ممکن است یک مدل ارزان‌تر در یک مرحله عملکرد بهتر و پایدار‌تری داشته باشد. حتی ممکن است ترکیب دو مدل قدرتمند، نتیجه بدتری از استفاده از یک مدل ساده ایجاد کند؛ چون خطای مدل اول به مرحله دوم منتقل می‌شود.</p>
-<h4 id="section-42">Ablation Study چیست؟</h4>
-<p>Ablation یعنی یکی از اجزای سیستم را حذف یا تغییر دهیم و اثر آن را روی خروجی اندازه‌گیری کنیم.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>آزمایش پیشنهادی</th>
-<th>ترکیب</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>Docling</td>
-</tr>
-<tr>
-<td>B</td>
-<td>Docling + OCR</td>
-</tr>
-<tr>
-<td>C</td>
-<td>Docling + VLM</td>
-</tr>
-<tr>
-<td>D</td>
-<td>Docling + OCR + VLM</td>
-</tr>
-<tr>
-<td>E</td>
-<td>Layout Model جایگزین + OCR</td>
-</tr>
-</tbody>
-</table></div>
-<p>تمام آزمایش‌ها باید روی همان اسناد، با معیارهای یکسان و داده مرجع ثابت انجام شوند. تا حد ممکن، در هر مقایسه فقط یک متغیر را تغییر می‌دهیم.</p>
-<p>در این صورت می‌توانیم بفهمیم هر جزء چه مقدار به کیفیت اضافه می‌کند و آیا هزینه و پیچیدگی آن ارزش دارد یا خیر.</p>
-<h3 id="section-43">۲۱. Gold Dataset؛ مهم‌ترین دارایی یک سیستم تخصصی</h3>
-<p>برای ارزیابی OCR یا Parser باید بدانیم پاسخ صحیح چیست. اما چه کسی مشخص می‌کند پاسخ صحیح چیست؟</p>
-<p>اگر یک مدل زبانی خروجی مدل دیگری را بررسی کند، ممکن است هر دو در یک مورد اشتباه کنند. اگر خروجی Parser قبلی را به‌عنوان مرجع انتخاب کنیم، ممکن است همان خطاهای قدیمی را وارد Benchmark کنیم.</p>
-<p>Gold Dataset مجموعه‌ای از ورودی‌ها و خروجی‌های صحیح و مستقلاً بررسی‌شده است.</p>
-<p>برای اسناد فارسی بهتر است این مجموعه تنها شامل متن ساده نباشد. باید شامل جدول پیچیده، فرم خالی، فرمول، مهر، اسکن کم‌کیفیت، متن ترکیبی انگلیسی و فارسی، اعداد، درصدها، پاورقی و سند چندستونه نیز باشد.</p>
-<p>برای هر نمونه می‌توانیم اطلاعاتی مشابه این را نگه داریم:</p>
-<pre><code class="language-json">{
-  "sample_id": "financial_cell_001",
-  "expected_text": "≤ ۱۸٪",
-  "element_type": "table_cell",
-  "critical_tokens": ["≤", "۱۸", "٪"],
-  "reference_status": "VERIFIED"
-}
-</code></pre>
-<p>Gold Dataset تنها برای انتخاب مدل نیست. بعد از هر تغییر در Parser، OCR، Prompt یا الگوریتم RTL، همین مجموعه می‌تواند جلوی بازگشت خطاهای قبلی را بگیرد.</p>
-<p>به همین دلیل، ساخت یک دیتاست فارسی دقیق و باکیفیت ممکن است از ساخت یک Pipeline جدید هم ارزشمندتر باشد.</p>
-<h3 id="section-44">۲۲. چه معیارهایی باید اندازه‌گیری شوند؟</h3>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>سؤال اصلی</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CER</td>
-<td>نرخ خطای نویسه‌ها چقدر است؟</td>
-</tr>
-<tr>
-<td>WER</td>
-<td>نرخ خطای کلمات چقدر است؟</td>
-</tr>
-<tr>
-<td>Exact Match</td>
-<td>آیا کل عبارت دقیقاً درست است؟</td>
-</tr>
-<tr>
-<td>Critical Token Accuracy</td>
-<td>آیا عددها و علامت‌های حساس درست هستند؟</td>
-</tr>
-<tr>
-<td>Layout Recall</td>
-<td>چند عنصر واقعی صفحه تشخیص داده شده‌اند؟</td>
-</tr>
-<tr>
-<td>Reading Order Accuracy</td>
-<td>آیا ترتیب خواندن درست است؟</td>
-</tr>
-<tr>
-<td>Header Association</td>
-<td>آیا مقدار متعلق به سرستون صحیح است؟</td>
-</tr>
-<tr>
-<td>Cell Coverage</td>
-<td>آیا همه سلول‌ها استخراج شده‌اند؟</td>
-</tr>
-<tr>
-<td>False Acceptance Rate</td>
-<td>چند خروجی اشتباه به‌عنوان معتبر پذیرفته شده‌اند؟</td>
-</tr>
-<tr>
-<td>Latency</td>
-<td>پردازش هر صفحه چقدر طول می‌کشد؟</td>
-</tr>
-<tr>
-<td>Cost per Page</td>
-<td>هزینه پردازش هر صفحه چقدر است؟</td>
-</tr>
-<tr>
-<td>Throughput</td>
-<td>در یک بازه زمانی چند صفحه پردازش می‌شود؟</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="section-45">مثال فرضی: چگونه دقت ۹۹٫۸ درصد گمراه‌کننده می‌شود؟</h4><section class="visual simulator"><h4>شبیه‌ساز کیفیت استخراج سند</h4><div class="sliders">
-<label for="units">تعداد کل واحدهای متنی <output id="units-out">10000</output></label><input id="units" max="20000" min="1000" step="1000" type="range" value="10000"/>
-<label for="errors">تعداد کل خطاها <output id="errors-out">20</output></label><input id="errors" max="200" min="0" type="range" value="20"/>
-<label for="critical">تعداد واحدهای حساس مالی <output id="critical-out">30</output></label><input id="critical" max="100" min="10" step="5" type="range" value="30"/>
-<label for="criticalerrors">خطاهای مالی (بخشی از کل خطاها) <output id="criticalerrors-out">5</output></label><input id="criticalerrors" max="20" min="0" type="range" value="5"/></div><div class="metricgrid"><div class="metric"><span>دقت کلی</span><strong><span id="overall">99.80%</span></strong></div><div class="metric bad"><span>دقت اطلاعات حساس</span><strong><span id="sensitive">83.33%</span></strong></div></div><figcaption>مثال آموزشی و فرضی؛ مقادیر را برای مشاهده تأثیر خطاهای حساس تغییر بده.</figcaption></section>
-<p>فرض کن از ۱۰٬۰۰۰ واحد متنی، ۲۰ مورد اشتباه باشند. در یک معیار ساده مبتنی بر تطابق واحدها، دقت کلی برابر ۹۹٫۸ درصد است.</p>
-<p>اما اگر در میان همان واحدها ۳۰ مورد حساس مالی داشته باشیم و پنج مورد از آن‌ها اشتباه باشند، دقت اطلاعات حساس فقط ۸۳٫۳۳ درصد خواهد بود.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>معیار</th>
-<th style="text-align:right">نتیجه</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>واحدهای درست در کل سند</td>
-<td style="text-align:right">۹٬۹۸۰ از ۱۰٬۰۰۰</td>
-</tr>
-<tr>
-<td>دقت کلی</td>
-<td style="text-align:right">۹۹٫۸٪</td>
-</tr>
-<tr>
-<td>واحدهای حساس درست</td>
-<td style="text-align:right">۲۵ از ۳۰</td>
-</tr>
-<tr>
-<td>دقت اطلاعات حساس</td>
-<td style="text-align:right">۸۳٫۳۳٪</td>
-</tr>
-</tbody>
-</table></div>
-<p>اگر همان اطلاعات حساس مبنای تصمیم‌گیری مالی باشند، دقت کلی بالای ۹۹ درصد به‌تنهایی ارزش پذیرش ندارد.</p>
-<hr/>
-<h2 id="section-46">بخش نهم: ایده‌هایی برای فکر کردن و آزمایش</h2>
-<p>تا اینجا درباره مشکلات و تجربه‌های ثبت‌شده صحبت کردیم. از اینجا به بعد، ایده‌های زیر پیشنهادهای پژوهشی هستند؛ برتری آن‌ها هنوز در آزمایش‌های مورد مطالعه اثبات نشده است.</p>
-<h3 id="section-47">ایده اول: Adaptive Document Parsing</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 310" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="42" rx="8" stroke="var(--line)" width="300" x="210" y="8"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="35">Input Page</text><path d="M360 50L360 70" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="70" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="42" rx="8" stroke="var(--accent)" width="330" x="195" y="70"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="96">Page / Region Analysis</text><path d="M360 112V132H120V150" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="58" rx="8" stroke="var(--line)" width="220" x="10" y="150"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="120" y="175">Native text</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="120" y="196">Digital</text><path d="M120 208V230H360V248" fill="none" stroke="var(--accent)" stroke-width="2"></path><path d="M360 112V132H360V150" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="58" rx="8" stroke="var(--line)" width="220" x="250" y="150"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="175">OCR</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="360" y="196">Scanned</text><path d="M360 208V230H360V248" fill="none" stroke="var(--accent)" stroke-width="2"></path><path d="M360 112V132H600V150" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="58" rx="8" stroke="var(--line)" width="220" x="490" y="150"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="600" y="175">VLM</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="600" y="196">Complex region</text><path d="M600 208V230H360V248" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--tint)" height="46" rx="8" stroke="var(--accent)" width="400" x="160" y="248"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="276">Reconstruct &amp; Verify</text></svg><figcaption>معماری پیشنهادی مسیریابی تطبیقی در سطح صفحه یا ناحیه؛ هنوز آزموده نشده است.</figcaption></figure>
-<p>به‌جای اینکه همه اسناد را از یک مسیر ثابت عبور دهیم، ابتدا ماهیت هر صفحه یا ناحیه را تشخیص دهیم.</p>
-<pre><code class="language-text">Input page / region
-         |
-         v
-  Region analysis
-         |
-         +-- Digital text --&gt; Native extraction
-         +-- Scanned text --&gt; OCR
-         `-- Difficult region --&gt; VLM
-         |
-         v
-  Reconstruct and verify
-</code></pre>
-<p>متن دیجیتال سالم مستقیماً پردازش شود، سند اسکن‌شده به OCR برود و ناحیه پیچیده یا مشکوک با VLM بررسی شود.</p>
-<p>مزیت بالقوه این روش، کاهش هزینه و سرعت بیشتر است. مشکل آن هم این است که خود سیستم انتخاب مسیر ممکن است اشتباه کند.</p>
-<p><strong>سؤال پژوهشی:</strong> آیا صرفه‌جویی حاصل از Routing، ارزش پیچیدگی و خطاهای احتمالی آن را دارد؟</p>
-<h3 id="section-48">ایده دوم: Multi-Engine Consensus</h3>
-<p>چرا همیشه فقط یک موتور استخراج داشته باشیم؟ فرض کن یک ناحیه حساس توسط سه موتور مختلف خوانده شود:</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>موتور</th>
-<th>خروجی</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Native PDF</td>
-<td><code>۱۸٪</code></td>
-</tr>
-<tr>
-<td>OCR</td>
-<td><code>۱۸٪</code></td>
-</tr>
-<tr>
-<td>VLM</td>
-<td><code>۸۱٪</code></td>
-</tr>
-</tbody>
-</table></div>
-<p>اختلاف میان خروجی‌ها می‌تواند خودش یک سیگنال برای بازبینی باشد.</p>
-<p>البته رأی اکثریت به معنای حقیقت نیست. ممکن است دو موتور از یک Backend یا نگاشت متنی مشترک استفاده کنند و هر دو اشتباه یکسانی داشته باشند.</p>
-<p>هدف این معماری بهتر است کشف تعارض باشد، نه پذیرش خودکار رأی اکثریت.</p>
-<h3 id="section-49">ایده سوم: OCR با رزولوشن تطبیقی</h3>
-<p>ارسال تمام صفحات با وضوح بسیار بالا ممکن است هزینه پردازش و مصرف حافظه را افزایش دهد. در مقابل، استفاده از رزولوشن پایین می‌تواند باعث حذف نقطه‌ها، علامت درصد، متن ریز و جزئیات فرمول شود.</p>
-<p>می‌توان ابتدا صفحه را با رزولوشن معمولی پردازش کرد و فقط برای نواحی دشوار، Crop دقیق‌تر یا رندر با DPI بالاتر تولید کرد.</p>
-<p>یک Benchmark جالب می‌تواند مقایسه کیفیت استخراج، زمان پردازش و هزینه در رزولوشن‌های مختلف باشد.</p>
-<h3 id="section-50">ایده چهارم: Verification در سطح سلول</h3>
-<p>به‌جای اینکه تمام یک جدول را درست یا اشتباه اعلام کنیم، برای هر سلول وضعیت مستقل داشته باشیم.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>مقدار</th>
-<th>وضعیت فرضی</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>۱۸٪</td>
-<td>Verified</td>
-</tr>
-<tr>
-<td>۵۰۰ میلیون ریال</td>
-<td>Verified</td>
-</tr>
-<tr>
-<td>۲۴ ماه</td>
-<td>Review required</td>
-</tr>
-<tr>
-<td>۲۳٪</td>
-<td>Conflict</td>
-</tr>
-</tbody>
-</table></div>
-<p>این ایده اجازه می‌دهد مشخص کنیم دقیقاً کدام قسمت جدول نیازمند پردازش مجدد است. اما باید مراقب باشیم که پذیرفته‌شدن تک‌تک سلول‌ها الزاماً به معنای درست‌بودن ارتباط آن‌ها با یکدیگر نیست.</p>
-<p>بنابراین Verification هم در سطح مقدار و هم در سطح ساختار لازم است.</p>
-<h3 id="section-51">ایده پنجم: ساخت دیتاست مصنوعی فارسی</h3>
-<p>می‌توان با استفاده از HTML، فونت‌های فارسی و ابزارهای تولید PDF، هزاران سند مصنوعی تولید کرد که پاسخ صحیح آن‌ها از ابتدا مشخص است.</p>
-<p>برای نمونه، جدول‌هایی با اعداد تصادفی، سلول‌های ادغام‌شده، تاریخ فارسی، متن انگلیسی ترکیبی و فرمول‌های مختلف تولید کنیم و سپس نسخه‌های اسکن‌شده یا نویزی آن‌ها را بسازیم.</p>
-<p>این روش می‌تواند برای Regression Testing، آموزش مدل یا پیدا کردن الگوهای خطا مفید باشد.</p>
-<p>محدودیت آن این است که اسناد مصنوعی ممکن است پیچیدگی، خرابی فونت و رفتار عجیب PDFهای واقعی را به‌طور کامل بازنمایی نکنند. بنابراین در کنار آن به داده واقعی نیز نیاز داریم.</p>
-<h3 id="section-52">ایده ششم: Human-in-the-loop به‌عنوان بخشی از محصول</h3>
-<p>یک رابط بازبینی بسازیم که تصویر سند اصلی را در سمت راست و ساختار استخراج‌شده را در سمت چپ نمایش دهد. وقتی روی یک سلول کلیک می‌کنیم، محل دقیق آن روی سند اصلی مشخص شود. کاربر بتواند مقدار را اصلاح کند، ساختار را تأیید کند و دلیل خطا را ثبت کند.</p>
-<p>این رابط فقط یک ابزار Debugging نیست؛ می‌تواند خودش به یک ابزار تولید Gold Dataset تبدیل شود.</p>
-<p>به‌مرور، اصلاحات انسانی می‌توانند داده ارزشمندی برای ارزیابی مدل‌ها، توسعه قواعد عمومی و حتی Fine-tuning ایجاد کنند.</p>
-<h3 id="section-53">ایده هفتم: Document Parsing به‌عنوان یک محصول مستقل</h3>
-<p>تصور کن یک سرویس API طراحی شود که ورودی آن انواع سند فارسی باشد:</p>
-<pre><code class="language-text">Inputs:
-  PDF / Scanned PDF / DOCX / Image
+assert cells[(1, 0)] == "Notebook"
+assert cells[(1, 1)] == "12.50"
+assert cells[(2, 1)] == "2.00"
+assert "AB123" in parsed["pages"][2]["text"]
+# This checks a synthetic fixture, not production quality.</code></pre>
+<p>بعد یک Gold Dataset بسازید؛ صفحاتی واقعی و مجاز با متن مرجع، ترتیب خواندن، ساختار جدول و فیلدهای کلیدی که دستی بررسی شده‌اند. خانواده‌های متفاوت سند را پوشش دهید: دیجیتال، اسکن، ترکیبی، دوستونه، چرخیده، کم‌کیفیت و چندزبانه؛ نه فقط صفحاتی که ابزار همین حالا خوب می‌خواند. مجموعهٔ ارزیابی را ثابت نگه دارید و تنظیمات را روی اسناد دیگری انتخاب کنید. تعداد صفحات به تنوع و ریسک بستگی دارد؛ چند صفحهٔ مصنوعی نمی‌تواند کیفیت کل اسناد شما را اثبات کند.</p>
+<div class="tablewrap"><table><thead><tr><th scope="col">معیار</th><th scope="col">چه چیزی را نشان می‌دهد؟</th></tr></thead><tbody><tr><td>CER / WER</td><td>فاصلهٔ ویرایشی نویسه/کلمه تقسیم بر تعداد نویسه/کلمهٔ مرجع؛ سیاست فاصله و نرمال‌سازی را مشخص کنید</td></tr>
+<tr><td>Reading Order</td><td>ترتیب صحیح عناصر سند</td></tr>
+<tr><td>ساختار و محتوای جدول</td><td>روابط سطر/ستون/Span، ارتباط سرستون و تطابق مقدار؛ در صورت نیاز TEDS برای شباهت درخت HTML جدول</td></tr>
+<tr><td>تطابق دقیق فیلد حساس</td><td>مبلغ، تاریخ، شناسه، علامت و واحد؛ علاوه بر متن، ارتباط فیلد را بسنجید</td></tr>
+<tr><td>پوشش و نرخ بازبینی</td><td>صفحه/ناحیهٔ جاافتاده و خروجی حل‌نشده؛ با حذف موارد ناموفق از امتیاز، خطا را پنهان نکنید</td></tr>
+<tr><td>عملکرد</td><td>ثانیه بر صفحه، تأخیر p50/p95، حافظه، هزینهٔ مدل/API؛ اجرای سرد، گرم و Cache-hit را جدا بسنجید</td></tr></tbody></table></div>
+<p>مثلاً در یک متن فرضی هزارنویسه‌ای، اگر فقط ده نویسه جایگزین شده باشند، CER برابر یک درصد است. اما اگر یکی از آن‌ها قیمت 12.50 را به 12.90 تبدیل کرده باشد، همان فیلد از نظر Exact Match شکست خورده است. میانگین به‌تنهایی کافی نیست.</p>
+<p><a href="https://github.com/opendatalab/OmniDocBench">OmniDocBench</a> مرجع خوبی برای تفکیک ارزیابی متن، جدول، فرمول و ترتیب خواندن است؛ <a href="https://github.com/opendatalab/OHR-Bench">OHR-Bench</a> هم نشان می‌دهد چرا نویز OCR در مراحل بعدی RAG اهمیت دارد. هیچ‌کدام اثبات کیفیت روی اسناد و زبان‌های شما نیستند. تست مخصوص کاربرد بسازید و آستانه را با توجه به هزینهٔ خطا تعیین کنید. تنظیمات، نسخهٔ دیتاست و موارد شکست را ثبت کنید. فقط وقتی مقایسهٔ کنترل‌شده بهبود ارزشمندی نشان می‌دهد، پیچیدگی بیشتری اضافه کنید.</p>
+<span id="section-55" aria-hidden="true"></span><span id="section-56" aria-hidden="true"></span>
+<h2 id="production" data-tutorial-step="production">۱۱. از تمرین محلی به یک اپلیکیشن واقعی برسید</h2>
 
-Outputs:
-  Structured JSON
-  HTML
-  Markdown
-  DocumentIR / TableIR
-  Quality Report
-  Source Provenance
-</code></pre>
-<p>توسعه‌دهندگان دیگر مجبور نباشند برای هر سیستم RAG، مسئله پردازش PDF فارسی را از ابتدا حل کنند. شرکت‌های مالی، حقوقی، بیمه‌ای، آموزشی و سازمانی می‌توانند اسناد خودشان را پردازش کنند و خروجی مناسب برای AI Agent دریافت کنند.</p>
-<p>مزیت رقابتی چنین محصولی الزاماً داشتن یک مدل OCR اختصاصی نیست. می‌تواند حاصل یک Pipeline دقیق، مجموعه آزمایش معتبر، مهندسی مناسب پردازش فارسی و قابلیت اعتماد به ساختار خروجی باشد.</p>
-<hr/>
-<h2 id="section-54">بخش دهم: بزرگ‌ترین موانع فنی</h2>
-<p>اگر بخواهیم تمام مسائل را به چند مانع بنیادی خلاصه کنیم، این شش مورد اهمیت ویژه‌ای دارند.</p>
-<div class="tablewrap"><table>
-<thead>
-<tr>
-<th>مانع</th>
-<th>چرا مهم است؟</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>نبود Gold Dataset معتبر</td>
-<td>نمی‌توان کیفیت واقعی را به‌درستی سنجید.</td>
-</tr>
-<tr>
-<td>خطاهای معنایی پنهان</td>
-<td>داده ظاهراً سالم است اما معنی اشتباهی دارد.</td>
-</tr>
-<tr>
-<td>بازسازی ساختار جدول</td>
-<td>خواندن متن بدون روابط آن کافی نیست.</td>
-</tr>
-<tr>
-<td>تشخیص نواحی ازدست‌رفته</td>
-<td>سیستم ممکن است اصلاً متوجه حذف محتوا نشود.</td>
-</tr>
-<tr>
-<td>نبود جایگزین محلی تأییدشده برای Vision</td>
-<td>استقلال، هزینه و کنترل زیرساخت همچنان چالش دارند.</td>
-</tr>
-<tr>
-<td>نبود ارزیابی مستقل End-to-End</td>
-<td>موفقیت اجزای منفرد، موفقیت کل سیستم را تضمین نمی‌کند.</td>
-</tr>
-</tbody>
-</table></div>
-<p>ترتیب منطقی پیشنهادی برای ادامه پژوهش این است که ابتدا معیارهای پذیرش و Gold Dataset مشخص شوند، سپس اجزای Pipeline مقایسه شوند، خطاهای ریشه‌ای برطرف شوند و در نهایت کل مجموعه اسناد با معماری منتخب از نو پردازش و ارزیابی شود.</p>
-<p>انتخاب مدل نهایی قبل از ایجاد این شواهد، تصمیمی زودهنگام خواهد بود.</p>
-<hr/>
-<h2 id="section-55">چند سؤال برای فکر کردن در آخر هفته</h2><div class="visual notebook"><p class="muted">یادداشت‌ها در همین مرورگر (در صورت پشتیبانی) ذخیره می‌شوند. می‌توانی آن‌ها را کپی یا به فایل متنی صادر کنی.</p><label for="note0">1. آیا واقعاً به OCR برای تمام صفحات نیاز داریم یا بخش قابل توجهی از آن هزینه اضافی است؟</label><textarea id="note0" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note1">2. اگر متن و هندسه را با دو موتور مستقل استخراج کنیم، چگونه آن‌ها را بدون ایجاد خطای جدید به هم متصل کنیم؟</label><textarea id="note1" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note2">3. آیا می‌توانیم خطاهای عددی را بدون استفاده از یک LLM گران‌قیمت تشخیص دهیم؟</label><textarea id="note2" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note3">4. چگونه می‌توانیم مطمئن شویم هیچ عنصر مهمی از صفحه جا نیفتاده است؟</label><textarea id="note3" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note4">5. اگر دو مدل خروجی متفاوتی بدهند، چگونه منبع حقیقت را تعیین کنیم؟</label><textarea id="note4" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note5">6. چه مقدار از پردازش اسناد مالی را می‌توان به روش‌های قطعی و بدون مدل زبانی انجام داد؟</label><textarea id="note5" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note6">7. آیا یک مدل کوچک تخصصی فارسی، در یک Pipeline خوب می‌تواند از یک VLM بزرگ بهتر عمل کند؟</label><textarea id="note6" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note7">8. آیا به‌جای Fine-tune کردن مدل، ابتدا باید روی کیفیت Crop و بازسازی ساختار سرمایه‌گذاری کنیم؟</label><textarea id="note7" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note8">9. چگونه می‌توانیم هزینه، سرعت، دقت و نیاز به بازبینی انسانی را هم‌زمان بهینه کنیم؟</label><textarea id="note8" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><label for="note9">10. چطور می‌توانیم پردازش سند فارسی را از یک قابلیت داخلی به یک محصول قابل عرضه تبدیل کنیم؟</label><textarea id="note9" placeholder="ایده‌ها و یادداشت‌های من…" rows="3"></textarea><div class="toolbar"><button id="copyNotes">کپی یادداشت‌ها</button><button id="exportNotes">خروجی متنی</button><span id="noteStatus" role="status"></span></div></div>
+<p>وقتی نمایش ساختاریافته برای کاربرد شما به کیفیت مناسب رسید، از روی آن Chunkهای بازیابی را بسازید. عنوان را همراه پاراگراف، سرستون را همراه ردیف مرتبط و Caption را همراه تصویر نگه دارید. شمارهٔ صفحه و شناسهٔ عنصر را در متادیتای Chunk ذخیره کنید تا جواب RAG به شواهد لینک شود. محدودیت اندازهٔ Chunk را با Tokenizer مدل Embedding واقعی انتخاب و کیفیت بازیابی را اندازه‌گیری کنید. Docling برای شروع آماده، <a href="https://docling-project.github.io/docling/concepts/chunking/">Chunking آگاه از ساختار</a> را مستند کرده است. کیفیت Parsing، Retrieval و جواب نهایی باید جداگانه ارزیابی شوند.</p>
+<p>برای سرویس، تبدیل سند را پشت Worker یا صف با منابع محدود بگذارید. دریافت فایل، Parse، بازبینی و انتشار را جدا کنید. فایل اصلی، هش محتوا، Artifact خام، تنظیمات و خروجی نسخه‌دار را نگه دارید. نوع و اندازهٔ فایل، تعداد صفحه و پیکسل، Timeout، حافظه و تعداد اجرای هم‌زمان را محدود کنید؛ از Worker ایزوله و بدون دسترسی اضافه یا شبکهٔ غیرضروری استفاده کنید. فایل‌های Office ممکن است هنگام بازشدن فشرده‌سازی حجم بسیار بیشتری پیدا کنند. اسکریپت آموزشی را مستقیم به Endpoint آپلود عمومی تبدیل نکنید. <a href="https://ocrmypdf.readthedocs.io/en/stable/pdfsecurity.html">راهنمای امنیت OCRmyPDF</a> توضیح می‌دهد چرا نباید PDF را ذاتاً امن فرض کنیم.</p>
+<p>قبل از فرستادن سند به سرویس OCR یا VLM خارجی، محرمانگی و سیاست نگهداری داده را بررسی کنید. دستورهای داخل سند را دادهٔ غیرقابل‌اعتماد بدانید، نه دستور ایجنت؛ خروجی قابل‌نمایش را Sanitization کنید و دسترسی به سند و Artifact را محدود کنید. برای عملکرد، خروجی خام موفق را با کلید شامل محتوا و تنظیمات Cache کنید، اجرای Cache-hit را از ارزیابی تازه جدا کنید و قبل از Batching یا مدل تخصصی، روی بار کاری واقعی Benchmark بگیرید.</p>
+<p><strong>چک‌لیست انتشار:</strong> تست رگرسیون Gold Dataset را اجرا کنید؛ مطمئن شوید همهٔ صفحات وضعیت مشخص دارند؛ ناحیهٔ جاافتاده یا مشکوک را بازبینی کنید؛ جدول و فیلد حساس را بررسی کنید؛ پیوندهای منبع را تأیید کنید؛ هزینه و تأخیر را بسنجید؛ ورودی‌های پشتیبانی‌نشده و Rollback را مستند کنید. بعد دادهٔ پذیرفته‌شده را ایندکس یا منتشر کنید. این‌ها پیشنهاد مهندسی‌اند، نه ادعای اینکه اسکریپت آموزشی همه‌شان را انجام می‌دهد.</p>
+<p>با سه سند و یک تست کوچک شروع کنید. اول راهش بیندازید، گلوگاه واقعی را پیدا کنید، همان را اصلاح کنید و دوباره اندازه بگیرید. مسیر تبدیل یک اسکریپت استخراج به Pipeline قابل‌اتکا همین است.</p>
+<span id="section-57" aria-hidden="true"></span>
+<h2 id="reading" data-tutorial-step="reading">برای مطالعه و تمرین بیشتر</h2>
 
-<hr/>
-<h2 id="section-56">جمع‌بندی: آنچه به‌عنوان یک AI Engineer باید یاد بگیریم</h2>
-<p>مهم‌ترین چیزی که از این تجربه می‌توان یاد گرفت این است که پردازش سند مسئله یک مدل هوش مصنوعی نیست؛ مسئله طراحی یک سیستم کامل است.</p>
-<p>در چنین سیستمی، PDF Decoder، Layout Model، OCR، VLM، الگوریتم‌های بازسازی ساختار، سیستم ذخیره‌سازی، Cache، کنترل کیفیت و ارزیابی، همگی در نتیجه نهایی سهیم هستند.</p>
-<p>مهندسی هوش مصنوعی فقط انتخاب قوی‌ترین مدل موجود نیست. گاهی انتخاب یک کتابخانه ساده برای یک مسئولیت محدود، طراحی یک Schema مناسب، ذخیره پاسخ خام، ثبت مختصات یک سلول یا جلوگیری از انتشار داده ناقص، تأثیر بیشتری از ارتقای مدل دارد.</p>
-<p>همچنین نباید پیچیدگی را با پیشرفت اشتباه بگیریم. اضافه‌کردن مدل‌ها، Agentها، Recovery Layerها و الگوریتم‌های بیشتر زمانی ارزشمند است که بتوانیم با شواهد نشان دهیم مسئله‌ای واقعی را حل می‌کنند.</p>
-<p>هدف نهایی باید ساخت ساده‌ترین معماری‌ای باشد که بتواند کیفیت موردنیاز را با شواهد قابل تکرار اثبات کند.</p>
-<blockquote>
-<p><strong>یک Parser عالی فقط سیستمی نیست که بتواند اسناد را بخواند؛ سیستمی است که بتواند نشان دهد چه چیزی را خوانده، از کجا خوانده، چه چیزی را نتوانسته بخواند و چرا باید به خروجی آن اعتماد کنیم.</strong></p>
-</blockquote>
-<hr/>
-<h2 id="section-57">برای مطالعه بیشتر</h2>
-<ul>
-<li><a href="https://pymupdf.readthedocs.io/">PyMuPDF Documentation</a></li>
-<li><a href="https://arxiv.org/abs/2408.09869">Docling: Technical Report</a></li>
-<li><a href="https://docling-project.github.io/docling/reference/pipeline_options/">Docling: Pipeline Options</a></li>
-<li><a href="https://github.com/docling-project/docling/blob/main/docs/concepts/docling_document.md">Docling: Document Representation</a></li>
-<li><a href="https://www.unicode.org/reports/tr9/">Unicode Standard Annex #9: Bidirectional Algorithm</a></li>
-</ul>
-<p><em>یادداشت درباره نتایج: اعداد و تجربه‌های مطرح‌شده از گزارش مهندسی و آزمایش‌های ثبت‌شده قبلی استخراج شده‌اند، نه یک Benchmark جدید یا یک مقایسه مستقل و جامع بین محصولات. شمارش ۱۸ اصلاح محدود و ۱۹ مسئله باز براساس فهرست تک‌تک مشکلات انجام شده است. منابع عمومی بالا برای مطالعه مفاهیم و ابزارها هستند و تأیید مستقل نتایج تجربی این مطلب محسوب نمی‌شوند. ایده‌های پژوهشی نیز پیشنهادهایی برای آزمایش هستند، نه راهکارهایی که برتری آن‌ها از قبل اثبات شده باشد.</em></p>
-
-<p class="meta">تصاویر شماتیک آموزشی بازسازی شده‌اند؛ نتایج ثبت‌شده با مثال‌های فرضی و ایده‌های آینده متمایز هستند.</p>
+<p>یک مقالهٔ عمومی دوستونه، یک اسکن فارسی و یک جدول بدون خط مرزی را امتحان کنید. برای هرکدام فایل اصلی را نگه دارید، چند ناحیهٔ مرجع را دستی مشخص کنید، دو مسیر منطقی را اجرا کنید و متن، ساختار، صحت فیلد و زمان اجرا را مقایسه کنید. برای نمودار یا فرم، Schema روشن تعریف کنید و به‌جای اعتماد به توضیح تولیدشدهٔ مدل، مقدار را با منبع تطبیق دهید.</p>
+<ul><li><a href="https://pymupdf.readthedocs.io/en/latest/recipes-text.html">راهنمای استخراج متن PyMuPDF</a> و <a href="https://pymupdf.readthedocs.io/en/latest/recipes-common-issues-and-their-solutions.html">مشکلات رایج استخراج</a></li><li><a href="https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html">راهنمای بهبود کیفیت OCR در Tesseract</a> و <a href="https://ocrmypdf.readthedocs.io/en/stable/cookbook.html">راهنمای OCRmyPDF</a></li><li><a href="https://docling-project.github.io/docling/getting_started/quickstart/">Quickstart Docling</a>، <a href="https://docling-project.github.io/docling/concepts/docling_document/">ساختار سند</a> و <a href="https://docling-project.github.io/docling/reference/pipeline_options/">تنظیمات Pipeline</a></li><li><a href="https://docs.unstructured.io/open-source/core-functionality/partitioning">روش‌های Partitioning در Unstructured</a></li><li><a href="https://www.unicode.org/reports/tr9/">Unicode UAX #9: الگوریتم دوجهته</a></li><li><a href="https://github.com/opendatalab/OmniDocBench">OmniDocBench</a> و <a href="https://github.com/opendatalab/OHR-Bench">OHR-Bench</a></li></ul>
+<p class="meta">مثال‌ها و معماری پیشنهادی آموزشی و مستقل از پروژهٔ خاصی هستند. تمرین سه‌صفحه‌ای مصنوعی است، نه Benchmark یک Parser تجاری یا متن‌باز. لینک مستندات برای APIها و مفاهیم است؛ انتخاب ابزار و معماری Production به کاربرد شما بستگی دارد.</p>
