@@ -1,0 +1,24 @@
+{% assign copy = site.data.home[page.lang] %}
+<section class="intro" aria-labelledby="intro-title">
+  <p class="eyebrow">{{ copy.role | escape }}</p>
+  <h1 id="intro-title">{{ copy.name | escape }}</h1>
+  <p class="hero-tagline">{{ copy.tagline | escape }}</p>
+  <p class="lede">{{ copy.intro | escape }}</p>
+  <p class="lede">{{ copy.about_before | escape }} <a href="{{ copy.about_url }}">{{ copy.about_label | escape }}</a>{{ copy.about_after | escape }}</p>
+  <div class="quick-links">
+    {% for action in copy.actions %}<a class="action{% if forloop.first %} primary{% endif %}" href="{{ action.url }}">{{ action.label | escape }}</a>{% endfor %}
+  </div>
+</section>
+{% for section in site.data.home.sections %}
+<section data-home-section="{{ section.key }}" aria-labelledby="{{ section.key }}-title">
+  <div class="section-heading">
+    <h2 id="{{ section.key }}-title">{{ section[page.lang] | escape }}</h2>
+    {% if section.link %}{% assign link = section.link[page.lang] %}<a class="section-link" href="{{ link.url }}">{{ link.label | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span></a>{% endif %}
+  </div>
+  <div class="section-grid{% if section.items.size == 3 %} three{% endif %}">
+  {% for item in section.items %}{% assign entry = item[page.lang] %}
+    <article class="entry-card"><div class="meta">{{ entry.tag | escape }}</div><h3><a href="{{ entry.url }}">{{ entry.title | escape }}</a></h3><p>{{ entry.desc | escape }}</p></article>
+  {% endfor %}
+  </div>
+</section>
+{% endfor %}
