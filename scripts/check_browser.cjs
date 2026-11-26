@@ -87,19 +87,23 @@ fs.mkdirSync(out, { recursive: true });
     }
     const articleRoute = '/fa/writing/document-parsing/';
     const englishRoute = '/writing/document-parsing/';
+    const faRetired = fs.existsSync('retired-posts/fa-document-parsing.html');
+    const enRetired = fs.existsSync('retired-posts/en-document-parsing.html');
     for (const route of ['/', '/fa/', '/writing/', '/fa/writing/']) {
       assert((await p.goto(origin+route)).ok());
       const faCount = await p.locator('a[href="'+articleRoute+'"]').count();
       const enCount = await p.locator('a[href="'+englishRoute+'"]').count();
-      if (route === '/fa/writing/') assert.equal(faCount, 1);
+      if (faRetired) assert.equal(faCount, 0);
+      else if (route === '/fa/writing/') assert.equal(faCount, 1);
       else if (route === '/fa/') assert(faCount <= 1);
       else assert.equal(faCount, 0);
-      if (route === '/writing/') assert.equal(enCount, 1);
+      if (enRetired) assert.equal(enCount, 0);
+      else if (route === '/writing/') assert.equal(enCount, 1);
       else if (route === '/') assert(enCount <= 1);
       else assert.equal(enCount, 0);
       assert.equal(await p.locator('a[href="/fa/writing/document-parsing-engineering/"]').count(),0);
     }
-    for (const lang of ['en']) for (const width of [375, 1440]) {
+    for (const lang of enRetired ? [] : ['en']) for (const width of [375, 1440]) {
       const ctx = await browser.newContext({viewport:{width,height:900},colorScheme:'dark',acceptDownloads:true});
       const a = await ctx.newPage();
       const failures = [];
@@ -135,7 +139,7 @@ fs.mkdirSync(out, { recursive: true });
       await a.waitForURL(origin+(lang==='fa'?englishRoute:articleRoute));
       await ctx.close();
     }
-    for (const width of [375, 1440]) {
+    for (const width of faRetired ? [] : [375, 1440]) {
       const ctx = await browser.newContext({viewport:{width,height:900}});
       const guide = await ctx.newPage();
       const failures = [];
@@ -158,6 +162,7 @@ fs.mkdirSync(out, { recursive: true });
     }
     assert((await p.goto(origin+'/fa/writing/document-parsing-engineering/')).ok());
     await p.waitForURL(origin+articleRoute);
+    for(const [route,removed] of [[articleRoute,faRetired],[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
     console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 6 localized resource routes.');
   } finally { await browser.close(); }

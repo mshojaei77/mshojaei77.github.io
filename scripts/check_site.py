@@ -89,16 +89,30 @@ for en, fa in pairs:
         if fa != "/fa/writing/document-parsing/" and (f.alternates.get("fa") != fa or f.alternates.get("en") != en):
             errors.append(f"{en}: missing language alternates")
 article_routes = {"fa": "/fa/writing/document-parsing/", "en": "/writing/document-parsing/"}
+def listed_xml(name, route):
+    import xml.etree.ElementTree as ET
+    tree = ET.parse(root / name)
+    ns = "{http://www.w3.org/2005/Atom}"
+    if name == "feed.xml":
+        urls = [link.get("href", "") for entry in tree.findall(ns + "entry") for link in entry.findall(ns + "link") if link.get("rel", "alternate") == "alternate"]
+    else:
+        urls = [node.text or "" for node in tree.iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+    return any(urlsplit(url).path == route for url in urls)
+
+def retired(route):
+    page = root / route.lstrip("/") / "index.html"
+    return page.is_file() and "data-retired-post" in page.read_text(encoding="utf-8")
+
 for lang, own in article_routes.items():
     other = article_routes["en" if lang == "fa" else "fa"]
     prefix = "fa/" if lang == "fa" else ""
     for path in (prefix + "index.html", prefix + "writing/index.html"):
         parser = Links()
         parser.feed((root / path).read_text(encoding="utf-8"))
-        if (path.endswith("writing/index.html") and own not in parser.links) or other in parser.links:
+        if (path.endswith("writing/index.html") and (own in parser.links) == retired(own)) or (retired(own) and own in parser.links) or other in parser.links:
             errors.append(f"{path}: article language isolation failed")
     for path in ("feed.xml", "sitemap.xml"):
-        if (root / path).is_file() and own not in (root / path).read_text(encoding="utf-8"):
+        if (root / path).is_file() and (listed_xml(path, own) == retired(own)):
             errors.append(f"{path}: missing {own}")
 for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
     html = (root / path).read_text(encoding="utf-8")
@@ -157,7 +171,7 @@ class Guide(HTMLParser):
             self.in_article = False
 if not guide_file.is_file():
     errors.append(f"Missing output: {guide_route}")
-else:
+elif not retired(guide_route):
     guide = Guide()
     guide.feed(guide_file.read_text(encoding="utf-8"))
     locale = inspect_route(guide_route)
@@ -172,13 +186,13 @@ else:
 for name in ("fa/index.html", "fa/writing/index.html", "index.html", "writing/index.html"):
     parser = Links()
     parser.feed((root / name).read_text(encoding="utf-8"))
-    expected = name == "fa/writing/index.html"
+    expected = name == "fa/writing/index.html" and not retired(guide_route)
     count = parser.links.count(guide_route)
-    if (expected and count != 1) or (name == "fa/index.html" and count > 1) or (not name.startswith("fa/") and count) or obsolete_route in parser.links:
+    if (expected and count != 1) or (retired(guide_route) and count) or (name == "fa/index.html" and count > 1) or (not name.startswith("fa/") and count) or obsolete_route in parser.links:
         errors.append(f"{name}: canonical article listing must be unique")
 for name in ("feed.xml", "sitemap.xml"):
     html = (root / name).read_text(encoding="utf-8")
-    if guide_route not in html or obsolete_route in html:
+    if (listed_xml(name, guide_route) == retired(guide_route)) or listed_xml(name, obsolete_route):
         errors.append(f"{name}: wrong canonical article listing")
 redirect = root / obsolete_route.lstrip("/") / "index.html"
 if not redirect.is_file() or f"url={guide_route}" not in redirect.read_text(encoding="utf-8"):
@@ -219,6 +233,34 @@ for path in Path("_posts").iterdir():
 for route, count in Counter(post_routes).items():
     if count > 1:
         errors.append(f"Duplicate post permalink: {route}")
+# All explicit removals must retain an unindexed notice, without a post or archive card.
+for path in Path("retired-posts").glob("*.html"):
+    source = path.read_text(encoding="utf-8")
+    match = re.search(r"^permalink:\s*(/[^\s]+/)\s*$", source, re.M)
+    if not match:
+        errors.append(f"Invalid removal notice: {path}")
+        continue
+    route = match.group(1)
+    if route in post_routes:
+        errors.append(f"Published and removed simultaneously: {route}")
+    if not retired(route):
+        errors.append(f"Missing removal notice: {route}")
+        continue
+    html = (root / route.lstrip("/") / "index.html").read_text(encoding="utf-8")
+    if 'content="noindex,nofollow"' not in html:
+        errors.append(f"Removal notice is indexable: {route}")
+    for name in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html", "feed.xml", "sitemap.xml"):
+        output = root / name
+        if not output.is_file():
+            continue
+        if name.endswith(".xml"):
+            found = listed_xml(name, route)
+        else:
+            parser = Links()
+            parser.feed(output.read_text(encoding="utf-8"))
+            found = route in parser.links
+        if found:
+            errors.append(f"Removed route still listed in {name}: {route}")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)
