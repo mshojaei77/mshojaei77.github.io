@@ -2,7 +2,10 @@
 title: "Tokenization Tutorial: Text to Tokens for LLMs"
 nav_order: 3
 parent: Tutorials
-layout: default
+layout: article
+lang: en
+permalink: /materials/Tokenization/
+nav_exclude: true
 ---
 
 # Tokenization Tutorial 🔢: Text to Numbers Hack for LLM Smarts

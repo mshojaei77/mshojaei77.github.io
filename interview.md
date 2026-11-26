@@ -1,12 +1,12 @@
 ---
-layout: default
+layout: article
+lang: en
 title: "LLM Interview Questions"
 description: "Interview preparation by topic and technical depth."
 permalink: /interview.html
 nav_order: 9
 ---
 
-[فارسی — Persian overview](/fa/interview/) · [Home](/)
 
 # Interview Questions
 

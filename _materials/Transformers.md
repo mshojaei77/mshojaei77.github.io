@@ -2,7 +2,10 @@
 title: "Transformers Tutorial: Attention Revolution for LLMs"
 nav_order: 6
 parent: Tutorials
-layout: default
+layout: article
+lang: en
+permalink: /materials/Transformers/
+nav_exclude: true
 ---
 
 # Transformers Tutorial ⚡: Attention Mechanism Explained – Parallel Seq Magic

@@ -2,7 +2,10 @@
 title: "Intro to LLMs: Large Language Models Basics"
 nav_order: 1
 parent: Tutorials
-layout: default
+layout: article
+lang: en
+permalink: /materials/Intro/
+nav_exclude: true
 ---
 
 # Intro to LLMs 🧠: Unlocking the Wizardry of AI Language Models

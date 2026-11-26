@@ -1,0 +1,1295 @@
+---
+layout: article
+show_article_header: true
+article_widgets: true
+lang: en
+title: "The Art of Document Parsing: From a Simple PDF to a Reliable AI System"
+description: "A weekend read on Persian document parsing, OCR, table reconstruction, recorded experiments, and engineering reliable systems."
+excerpt: "A weekend read on Persian document parsing, OCR, table reconstruction, recorded experiments, and engineering reliable systems."
+date: 2026-11-26 00:00:00 +0000
+permalink: /writing/document-parsing/
+nav_exclude: true
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
+tags: [document-parsing, OCR, Persian, RAG, weekend-reading]
+---
+<details class="article-toc"><summary>Table of contents</summary><a href="#section-1">Part I: Why is reading a PDF so complicated?</a><a href="#section-5">Part II: Understanding the tools and architecture</a><a href="#section-10">Part III: Why Persian documents are harder</a><a href="#section-19">Part IV: Vision models and information retrieval</a><a href="#section-23">Part V: Experiments and lessons learned</a><a href="#section-28">Part VI: Reliability engineering</a><a href="#section-34">Part VII: A review of the problems encountered</a><a href="#section-40">Part VIII: How can we build a better parser?</a><a href="#section-46">Part IX: Ideas to explore and experiment with</a><a href="#section-54">Part X: The biggest technical obstacles</a><a href="#section-55">Questions to think about over the weekend</a><a href="#section-56">Conclusion: What we need to learn as AI engineers</a><a href="#section-57">Further reading</a></details>
+
+
+<p>In this article, we draw on practical experience processing Persian documents to understand why turning a PDF into reliable knowledge is much more than picking an AI model. The reported numbers and experimental results refer to limited, documented samples; educational examples and future ideas are distinguished from demonstrated results.</p>
+<hr/>
+<h2 id="section-1">Part I: Why is reading a PDF so complicated?</h2>
+<h3 id="section-2">1. A problem beyond text extraction</h3>
+<p>At first glance, the problem looks simple: we have a PDF, want to extract its text, and feed it into a RAG system or AI agent.</p>
+<p>Install a few libraries, extract the text, split it into chunks, generate embeddings, and put them in a vector database.</p>
+<p>But once we work with real Persian documents, especially financial, banking, legal, and organizational documents, we realize it is not that simple.</p>
+<p>Imagine a financial document containing this table:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Loan type</th>
+<th>Interest rate</th>
+<th>Maximum amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purchase of goods</td>
+<td>18%</td>
+<td>500 million rials</td>
+</tr>
+<tr>
+<td>Working capital</td>
+<td>23%</td>
+<td>2 billion rials</td>
+</tr>
+<tr>
+<td>Qard al-hasan loan</td>
+<td>4%</td>
+<td>300 million rials</td>
+</tr>
+</tbody>
+</table></div>
+<p>If a parser extracts every word and number from this table, has it done its job correctly?</p>
+<p>Not necessarily.</p>
+<p>All numbers might be read correctly, but the 23% interest rate could be assigned to the qard al-hasan loan. The word “million” might disappear, or 18 might become 81. Even if every bit of text is extracted correctly, the relationships between rows and columns could be lost.</p>
+<p>In each case, incorrect information enters the database, and a powerful language model can generate a thoroughly convincing answer based on that incorrect information.</p>
+<p><strong>The language model is not necessarily at fault; the error starts as soon as the document enters the system.</strong></p>
+<p>This is one of the most important lessons in RAG engineering: errors in the input knowledge can severely limit the quality of the answers.</p>
+<h3 id="section-3">2. What is a PDF, really?</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 285" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="95" y="12"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="171.0" y="30"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="54"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="66"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="78"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="90"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="110" y="112"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="110" y="112"></rect><path d="M110 129.5H270" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M110 147.0H270" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M110 164.5H270" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M163.33333333333334 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M216.66666666666669 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="110" y="194"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="110" y="204"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="110" y="214"></rect><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="435" y="12"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="511.0" y="30"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="54"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="66"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="78"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="90"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="450" y="112"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="450" y="112"></rect><path d="M450 129.5H610" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M450 147.0H610" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M450 164.5H610" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M503.3333333333333 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M556.6666666666666 112V182" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="450" y="194"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="450" y="204"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="450" y="214"></rect><rect fill="none" height="20" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="104.50000000000001" x="505.3" y="24"></rect><rect fill="none" height="55" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="170" x="445" y="47"></rect><rect fill="none" height="80" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="170" x="445" y="107"></rect><rect fill="none" height="35" rx="3" stroke="var(--accent)" stroke-dasharray="5 3" stroke-width="2" width="170" x="445" y="190"></rect><path d="M300 120L420 120" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="420" cy="120" fill="var(--accent)" r="3"></circle><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="190" y="267">What a human sees</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="530" y="267">What the parser analyzes</text></svg><figcaption>Document appearance compared with extracted geometric regions; schematic illustration.</figcaption></figure>
+<p>A common mistake is treating a PDF like a Word document or a plain text file. PDFs were primarily designed for displaying and printing documents, not necessarily for reconstructing their logical structure.</p>
+<p>What a human sees as a heading, paragraph, or table might just be a collection of glyphs, lines, and coordinates inside the PDF. The parser needs to rediscover the relationships between those elements.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>PDF type</th>
+<th>Characteristics</th>
+<th>Main challenge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Born-digital</td>
+<td>Digital text layer</td>
+<td>Reading order and structure</td>
+</tr>
+<tr>
+<td>Scanned PDF</td>
+<td>Scanned page images</td>
+<td>Text recognition with OCR</td>
+</tr>
+<tr>
+<td>Hybrid PDF</td>
+<td>Combination of text, images, and scans</td>
+<td>Selecting the right method for each region</td>
+</tr>
+</tbody>
+</table></div>
+<p>A 100-page PDF might contain 95 digital text pages, three scanned pages, and two pages with image-based tables. Choosing a processing method for the entire file is not always appropriate. We might need to make the decision per page or even per small region.</p>
+<h3 id="section-4">3. OCR, layout analysis, and document parsing</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 365" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="15" y="10"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="182" y="37">OCR</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="182" y="160">Text recognition</text><rect fill="var(--page)" height="76" rx="8" stroke="var(--line)" width="205" x="80" y="55"></rect><text fill="var(--ink)" font-size="26" font-weight="500" text-anchor="middle" x="182" y="97">Rate: 18%</text><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="370" y="10"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="537" y="37">Layout Analysis</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="537" y="160">Region detection</text><rect fill="var(--page)" height="85" rx="8" stroke="var(--line)" width="110" x="482" y="52"></rect><rect fill="var(--tint)" height="15" rx="2" stroke="var(--accent)" width="88" x="493" y="61"></rect><rect fill="var(--tint)" height="43" rx="2" stroke="var(--accent)" width="88" x="493" y="81"></rect><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="15" y="190"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="182" y="217">Table Structure</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="182" y="340">Cell reconstruction</text><rect fill="var(--page)" height="82" rx="2" stroke="var(--line)" width="205" x="80" y="233"></rect><rect fill="var(--tint)" height="20.5" rx="1" stroke="none" width="205" x="80" y="233"></rect><path d="M80 253.5H285" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M148.33333333333331 274.0H285" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M148.33333333333331 294.5H285" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M148.33333333333331 233V315" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M216.66666666666666 233V315" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--panel)" height="165" rx="8" stroke="var(--line)" width="335" x="370" y="190"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="537" y="217">Document Parsing</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="537" y="340">Final structure</text><text fill="var(--accent)" font-size="17" font-weight="500" text-anchor="middle" x="537" y="251">DocumentIR</text><path d="M537 258V274H459V284 M537 274H616V284" fill="none" stroke="var(--line)" stroke-width="2"></path><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="459" y="304">Text</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="616" y="304">TableIR</text></svg><figcaption>Four distinct responsibilities in document processing.</figcaption></figure>
+<p>These terms are often used interchangeably, even though they describe different responsibilities.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OCR</td>
+<td>Recognizing letters, words, and numbers from images</td>
+</tr>
+<tr>
+<td>Layout Analysis</td>
+<td>Identifying headings, paragraphs, tables, figures, footnotes, and formulas</td>
+</tr>
+<tr>
+<td>Table Structure Recognition</td>
+<td>Detecting rows, columns, merged cells, and their relationships to headers</td>
+</tr>
+<tr>
+<td>Reading Order</td>
+<td>Reconstructing the logical reading order of elements</td>
+</tr>
+<tr>
+<td>Document Parsing</td>
+<td>Combining this information to reconstruct a coherent document structure</td>
+</tr>
+</tbody>
+</table></div>
+<p>A model could be excellent at reading Persian text but unable to identify the table cell it belongs to, or the legal article to which a clause refers.</p>
+<p><strong>The world's best OCR is not necessarily the world's best document parser.</strong> Evaluating a document processing system solely on OCR accuracy is not enough.</p>
+<hr/>
+<h2 id="section-5">Part II: Understanding the tools and architecture</h2>
+<h3 id="section-6">4. What does PyMuPDF do?</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 252" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="100" y="10"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="176.0" y="28"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="52"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="64"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="76"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="88"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="115" y="110"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="115" y="110"></rect><path d="M115 127.5H275" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M115 145.0H275" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M115 162.5H275" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M168.33333333333334 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M221.66666666666669 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="115" y="192"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="115" y="202"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="115" y="212"></rect><rect fill="var(--tint)" height="17.5" rx="2" stroke="var(--accent)" width="53.333333333333336" x="168.33333333333334" y="127.5"></rect><text fill="var(--ink)" font-size="12" font-weight="500" text-anchor="middle" x="195" y="140">18%</text><path d="M215 130L430 130" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="430" cy="130" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="75" rx="8" stroke="var(--accent)" width="220" x="435" y="93"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="545" y="119">Bounding Box</text><text fill="var(--ink)" font-size="15" font-weight="500" text-anchor="middle" x="545" y="145">[120, 340, 165, 360]</text></svg><figcaption>Cell coordinates let us return to the actual document region; values are illustrative.</figcaption></figure>
+<p>PyMuPDF is one of the tools used in the architecture under study to access PDF content directly. Its uses include extracting digital text and glyph coordinates, rendering pages as images, identifying images, and inspecting the positions of page elements.</p>
+<p>For example, if we want to know where a number appears on a page, we can retain information like this:</p>
+<pre><code class="language-json">{
+  "text": "۱۸٪",
+  "page": 5,
+  "bbox": [120, 340, 165, 360]
+}
+</code></pre>
+<p><code>bbox</code> or bounding box, is the rectangular area occupied by an element on the page. These coordinates allow the system to return to the actual location of that element later.</p>
+<p>But PyMuPDF has limitations too. In one experiment on a challenging Persian page, 308 of 980 extracted characters belonged to the PUA range, roughly one-third.</p>
+<p>PUA stands for Private Use Area, a Unicode range reserved for private use and custom mappings. Some fonts and PDFs may use such mappings, so the text can look perfectly correct to a human while the extracted characters do not have the intended meaning.</p>
+<p>The lesson is not that PyMuPDF is a bad library; it is that <strong>direct PDF text extraction is not always the source of truth.</strong></p>
+<h3 id="section-7">5. Docling and TableFormer</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 230" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="140" rx="2" stroke="var(--line)" width="245" x="65" y="40"></rect><rect fill="var(--tint)" height="28.0" rx="1" stroke="none" width="245" x="65" y="40"></rect><path d="M65 68.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 96.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 124.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 152.0H310" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M146.66666666666669 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M228.33333333333334 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="140" rx="2" stroke="var(--line)" width="245" x="410" y="40"></rect><rect fill="var(--tint)" height="28.0" rx="1" stroke="none" width="245" x="410" y="40"></rect><path d="M410 68.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 96.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 124.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 152.0H655" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M491.6666666666667 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M573.3333333333334 40V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M325 110L395 110" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="395" cy="110" fill="var(--accent)" r="3"></circle><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="71"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="99"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="127"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="415.0" y="155"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="71"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="99"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="127"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="496.6" y="155"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="71"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="99"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="127"></rect><rect fill="none" height="20" rx="2" stroke="var(--accent)" width="70" x="578.2" y="155"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="187" y="210">Original table</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="532" y="210">Detected geometry and cells</text></svg><figcaption>Schematic illustration of TableFormer's task; not actual model output.</figcaption></figure>
+<p><a href="https://github.com/docling-project/docling">Docling</a> is a document processing tool that helps analyze page structure and convert documents into structured representations. One of its components is TableFormer, which detects table structure.</p>
+<p>In the implementation under study, Docling was configured as follows (a conceptual representation, not a complete executable code snippet):</p>
+<pre><code class="language-python">do_table_structure = True
+table_structure_mode = ACCURATE
+do_cell_matching = True
+do_ocr = False
+</code></pre>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>do_table_structure</code></td>
+<td>Table structure recognition</td>
+</tr>
+<tr>
+<td><code>ACCURATE</code></td>
+<td>Mode focused on structure recognition accuracy</td>
+</tr>
+<tr>
+<td><code>do_cell_matching</code></td>
+<td>Matching PDF text to detected cells</td>
+</tr>
+<tr>
+<td><code>do_ocr</code></td>
+<td>OCR is disabled on this particular path</td>
+</tr>
+</tbody>
+</table></div>
+<p>Even toggling <code>do_cell_matching</code> did not fix the corrupted Persian characters in the experiment on a difficult page. An image-based formula was not recognized as a formula, and the table structure was incomplete.</p>
+<p>In this architecture, TableFormer is part of Docling, not an independent parser that reprocesses the entire document after Docling.</p>
+<p>Selecting a mode <code>ACCURATE</code> does not guarantee real accuracy. Settings should be chosen based on actual experimental outputs, not merely their names.</p>
+<h3 id="section-8">6. Architecture of a document processing pipeline</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 590" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="12"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="360" y="40">PDF + Source Identity / Hash</text><path d="M360 56L360 74" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="74" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="74"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="360" y="102">PyMuPDF · Page evidence, text, geometry</text><path d="M360 118L360 136" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="136" fill="var(--accent)" r="3"></circle><path d="M360 136H120V151 M360 136V151 M360 136H600V151" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--tint)" height="62" rx="8" stroke="var(--accent)" width="220" x="10" y="151"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="120" y="176">Provider</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="120" y="197">+ Docling / TableFormer</text><rect fill="var(--tint)" height="62" rx="8" stroke="var(--accent)" width="220" x="250" y="151"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="360" y="176">Local Docling</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="360" y="197">TableFormer</text><rect fill="var(--tint)" height="62" rx="8" stroke="var(--accent)" width="220" x="490" y="151"></rect><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="600" y="176">Local + VLM</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="600" y="197">Selected crops</text><path d="M120 213V230H360 M360 213V245 M600 213V230H360" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="245"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="273">Structural Reconstruction</text><path d="M360 289L360 307" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="307" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="307"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="335">DocumentIR / TableIR</text><path d="M360 351L360 369" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="369" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="44" rx="8" stroke="var(--line)" width="470" x="125" y="369"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="397">Quality Gates</text><path d="M360 413L360 431" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="431" fill="var(--accent)" r="3"></circle><path d="M360 431H180V448 M360 431H540V448" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--goodbg)" height="48" rx="8" stroke="var(--good)" width="320" x="20" y="448"></rect><text fill="var(--good)" font-size="18" font-weight="500" text-anchor="middle" x="180" y="478">Accepted content</text><rect fill="var(--warnbg)" height="48" rx="8" stroke="var(--warn)" width="320" x="380" y="448"></rect><text fill="var(--warn)" font-size="18" font-weight="500" text-anchor="middle" x="540" y="478">Review / Quarantine</text><path d="M180 496L180 520" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="180" cy="520" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="56" rx="8" stroke="var(--line)" width="320" x="20" y="520"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="180" y="543">JSON / HTML / Markdown</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="180" y="562">Eligible chunks</text></svg><figcaption>Conceptual processing flow; only eligible content reaches downstream output.</figcaption></figure>
+<p>The architecture under study had several extraction paths. The default path first used an extraction provider for structured extraction, then Docling enriched the table structure. Another path relied on local Docling and selective visual recovery.</p>
+<pre><code class="language-text">PDF + Source Identity / Hash
+            |
+            v
+PyMuPDF: page evidence, text, geometry
+            |
+            v
+    Extraction strategy
+    |-- Provider + Docling / TableFormer
+    |-- Local Docling / TableFormer
+    `-- Local Docling + selected VLM crops
+            |
+            v
+    Structural reconstruction
+            |
+            v
+    DocumentIR / TableIR
+            |
+            v
+        Quality gates
+        |-- Accepted content
+        `-- Review / quarantine
+            |
+            v
+    Eligible derived outputs:
+    JSON / HTML / Markdown / Chunks
+</code></pre>
+<p>This diagram is a conceptual map of processing paths and decision points, not the exact order of every code call. Quarantined content must be reported and must not enter trusted downstream output.</p>
+<p>The ultimate goal is not plain text, but a structured version of the document whose information and provenance can be checked. That is the difference between text extraction and structural reconstruction.</p>
+<h3 id="section-9">7. DocumentIR and TableIR: Why isn't Markdown enough?</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 235" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="45" rx="8" stroke="var(--line)" width="350" x="185" y="8"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="36">Original Document</text><path d="M360 53L360 78" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="78" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="56" rx="8" stroke="var(--accent)" width="430" x="145" y="78"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="101">DocumentIR / TableIR</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="360" y="121">Canonical representation</text><path d="M360 134V157H90V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="10" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="90" y="206">JSON</text><path d="M360 134V157H270V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="190" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="270" y="206">HTML</text><path d="M360 134V157H450V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="370" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="450" y="206">Markdown</text><path d="M360 134V157H630V180" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="40" rx="8" stroke="var(--line)" width="160" x="550" y="180"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="630" y="206">Chunks</text></svg><figcaption>All derived representations are generated from one canonical structure.</figcaption></figure>
+<p>Markdown is great for humans and language models to read, but has limitations when storing all the structural details of a document.</p>
+<p>For example, in a complex table, a cell may span three rows. A table might continue on the next page, or a footnote might apply only to a particular column. Converting everything directly to Markdown can lose some of these relationships.</p>
+<p>The architectural solution is an intermediate representation. DocumentIR retains the overall document structure, while TableIR retains the precise structure of tables.</p>
+<p>A simple conceptual example of TableIR:</p>
+<pre><code class="language-json">{
+  "type": "table",
+  "table_id": "table_001",
+  "page": 5,
+  "cells": [
+    {
+      "row": 1,
+      "column": 2,
+      "text": "۱۸٪",
+      "header": "نرخ سود",
+      "rowspan": 1,
+      "colspan": 1,
+      "bbox": [120, 340, 165, 360],
+      "status": "REVIEW_REQUIRED"
+    }
+  ]
+}
+</code></pre>
+<p>Now the system knows not only the 18% figure, but also its column, page, coordinates, and whether its accuracy has been verified.</p>
+<pre><code class="language-text">Original document
+        |
+        v
+DocumentIR + TableIR
+(canonical representation)
+        |
+        +-- JSON
+        +-- HTML
+        +-- Markdown
+        `-- RAG chunks
+</code></pre>
+<p><strong>Maintain one structured source of truth and generate all other outputs from it.</strong></p>
+<p>If the original table is corrected, Markdown, HTML, and chunks should be regenerated from that same structure. Otherwise the JSON might be correct while an outdated, incorrect version remains in the vector database. This is a particularly misleading source of errors in real systems.</p>
+<hr/>
+<h2 id="section-10">Part III: Why Persian documents are harder</h2>
+<h3 id="section-11">8. The nightmare of RTL, Unicode, and Persian numerals</h3>
+<p>Persian is written right to left, but not every element in Persian text follows that direction. Numbers, some formulas, English words, dates, and mixed expressions behave differently.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Original value</th>
+<th>Possible incorrect output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>۱۴۰۱</code></td>
+<td><code>۱۰۴۱</code></td>
+</tr>
+<tr>
+<td><code>۹٬۰۳۹٬۰۰۰</code></td>
+<td><code>۰۰۰٬۹۳۰٬۹</code></td>
+</tr>
+<tr>
+<td><code>+10</code></td>
+<td><code>10+</code></td>
+</tr>
+<tr>
+<td><code>≤ 20</code></td>
+<td><code>&lt; 20</code></td>
+</tr>
+<tr>
+<td><code>۱۸٪</code></td>
+<td><code>۱۸</code></td>
+</tr>
+<tr>
+<td><code>500 million rials</code></td>
+<td><code>500 rials</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>These are not merely visual glitches. In financial documents, each can change the meaning of a rule or calculation.</p>
+<h4 id="section-12">Visual order and logical order</h4>
+<ul>
+<li><strong>Visual Order:</strong> The order in which characters appear on the page.</li>
+<li><strong>Logical Order:</strong> The order in which characters should be stored in memory and processed as text.</li>
+</ul>
+<p>The <a href="https://www.unicode.org/reports/tr9/">Unicode Bidirectional Algorithm, or BiDi,</a> helps manage the display of text containing a mixture of directions.</p>
+<p>A report about Docling's C++ engine suggested that right-to-left character handling caused some Persian numerals to be reversed. The exact upstream bug was not independently confirmed in the investigation under study, but similar errors were observed in real experiments.</p>
+<h4 id="section-13">Is reversing every number enough?</h4>
+<p>No; that can introduce new and even worse errors. Imagine that the parser extracted the number <code>21</code> . How can we tell whether the correct value was <code>21</code> or <code>12</code>?</p>
+<p>One approach tested was to first extract the native page text with PyMuPDF. If the value <code>12</code> appeared in the source but <code>21</code> did not, the system could cautiously correct the order. If both values appeared in the source, it should not guess.</p>
+<p>This approach was useful in some samples but is insufficient for scanned PDFs or PDFs whose text layer is itself corrupted. Even finding the reversed value on the same page does not necessarily prove it belongs to the same cell.</p>
+<p><strong>Evidence-based correction is better than guesswork. But the evidence itself must also be checked for reliability.</strong></p>
+<h3 id="section-14">9. The hardest table problems</h3>
+<p>The challenge with tables is not just reading cells; it is identifying the relationships between them.</p>
+<h4 id="section-15">Merged cells</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 175" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="150" rx="2" stroke="var(--line)" width="550" x="85" y="10"></rect><rect fill="var(--tint)" height="37.5" rx="1" stroke="none" width="550" x="85" y="10"></rect><path d="M85 47.5H635" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M268.33333333333337 85.0H635" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M268.33333333333337 122.5H635" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M268.33333333333337 10V160" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M451.6666666666667 10V160" fill="none" stroke="var(--line)" stroke-width="1"></path><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="177" y="38">Contract type</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="38">Term</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="38">Interest rate</text><text fill="var(--ink)" font-size="17" font-weight="500" text-anchor="middle" x="177" y="110">Installment sale</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="76.0">12 months</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="76.0">18%</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="113.5">24 months</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="113.5">20%</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="360" y="151.0">36 months</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="543" y="151.0">23%</text></svg><figcaption>One cell belongs to three rows (rowspan).</figcaption></figure>
+<p>Imagine the heading “installment sale” occupies a vertically merged cell spanning three rows:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Contract type</th>
+<th>Term</th>
+<th>Interest rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Installment sale</td>
+<td>12 months</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>(same cell continued)</td>
+<td>24 months</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>(same cell continued)</td>
+<td>36 months</td>
+<td>23%</td>
+</tr>
+</tbody>
+</table></div>
+<p>If the parser stores only the text of the second and third rows, their relationship to the contract type may disappear. TableIR must preserve the <code>rowspan</code> relationship.</p>
+<h4 id="section-16">Tables continued on the next page</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 205" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="145" rx="2" stroke="var(--line)" width="245" x="55" y="40"></rect><rect fill="var(--tint)" height="36.25" rx="1" stroke="none" width="245" x="55" y="40"></rect><path d="M55 76.25H300" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M55 112.5H300" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M55 148.75H300" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M136.66666666666669 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M218.33333333333334 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="145" rx="2" stroke="var(--line)" width="245" x="420" y="40"></rect><path d="M420 76.25H665" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M420 112.5H665" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M420 148.75H665" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M501.6666666666667 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M583.3333333333334 40V185" fill="none" stroke="var(--line)" stroke-width="1"></path><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="177" y="25">Page 15</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="542" y="25">Page 16</text><path d="M312 108L408 108" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="408" cy="108" fill="var(--accent)" r="3"></circle></svg><figcaption>Continued table and inherited header from the previous page.</figcaption></figure>
+<pre><code class="language-text">Page 15                  Page 16
++-------+-------+        +-------+-------+
+| Header A      |        | No header     |
++-------+-------+        +-------+-------+
+| Row 1 | Value |        | Row 3 | Value |
+| Row 2 | Value |  ---&gt;  | Row 4 | Value |
++-------+-------+        +-------+-------+
+</code></pre>
+<p>The second page might have no header but still inherit the previous page's headers. In one real sample, a possible cross-page connection was detected, but the final table was not accepted because of unverified cells and incomplete headers.</p>
+<h4 id="section-17">Adjacent tables with different meanings</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 185" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="120" rx="2" stroke="var(--line)" width="300" x="30" y="40"></rect><rect fill="var(--tint)" height="30.0" rx="1" stroke="none" width="300" x="30" y="40"></rect><path d="M30 70.0H330" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M30 100.0H330" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M30 130.0H330" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M180.0 40V160" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="120" rx="2" stroke="var(--line)" width="300" x="390" y="40"></rect><rect fill="var(--tint)" height="30.0" rx="1" stroke="none" width="300" x="390" y="40"></rect><path d="M390 70.0H690" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M390 100.0H690" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M390 130.0H690" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M540.0 40V160" fill="none" stroke="var(--line)" stroke-width="1"></path><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="180" y="25">Guarantee requirements</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="540" y="25">Loan requirements</text><path d="M360 10V170" fill="none" stroke="var(--warn)" stroke-width="2"></path></svg><figcaption>Adjacent tables must remain structurally and semantically separate.</figcaption></figure>
+<p>Imagine a page with two independent tables about guarantee requirements and loan eligibility. Incorrectly merging them could assign guarantee requirements to loan eligibility, even if every number was read correctly.</p>
+<h4 id="section-18">Blank forms</h4><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 280" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="2" stroke="var(--line)" width="235" x="70" y="10"></rect><path d="M70 22.77777777777778H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 35.55555555555556H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 48.333333333333336H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 61.111111111111114H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 73.88888888888889H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 86.66666666666667H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 99.44444444444444H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 112.22222222222223H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 125.0H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 137.77777777777777H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 150.55555555555554H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 163.33333333333334H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 176.11111111111111H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 188.88888888888889H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 201.66666666666666H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 214.44444444444446H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M70 227.22222222222223H305" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M117.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M164.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M211.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M258.0 10V240" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--page)" height="35" rx="2" stroke="var(--line)" width="210" x="450" y="95"></rect><path d="M492.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M534.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M576.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M618.0 95V130" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M320 115L435 115" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="435" cy="115" fill="var(--accent)" r="3"></circle><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="187" y="262">18 × 5 = 90 positions</text><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="555" y="154">Incomplete reconstruction</text></svg><figcaption>The structure of a blank form must be preserved even without text.</figcaption></figure>
+<p>In one real sample, a form had 18 rows and five columns, or 90 positions, but the parser reconstructed a much smaller structure. Empty cells do not mean the structure is unimportant.</p>
+<p>Footnotes, table titles, units of measurement, rows split at page boundaries, and multilevel headers each introduce their own problems. That is why the percentage of correctly read words is not a good standalone measure of table quality.</p>
+<hr/>
+<h2 id="section-19">Part IV: Vision models and information retrieval</h2>
+<h3 id="section-20">10. Why use a vision-language model?</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 250" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--page)" height="230" rx="8" stroke="var(--line)" width="190" x="35" y="10"></rect><rect fill="var(--muted)" height="9" rx="2" stroke="none" width="93.1" x="111.0" y="28"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="52"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="64"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="76"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="88"></rect><rect fill="var(--page)" height="70" rx="2" stroke="var(--line)" width="160" x="50" y="110"></rect><rect fill="var(--tint)" height="17.5" rx="1" stroke="none" width="160" x="50" y="110"></rect><path d="M50 127.5H210" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M50 145.0H210" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M50 162.5H210" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M103.33333333333334 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><path d="M156.66666666666669 110V180" fill="none" stroke="var(--line)" stroke-width="1"></path><rect fill="var(--line)" height="4" rx="1" stroke="none" width="160" x="50" y="192"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="148" x="50" y="202"></rect><rect fill="var(--line)" height="4" rx="1" stroke="none" width="136" x="50" y="212"></rect><rect fill="none" height="34" rx="2" stroke="var(--warn)" width="160" x="50" y="108"></rect><path d="M225 126L290 126" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="290" cy="126" fill="var(--accent)" r="3"></circle><rect fill="var(--warnbg)" height="64" rx="8" stroke="var(--warn)" width="180" x="295" y="94"></rect><text fill="var(--ink)" font-size="16" font-weight="500" text-anchor="middle" x="385" y="117">Region crop</text><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="385" y="140">Rate: 18%</text><path d="M475 126L530 126" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="530" cy="126" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="64" rx="8" stroke="var(--accent)" width="150" x="535" y="94"></rect><text fill="var(--ink)" font-size="22" font-weight="500" text-anchor="middle" x="610" y="132">VLM</text></svg><figcaption>Only the identified, suspicious region is sent for visual transcription.</figcaption></figure>
+<p>Imagine a PDF with corrupted native text, but everything is clearly visible when you open the page. We can extract the relevant region as an image and send it to a vision-language model such as Gemini or an open-source VLM.</p>
+<p>But there is an important architectural decision: should we send the whole PDF to the model, or only the parts that need visual reading?</p>
+<p>In one tested path, the VLM's responsibility was intentionally limited:</p>
+<pre><code class="language-text">Page image
+    |
+    v
+Select suspicious region
+    |
+    v
+Crop + stable region ID
+    |
+    v
+VLM transcription
+    |
+    v
+Validate and reconcile with source
+</code></pre>
+<p>The model receives the image and returns something like this:</p>
+<pre><code class="language-json">{
+  "region_id": "page_5_region_12",
+  "recognized_text": "نرخ ۱۸٪",
+  "unreadable_spans": []
+}
+</code></pre>
+<p>The model should not analyze, translate, summarize, or complete the information. It is not supposed to decide how many rows the table has or which column a number belongs to. When the geometry is known, those responsibilities belong to other pipeline components.</p>
+<p>This architecture has several potential advantages: lower processing costs, replaceable models, traceable errors, and a narrower scope in which the model can invent or add information.</p>
+<p>Of course, if the crop is wrong or the layout model fails to detect a region entirely, even the best VLM will never get a chance to read it.</p>
+<p>This limited VLM role should not be confused with the separate path that delegates full-page structured extraction to a provider.</p>
+<h3 id="section-21">11. How do we know which part is corrupted?</h3>
+<p>This question may be more important than OCR itself. If the system could always detect which part it had misread, we could reprocess just that part with another method. But detecting errors is itself a difficult engineering problem.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Detection method</th>
+<th>What does it find?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unicode Validation</td>
+<td>Corrupted or unexpected characters, such as PUA and <code>�</code></td>
+</tr>
+<tr>
+<td>Layout Overlap</td>
+<td>Text or images missing from the document structure</td>
+</tr>
+<tr>
+<td>Table Validation</td>
+<td>Incomplete cells, rows, or headers</td>
+</tr>
+<tr>
+<td>Empty Cell Inspection</td>
+<td>An empty cell with visible content in the image</td>
+</tr>
+<tr>
+<td>Page Coverage</td>
+<td>Omitted or unprocessed pages</td>
+</tr>
+<tr>
+<td>Numeric Cross-check</td>
+<td>Some conflicts in numbers and signs</td>
+</tr>
+<tr>
+<td>Formula Detection</td>
+<td>Regions requiring formula detection or transcription</td>
+</tr>
+</tbody>
+</table></div>
+<p>For example, if Docling identifies an empty cell, we can use its coordinates to check whether the region actually contains text, images, or drawn content.</p>
+<p>But here's the important problem: if the true number is <code>18</code> and the parser returns <code>19</code> , both values are valid Unicode. Both can occupy a valid cell, and both can look semantically plausible.</p>
+<p>As a result, many quality checks might find nothing wrong.</p>
+<blockquote>
+<p><strong>Failing to detect an error is not the same as proving correctness.</strong></p>
+</blockquote>
+<h3 id="section-22">12. Does a confidence score solve the problem?</h3>
+<p>Suppose an OCR model tells us it read a number correctly with 98% confidence. Can we accept it directly?</p>
+<p>One real experiment showed that an OCR model misread important signs and numbers even when its confidence was high.</p>
+<p>Before relying on confidence scores, we need to calibrate them: use samples with trustworthy answers to examine how reported confidence relates to actual accuracy. Even then, model behavior may change on a new document, font, or image quality.</p>
+<p>Confidence is a useful decision signal, not definitive proof of correctness.</p>
+<hr/>
+<h2 id="section-23">Part V: Experiments and lessons learned</h2>
+<h3 id="section-24">13. Comparing different parsers and models</h3>
+<p>Recorded results from limited experiments offer an interesting picture of the difficulty of the problem.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Tool or model</th>
+<th>Recorded result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PyMuPDF</td>
+<td>308 PUA characters out of 980 characters on one difficult page</td>
+</tr>
+<tr>
+<td>Docling / TableFormer</td>
+<td>Unicode issues, incomplete table structure, and a failed formula detection</td>
+</tr>
+<tr>
+<td>Gemini Flash 3</td>
+<td>Exact recognition of 17 out of 26 cell texts</td>
+</tr>
+<tr>
+<td>PageIndex Page Extract</td>
+<td>Successful extraction of several rows and a formula in a schema-guided experiment</td>
+</tr>
+<tr>
+<td>Inkling 2 Mini</td>
+<td>Failed initial vision screening on a synthetic financial image</td>
+</tr>
+<tr>
+<td>Bina Rizeh</td>
+<td>Substantial errors on 37 real image crops</td>
+</tr>
+</tbody>
+</table></div>
+<p>These were not identical tests under identical conditions, so they should not be turned into a definitive ranking.</p>
+<p>Tools such as Marker, MinerU, Surya, PP-DocLayoutV3, PaddleOCR, and LlamaParse were also considered, but available evidence was insufficient to establish their relative superiority.</p>
+<h4 id="section-25">Gemini experiment</h4><figure class="visual"><div class="metricgrid"><div class="metric"><span>Exact cell match</span><strong>17/26</strong></div><div class="metric bad"><span>Extra cells</span><strong>13</strong></div><div class="metric bad"><span>Missed critical occurrence</span><strong>1/49</strong></div></div><div class="barrow"><div><span>Cell text match</span><b dir="ltr">17/26</b></div><div class="track"><i style="width:65.3846%"></i></div></div><figcaption>A limited test, not a general model performance benchmark.</figcaption></figure>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align:right">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cell texts matching the reference exactly</td>
+<td style="text-align:right">17 of 26 (about 65%)</td>
+</tr>
+<tr>
+<td>Extra cells generated</td>
+<td style="text-align:right">13</td>
+</tr>
+<tr>
+<td>Missed critical numerical or sign occurrence</td>
+<td style="text-align:right">1 of 49</td>
+</tr>
+</tbody>
+</table></div>
+<p>The important point is that a model can generate perfectly valid JSON while still containing incorrect text or extra cells.</p>
+<p><strong>Structured output guarantees adherence to a specified structure, not the correctness of the information inside it.</strong></p>
+<h4 id="section-26">Inkling 2 Mini experiment</h4>
+<p>On a synthetic financial image, this model correctly extracted only three of five critical digits and neither of two complete financial expressions. It therefore failed the initial screening.</p>
+<p>This does not establish that the model is poor at every vision task. It only shows that it did not provide sufficient evidence to advance to the next stage of that financial use case. Potential success in textual financial question answering does not imply success in OCR or vision.</p>
+<h4 id="section-27">Persian-specialized OCR experiment</h4><figure class="visual"><div class="metricgrid"><div class="metric bad"><span>CER</span><strong>31.03%</strong></div><div class="metric bad"><span>WER</span><strong>51.69%</strong></div></div><div class="barrow warn"><div><span>Exact line match</span><b dir="ltr">9/37</b></div><div class="track"><i style="width:24.3243%"></i></div></div><div class="barrow warn"><div><span>Percentage recognition</span><b dir="ltr">2/9</b></div><div class="track"><i style="width:22.2222%"></i></div></div><div class="barrow warn"><div><span>Plus sign</span><b dir="ltr">3/9</b></div><div class="track"><i style="width:33.3333%"></i></div></div><div class="barrow warn"><div><span>Less-than sign</span><b dir="ltr">2/7</b></div><div class="track"><i style="width:28.5714%"></i></div></div><figcaption>37 real crops; 21 of 29 sensitive samples failed the test criterion.</figcaption></figure>
+<p>One interesting experiment used the Bina Rizeh model on 37 real crops from four document families.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align:right">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Character Error Rate (CER)</td>
+<td style="text-align:right">31.03%</td>
+</tr>
+<tr>
+<td>Word Error Rate (WER)</td>
+<td style="text-align:right">51.69%</td>
+</tr>
+<tr>
+<td>Exact line match</td>
+<td style="text-align:right">9 of 37</td>
+</tr>
+<tr>
+<td>Percentage sign recognition</td>
+<td style="text-align:right">2 of 9</td>
+</tr>
+<tr>
+<td>Plus sign recognition</td>
+<td style="text-align:right">3 of 9</td>
+</tr>
+<tr>
+<td>Less-than sign recognition</td>
+<td style="text-align:right">2 of 7</td>
+</tr>
+<tr>
+<td>Sensitive samples failing the test criterion</td>
+<td style="text-align:right">21 of 29</td>
+</tr>
+</tbody>
+</table></div>
+<p>CER is character error rate and WER is word error rate. Lower is better for both. Some acceptance failures involved spacing and text boundaries, not necessarily financial semantic errors.</p>
+<p>This experiment taught an important lesson: a model specialized for Persian is not necessarily suitable for Persian financial documents. Font, digits, formulas, mathematical symbols, scan quality, and document structure also matter.</p>
+<p>Some sign errors also existed in the raw model output before RTL correction. In other words, the problem was not merely display direction; some errors came from recognition itself.</p>
+<hr/>
+<h2 id="section-28">Part VI: Reliability engineering</h2>
+<h3 id="section-29">14. Cache: friend or foe?</h3>
+<p>Caching is appealing in document processing. Processing a 100-page PDF may involve running several models and sending many API requests. If we have processed the document before, why pay the same cost again?</p>
+<p>But one investigation found that running the parser with <code>force=True</code> did not necessarily mean re-extracting the document. The system could read the previous parser response from cache and rebuild only derived outputs.</p>
+<p>Imagine changing the OCR model, fixing an important Docling bug, or writing a new prompt. You run the pipeline again and are happy with the result, but you are actually still looking at output from the previous model!</p>
+<p>To solve this, four independent operations were defined:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>verify-only</code></td>
+<td>Inspect existing output</td>
+</tr>
+<tr>
+<td><code>rebuild-derived</code></td>
+<td>Rebuild outputs from previously extracted data</td>
+</tr>
+<tr>
+<td><code>reparse-regions</code></td>
+<td>Re-extract specified regions</td>
+</tr>
+<tr>
+<td><code>reparse-document-fresh</code></td>
+<td>Actually re-extract the entire document</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="section-30">An idea for a better cache</h4>
+<p>Instead of using only the file name as the cache key, we can build cache identity from a combination of factors:</p>
+<pre><code class="language-text">Cache Key = hash(
+    Document Hash
+  + Region Identity
+  + Crop Hash
+  + Model Version
+  + Parser Configuration
+  + Prompt Version
+  + Schema Version
+)
+</code></pre>
+<p>If any of these factors changes, the system must determine whether the old cache remains valid. Nor does changing one stage necessarily require rerunning all earlier stages. If only Markdown generation changed, visual extraction again makes little sense.</p>
+<p>This approach can enable incremental processing and reduce costs for large documents.</p>
+<h3 id="section-31">15. Provenance: Where did the information come from?</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 490" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--tint)" height="48" rx="8" stroke="var(--accent)" width="440" x="140" y="10"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="40">Source Document · Hash</text><path d="M360 58L360 77" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="77" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="78"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="108">Page · Physical / Printed</text><path d="M360 126L360 145" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="145" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="146"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="176">Region · Bounding Box</text><path d="M360 194L360 213" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="213" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="214"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="244">Table / Cell · Row / Column</text><path d="M360 262L360 281" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="281" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="282"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="312">Extracted Value · Status</text><path d="M360 330L360 349" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="349" fill="var(--accent)" r="3"></circle><rect fill="var(--panel)" height="48" rx="8" stroke="var(--line)" width="440" x="140" y="350"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="380">Chunk · Evidence</text><path d="M360 398L360 417" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="417" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="48" rx="8" stroke="var(--accent)" width="440" x="140" y="418"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="448">AI Answer · Citation</text></svg><figcaption>Information provenance chain from original file to AI answer.</figcaption></figure>
+<p>Imagine an AI agent telling a user that the maximum loan amount is two billion rials. If the user wants to verify the source, the system must be able to return to its exact location in the original document.</p>
+<p>Provenance means recording the origin and production history of information.</p>
+<pre><code class="language-text">Source Document (identity + hash)
+              |
+              v
+Page (physical + printed number)
+              |
+              v
+Region (bounding box + crop)
+              |
+              v
+Table / Cell (row + column)
+              |
+              v
+Extracted Value (method + status)
+              |
+              v
+Chunk / Retrieval Evidence
+              |
+              v
+AI Answer + Citation
+</code></pre>
+<p>In one sample, the eighth physical PDF page corresponded to the seventh printed page. If the system ignores that difference, the citation may be wrong from the start.</p>
+<p>Besides building trust, provenance is crucial for debugging. When we find an incorrect number, we must know whether the PDF decoder introduced it, OCR misread it, the table parser moved it, or chunking lost its meaning.</p>
+<h3 id="section-32">16. Quarantine: The art of refusing suspicious information</h3><figure class="visual"><div class="metricgrid"><div class="metric"><span>Target regions</span><strong>231</strong></div><div class="metric"><span>Review required</span><strong>34</strong></div><div class="metric"><span>No matching response</span><strong>197</strong></div><div class="metric bad"><span>Accepted</span><strong>0</strong></div></div><div class="stack"><i style="width:14.7186%;background:var(--warn)"></i><i style="width:85.2814%;background:var(--muted)"></i></div><figcaption>Detected regions must be reported even if they cannot be published.</figcaption></figure>
+<p>A reliable system should not be forced to produce a complete result for every input. Sometimes the best response is to admit that part of the document could not be processed confidently.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ACCEPTED</code></td>
+<td>Content passed the defined acceptance criteria.</td>
+</tr>
+<tr>
+<td><code>REVIEW_REQUIRED</code></td>
+<td>Content was extracted but still requires review.</td>
+</tr>
+<tr>
+<td><code>QUARANTINED</code></td>
+<td>Content is incomplete, invalid, or suspicious and must not be published as reliable knowledge.</td>
+</tr>
+</tbody>
+</table></div>
+<p>In one historical report, 231 regions requiring visual processing had been detected:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th style="text-align:right">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stored response, review required</td>
+<td style="text-align:right">34</td>
+</tr>
+<tr>
+<td>No matching response</td>
+<td style="text-align:right">197</td>
+</tr>
+<tr>
+<td>Accepted</td>
+<td style="text-align:right">Zero</td>
+</tr>
+</tbody>
+</table></div>
+<p>The problem was not merely that some regions had not been extracted. More importantly, the system needed to report accurately what it did not know.</p>
+<p>Silently removing a suspicious table from the output can make a document appear clean while leaving it incomplete.</p>
+<p><strong>The system must both prevent publication of incorrect information and report missing information.</strong></p>
+<h3 id="section-33">17. Problems unrelated to the AI model itself</h3>
+<p>When building AI systems, we often focus heavily on model choice. But many recorded problems were software engineering problems.</p>
+<p>For example, in one incident the model produced a successful response containing 32 processed regions. Validation then failed and the extracted response was lost. The model had done its job, but the storage architecture was inadequate.</p>
+<p>The solution was to persist the raw model response before validation so it could later be inspected or replayed.</p>
+<p>Other issues included concurrent duplicate requests, validating files by extension rather than actual content, stale chunks, mismatched parser output and index, and incorrectly reporting success for partially processed documents.</p>
+<p>None of these issues is solved by swapping Gemini for Qwen.</p>
+<p>A document parsing service needs backend engineering, job management, durable storage, idempotency, observability, and publication lifecycle control as well as AI.</p>
+<hr/>
+<h2 id="section-34">Part VII: A review of the problems encountered</h2>
+<h3 id="section-35">18. A list of 37 error families</h3><div aria-label="Issue filters" class="toolbar issue-controls" role="group"><button class="active" aria-pressed="true" data-filter="all">All (37)</button><button aria-pressed="false" data-filter="open">Open (19)</button><button aria-pressed="false" data-filter="fixed">Limited fix (18)</button></div>
+<p>The investigation identified 37 families of issues. That does not mean there are 37 active bugs in the current version: some are historical, some have limited fixes, and some still need testing.</p>
+<ul>
+<li><strong>◐ Limited fix:</strong> Evidence of a fix for a behavior or several samples, not comprehensive validation.</li>
+<li><strong>○ Open:</strong> The issue remains open, incomplete, or unverified.</li>
+</ul>
+<h4 id="section-36">Text, numbers, and visual processing</h4>
+<div class="tablewrap"><table class="issue-table">
+<thead>
+<tr>
+<th>ID</th>
+<th>Issue</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr data-status="fixed">
+<td>EX-001</td>
+<td>Unicode corruption and PUA characters</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-002</td>
+<td>Corrupted text passes quality checks</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="open">
+<td>EX-003</td>
+<td>Insufficient Persian visual transcription accuracy</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-004</td>
+<td>Model response lost after validation failure</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="open">
+<td>EX-005</td>
+<td>No correct, independently reviewed ground truth</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-006</td>
+<td>Incomplete visual document processing</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-007</td>
+<td>Fine text lost in crops</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-008</td>
+<td>RTL reading order and multicolumn pages</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-009</td>
+<td>Reversed numbers and signs</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-010</td>
+<td>Missing percent signs, currency units, and ranges</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-011</td>
+<td>Formula structure lost</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="open">
+<td>EX-012</td>
+<td>Images and charts ignored</td>
+<td class="status-open">○ Open</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="section-37">Tables, forms, and document structure</h4>
+<div class="tablewrap"><table class="issue-table">
+<thead>
+<tr>
+<th>ID</th>
+<th>Issue</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr data-status="fixed">
+<td>EX-013</td>
+<td>Incorrect cell geometry and record counts</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="open">
+<td>EX-014</td>
+<td>Incorrect value-to-header relationship</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-015</td>
+<td>Adjacent tables incorrectly merged</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-016</td>
+<td>Semantic mixing of two different tables</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-017</td>
+<td>Tables continued across pages</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-018</td>
+<td>Repeated headers and split rows</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-019</td>
+<td>Title attached to wrong table</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-020</td>
+<td>Footnotes and units attached incorrectly</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="open">
+<td>EX-021</td>
+<td>Blank forms detected incorrectly</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-022</td>
+<td>TableIR corrected without updating derived output</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-023</td>
+<td>Merged cells broken during chunking</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-024</td>
+<td>Table structure corrupted in Markdown</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="open">
+<td>EX-025</td>
+<td>Missing lists or incorrect list hierarchy</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-026</td>
+<td>Physical and printed page numbers differ</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="section-38">Infrastructure, storage, and publication</h4>
+<div class="tablewrap"><table class="issue-table">
+<thead>
+<tr>
+<th>ID</th>
+<th>Issue</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr data-status="fixed">
+<td>EX-027</td>
+<td>Unstable identifiers and incomplete provenance</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-028</td>
+<td>Corrupted diagnostic data enters searchable content</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="open">
+<td>EX-029</td>
+<td>Quarantined regions remain hidden</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-030</td>
+<td>Cache and replay errors</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-031</td>
+<td>Duplicate jobs and lost artifacts</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-032</td>
+<td>Model identity, endpoint, and error reporting</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="open">
+<td>EX-033</td>
+<td>Parser output and index inconsistency</td>
+<td class="status-open">○ Open</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-034</td>
+<td>Incomplete DOCX structure coverage</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-035</td>
+<td>Confusing Force with fresh extraction</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-036</td>
+<td>File validation based only on extension</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+<tr data-status="fixed">
+<td>EX-037</td>
+<td>Reporting success for incomplete processing</td>
+<td class="status-fixed">◐ Limited fix</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="section-39">19. The difference between implementation and final acceptance</h3><figure class="visual"><div class="metricgrid"><div class="metric"><span>Issue families</span><strong>37</strong></div><div class="metric"><span>Limited fixes</span><strong>18</strong></div><div class="metric bad"><span>Open or unverified</span><strong>19</strong></div><div class="metric bad"><span>Final acceptance</span><strong>0</strong></div></div><div class="stack"><i style="width:48.6486%;background:var(--warn)"></i><i style="width:51.3514%;background:var(--bad)"></i></div><div class="barrow warn"><div><span>Independent PDF page review</span><b dir="ltr">0/121</b></div><div class="track"><i style="width:0.0000%"></i></div></div></figure>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align:right">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recorded issue families</td>
+<td style="text-align:right">37</td>
+</tr>
+<tr>
+<td>Limited fixes</td>
+<td style="text-align:right">18</td>
+</tr>
+<tr>
+<td>Open or unverified</td>
+<td style="text-align:right">19</td>
+</tr>
+<tr>
+<td>Final confirmation of issue resolution</td>
+<td style="text-align:right">Zero</td>
+</tr>
+<tr>
+<td>Independent PDF page review in the audit under study</td>
+<td style="text-align:right">Zero of 121</td>
+</tr>
+</tbody>
+</table></div>
+<p>Imagine hundreds of unit tests passing successfully. That's good news, but what does it prove?</p>
+<p>It proves that the behaviors for which we wrote tests work under the specified conditions. It does not prove that a new financial document with a different font, complex formula, and multipage table will be processed correctly.</p>
+<p>The audit under study covered nine PDFs totaling 121 pages, but independent page review had not been completed. So despite numerous engineering fixes, the system still did not meet the final acceptance criteria.</p>
+<p>This is one of the most important differences between a successful prototype and a reliable product.</p>
+<hr/>
+<h2 id="section-40">Part VIII: How can we build a better parser?</h2>
+<h3 id="section-41">20. Benchmark the entire pipeline rather than the model</h3>
+<p>Imagine building a specialized Persian document processing system. The first question is often whether Gemini is better than Qwen or Docling is better than Marker.</p>
+<p>But perhaps we should change the question:</p>
+<p><strong>What is the best combination of document processing components for our target document types?</strong></p>
+<p>Each stage can be tested independently.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Things to compare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native Extraction</td>
+<td>PyMuPDF and other PDF backends</td>
+</tr>
+<tr>
+<td>Layout Detection</td>
+<td>Docling, Surya, PP-DocLayout</td>
+</tr>
+<tr>
+<td>Image Preprocessing</td>
+<td>Resolution changes, deskew, denoising, contrast</td>
+</tr>
+<tr>
+<td>OCR</td>
+<td>PaddleOCR, Persian-specialized models, and other OCR systems</td>
+</tr>
+<tr>
+<td>Vision Recovery</td>
+<td>Local and API-based VLMs</td>
+</tr>
+<tr>
+<td>Table Recognition</td>
+<td>Table geometry and structure reconstruction models</td>
+</tr>
+<tr>
+<td>Reading Order</td>
+<td>Reading order algorithms and models</td>
+</tr>
+<tr>
+<td>Reconciliation</td>
+<td>Methods for aligning text, images, and structure</td>
+</tr>
+<tr>
+<td>Serialization</td>
+<td>JSON, HTML, Markdown</td>
+</tr>
+<tr>
+<td>Quality Control</td>
+<td>Structural rules, source comparison, independent review</td>
+</tr>
+</tbody>
+</table></div>
+<p>Experiments may reveal that a stage is unnecessary. A cheaper model may perform better and more consistently at one stage. Even combining two powerful models may produce worse results than a simple model, because errors from the first propagate into the second.</p>
+<h4 id="section-42">What is an ablation study?</h4>
+<p>Ablation means removing or changing a system component and measuring its effect on the output.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Proposed experiment</th>
+<th>Combination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Docling</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Docling + OCR</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Docling + VLM</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Docling + OCR + VLM</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Alternative layout model + OCR</td>
+</tr>
+</tbody>
+</table></div>
+<p>All experiments should use the same documents, metrics, and fixed ground truth. Wherever possible, change only one variable per comparison.</p>
+<p>This lets us understand how much quality each component contributes and whether the cost and complexity are justified.</p>
+<h3 id="section-43">21. Gold dataset: The most important asset of a specialized system</h3>
+<p>To evaluate OCR or a parser, we need to know the correct answer. But who decides what that is?</p>
+<p>If one language model reviews another model's output, both may make the same mistake. If we use the previous parser's output as reference, we may import its old errors into the benchmark.</p>
+<p>A gold dataset is a collection of inputs and correct, independently reviewed outputs.</p>
+<p>For Persian documents, this collection should go beyond simple text. It should include complex tables, blank forms, formulas, stamps, low-quality scans, mixed English and Persian text, numbers, percentages, footnotes, and multicolumn documents.</p>
+<p>For each sample, we can retain information like this:</p>
+<pre><code class="language-json">{
+  "sample_id": "financial_cell_001",
+  "expected_text": "≤ ۱۸٪",
+  "element_type": "table_cell",
+  "critical_tokens": ["≤", "۱۸", "٪"],
+  "reference_status": "VERIFIED"
+}
+</code></pre>
+<p>A gold dataset is not just for model selection. After every change to the parser, OCR, prompt, or RTL algorithm, it can help prevent old errors from returning.</p>
+<p>That is why building a precise, high-quality Persian dataset may be more valuable than building a new pipeline.</p>
+<h3 id="section-44">22. What should we measure?</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Main question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CER</td>
+<td>What is the character error rate?</td>
+</tr>
+<tr>
+<td>WER</td>
+<td>What is the word error rate?</td>
+</tr>
+<tr>
+<td>Exact Match</td>
+<td>Is the entire expression exactly correct?</td>
+</tr>
+<tr>
+<td>Critical Token Accuracy</td>
+<td>Are sensitive numbers and signs correct?</td>
+</tr>
+<tr>
+<td>Layout Recall</td>
+<td>How many actual page elements were detected?</td>
+</tr>
+<tr>
+<td>Reading Order Accuracy</td>
+<td>Is the reading order correct?</td>
+</tr>
+<tr>
+<td>Header Association</td>
+<td>Does the value belong to the correct header?</td>
+</tr>
+<tr>
+<td>Cell Coverage</td>
+<td>Were all cells extracted?</td>
+</tr>
+<tr>
+<td>False Acceptance Rate</td>
+<td>How many incorrect outputs were accepted as valid?</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>How long does each page take to process?</td>
+</tr>
+<tr>
+<td>Cost per Page</td>
+<td>How much does each page cost to process?</td>
+</tr>
+<tr>
+<td>Throughput</td>
+<td>How many pages are processed per unit of time?</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="section-45">Hypothetical example: How 99.8% accuracy can be misleading</h4><section class="visual simulator"><h4>Document extraction quality simulator</h4><div class="sliders">
+<label for="units">Total text units <output id="units-out">10000</output></label><input id="units" max="20000" min="1000" step="1000" type="range" value="10000"/>
+<label for="errors">Total errors <output id="errors-out">20</output></label><input id="errors" max="200" min="0" type="range" value="20"/>
+<label for="critical">Sensitive financial units <output id="critical-out">30</output></label><input id="critical" max="100" min="10" step="5" type="range" value="30"/>
+<label for="criticalerrors">Financial errors (subset of all errors) <output id="criticalerrors-out">5</output></label><input id="criticalerrors" max="20" min="0" type="range" value="5"/></div><div class="metricgrid"><div class="metric"><span>Overall accuracy</span><strong><span id="overall">99.80%</span></strong></div><div class="metric bad"><span>Sensitive information accuracy</span><strong><span id="sensitive">83.33%</span></strong></div></div><figcaption>Hypothetical educational example; change the values to see the effect of sensitive errors.</figcaption></section>
+<p>Imagine 20 errors among 10,000 text units. Under a simple unit-matching metric, overall accuracy is 99.8%.</p>
+<p>But if those units include 30 sensitive financial items and five of them are incorrect, sensitive information accuracy is just 83.33%.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align:right">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Correct units in entire document</td>
+<td style="text-align:right">9,980 of 10,000</td>
+</tr>
+<tr>
+<td>Overall accuracy</td>
+<td style="text-align:right">99.8%</td>
+</tr>
+<tr>
+<td>Correct sensitive units</td>
+<td style="text-align:right">25 of 30</td>
+</tr>
+<tr>
+<td>Sensitive information accuracy</td>
+<td style="text-align:right">83.33%</td>
+</tr>
+</tbody>
+</table></div>
+<p>If that sensitive information drives financial decisions, overall accuracy above 99% is not sufficient for acceptance.</p>
+<hr/>
+<h2 id="section-46">Part IX: Ideas to explore and experiment with</h2>
+<p>So far, we have discussed recorded problems and experiences. The following are research proposals; their superiority has not been demonstrated in the experiments under study.</p>
+<h3 id="section-47">Idea 1: Adaptive document parsing</h3><figure class="visual"><svg direction="ltr" role="img" style="font-family:inherit" viewbox="0 0 720 310" xmlns="http://www.w3.org/2000/svg"><rect fill="var(--panel)" height="42" rx="8" stroke="var(--line)" width="300" x="210" y="8"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="35">Input Page</text><path d="M360 50L360 70" fill="none" stroke="var(--accent)" stroke-width="2"></path><circle cx="360" cy="70" fill="var(--accent)" r="3"></circle><rect fill="var(--tint)" height="42" rx="8" stroke="var(--accent)" width="330" x="195" y="70"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="96">Page / Region Analysis</text><path d="M360 112V132H120V150" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="58" rx="8" stroke="var(--line)" width="220" x="10" y="150"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="120" y="175">Native text</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="120" y="196">Digital</text><path d="M120 208V230H360V248" fill="none" stroke="var(--accent)" stroke-width="2"></path><path d="M360 112V132H360V150" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="58" rx="8" stroke="var(--line)" width="220" x="250" y="150"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="175">OCR</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="360" y="196">Scanned</text><path d="M360 208V230H360V248" fill="none" stroke="var(--accent)" stroke-width="2"></path><path d="M360 112V132H600V150" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--panel)" height="58" rx="8" stroke="var(--line)" width="220" x="490" y="150"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="600" y="175">VLM</text><text fill="var(--ink)" font-size="14" font-weight="500" text-anchor="middle" x="600" y="196">Complex region</text><path d="M600 208V230H360V248" fill="none" stroke="var(--accent)" stroke-width="2"></path><rect fill="var(--tint)" height="46" rx="8" stroke="var(--accent)" width="400" x="160" y="248"></rect><text fill="var(--ink)" font-size="18" font-weight="500" text-anchor="middle" x="360" y="276">Reconstruct &amp; Verify</text></svg><figcaption>Proposed adaptive routing architecture at page or region level; not yet tested.</figcaption></figure>
+<p>Instead of sending every document down a fixed path, first identify the nature of each page or region.</p>
+<pre><code class="language-text">Input page / region
+         |
+         v
+  Region analysis
+         |
+         +-- Digital text --&gt; Native extraction
+         +-- Scanned text --&gt; OCR
+         `-- Difficult region --&gt; VLM
+         |
+         v
+  Reconstruct and verify
+</code></pre>
+<p>Process clean digital text directly, send scans to OCR, and inspect complex or suspicious regions with a VLM.</p>
+<p>Potential benefits are reduced cost and faster processing. The drawback is that the routing system itself can make mistakes.</p>
+<p><strong>Research question:</strong> Are routing savings worth its complexity and potential errors?</p>
+<h3 id="section-48">Idea 2: Multi-engine consensus</h3>
+<p>Why always rely on one extraction engine? Imagine a sensitive region read by three different engines:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native PDF</td>
+<td><code>18%</code></td>
+</tr>
+<tr>
+<td>OCR</td>
+<td><code>18%</code></td>
+</tr>
+<tr>
+<td>VLM</td>
+<td><code>81%</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Disagreement between outputs can itself signal the need for review.</p>
+<p>Of course, a majority vote is not truth. Two engines might use the same backend or text mapping and make the same mistake.</p>
+<p>The goal of this architecture should be conflict detection, not automatic acceptance of the majority vote.</p>
+<h3 id="section-49">Idea 3: Adaptive-resolution OCR</h3>
+<p>Sending every page at very high resolution can increase processing cost and memory use. Low resolution, on the other hand, can erase dots, percent signs, fine text, and formula details.</p>
+<p>We could process the page at ordinary resolution first and generate a more precise crop or higher-DPI render only for difficult regions.</p>
+<p>An interesting benchmark would compare extraction quality, processing time, and cost across resolutions.</p>
+<h3 id="section-50">Idea 4: Cell-level verification</h3>
+<p>Instead of declaring an entire table correct or incorrect, maintain an independent status for each cell.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Hypothetical status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18%</td>
+<td>Verified</td>
+</tr>
+<tr>
+<td>500 million rials</td>
+<td>Verified</td>
+</tr>
+<tr>
+<td>24 months</td>
+<td>Review required</td>
+</tr>
+<tr>
+<td>23%</td>
+<td>Conflict</td>
+</tr>
+</tbody>
+</table></div>
+<p>This lets us identify exactly which parts of the table require reprocessing. But accepting every cell does not necessarily mean their relationships are correct.</p>
+<p>Verification is therefore necessary at both value and structure levels.</p>
+<h3 id="section-51">Idea 5: Building a synthetic Persian dataset</h3>
+<p>Using HTML, Persian fonts, and PDF generation tools, we could create thousands of synthetic documents with answers known from the outset.</p>
+<p>For example, generate tables with random numbers, merged cells, Persian dates, mixed English text, and various formulas, then create scanned or noisy versions.</p>
+<p>This could help with regression testing, model training, and identifying error patterns.</p>
+<p>The limitation is that synthetic documents may not fully reproduce the complexity, font corruption, and strange behavior of real PDFs. Real data is needed alongside them.</p>
+<h3 id="section-52">Idea 6: Human-in-the-loop as part of the product</h3>
+<p>Build a review interface showing the original document image on the right and its extracted structure on the left. Clicking a cell highlights its exact location on the source. Users can correct values, verify structure, and record the reason for errors.</p>
+<p>This is not just a debugging tool; it can become a gold dataset creation tool.</p>
+<p>Over time, human corrections can generate valuable data for model evaluation, general rules, and even fine-tuning.</p>
+<h3 id="section-53">Idea 7: Document parsing as an independent product</h3>
+<p>Imagine an API service designed to accept various Persian document types:</p>
+<pre><code class="language-text">Inputs:
+  PDF / Scanned PDF / DOCX / Image
+
+Outputs:
+  Structured JSON
+  HTML
+  Markdown
+  DocumentIR / TableIR
+  Quality Report
+  Source Provenance
+</code></pre>
+<p>Developers would no longer need to solve Persian PDF processing from scratch for every RAG system. Financial, legal, insurance, educational, and other organizations could process their documents and receive outputs suited to AI agents.</p>
+<p>Such a product's competitive advantage need not be a proprietary OCR model. It could come from a precise pipeline, trustworthy experiments, sound Persian processing engineering, and reliable output structure.</p>
+<hr/>
+<h2 id="section-54">Part X: The biggest technical obstacles</h2>
+<p>If we summarize the problems into a few fundamental obstacles, these six stand out.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Obstacle</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No trustworthy gold dataset</td>
+<td>Actual quality cannot be measured properly.</td>
+</tr>
+<tr>
+<td>Hidden semantic errors</td>
+<td>Data looks valid but has the wrong meaning.</td>
+</tr>
+<tr>
+<td>Table structure reconstruction</td>
+<td>Reading text without its relationships is insufficient.</td>
+</tr>
+<tr>
+<td>Detecting missing regions</td>
+<td>The system might not even notice omitted content.</td>
+</tr>
+<tr>
+<td>No validated local alternative for vision</td>
+<td>Independence, cost, and infrastructure control remain challenging.</td>
+</tr>
+<tr>
+<td>No independent end-to-end evaluation</td>
+<td>Success of individual components does not guarantee success of the entire system.</td>
+</tr>
+</tbody>
+</table></div>
+<p>A proposed research sequence is to define acceptance criteria and a gold dataset first, then compare pipeline components, address root causes, and finally reprocess and evaluate the entire document collection using the chosen architecture.</p>
+<p>Choosing a final model before establishing this evidence would be premature.</p>
+<hr/>
+<h2 id="section-55">Questions to think about over the weekend</h2><div class="visual notebook"><p class="muted">Notes are saved in this browser when supported. You can copy them or export them to a text file.</p><label for="note0">1. Do we really need OCR on every page, or is much of that expense unnecessary?</label><textarea id="note0" placeholder="My ideas and notes…" rows="3"></textarea><label for="note1">2. If text and geometry are extracted by two independent engines, how do we connect them without introducing new errors?</label><textarea id="note1" placeholder="My ideas and notes…" rows="3"></textarea><label for="note2">3. Can numerical errors be detected without an expensive LLM?</label><textarea id="note2" placeholder="My ideas and notes…" rows="3"></textarea><label for="note3">4. How can we ensure no important page element was missed?</label><textarea id="note3" placeholder="My ideas and notes…" rows="3"></textarea><label for="note4">5. If two models disagree, how do we determine the source of truth?</label><textarea id="note4" placeholder="My ideas and notes…" rows="3"></textarea><label for="note5">6. How much financial document processing can be deterministic and require no language model?</label><textarea id="note5" placeholder="My ideas and notes…" rows="3"></textarea><label for="note6">7. Can a small Persian-specialized model in a good pipeline outperform a large VLM?</label><textarea id="note6" placeholder="My ideas and notes…" rows="3"></textarea><label for="note7">8. Instead of fine-tuning the model, should we first invest in crop quality and structural reconstruction?</label><textarea id="note7" placeholder="My ideas and notes…" rows="3"></textarea><label for="note8">9. How can we jointly optimize cost, speed, accuracy, and the need for human review?</label><textarea id="note8" placeholder="My ideas and notes…" rows="3"></textarea><label for="note9">10. How can we turn Persian document processing from an internal capability into a marketable product?</label><textarea id="note9" placeholder="My ideas and notes…" rows="3"></textarea><div class="toolbar"><button id="copyNotes">Copy notes</button><button id="exportNotes">Export text</button><span id="noteStatus" role="status"></span></div></div>
+
+<hr/>
+<h2 id="section-56">Conclusion: What we need to learn as AI engineers</h2>
+<p>The most important lesson from this experience is that document processing is not a problem of one AI model; it is a problem of designing a complete system.</p>
+<p>In that system, the PDF decoder, layout model, OCR, VLM, structure reconstruction algorithms, storage, cache, quality control, and evaluation all contribute to the final result.</p>
+<p>AI engineering is not just choosing the most powerful model. Sometimes a simple library with a limited responsibility, a well-designed schema, durable raw responses, cell coordinates, or preventing publication of incomplete data has more impact than upgrading a model.</p>
+<p>Nor should we mistake complexity for progress. Adding models, agents, recovery layers, and algorithms is worthwhile only when we can demonstrate that they solve a real problem.</p>
+<p>The ultimate goal should be the simplest architecture capable of demonstrating the required quality with reproducible evidence.</p>
+<blockquote>
+<p><strong>A great parser does not just read documents; it can show what it read, where it read it, what it could not read, and why its output deserves trust.</strong></p>
+</blockquote>
+<hr/>
+<h2 id="section-57">Further reading</h2>
+<ul>
+<li><a href="https://pymupdf.readthedocs.io/">PyMuPDF Documentation</a></li>
+<li><a href="https://arxiv.org/abs/2408.09869">Docling: Technical Report</a></li>
+<li><a href="https://docling-project.github.io/docling/reference/pipeline_options/">Docling: Pipeline Options</a></li>
+<li><a href="https://github.com/docling-project/docling/blob/main/docs/concepts/docling_document.md">Docling: Document Representation</a></li>
+<li><a href="https://www.unicode.org/reports/tr9/">Unicode Standard Annex #9: Bidirectional Algorithm</a></li>
+</ul>
+<p><em>Note on results: The numbers and experiences come from the earlier engineering report and recorded experiments, not a new benchmark or an independent comprehensive product comparison. The count of 18 limited fixes and 19 open issues is based on the individual issue list. The public resources above are for learning about concepts and tools, not independent confirmation of this article's experimental results. Research ideas are proposals to test, not solutions whose superiority has already been established.</em></p>
+
+<p class="meta">Educational schematics have been reconstructed; recorded results are distinguished from hypothetical examples and future ideas.</p>

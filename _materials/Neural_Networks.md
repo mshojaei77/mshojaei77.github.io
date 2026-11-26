@@ -2,7 +2,10 @@
 title: "Neural Networks Tutorial: Foundations for LLMs"
 nav_order: 2
 parent: Tutorials
-layout: default
+layout: article
+lang: en
+permalink: /materials/Neural_Networks/
+nav_exclude: true
 ---
 
 # Neural Networks Tutorial 🧠: Math and Mechanics for LLM Foundations

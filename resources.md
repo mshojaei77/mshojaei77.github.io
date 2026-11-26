@@ -1,12 +1,12 @@
 ---
-layout: default
+layout: article
+lang: en
 title: "Learning Resources"
 description: "Curated resources organized by LLM development stage."
 permalink: /resources.html
 nav_order: 8
 ---
 
-[فارسی — Persian overview](/fa/resources/) · [Home](/)
 
 # Learning Resources
 

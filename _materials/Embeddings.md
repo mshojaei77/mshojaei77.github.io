@@ -2,7 +2,10 @@
 title: "Embeddings Tutorial: Word Vectors for LLMs"
 nav_order: 5
 parent: Tutorials
-layout: default
+layout: article
+lang: en
+permalink: /materials/Embeddings/
+nav_exclude: true
 ---
 
 # Embeddings Tutorial 🌐: Word2Vec Hack – Numbers that Grok Meaning

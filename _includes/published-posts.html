@@ -1,4 +1,4 @@
-{% assign published_posts = site.posts %}
+{% assign published_posts = site.posts | where: 'lang', page.lang %}
 {% if published_posts.size > 0 %}
 <section aria-labelledby="latest-posts-title">
   <h2 id="latest-posts-title">{% if page.lang == 'fa' %}تازه‌ترین نوشته‌ها{% else %}Latest writing{% endif %}</h2>

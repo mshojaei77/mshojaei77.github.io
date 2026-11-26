@@ -3,9 +3,8 @@
 Hosted at https://mshojaei77.github.io/. Existing URLs are public contracts: preserve them when editing or moving content.
 
 - The homepage and editorial indexes use `_layouts/publication.html` and `assets/css/publication.css`.
-- Book chapters and existing long-form Markdown use Just the Docs.
+- Public articles and long-form Markdown use the shared article layout. The canceled book is excluded from publication; original source remains in the repository and Git history.
 - Add an article to the writing index only after it exists; link external articles to their original URLs.
-- Mark unfinished chapters as planned; retain their outlines.
 - For research, disclose sampling, versions, methods, results and limitations. Do not invent benchmarks or issue dates.
 
 ## Local validation
@@ -16,7 +15,7 @@ Do not configure analytics with placeholder measurement IDs. GitHub Pages deploy
 
 ## Languages
 
-English remains at its original URLs; Persian uses `/fa/`. The route mapping is in `_data/languages.yml`. Persian pages have explicit `lang: fa` and use the shared RTL-aware publication layout. Only publish actual translations or clearly labeled summaries; do not silently substitute English material. Existing long-form English pages retain the docs theme. Add the paired route and reciprocal language links when a full translation becomes available.
+English remains at its original URLs; Persian uses `/fa/`. The route mapping is in `_data/languages.yml`. Persian pages have explicit `lang: fa` and use the shared RTL-aware publication layout. Only publish actual translations or clearly labeled summaries; do not silently substitute English material. Long-form pages use the same publication shell. Add the paired route and reciprocal language links when a full translation becomes available.
 
 ## Bilingual layout and verification
 
@@ -28,4 +27,8 @@ Write as an AI engineer talking to engineering peers: conversational, native, te
 
 ## Published posts
 
-Add new articles to `_posts/` with explicit `lang`, title, description, date and stable permalink. The homepage and writing indexes automatically list published posts; Persian-only work is labeled as such. The document-parsing weekend reading preserves its original interactive article design in a dedicated layout and local assets. Its source upload Git blob was verified as `263ade133398d50ee20f5ffe57b6ae96e603fc58`. The article is available at `/fa/writing/document-parsing/` and included in the feed and sitemap. Do not mark an English translation as published until it exists.
+Add new articles to `_posts/` with explicit `lang`, title, description, date and stable permalink. The homepage and writing indexes automatically list published posts; Each archive lists posts in its own language. The document-parsing weekend reading uses the shared article layout, retaining original content and interactive features. Its source upload Git blob was verified as `263ade133398d50ee20f5ffe57b6ae96e603fc58`. The article is available at `/fa/writing/document-parsing/` and included in the feed and sitemap. Do not mark an English translation as published until it exists.
+
+Light is the first-visit default; the shared theme toggle saves the preference. Public code is linked directly to GitHub. Telegram channel and community links are shared across both languages.
+
+All internal tutorials and articles have paired English and Persian routes. Resource links retain their original publication titles; Persian OCR examples retain source characters. The theme starts in light mode and remembers explicit user selection.

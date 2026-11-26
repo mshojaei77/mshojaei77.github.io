@@ -1,12 +1,12 @@
 ---
-layout: default
+layout: article
+lang: en
 title: "LLM Development Roadmap"
 description: "A hands-on learning path from neural networks to production LLM systems."
 permalink: /roadmap.html
 nav_order: 7
 ---
 
-[فارسی — Persian overview](/fa/roadmap/)
 
 # LLM development Roadmap
 

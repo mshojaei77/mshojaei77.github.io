@@ -14,12 +14,12 @@
         "label": "Explore writing"
       },
       {
-        "url": "/projects/",
-        "label": "View projects"
-      },
-      {
         "url": "/research/",
         "label": "Research & experiments"
+      },
+      {
+        "url": "https://github.com/mshojaei77",
+        "label": "GitHub"
       }
     ]
   },
@@ -38,12 +38,12 @@
         "label": "خواندن نوشته‌ها"
       },
       {
-        "url": "/fa/projects/",
-        "label": "دیدن پروژه‌ها"
-      },
-      {
         "url": "/fa/research/",
         "label": "پژوهش و آزمایش‌ها"
+      },
+      {
+        "url": "https://github.com/mshojaei77",
+        "label": "GitHub"
       }
     ]
   },
@@ -71,7 +71,7 @@
             "desc": "A perspective on the open-source AI ecosystem."
           },
           "fa": {
-            "tag": "مقاله · معرفی فارسی",
+            "tag": "مقاله · فارسی",
             "url": "/fa/open-source-ai/",
             "title": "هوش مصنوعی متن‌باز؛ آزادی و آینده",
             "desc": "وزن‌باز بودن یک مدل با متن‌باز بودنش یکی نیست. اینجا تفاوتشان و تأثیرش بر کار مهندسی را مرور می‌کنم."
@@ -85,7 +85,7 @@
             "desc": "An overview of vector database options."
           },
           "fa": {
-            "tag": "مرجع فنی · معرفی فارسی",
+            "tag": "مرجع فنی · فارسی",
             "url": "/fa/vector-databases/",
             "title": "مقایسهٔ پایگاه‌های دادهٔ برداری",
             "desc": "برای انتخاب Vector DB از کجا شروع کنیم؟ نگاهی به گزینه‌ها و معیارهایی که در یک پروژهٔ واقعی مهم‌اند."
@@ -99,55 +99,10 @@
             "desc": "A look at demand for production LLM engineering skills."
           },
           "fa": {
-            "tag": "گزارش پژوهشی · معرفی فارسی",
+            "tag": "گزارش پژوهشی · فارسی",
             "url": "/fa/market-analysis/",
             "title": "تحلیل بازار مهندسی مدل‌های زبانی",
             "desc": "شرکت‌ها از مهندس LLM چه می‌خواهند و رزومه‌ها چه مهارت‌هایی را نشان می‌دهند؟ یک نگاه به فاصلهٔ این دو."
-          }
-        }
-      ]
-    },
-    {
-      "key": "projects",
-      "en": "Selected open-source work",
-      "fa": "پروژه‌های متن‌باز منتخب",
-      "link": {
-        "en": {
-          "url": "/projects/",
-          "label": "All projects"
-        },
-        "fa": {
-          "url": "/fa/projects/",
-          "label": "همهٔ پروژه‌ها"
-        }
-      },
-      "items": [
-        {
-          "en": {
-            "tag": "Open source · MCP",
-            "url": "https://github.com/mshojaei77/ReActMCP",
-            "title": "ReActMCP",
-            "desc": "A web-search MCP server/client connecting Exa-powered search to AI assistants."
-          },
-          "fa": {
-            "tag": "متن‌باز · MCP",
-            "url": "https://github.com/mshojaei77/ReActMCP",
-            "title": "ReActMCP",
-            "desc": "این سرور و کلاینت MCP به دستیارهای هوش مصنوعی اجازه می‌دهند جست‌وجوی وب Exa را به‌عنوان ابزار فراخوانی کنند."
-          }
-        },
-        {
-          "en": {
-            "tag": "Open source · Python",
-            "url": "https://github.com/mshojaei77/pytsetmc-api",
-            "title": "pytsetmc-api",
-            "desc": "A typed client for Tehran Stock Exchange Market Center data, with validation, retries and tests."
-          },
-          "fa": {
-            "tag": "متن‌باز · Python",
-            "url": "https://github.com/mshojaei77/pytsetmc-api",
-            "title": "pytsetmc-api",
-            "desc": "یک کلاینت Python برای داده‌های بورس تهران، با Type Hint، اعتبارسنجی، Retry و تست؛ تا لازم نباشد هر بار از صفر شروع کنیم."
           }
         }
       ]
@@ -157,20 +112,6 @@
       "en": "Start here",
       "fa": "از اینجا شروع کنید",
       "items": [
-        {
-          "en": {
-            "tag": "Living book",
-            "url": "/book/",
-            "title": "LLM Engineering in Action",
-            "desc": "The book I’m writing about the LLM stack from useful foundations to systems that need to run, fail, recover, and be debugged."
-          },
-          "fa": {
-            "tag": "کتاب در حال نگارش",
-            "url": "/fa/book/",
-            "title": "مهندسی مدل‌های زبانی در عمل",
-            "desc": "کتابی که دارم می‌نویسم؛ از طرز کار مدل‌ها تا ساخت سیستم‌هایی که باید اجرا شوند، خطا بدهند، بازیابی شوند و بتوانیم دیباگشان کنیم."
-          }
-        },
         {
           "en": {
             "tag": "Study path",
@@ -193,7 +134,7 @@
             "desc": "Curated material organized by learning stage."
           },
           "fa": {
-            "tag": "منابع · معرفی فارسی",
+            "tag": "منابع · فارسی",
             "url": "/fa/resources/",
             "title": "منابع یادگیری",
             "desc": "اگر نمی‌دانید بعد از هر مبحث چه بخوانید، منابع را به ترتیب مراحل یادگیری کنار هم گذاشته‌ام."
@@ -207,7 +148,7 @@
             "desc": "Questions organized by role and technical depth."
           },
           "fa": {
-            "tag": "آمادگی شغلی · معرفی فارسی",
+            "tag": "آمادگی شغلی · فارسی",
             "url": "/fa/interview/",
             "title": "سؤالات مصاحبه",
             "desc": "از مبانی مدل تا طراحی سیستم و سناریوهای واقعی؛ برای اینکه ببینید کدام بخش‌ها را باید بیشتر تمرین کنید."
@@ -221,7 +162,7 @@
             "desc": "A visual overview of the LLM development path."
           },
           "fa": {
-            "tag": "مرجع تصویری · معرفی فارسی",
+            "tag": "مرجع · فارسی",
             "url": "/fa/mini-roadmap/",
             "title": "نقشهٔ راه فشرده",
             "desc": "نمای تصویری مسیر یادگیری؛ وقتی می‌خواهید قبل از ورود به جزئیات، یک تصویر کلی از راه داشته باشید."
@@ -245,8 +186,8 @@
     },
     {
       "key": "elsewhere",
-      "en": "Elsewhere",
-      "fa": "جاهای دیگر",
+      "en": "Connect",
+      "fa": "در ارتباط باشیم",
       "items": [
         {
           "en": {
@@ -288,6 +229,34 @@
             "url": "https://huggingface.co/mshojaei77",
             "title": "Hugging Face",
             "desc": "مدل‌ها، دیتاست‌ها، آداپترها و کارهای ارزیابی، از جمله آزمایش‌های مرتبط با پردازش زبان فارسی."
+          }
+        },
+        {
+          "en": {
+            "tag": "Telegram channel",
+            "url": "https://t.me/LLMEngineers",
+            "title": "LLM Engineers",
+            "desc": "Follow engineering notes, articles and practical AI discussions."
+          },
+          "fa": {
+            "tag": "کانال تلگرام",
+            "url": "https://t.me/LLMEngineers",
+            "title": "LLM Engineers",
+            "desc": "یادداشت‌ها، مقاله‌ها و تجربه‌های مهندسی هوش مصنوعی را اینجا منتشر می‌کنم."
+          }
+        },
+        {
+          "en": {
+            "tag": "Telegram community",
+            "url": "https://t.me/AI_LLMs",
+            "title": "AI / LLM community",
+            "desc": "Ask questions and discuss AI engineering with other engineers."
+          },
+          "fa": {
+            "tag": "گروه تلگرام",
+            "url": "https://t.me/AI_LLMs",
+            "title": "گروه مهندسان AI و LLM",
+            "desc": "برای سؤال پرسیدن، بحث فنی و به‌اشتراک‌گذاشتن تجربه‌ها با همکاران."
           }
         }
       ]
