@@ -1,12 +1,11 @@
 {% assign published_posts = site.posts | where: 'lang', page.lang %}
-{% if include.exclude_url %}{% assign published_posts = published_posts | where_exp: 'post', 'post.url != include.exclude_url' %}{% endif %}
 {% assign post_limit = include.limit | default: published_posts.size %}
 {% if published_posts.size > 0 %}
 <section aria-labelledby="latest-posts-title"{% if include.home %} class="home-latest" data-home-section="latest"{% endif %}>
   {% if include.home %}<div class="section-heading">{% endif %}
   <h2 id="latest-posts-title">{% if page.lang == 'fa' %}تازه‌ترین نوشته‌ها{% else %}Latest writing{% endif %}</h2>
   {% if include.home %}<a class="section-link" href="{% if page.lang == 'fa' %}/fa/writing/{% else %}/writing/{% endif %}">{% if page.lang == 'fa' %}همهٔ نوشته‌ها ←{% else %}All writing →{% endif %}</a></div>{% endif %}
-  <div class="section-grid{% if include.home %} home-latest-grid{% endif %}">
+  <div class="section-grid{% if include.home %} three home-latest-grid{% endif %}">
     {% for post in published_posts limit:post_limit %}
     <article class="entry-card">
       <div class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time> · {% if post.lang == 'fa' %}{% if page.lang == 'fa' %}متن فارسی{% else %}In Persian{% endif %}{% else %}English{% endif %}</div>

@@ -16,7 +16,7 @@ feed:
 
 # Learning Resources
 
-A comprehensive collection of learning resources organized to match the LLM development roadmap structure.
+A comprehensive collection of learning resources organized to match the AI Engineering Roadmap structure.
 
 ---
 

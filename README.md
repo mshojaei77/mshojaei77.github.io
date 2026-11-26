@@ -73,4 +73,4 @@ Published sidebar titles come from actual GitHub front matter, cached by path an
 
 ## Editorial homepage
 
-Both homepages share `_includes/home.html` and localized `_data/home.json`. Home-only CSS lives in `assets/css/homepage.css`. Start here leads with the Roadmap and an optional selected live post; the three latest cards exclude the selected post to prevent repetition. The selected post is resolved from current published content in the matching language, with a fallback and graceful omission after retirement. No article URLs, article source, or writing archive styling are changed by the homepage design.
+Both homepages share `_includes/home.html` and localized `_data/home.json`. Home-only CSS lives in `assets/css/homepage.css`. The hero links directly to Writing and the AI Engineering Roadmap. There is no separate Start here section. The three latest live posts are shown without pinning; English uses a card grid and Persian uses spacious RTL editorial rows. Existing URLs and archive styling are preserved. Roadmap references use the new AI Engineering Roadmap name (نقشهٔ راه مهندسی هوش مصنوعی); the curriculum remains unchanged.
