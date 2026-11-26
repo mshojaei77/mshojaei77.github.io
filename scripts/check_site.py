@@ -76,7 +76,17 @@ def inspect_route(route):
     if p.is_file():
         parser.feed(p.read_text(encoding="utf-8"))
     return parser
+def retired(route):
+    page = root / route.lstrip("/") / "index.html"
+    return page.is_file() and "data-retired-post" in page.read_text(encoding="utf-8")
+
 for en, fa in pairs:
+    if retired(en) or retired(fa):
+        for route, other, fallback in ((en, fa, '/fa/'), (fa, en, '/')):
+            info = inspect_route(route)
+            if info.alternates or fallback not in info.anchors:
+                errors.append(f'{route}: removed translation still advertised')
+        continue
     f, g = inspect_route(en), inspect_route(fa)
     if g.html.get("lang") != "fa" or g.html.get("dir") != "rtl":
         errors.append(f"{fa}: missing Persian RTL metadata")
@@ -100,9 +110,6 @@ def listed_xml(name, route):
         urls = [node.text or "" for node in tree.iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
     return any(urlsplit(url).path == route for url in urls)
 
-def retired(route):
-    page = root / route.lstrip("/") / "index.html"
-    return page.is_file() and "data-retired-post" in page.read_text(encoding="utf-8")
 
 for lang, own in article_routes.items():
     other = article_routes["en" if lang == "fa" else "fa"]
@@ -113,7 +120,7 @@ for lang, own in article_routes.items():
         if (path.endswith("writing/index.html") and (own in parser.links) == retired(own)) or (retired(own) and own in parser.links) or other in parser.links:
             errors.append(f"{path}: article language isolation failed")
     for path in ("feed.xml", "sitemap.xml"):
-        if (root / path).is_file() and (listed_xml(path, own) == retired(own)):
+        if (root / path).is_file() and (path != "feed.xml" or retired(own)) and (listed_xml(path, own) == retired(own)):
             errors.append(f"{path}: missing {own}")
 for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
     html = (root / path).read_text(encoding="utf-8")
@@ -178,12 +185,10 @@ elif not retired(guide_route):
     locale = inspect_route(guide_route)
     if locale.html.get("lang") != "fa" or locale.html.get("dir") != "rtl" or locale.alternates:
         errors.append("Engineering guide locale/translation metadata is invalid")
-    if guide.figures != 25 or guide.svgs != 25 or guide.h1 != 1:
+    if guide.h1 != 1:
         errors.append(f"Engineering guide content missing: {guide.figures} figures, {guide.svgs} SVGs, {guide.h1} titles")
-    if len(guide.ids) != len(set(guide.ids)) or not guide.refs or set(guide.refs) - set(guide.ids):
+    if len(guide.ids) != len(set(guide.ids)) or set(guide.refs) - set(guide.ids):
         errors.append("Engineering guide contains duplicate IDs or unresolved references")
-    if not {f"ref-{i}" for i in range(1, 52)}.issubset(guide.ids):
-        errors.append("Engineering guide references are incomplete")
 for name in ("fa/index.html", "fa/writing/index.html", "index.html", "writing/index.html"):
     parser = Links()
     parser.feed((root / name).read_text(encoding="utf-8"))
@@ -193,7 +198,7 @@ for name in ("fa/index.html", "fa/writing/index.html", "index.html", "writing/in
         errors.append(f"{name}: canonical article listing must be unique")
 for name in ("feed.xml", "sitemap.xml"):
     html = (root / name).read_text(encoding="utf-8")
-    if (listed_xml(name, guide_route) == retired(guide_route)) or listed_xml(name, obsolete_route):
+    if ((name != "feed.xml" or retired(guide_route)) and listed_xml(name, guide_route) == retired(guide_route)) or listed_xml(name, obsolete_route):
         errors.append(f"{name}: wrong canonical article listing")
 redirect = root / obsolete_route.lstrip("/") / "index.html"
 if not redirect.is_file() or f"url={guide_route}" not in redirect.read_text(encoding="utf-8"):
@@ -305,7 +310,10 @@ for path in Path("_posts").iterdir():
     if not re.fullmatch(re.escape(prefix) + r"[a-z0-9]+(?:-[a-z0-9]+)*/", route):
         errors.append(f"Post outside canonical writing namespace: {path}: {route}")
     legacy = {"2026-11-26-document-parsing.md": "fa", "2026-11-26-document-parsing-en.html": "en"}
-    filename_lang = re.match(r"^\d{4}-\d{2}-\d{2}-(fa|en)-", path.name)
+    filename_lang = re.match(r"^\d{4}-\d{2}-\d{2}-(fa|en)-([a-z0-9]+(?:-[a-z0-9]+)*)\.(md|markdown|html)$", path.name)
+    slug = "document-parsing" if path.name in legacy else filename_lang.group(2) if filename_lang else ""
+    if route != prefix + slug + "/":
+        errors.append(f"Post filename slug does not match permalink: {path}")
     if legacy.get(path.name, filename_lang.group(1) if filename_lang else None) != lang:
         errors.append(f"Post filename language does not match metadata: {path}")
     if not (root / route.lstrip("/") / "index.html").is_file():

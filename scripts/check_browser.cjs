@@ -78,18 +78,25 @@ fs.mkdirSync(out, { recursive: true });
       await context.close();
     }
     const p = await browser.newPage();
+    const isRetired = route => fs.existsSync('retired-posts/'+(route.startsWith('/fa/')?'fa':'en')+'-'+route.split('/').filter(Boolean).at(-1)+'.html');
+    const checkSwitch = async (page,route,other,lang) => {
+      const fallback=lang==='fa'?'/':'/fa/';
+      assert.equal(await page.locator('.language-switch a').getAttribute('href'),isRetired(route)||isRetired(other)?fallback:other);
+      if(isRetired(route)||isRetired(other))assert.equal(await page.locator('link[hreflang]').count(),0);
+      if(isRetired(route))assert.equal(await page.locator('[data-retired-post]').count(),1);
+    };
     for (const [old,route,other,lang] of [["/open_source_ai.html","/writing/open-source-ai/","/fa/writing/open-source-ai/","en"],["/fa/open-source-ai/","/fa/writing/open-source-ai/","/writing/open-source-ai/","fa"],["/resources.html","/writing/resources/","/fa/writing/resources/","en"],["/fa/resources/","/fa/writing/resources/","/writing/resources/","fa"],["/interview.html","/writing/interview/","/fa/writing/interview/","en"],["/fa/interview/","/fa/writing/interview/","/writing/interview/","fa"],["/mini_roadmap.html","/writing/mini-roadmap/","/fa/writing/mini-roadmap/","en"],["/fa/mini-roadmap/","/fa/writing/mini-roadmap/","/writing/mini-roadmap/","fa"],["/materials/Data_Preparation/","/writing/data-preparation/","/fa/writing/data-preparation/","en"],["/fa/materials/Data_Preparation/","/fa/writing/data-preparation/","/writing/data-preparation/","fa"],["/materials/Embeddings/","/writing/embeddings/","/fa/writing/embeddings/","en"],["/fa/materials/Embeddings/","/fa/writing/embeddings/","/writing/embeddings/","fa"],["/materials/Intro/","/writing/intro-to-llms/","/fa/writing/intro-to-llms/","en"],["/fa/materials/Intro/","/fa/writing/intro-to-llms/","/writing/intro-to-llms/","fa"],["/materials/Neural_Networks/","/writing/neural-networks/","/fa/writing/neural-networks/","en"],["/fa/materials/Neural_Networks/","/fa/writing/neural-networks/","/writing/neural-networks/","fa"],["/materials/Tokenization/","/writing/tokenization/","/fa/writing/tokenization/","en"],["/fa/materials/Tokenization/","/fa/writing/tokenization/","/writing/tokenization/","fa"],["/materials/Traditional_LMs/","/writing/traditional-language-models/","/fa/writing/traditional-language-models/","en"],["/fa/materials/Traditional_LMs/","/fa/writing/traditional-language-models/","/writing/traditional-language-models/","fa"],["/materials/Transformers/","/writing/transformers/","/fa/writing/transformers/","en"],["/fa/materials/Transformers/","/fa/writing/transformers/","/writing/transformers/","fa"]]) {
       assert((await p.goto(origin+old)).ok());
       await p.waitForURL(origin+route);
       assert.equal(await p.locator('html').getAttribute('dir'),lang==='fa'?'rtl':'ltr');
-      assert.equal(await p.locator('.language-switch a').getAttribute('href'),other);
+      await checkSwitch(p,route,other,lang);
       assert.equal(await p.locator('body').getAttribute('data-layout-version'),'publication-4');
     }
     for(const [old,route,other,lang] of [["/fa/market-analysis/","/fa/writing/market-analysis/","/writing/market-analysis/","fa"],["/market_analysis.html","/writing/market-analysis/","/fa/writing/market-analysis/","en"],["/fa/vector-databases/","/fa/writing/vector-databases/","/writing/vector-databases/","fa"],["/vector_dbs.html","/writing/vector-databases/","/fa/writing/vector-databases/","en"]]){
       assert((await p.goto(origin+old)).ok());
       await p.waitForURL(origin+route);
       assert.equal(await p.locator('html').getAttribute('lang'),lang);
-      assert.equal(await p.locator('.language-switch a').getAttribute('href'),other);
+      await checkSwitch(p,route,other,lang);
       assert.equal(await p.locator('header nav a[href="/research/"],header nav a[href="/fa/research/"]').count(),0);
     }
     const articleRoute = '/fa/writing/document-parsing/';
@@ -143,7 +150,7 @@ fs.mkdirSync(out, { recursive: true });
       assert.deepEqual(failures,[]);
       await a.screenshot({path:out+'/document-parsing-'+lang+'-'+width+'.png',fullPage:false});
       await a.locator('.language-switch a').click();
-      await a.waitForURL(origin+(lang==='fa'?englishRoute:articleRoute));
+      await a.waitForURL(origin+(faRetired?'/fa/':articleRoute));
       await ctx.close();
     }
     for (const width of faRetired ? [] : [375, 1440]) {
@@ -156,8 +163,8 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await guide.locator('html').getAttribute('lang'),'fa');
       assert.equal(await guide.locator('html').getAttribute('dir'),'rtl');
       assert.equal(await guide.locator('main article h1').count(),1);
-      assert.equal(await guide.locator('main figure svg').count(),25);
-      assert.equal(await guide.locator('.language-switch a').getAttribute('href'),englishRoute);
+      assert.equal(await guide.locator('main figure svg').count(),(fs.readFileSync('_posts/2026-11-26-document-parsing.md','utf8').match(/<svg\b/g)||[]).length);
+      await checkSwitch(guide,articleRoute,englishRoute,'fa');
       assert.equal(await guide.locator('link[hreflang]').count(),0);
       assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'engineering guide horizontal overflow '+width);
       assert(await guide.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));

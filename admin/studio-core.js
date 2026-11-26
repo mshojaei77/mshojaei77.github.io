@@ -89,7 +89,7 @@ export class GitHub{
   const fileChanges={additions:files.filter(f=>!f.deleted).map(f=>({path:f.path,contents:f.base64||to64(bytes(f.content))})),deletions:files.filter(f=>f.deleted).map(f=>({path:f.path}))};
   const query='mutation Publish($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid url } } }';
   const result=await this.call('/graphql',{method:'POST',body:{query,variables:{input:{branch:{repositoryNameWithOwner:REPO,branchName:'main'},expectedHeadOid:base,message:{headline:(d.deleting?'Studio: remove ':'Studio: publish ')+meta(d.source).title.slice(0,100)},fileChanges}}}});
-  if(result.errors?.length||!result.data?.createCommitOnBranch?.commit?.oid)throw Error('GitHub did not confirm the commit: '+(result.errors?.map(e=>e.message).join('; ')||'unknown response')+'. Retry to check the outcome; local draft retained.');
+  if(result.errors?.length&&!result.data?.createCommitOnBranch?.commit?.oid){d.directAttempt=null;await saveAttempt();throw Error('GitHub rejected the commit: '+result.errors.map(e=>e.message).join('; ')+'. Local draft retained.');}if(!result.data?.createCommitOnBranch?.commit?.oid)throw Error('GitHub did not confirm the commit. Retry to check the outcome; local draft retained.');
   return {...result.data.createCommitOnBranch.commit,sourceSha:files[0].sha};
  }
  async resolveLegacy(d){
