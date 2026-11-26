@@ -7,7 +7,7 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/jekyll-build-pages@v1
@@ -24,6 +24,7 @@ jobs:
           NODE_PATH: /tmp/publication-browser/node_modules
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 --directory _site > /tmp/site-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
           node scripts/check_browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
