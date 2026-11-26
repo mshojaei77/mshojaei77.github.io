@@ -57,8 +57,8 @@ fs.mkdirSync(out, { recursive: true });
         assert(!facts.intersects, width + ' ' + lang + ' nav overlap');
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
-        assert.equal(facts.navLinks, 4); assert.equal(facts.ctas, 3); assert(facts.rss);
-        assert.deepEqual(facts.sections, [['writing',3],['start',4],['elsewhere',4]]);
+        assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 2); assert(facts.rss);
+        assert.deepEqual(facts.sections, [['writing',1],['start',4],['elsewhere',4]]);
         if (width > 680) assert.equal(new Set(facts.grid).size, 1, 'featured cards should share a row');
         if (lang === 'fa') {
           assert(facts.fontLoaded, 'self-hosted Persian font did not load');
@@ -79,11 +79,18 @@ fs.mkdirSync(out, { recursive: true });
       await context.close();
     }
     const p = await browser.newPage();
-    for (const [slug, original] of [['open-source-ai','open_source_ai.html'],['vector-databases','vector_dbs.html'],['market-analysis','market_analysis.html'],['resources','resources.html'],['interview','interview.html'],['mini-roadmap','mini_roadmap.html']]) {
+    for (const [slug, original] of [['open-source-ai','open_source_ai.html'],['resources','resources.html'],['interview','interview.html'],['mini-roadmap','mini_roadmap.html']]) {
       assert((await p.goto(origin+'/fa/'+slug+'/')).ok());
       assert.equal(await p.locator('html').getAttribute('dir'),'rtl');
       assert.equal(await p.locator('.language-switch a').getAttribute('href'),'/'+original);
       assert.equal(await p.locator('body').getAttribute('data-layout-version'),'publication-4');
+    }
+    for(const [old,route,other,lang] of [["/fa/market-analysis/","/fa/writing/market-analysis/","/writing/market-analysis/","fa"],["/market_analysis.html","/writing/market-analysis/","/fa/writing/market-analysis/","en"],["/fa/vector-databases/","/fa/writing/vector-databases/","/writing/vector-databases/","fa"],["/vector_dbs.html","/writing/vector-databases/","/fa/writing/vector-databases/","en"]]){
+      assert((await p.goto(origin+old)).ok());
+      await p.waitForURL(origin+route);
+      assert.equal(await p.locator('html').getAttribute('lang'),lang);
+      assert.equal(await p.locator('.language-switch a').getAttribute('href'),other);
+      assert.equal(await p.locator('header nav a[href="/research/"],header nav a[href="/fa/research/"]').count(),0);
     }
     const articleRoute = '/fa/writing/document-parsing/';
     const englishRoute = '/writing/document-parsing/';
@@ -164,6 +171,6 @@ fs.mkdirSync(out, { recursive: true });
     await p.waitForURL(origin+articleRoute);
     for(const [route,removed] of [[articleRoute,faRetired],[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
     console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
-    console.log('Verified '+count+' locale / viewport / theme browser combinations and 6 localized resource routes.');
+    console.log('Verified '+count+' locale / viewport / theme browser combinations and 4 localized resource routes and 4 migrated article redirects.');
   } finally { await browser.close(); }
 })().catch(err => { console.error(err); process.exitCode = 1; });

@@ -1,0 +1,26 @@
+---
+layout: article
+lang: en
+title: "Vector Database Comparison"
+description: "A comparative guide to leading vector databases."
+permalink: /writing/vector-databases/
+nav_exclude: true
+date: 2026-11-26 16:35:12 +0000
+article_kind: essay
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
+---
+<h1>Vector Database Showdown</h1><p>A Comparative Guide to Leading Vector Databases</p><p class="language-note">The figures and licensing descriptions below are retained from the original comparison; benchmark conditions are not consistently specified and these are not independently verified current product specifications.</p><div class="tablewrap"><table><thead><tr><th scope="col">Database</th><th scope="col">License & Hosting</th><th scope="col">Scale & Performance</th><th scope="col">Filtering & Search</th><th scope="col">Ecosystem & Tooling</th><th scope="col">Strengths</th><th scope="col">Caveats</th></tr></thead><tbody><tr><td><strong>Qdrant</strong></td><td>Apache-2, Self-host & Cloud</td><td>⚡️ &lt;3ms p50 (1M vec)<br/>💾 Quantization cuts RAM ~30x</td><td>Payload-aware filters<br/>Multi-vector per doc</td><td>HTTP & gRPC APIs<br/>LangChain/LlamaIndex</td><td>✅ High RPS<br/>✅ Multi-vector out-of-box</td><td>⚠️ Newer managed cloud<br/>⚠️ Fewer enterprise RBAC</td></tr>
+<tr><td><strong>Milvus</strong></td><td>Apache-2 & Zilliz Cloud</td><td>📈 Billions of vectors<br/>🖥️ CPU/GPU HNSW, IVF-PQ</td><td>Hybrid sparse + dense<br/>Boolean filters</td><td>Dozens of RAG tutorials</td><td>✅ Mature scaling<br/>✅ Laptop → Cluster</td><td>⚠️ On-prem ops complexity<br/>⚠️ Cloud vendor lock-in</td></tr>
+<tr><td><strong>Weaviate</strong></td><td>Apache-2, Self-host & Serverless</td><td>Go core; auto-sharding<br/>Scales to billions</td><td>BM25 + vector "hybrid"<br/>Metadata & geo filters</td><td>GraphQL & REST APIs<br/>Agents SDK, RAG e-book</td><td>✅ Turn-key vectorization<br/>✅ Multi-tenant RBAC, SOC 2</td><td>⚠️ Higher write latencies at scale</td></tr>
+<tr><td><strong>Faiss</strong></td><td>BSD-2 (Library, not DB)</td><td>🚀 Fastest raw ANN on GPU</td><td>None; must build custom</td><td>Python/C++ wrappers<br/>Underpins many DBs</td><td>✅ Ultimate algorithm control<br/>✅ No network hop</td><td>⚠️ No persistence/auth<br/>⚠️ You build the server</td></tr>
+<tr><td><strong>Chroma</strong></td><td>Apache-2, Local & Cloud</td><td>Single-node (~100M vec)<br/>~20ms p50 (100k vec)</td><td>Metadata & full-text<br/>Multimodal support</td><td>3-line Python API<br/>Built into LangChain</td><td>✅ Easiest local prototyping<br/>✅ "Works out-of-the-box"</td><td>⚠️ Single-node today<br/>⚠️ Distributed in preview</td></tr>
+<tr><td><strong>Pinecone</strong></td><td>Proprietary; Managed Serverless</td><td>12B vectors GA<br/>O(10 ms) low-latency reads</td><td>High-recall metadata filters</td><td>Batteries-included docs<br/>Dashboard & RAG primers</td><td>✅ Zero-ops, autoscaling<br/>✅ Cross-region replication</td><td>⚠️ Usage-based cost<br/>⚠️ Closed-source, no self-host</td></tr>
+<tr><td><strong>pgvector</strong></td><td>PostgreSQL License</td><td>Tens of millions<br/>Inherits ACID, PITR</td><td>SQL WHERE clauses<br/>Joins with GIS/JSONB</td><td>Works via any Postgres driver</td><td>✅ Keep vectors with relational data<br/>✅ Simplicity</td><td>⚠️ Table bloat under writes<br/>⚠️ IVFFlat tuning required</td></tr>
+<tr><td><strong>LanceDB</strong></td><td>Apache-2, Local & Cloud</td><td>Columnar "Lance" format<br/>Sub-ms lookups</td><td>SQL-like filters<br/>ANN & brute-force</td><td>Python/TypeScript SDKs<br/>Graph-RAG template</td><td>✅ Multimodal Lakehouse vision<br/>✅ Search → EDA → Training</td><td>⚠️ Younger community<br/>⚠️ Fewer 3rd-party integrations</td></tr>
+<tr><td><strong>Vespa</strong></td><td>Apache-2 & Vespa Cloud</td><td>Proven at Yahoo/Perplexity<br/>&lt;100ms at K QPS</td><td>Native BM25 + dense<br/>Tensor ranking</td><td>YQL, REST & gRPC<br/>LangChain/LlamaIndex</td><td>✅ Unified ranking (text, tensor)<br/>✅ Real-time in-cluster inference</td><td>⚠️ Steep ops footprint (Java)<br/>⚠️ Learning curve for config</td></tr>
+<tr><td><strong>Vald</strong></td><td>Apache-2 (Helm charts)</td><td>NGT index; auto-index<br/>Scales to billions on K8s</td><td>gRPC hooks for custom filters</td><td>Go/Java/Python/Node SDKs<br/>Grafana dashboards</td><td>✅ Kubernetes-first<br/>✅ Auto-scaling, backups</td><td>⚠️ Smaller community<br/>⚠️ Limited hybrid search</td></tr>
+<tr><td><strong>Elasticsearch</strong></td><td>Elastic License & Cloud</td><td>Lucene 9.9 HNSW<br/>Sub-10ms p50 (10M vec)</td><td>BM25 + vector hybrid<br/>Rich bool/geo filters</td><td>Huge ecosystem; ESQL<br/>Kibana, LangChain plugin</td><td>✅ "All-in-one" solution<br/>✅ Mature RBAC & observability</td><td>⚠️ SSPL-like license<br/>⚠️ Can be resource-heavy</td></tr>
+<tr><td><strong>Redis</strong></td><td>BSD-3 OSS & Enterprise</td><td>In-memory KNN<br/>62% higher QPS than peers</td><td>RediSearch KNN<br/>Mix with JSON/full-text</td><td>Clients in all languages<br/>LangChain, llama-cpp</td><td>✅ Lowest latency (μs–ms)<br/>✅ Ideal for real-time RAG</td><td>⚠️ Memory-bound (unless Flash)<br/>⚠️ Some features Enterprise-only</td></tr></tbody></table></div><p>Feel free to benchmark with your own embeddings and workload to pick the best fit!</p>

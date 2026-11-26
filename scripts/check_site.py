@@ -5,14 +5,15 @@ from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
-routes = ["index.html", "writing/index.html", "research/index.html", "projects/index.html",
+routes = ["index.html", "writing/index.html", "projects/index.html",
           "about.html", "roadmap.html", "resources.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
           "vector_dbs.html", "writing/document-parsing/index.html",
           "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
-fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "roadmap", "about")]
+fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "projects", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
-fa_routes += ["fa/writing/document-parsing/index.html"]
+fa_routes += ["fa/writing/document-parsing/index.html", "fa/writing/market-analysis/index.html", "fa/writing/vector-databases/index.html"]
+routes += ["writing/market-analysis/index.html", "writing/vector-databases/index.html"]
 routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/js/theme.js", "assets/js/document-parsing.js"]
 routes += ["materials/Data_Preparation/index.html","fa/materials/Data_Preparation/index.html","materials/Embeddings/index.html","fa/materials/Embeddings/index.html","materials/Intro/index.html","fa/materials/Intro/index.html","materials/Neural_Networks/index.html","fa/materials/Neural_Networks/index.html","materials/Tokenization/index.html","fa/materials/Tokenization/index.html","materials/Traditional_LMs/index.html","fa/materials/Traditional_LMs/index.html","materials/Transformers/index.html","fa/materials/Transformers/index.html"]
 routes += ["assets/examples/document-parsing/" + name for name in ("parse_pdf.py", "make_demo.py", "requirements.txt")]
@@ -28,9 +29,9 @@ class Links(HTMLParser):
             if href:
                 self.links.append(href)
 
-indexes = ["index.html", "writing/index.html", "research/index.html", "projects/index.html",
+indexes = ["index.html", "writing/index.html", "projects/index.html",
            "newsletter/index.html", "404.html"]
-indexes += fa_routes
+indexes += [p for p in fa_routes if p not in ("fa/market-analysis/index.html", "fa/vector-databases/index.html")]
 for name in indexes:
     path = root / name
     if not path.is_file():
@@ -63,8 +64,8 @@ class Locale(HTMLParser):
         if tag == "a":
             self.anchors.append(a.get("href"))
 
-pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research")]
-pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/open_source_ai.html", "/fa/open-source-ai/"), ("/vector_dbs.html", "/fa/vector-databases/"), ("/resources.html", "/fa/resources/"), ("/mini_roadmap.html", "/fa/mini-roadmap/"), ("/interview.html", "/fa/interview/"), ("/market_analysis.html", "/fa/market-analysis/")]
+pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing",)]
+pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/open_source_ai.html", "/fa/open-source-ai/"), ("/writing/vector-databases/", "/fa/writing/vector-databases/"), ("/resources.html", "/fa/resources/"), ("/mini_roadmap.html", "/fa/mini-roadmap/"), ("/interview.html", "/fa/interview/"), ("/writing/market-analysis/", "/fa/writing/market-analysis/")]
 pairs.append(("/writing/document-parsing/", "/fa/writing/document-parsing/"))
 pairs += [["/materials/Data_Preparation/","/fa/materials/Data_Preparation/"],["/materials/Embeddings/","/fa/materials/Embeddings/"],["/materials/Intro/","/fa/materials/Intro/"],["/materials/Neural_Networks/","/fa/materials/Neural_Networks/"],["/materials/Tokenization/","/fa/materials/Tokenization/"],["/materials/Traditional_LMs/","/fa/materials/Traditional_LMs/"],["/materials/Transformers/","/fa/materials/Transformers/"]]
 def inspect_route(route):
@@ -261,6 +262,28 @@ for path in Path("retired-posts").glob("*.html"):
             found = route in parser.links
         if found:
             errors.append(f"Removed route still listed in {name}: {route}")
+
+# Research is removed; migrated articles are real posts and legacy pages are redirects.
+for name in ("research/index.html", "fa/research/index.html"):
+    if (root / name).exists():
+        errors.append(f"Removed research section still built: {name}")
+for name in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
+    parser = Links()
+    parser.feed((root / name).read_text(encoding="utf-8"))
+    if any(link in ("/research/", "/fa/research/") for link in parser.links):
+        errors.append(f"Research navigation remains: {name}")
+for old, route, archive in [["fa/market-analysis/index.html","/fa/writing/market-analysis/","fa/writing/index.html"],["market_analysis.html","/writing/market-analysis/","writing/index.html"],["fa/vector-databases/index.html","/fa/writing/vector-databases/","fa/writing/index.html"],["vector_dbs.html","/writing/vector-databases/","writing/index.html"]]:
+    legacy = root / old
+    if not legacy.is_file() or f"url={route}" not in legacy.read_text(encoding="utf-8"):
+        errors.append(f"Legacy redirect missing: {old}")
+    parser = Links()
+    parser.feed((root / archive).read_text(encoding="utf-8"))
+    if parser.links.count(route) != (0 if retired(route) else 1):
+        errors.append(f"Wrong migrated article count: {route}")
+    if listed_xml("sitemap.xml", route) == retired(route):
+        errors.append(f"Wrong migrated sitemap state: {route}")
+    if listed_xml("sitemap.xml", "/" + old.replace("index.html", "")):
+        errors.append(f"Legacy redirect indexed: {old}")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)

@@ -6,10 +6,6 @@
   fa: "/fa/writing/"
   en_label: "Writing"
   fa_label: "نوشته‌ها"
-- en: "/research/"
-  fa: "/fa/research/"
-  en_label: "Research"
-  fa_label: "پژوهش"
 - en: "/roadmap.html"
   fa: "/fa/roadmap/"
   en_label: "Roadmap"
@@ -18,8 +14,8 @@
   fa: "/fa/about/"
   en_label: "About"
   fa_label: "دربارهٔ من"
-- en: "/vector_dbs.html"
-  fa: "/fa/vector-databases/"
+- en: "/writing/vector-databases/"
+  fa: "/fa/writing/vector-databases/"
   en_label: "Vector databases"
   fa_label: "پایگاه‌های دادهٔ برداری"
   hidden: true
@@ -43,8 +39,8 @@
   en_label: "Interview questions"
   fa_label: "سؤالات مصاحبه"
   hidden: true
-- en: "/market_analysis.html"
-  fa: "/fa/market-analysis/"
+- en: "/writing/market-analysis/"
+  fa: "/fa/writing/market-analysis/"
   en_label: "Market analysis"
   fa_label: "تحلیل بازار"
   hidden: true

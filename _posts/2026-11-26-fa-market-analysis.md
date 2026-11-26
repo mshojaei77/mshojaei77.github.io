@@ -3,8 +3,14 @@ layout: article
 lang: fa
 title: "تحلیل بازار مهندسی LLM"
 description: "تحلیل جهت‌نمای تقاضای کارفرما و مهارت‌های مهندسان هوش مصنوعی."
-permalink: /fa/market-analysis/
+permalink: /fa/writing/market-analysis/
 nav_exclude: true
+date: 2026-11-26 16:45:17 +0000
+article_kind: essay
+show_article_header: false
+image: /assets/img/social-card.png
+feed:
+  excerpt_only: true
 ---
 # تحلیل بازار مهندسی LLM
 
