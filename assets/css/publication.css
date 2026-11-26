@@ -91,7 +91,7 @@
     }
 
     header {
-      border-top: 4px solid var(--ink);
+      border-top: 0;
       border-bottom: 1px solid var(--line);
       background: color-mix(in srgb, var(--bg) 94%, transparent);
     }
@@ -466,3 +466,26 @@ nav a {min-height:36px;align-items:center;}
 .article-content :is(div,section,header,aside){min-width:0;max-width:100%}.article-content header{border:0;background:transparent}.article-content .tablewrap{max-width:100%}.article-content section{padding:0;border:0}.article-content table{overflow-wrap:normal}.article-content td{min-width:90px}.article-content .issue-table td{overflow-wrap:anywhere}.article-content .metricgrid{grid-template-columns:repeat(auto-fit,minmax(min(120px,100%),1fr))}
 
 .article-content .article-toc a{padding-block:3px}.article-content pre{max-width:100%;tab-size:4}.article-content pre code{white-space:pre;overflow-wrap:normal}.article-content [data-tutorial-step]{scroll-margin-top:1rem}
+
+/* Shared accessible site chrome. */
+:root{--faint:#69655e}
+:root[data-theme="dark"]{--faint:#b8b2a8}
+html{background:var(--bg)}
+.site-header{background:var(--bg);border-top:0}
+.site-header .nav{align-items:center;font-size:14px}
+.site-header .brand-mark{width:30px;height:30px;border-radius:5px;color:var(--ink);border-color:var(--muted);flex:0 0 auto}
+.site-header .brand-mark .icon{width:19px;height:19px}
+.site-header nav a{min-height:44px;font-size:14px;padding-inline:3px}
+.site-header nav a[aria-current]{color:var(--ink);font-weight:700;border-bottom:2px solid var(--accent)}
+.site-header .brand[aria-current]{color:var(--ink)}
+.language-switch{gap:4px;padding:2px;font-size:14px}
+.language-switch a,.language-switch span:not(.language-divider){min-height:44px;padding:5px 9px}
+.language-switch [lang=fa]{font-family:Vazirmatn,system-ui,sans-serif}
+.theme-switch{min-height:48px;min-width:44px;padding:6px 10px}
+footer{font-size:14px;color:var(--muted);padding-block:16px 22px}
+.foot{align-items:center;gap:8px 20px}
+.foot .socials{gap:0 13px}
+.foot .socials a{min-height:44px;font-size:14px;text-decoration:none}
+.foot .socials a:hover{text-decoration:underline;color:var(--accent)}
+html[lang=fa] .foot .socials{direction:rtl}
+@media(max-width:480px){.site-header .nav{gap:4px 8px}.site-header .brand{font-size:16px;gap:5px}.site-header .brand-mark{width:25px;height:25px}.header-controls{gap:5px}.language-switch a,.language-switch span:not(.language-divider){padding-inline:6px}.site-header nav ul{gap:4px 14px}.site-header nav a{font-size:14px}}

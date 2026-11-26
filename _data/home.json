@@ -3,45 +3,41 @@
     "name": "Mohammad Shojaei",
     "role": "AI engineer",
     "tagline": "Building AI systems that survive production.",
-    "intro": "I build LLM systems and write about the parts that break outside demos: agents that lose state, retrieval that sounds right until it isn’t, evals that replace vibes, and the serving bills that quietly become a plot twist.",
-    "about_label": "About & work history",
-    "about_url": "/about.html",
+    "intro": "I build LLM systems and write about the parts that break outside demos: agents that lose state, retrieval that sounds right until it isn’t, unreliable evaluations, and serving costs that get out of hand.",
     "actions": [
       {
         "url": "/writing/",
         "label": "Explore writing"
-      },
-      {
-        "url": "/roadmap.html",
-        "label": "AI Engineering Roadmap"
       }
     ],
-    "notebook": "This is my engineering notebook.",
-    "focus": "Production LLM systems · Evaluation · Multilingual AI, especially Persian",
+    "focus": "Production LLM systems · Evaluation · Persian and multilingual AI",
     "latest": "Latest writing",
-    "all_writing": "All writing"
+    "all_writing": "All writing",
+    "work_heading": "Selected work",
+    "work_tag": "Public project",
+    "work_title": "SURFEX",
+    "work_desc": "A research agent that turns requests into structured research tasks, collects evidence, checks citations, and produces traceable reports and artifacts.",
+    "work_link": "View source and documentation"
   },
   "fa": {
     "name": "محمد شجاعی",
     "role": "مهندس هوش مصنوعی",
     "tagline": "سیستم‌های هوش مصنوعی می‌سازم که بیرون از دمو هم کار کنند.",
-    "intro": "روی ساخت سیستم‌های مبتنی بر LLM کار می‌کنم و از بخش‌هایی می‌نویسم که در محیط واقعی دردسرساز می‌شوند: ایجنت‌هایی که وضعیت مکالمه را گم می‌کنند، بازیابیِ متن قانع‌کننده اما نادرست، ارزیابی به‌جای حدس و گمان و هزینهٔ اجرای مدل‌ها.",
-    "about_label": "دربارهٔ من",
-    "about_url": "/fa/about/",
+    "intro": "سیستم‌های مبتنی بر LLM می‌سازم و دربارهٔ چالش‌های اجرای آن‌ها در محیط واقعی می‌نویسم: ایجنت‌هایی که وضعیت مکالمه را گم می‌کنند، بازیابیِ متن قانع‌کننده اما نادرست، ارزیابی‌های غیرقابل‌اعتماد و هزینه‌های پیش‌بینی‌نشدهٔ اجرای مدل.",
     "actions": [
       {
         "url": "/fa/writing/",
         "label": "خواندن نوشته‌ها"
-      },
-      {
-        "url": "/fa/roadmap/",
-        "label": "نقشهٔ راه مهندسی هوش مصنوعی"
       }
     ],
-    "notebook": "اینجا دفترچهٔ یادداشت مهندسی من است؛ از آزمایش تا Production.",
     "focus": "سیستم‌های LLM در محیط واقعی · ارزیابی · هوش مصنوعی فارسی و چندزبانه",
     "latest": "تازه‌ترین نوشته‌ها",
-    "all_writing": "همهٔ نوشته‌ها"
+    "all_writing": "همهٔ نوشته‌ها",
+    "work_heading": "کارهای منتخب",
+    "work_tag": "پروژهٔ عمومی",
+    "work_title": "SURFEX",
+    "work_desc": "ایجنت پژوهشی برای تعریف مسئله، گردآوری شواهد، بررسی ارجاع‌ها و تولید گزارش‌ها و خروجی‌های قابل‌ردیابی.",
+    "work_link": "مشاهدهٔ کد و مستندات"
   },
   "sections": [
     {
@@ -49,6 +45,20 @@
       "en": "Connect",
       "fa": "در ارتباط باشیم",
       "items": [
+        {
+          "en": {
+            "url": "mailto:shojaei.dev@gmail.com",
+            "title": "Email",
+            "desc": "For technical questions, collaboration and work inquiries.",
+            "tag": "Direct contact"
+          },
+          "fa": {
+            "url": "mailto:shojaei.dev@gmail.com",
+            "title": "ایمیل",
+            "desc": "برای پرسش‌های فنی، همکاری و فرصت‌های کاری.",
+            "tag": "ارتباط مستقیم"
+          }
+        },
         {
           "en": {
             "tag": "Code",
@@ -60,7 +70,7 @@
             "tag": "کد و آزمایش",
             "url": "https://github.com/mshojaei77",
             "title": "مخازن GitHub",
-            "desc": "کدها، ابزارها و آزمایش‌های مهندسی؛ از پروژه‌های جدی تا ایده‌هایی که هنوز در حال شکل‌گیری‌اند."
+            "desc": "کد، ابزار و آزمایش‌های مهندسی؛ از نمونه‌های اولیه تا پروژه‌های کامل‌تر."
           }
         },
         {
@@ -88,7 +98,7 @@
             "tag": "کانال تلگرام",
             "url": "https://t.me/LLMEngineers",
             "title": "LLM Engineers",
-            "desc": "یادداشت‌ها، مقاله‌ها و تجربه‌های مهندسی هوش مصنوعی را اینجا منتشر می‌کنم."
+            "desc": "یادداشت‌ها و تجربه‌های عملی مهندسی هوش مصنوعی."
           }
         },
         {
@@ -102,7 +112,49 @@
             "tag": "گروه تلگرام",
             "url": "https://t.me/AI_LLMs",
             "title": "گروه مهندسان AI و LLM",
-            "desc": "برای سؤال پرسیدن، بحث فنی و به‌اشتراک‌گذاشتن تجربه‌ها با همکاران."
+            "desc": "پرسش، گفت‌وگوی فنی و تبادل تجربه با مهندسان هوش مصنوعی."
+          }
+        },
+        {
+          "en": {
+            "url": "https://www.linkedin.com/in/mshojaei77/",
+            "title": "LinkedIn",
+            "desc": "Professional background and connections.",
+            "tag": "Professional"
+          },
+          "fa": {
+            "url": "https://www.linkedin.com/in/mshojaei77/",
+            "title": "LinkedIn",
+            "desc": "سوابق حرفه‌ای و ارتباط با همکاران.",
+            "tag": "حرفه‌ای"
+          }
+        },
+        {
+          "en": {
+            "url": "https://x.com/realshojaei",
+            "title": "X",
+            "desc": "Short notes and conversations.",
+            "tag": "Social"
+          },
+          "fa": {
+            "url": "https://x.com/realshojaei",
+            "title": "X",
+            "desc": "یادداشت‌های کوتاه و گفت‌وگوها.",
+            "tag": "شبکهٔ اجتماعی"
+          }
+        },
+        {
+          "en": {
+            "url": "/feed.xml",
+            "title": "RSS",
+            "desc": "Follow new articles in your own reader.",
+            "tag": "Subscribe"
+          },
+          "fa": {
+            "url": "/feed.xml",
+            "title": "RSS",
+            "desc": "دنبال‌کردن نوشته‌های تازه در خبرخوان دلخواه.",
+            "tag": "دنبال‌کردن"
           }
         }
       ]

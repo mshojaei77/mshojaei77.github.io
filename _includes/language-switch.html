@@ -7,8 +7,8 @@
 {% endif %}
 <div class="language-switch" role="group" aria-label="{% if current_language == 'fa' %}زبان سایت{% else %}Site language{% endif %}" dir="ltr">
 {% if current_language == 'fa' %}
-  <a lang="en" hreflang="en" href="{{ language_pair.en | default: '/' }}">EN</a><span class="language-divider" aria-hidden="true">/</span><span lang="fa" aria-current="true">FA</span>
+  <a lang="en" hreflang="en" href="{{ language_pair.en | default: '/' }}">English</a><span lang="fa" aria-current="true">فارسی</span>
 {% else %}
-  <span lang="en" aria-current="true">EN</span><span class="language-divider" aria-hidden="true">/</span><a lang="fa" hreflang="fa" href="{{ language_pair.fa | default: '/fa/' }}" aria-label="فارسی">FA</a>
+  <span lang="en" aria-current="true">English</span><a lang="fa" hreflang="fa" href="{{ language_pair.fa | default: '/fa/' }}" aria-label="فارسی">فارسی</a>
 {% endif %}
 </div>

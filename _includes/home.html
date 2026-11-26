@@ -5,18 +5,24 @@
   <h1 id="intro-title">{{ copy.name | escape }}</h1>
   <p class="hero-tagline">{{ copy.tagline | escape }}</p>
   <p class="lede">{{ copy.intro | escape }}</p>
-  <p class="lede home-notebook">{{ copy.notebook | escape }}</p>
   <div class="quick-links">
     {% for action in copy.actions %}<a class="action{% if forloop.first %} primary{% endif %}" href="{{ action.url }}">{{ action.label | escape }}{% if forloop.first %}<span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>{% endif %}</a>{% endfor %}
   </div>
-  <div class="home-focus"><span>{{ copy.focus | escape }}</span><a href="{{ copy.about_url }}">{{ copy.about_label | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span></a></div>
+  <p class="home-focus">{{ copy.focus | escape }}</p>
+</section>
+<section class="home-work" data-home-section="work" aria-labelledby="work-title">
+  <div class="section-heading"><h2 id="work-title">{{ copy.work_heading | escape }}</h2></div>
+  <article class="entry-card featured-work">
+    <div class="work-copy"><div class="meta">{{ copy.work_tag | escape }}</div><h3><a href="https://github.com/mshojaei77/SURFEX" dir="ltr">{{ copy.work_title | escape }}</a></h3><p>{{ copy.work_desc | escape }}</p><span class="work-link" aria-hidden="true">{{ copy.work_link | escape }} ↗</span></div>
+    <svg class="work-icon" aria-hidden="true"><use href="#i-code"></use></svg>
+  </article>
 </section>
 {% include published-posts.html limit=3 home=true %}
 <section class="home-connect" data-home-section="elsewhere" aria-labelledby="elsewhere-title">
   <div class="section-heading"><h2 id="elsewhere-title">{{ connect[page.lang] | escape }}</h2></div>
   <div class="home-connect-grid">
   {% for item in connect.items %}{% assign entry = item[page.lang] %}
-    <article class="entry-card"><div class="home-card-top"><span class="meta">{{ entry.tag | escape }}</span><span aria-hidden="true">↗</span></div><h3><a href="{{ entry.url }}">{{ entry.title | escape }}</a></h3><p>{{ entry.desc | escape }}</p></article>
+    <article class="entry-card{% if forloop.first %} contact-primary{% endif %}"><div class="home-card-top"><span class="meta">{{ entry.tag | escape }}</span><span aria-hidden="true">↗</span></div><h3><a href="{{ entry.url }}">{{ entry.title | escape }}</a></h3><p>{{ entry.desc | escape }}</p></article>
   {% endfor %}
   </div>
 </section>
