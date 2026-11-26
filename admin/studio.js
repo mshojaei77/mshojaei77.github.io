@@ -39,17 +39,80 @@ async function switchLocale(next){
 for(const button of document.querySelectorAll('[data-locale]'))button.onclick=()=>switchLocale(button.dataset.locale);
 applyLocale(locale);
 
+
+const SESSION_KEY='studio-remember-v1', TITLE_KEY='studio-post-titles-v1', SESSION_TTL=7*24*60*60*1000;
+const storageGet=key=>{try{return JSON.parse(localStorage.getItem(key)||'null');}catch{return null;}};
+const storageSet=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}};
+const storageRemove=key=>{try{localStorage.removeItem(key);}catch{}};
+function savedSession(){const r=storageGet(SESSION_KEY);if(r&&typeof r.token==='string'&&r.token.startsWith('github_pat_')&&Number.isFinite(r.expires)&&r.expires>Date.now()&&r.expires<=Date.now()+SESSION_TTL)return r;storageRemove(SESSION_KEY);return null;}
+let titles=Object.create(null), titleEpoch=0;
+const cachedTitles=storageGet(TITLE_KEY);
+if(cachedTitles&&typeof cachedTitles==='object'&&!Array.isArray(cachedTitles))for(const [path,x] of Object.entries(cachedTitles))if(allowed(path)&&x&&typeof x.sha==='string'&&typeof x.title==='string')titles[path]=x;
+function recordTitle(path,sha,source){
+ if(!sha)return;
+ const title=meta(source).title;
+ if(title)titles[path]={sha,title};
+}
+function persistTitles(){
+ const live=new Set(items.map(x=>x.path));for(const path of Object.keys(titles))if(!live.has(path))delete titles[path];
+ storageSet(TITLE_KEY,titles);
+}
+async function hydrateTitles(){
+ const epoch=++titleEpoch, client=api;
+ const todo=items.filter(x=>x.path.startsWith('_posts/')&&x.sha&&titles[x.path]?.sha!==x.sha);
+ let cursor=0;
+ async function load(){while(epoch===titleEpoch&&client===api&&cursor<todo.length){
+  const item=todo[cursor++];
+  try{
+   const remote=await client.read(item.path);
+   if(epoch!==titleEpoch||client!==api)return;
+   if(remote&&items.some(x=>x.path===item.path&&x.sha===remote.sha)){recordTitle(item.path,remote.sha,remote.source);renderList();}
+  }catch{/* Leave the slug visible; do not restore a stale title. */}
+ }}
+ await Promise.all(Array.from({length:Math.min(3,todo.length)},load));
+ if(epoch===titleEpoch&&client===api)persistTitles();
+}
+
 function saveSnapshot(){clearTimeout(timer);timer=null;if(!d)return saving;const snapshot=structuredClone(d),n=version;const promise=saving.catch(()=>{}).then(()=>drafts.put(snapshot));saving=promise;promise.then(()=>{local.set(snapshot.path,snapshot);if(d?.path===snapshot.path&&n===version){stored=n;$('local-status').textContent=tr('Saved locally');}renderList();},()=>{$('local-status').textContent=tr('Local save FAILED — download now');});return promise;}
 function changed(){version++;$('local-status').textContent=tr('Saving locally…');clearTimeout(timer);timer=setTimeout(()=>saveSnapshot().catch(()=>{}),250);$('metrics').textContent=editor.value.length.toLocaleString()+' characters';if(!$('preview').hidden)$('preview-refresh').textContent=tr('Refresh preview •');}
 function lock(on){busy=on;const editing=on||!!d?.pr||!!d?.deleting||!!d?.directAttempt;for(const id of ['source','title','description','excerpt'])$(id).readOnly=editing;for(const el of document.querySelectorAll('[data-format],#media,#submit,#discard'))el.disabled=editing;$('new').disabled=on;$('import-new').disabled=on;$('import-replace').disabled=editing||!d;$('delete-post').disabled=on||!!d?.pr||!d||!d.path.startsWith('_posts/');$('delete-post').hidden=!d?.path.startsWith('_posts/')||!d?.baseSha;$('submit').disabled=on||!!d?.pr;$('discard').disabled=on||!!d?.pr||!!d?.deleting&&!d?.directAttempt;$('delete-post').disabled=on||!!d?.pr||!!d?.directAttempt||!d?.baseSha||!d?.path.startsWith('_posts/');$('logout').disabled=on;$('local-save').disabled=on;$('unlock').disabled=on;for(const el of document.querySelectorAll('[data-locale]'))el.disabled=on;}
-function renderList(){const q=$('search').value.toLowerCase();const map=new Map(items.map(x=>[x.path,x]));for(const [path,l] of local)if(allowed(path))map.set(path,{...map.get(path),...l});const node=$('documents');node.replaceChildren();for(const group of ['Posts','Pages']){const label=document.createElement('span');label.className='nav-label';label.textContent=tr(group);node.append(label);for(const [path,x] of [...map].sort((a,b)=>b[0].localeCompare(a[0]))){if((path.startsWith('_posts/')?'Posts':'Pages')!==group||!matchesLocale(path,x))continue;let title=LABELS[path]||path.split('/').pop().replace(/^\d{4}-\d{2}-\d{2}-(en|fa)-/,'').replace(/\.[^.]+$/,'').replace(/-/g,' ');if(x.source){try{title=meta(x.source).title||title;}catch{}}if(!(path+' '+title).toLowerCase().includes(q))continue;const button=document.createElement('button');button.className='doc'+(d?.path===path?' active':'');button.dataset.path=path;const name=document.createElement('span');name.dir='auto';name.textContent=title;const sub=document.createElement('small');sub.textContent=tr(x.deleting?'Deletion pending':x.pr?'PR submitted':local.has(path)?'Local draft':path.startsWith('_posts/')?'Published post':'Page');button.append(name,sub);button.onclick=()=>open(path);node.append(button);}}}
+function renderList(){const q=$('search').value.toLowerCase();const map=new Map(items.map(x=>[x.path,x]));for(const [path,l] of local)if(allowed(path))map.set(path,{...map.get(path),...l});const node=$('documents');node.replaceChildren();for(const group of ['Posts','Pages']){const label=document.createElement('span');label.className='nav-label';label.textContent=tr(group);node.append(label);for(const [path,x] of [...map].sort((a,b)=>b[0].localeCompare(a[0]))){if((path.startsWith('_posts/')?'Posts':'Pages')!==group||!matchesLocale(path,x))continue;const published=items.find(item=>item.path===path);let title=(titles[path]?.sha===published?.sha?titles[path]?.title:null)||(!path.startsWith('_posts/')?LABELS[path]:null)||path.split('/').pop().replace(/^\d{4}-\d{2}-\d{2}-(?:(en|fa)-)?/,'').replace(/\.[^.]+$/,'').replace(/-/g,' ');const source=d?.path===path?d.source:x.source;if(source){try{title=meta(source).title||title;}catch{}}if(!(path+' '+title).toLowerCase().includes(q))continue;const button=document.createElement('button');button.className='doc'+(d?.path===path?' active':'');button.dataset.path=path;const name=document.createElement('span');name.dir='auto';name.textContent=title;const sub=document.createElement('small');sub.textContent=tr(x.deleting?'Deletion pending':x.pr?'PR submitted':local.has(path)?'Local draft':path.startsWith('_posts/')?'Published post':'Page');button.append(name,sub);button.onclick=()=>open(path);node.append(button);}}}
 function showDraft(){const m=meta(d.source),parts=splitSource(d.source);$('empty').hidden=true;$('editor-pane').hidden=false;$('title').value=m.title;$('description').value=m.description;$('excerpt').value=m.excerpt;$('current-title').textContent=m.title;$('current-title').dir='auto';$('kind').textContent=(m.lang==='fa'?'FA · Persian':'EN · English')+' / '+(d.path.endsWith('.html')?'HTML':'MARKDOWN');$('route').textContent=m.permalink;$('live').href=SITE+m.permalink;$('live').hidden=!d.baseSha;editor.value=parts.body;editor.dir=m.lang==='fa'?'rtl':'ltr';$('metrics').textContent=editor.value.length.toLocaleString()+' characters';$('local-status').textContent=tr(local.has(d.path)?'Saved locally':'No local changes');$('pending').hidden=!d.pr;$('submit').textContent=tr(d.directAttempt||d.deleting?(d.deleting?'Retry deletion':'Retry publish'):'Publish');$('delete-post').textContent=tr(d.deleting&&!d.directAttempt?'Cancel deletion':'Delete post');$('commit-result').hidden=true;if(d.pr)$('pr').href='https://github.com/'+OWNER+'/mshojaei77.github.io/pull/'+d.pr.number;$('preview').hidden=true;$('preview').srcdoc='';$('preview-toggle').setAttribute('aria-pressed','false');$('preview-refresh').hidden=true;previewId++;version=stored=0;lock(false);renderList();}
-async function open(path){if(busy||!allowed(path)||!matchesLocale(path,local.get(path)))return;lock(true);try{if(d&&version!==stored)await saveSnapshot();const cached=local.get(path);let remote=null,offline=false;if(cached&&cached.baseSha===null&&!cached.attempt&&!cached.pr&&!cached.directAttempt){d=structuredClone(cached);showDraft();status('Local draft. Nothing published.');return;}try{remote=await api.read(path);if(remote&&meta(remote.source).lang!==locale)throw Error('Document language does not match the selected edition.');}catch(e){if(!cached)throw e;offline=true;}if(cached&&remote?.source===cached.source&&!cached.pr&&!cached.deleting&&!cached.attempt&&!cached.directAttempt&&!cached.assets?.length){await drafts.remove(path);local.delete(path);}const retained=local.get(path);if(retained&&!matchesLocale(path,retained))throw Error('Local draft language does not match the selected edition.');if(retained?.pr&&!retained.deleting&&remote?.source===retained.source){await drafts.remove(path);local.delete(path);}else if(retained&&(retained.pr||retained.attempt)){try{const result=await api.resolveLegacy(retained);if(result==='deleted'){await drafts.remove(path);local.delete(path);items=await api.list();renderList();return;}await drafts.put(retained);local.set(path,retained);}catch(e){if(!retained.pr)throw e;}}if(local.has(path)){d=structuredClone(local.get(path));showDraft();status(offline?'Offline: recovered local draft.':remote&&remote.sha!==d.baseSha?'Main changed. Download and reconcile before submission.':'Recovered local draft.',!!(remote&&remote.sha!==d.baseSha));}else{if(!remote)throw Error('Article no longer exists on main.');d={path,source:remote.source,baseSha:remote.sha,assets:[],attempt:null,pr:null};showDraft();status('Loaded from GitHub. No changes.');}}catch(e){status(e.message,true);if(!d)alert(e.message);}finally{lock(false);}}
+async function open(path){if(busy||!allowed(path)||!matchesLocale(path,local.get(path)))return;lock(true);try{if(d&&version!==stored)await saveSnapshot();const cached=local.get(path);let remote=null,offline=false;if(cached&&cached.baseSha===null&&!cached.attempt&&!cached.pr&&!cached.directAttempt){d=structuredClone(cached);showDraft();status('Local draft. Nothing published.');return;}try{remote=await api.read(path);if(remote&&meta(remote.source).lang!==locale)throw Error('Document language does not match the selected edition.');if(remote){const item=items.find(x=>x.path===path);if(item)item.sha=remote.sha;recordTitle(path,remote.sha,remote.source);persistTitles();}}catch(e){if(!cached)throw e;offline=true;}if(cached&&remote?.source===cached.source&&!cached.pr&&!cached.deleting&&!cached.attempt&&!cached.directAttempt&&!cached.assets?.length){await drafts.remove(path);local.delete(path);}const retained=local.get(path);if(retained&&!matchesLocale(path,retained))throw Error('Local draft language does not match the selected edition.');if(retained?.pr&&!retained.deleting&&remote?.source===retained.source){await drafts.remove(path);local.delete(path);}else if(retained&&(retained.pr||retained.attempt)){try{const result=await api.resolveLegacy(retained);if(result==='deleted'){await drafts.remove(path);local.delete(path);items=await api.list();renderList();return;}await drafts.put(retained);local.set(path,retained);}catch(e){if(!retained.pr)throw e;}}if(local.has(path)){d=structuredClone(local.get(path));showDraft();status(offline?'Offline: recovered local draft.':remote&&remote.sha!==d.baseSha?'Main changed. Download and reconcile before submission.':'Recovered local draft.',!!(remote&&remote.sha!==d.baseSha));}else{if(!remote)throw Error('Article no longer exists on main.');d={path,source:remote.source,baseSha:remote.sha,assets:[],attempt:null,pr:null};showDraft();status('Loaded from GitHub. No changes.');}}catch(e){status(e.message,true);if(!d)alert(e.message);}finally{lock(false);}}
 $('search').oninput=renderList;
-$('login-form').onsubmit=async e=>{e.preventDefault();const button=e.submitter;button.disabled=true;$('login-error').textContent='Checking owner identity…';const candidate=new GitHub($('token').value.trim());try{await candidate.authenticate();await acquireTab();const result=await Promise.all([candidate.list(),drafts.all()]);api=candidate;items=result[0];local=new Map(result[1].map(x=>[x.path,x]));$('token').value='';$('login').hidden=true;$('workspace').hidden=false;$('logout').hidden=false;$('identity').textContent=OWNER;renderList();}catch(e){candidate.clear();releaseTab?.();releaseTab=null;$('login-error').textContent=e.message;}finally{button.disabled=false;}};
-$('logout').onclick=async()=>{if(busy)return;try{if(d&&version!==stored)await saveSnapshot();}catch{if(!confirm('Local save failed. Sign out anyway? Download first if needed.'))return;}api?.clear();releaseTab?.();location.reload();};
+
+let signingIn=false;
+const loginButton=$('login-form').querySelector('button[type=submit]');
+function loginMessage(message,error=false){$('login-error').textContent=message;$('login-error').classList.toggle('is-error',error);}
+async function signIn(token,remember,restoring=false){
+ if(signingIn||api)return;
+ signingIn=true;loginButton.disabled=true;$('token').disabled=true;$('remember').disabled=true;
+ loginMessage(locale==='fa'?'در حال بررسی حساب مالک…':'Checking owner identity…');
+ const candidate=new GitHub(token);
+ try{
+  await candidate.authenticate();await acquireTab();
+  const result=await Promise.all([candidate.list(),drafts.all()]);
+  api=candidate;items=result[0];local=new Map(result[1].map(x=>[x.path,x]));
+  let warning='';
+  if(remember){
+   if(!token.startsWith('github_pat_')){storageRemove(SESSION_KEY);warning=locale==='fa'?'فقط توکن محدود (fine-grained) قابل ذخیره است.':'Only fine-grained tokens can be remembered.';}
+   else if(!restoring&&!storageSet(SESSION_KEY,{token,expires:Date.now()+SESSION_TTL}))warning=locale==='fa'?'ذخیرهٔ ورود در مرورگر ناموفق بود.':'Browser could not remember your login.';
+  }else storageRemove(SESSION_KEY);
+  $('token').value='';$('login').hidden=true;$('workspace').hidden=false;$('logout').hidden=false;$('identity').textContent=OWNER;
+  renderList();void hydrateTitles();if(warning)$('session-note').textContent=warning;
+ }catch(e){
+  candidate.clear();releaseTab?.();releaseTab=null;
+  if(e.status===401||/Access denied:|does not have confirmed write access/.test(e.message)){storageRemove(SESSION_KEY);$('remember').checked=false;$('token').value='';}
+  else if(restoring)$('token').value=token;
+  loginMessage(e.message,true);
+ }finally{signingIn=false;loginButton.disabled=false;$('token').disabled=false;$('remember').disabled=false;}
+}
+$('login-form').onsubmit=e=>{e.preventDefault();void signIn($('token').value.trim(),$('remember').checked);};
+$('logout').onclick=async()=>{if(busy)return;try{if(d&&version!==stored)await saveSnapshot();}catch{if(!confirm('Local save failed. Sign out anyway? Download first if needed.'))return;}storageRemove(SESSION_KEY);titleEpoch++;api?.clear();releaseTab?.();location.reload();};
+const remembered=savedSession();
+if(remembered){$('remember').checked=true;void signIn(remembered.token,true,true);}
 editor.addEventListener('input',()=>{if(!d||busy||d.pr||d.deleting||d.directAttempt)return;const p=splitSource(d.source);d.source=p.header+bodyWithLineEndings(editor.value,p.body);changed();});
-for(const k of ['title','description','excerpt'])$(k).addEventListener('input',()=>{if(!d||busy||d.pr||d.deleting||d.directAttempt)return;const p=splitSource(d.source);d.source=setScalar(p.header,k,$(k).value)+p.body;if(k==='title')$('current-title').textContent=$(k).value;changed();});
+for(const k of ['title','description','excerpt'])$(k).addEventListener('input',()=>{if(!d||busy||d.pr||d.deleting||d.directAttempt)return;const p=splitSource(d.source);d.source=setScalar(p.header,k,$(k).value)+p.body;if(k==='title'){$('current-title').textContent=$(k).value;renderList();}changed();});
 $('local-save').onclick=()=>saveSnapshot().then(()=>status('Draft saved on this device.')).catch(()=>status('Local storage failed. Download the source before closing.',true));
 window.addEventListener('beforeunload',e=>{if(d&&version!==stored){e.preventDefault();e.returnValue='';}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&d&&version!==stored)saveSnapshot().catch(()=>{});});
@@ -78,7 +141,7 @@ async function publishNow(){
   // A confirmed commit is durable even if local cleanup subsequently fails.
   const next=deleting?null:{path,source:d.source,baseSha:result.sourceSha,assets:[],attempt:null,pr:null};
   try{await drafts.remove(path);local.delete(path);}catch{if(next){await drafts.put(next);local.set(path,next);}else throw Error('Deletion committed; local draft cleanup failed. Reload and retry to reconcile.');}
-  items=items.filter(x=>x.path!==path);if(next)items.push({path,sha:result.sourceSha});
+  items=items.filter(x=>x.path!==path);if(next){items.push({path,sha:result.sourceSha});recordTitle(path,result.sourceSha,next.source);}else delete titles[path];persistTitles();
   d=next;version=stored=0;
   if(deleting){$('editor-pane').hidden=true;$('empty').hidden=false;$('empty').querySelector('h1').textContent=tr('Deleted from GitHub. Site deployment is pending.');renderList();}
   else{showDraft();status('Committed to GitHub. Site deployment is pending.');showCommit(result);}
