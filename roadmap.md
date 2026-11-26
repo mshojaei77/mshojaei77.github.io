@@ -1,5 +1,7 @@
 ---
-layout: default
+layout: publication
+lang: en
+prose: true
 title: "LLM Development Roadmap"
 description: "A hands-on learning path from neural networks to production LLM systems."
 permalink: /roadmap.html

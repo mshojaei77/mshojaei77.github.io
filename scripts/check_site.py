@@ -5,16 +5,15 @@ from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
-routes = ["index.html", "writing/index.html", "research/index.html", "projects/index.html",
+routes = ["index.html", "writing/index.html", "research/index.html",
           "newsletter/index.html", "about.html", "roadmap.html", "resources.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
-          "vector_dbs.html", "book/index.html", "book/intro.html", "book/ch7.html",
+          "vector_dbs.html",
           "404.html", "assets/css/publication.css", "feed.xml", "sitemap.xml"]
-routes += [f"book/ch{i}.html" for i in range(1, 7)]
-fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "projects", "newsletter", "book", "roadmap", "about")]
+fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing", "research", "newsletter", "roadmap", "about")]
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
 fa_routes += ["fa/writing/document-parsing/index.html"]
-routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/css/document-parsing.css", "assets/js/document-parsing.js"]
+routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/js/theme.js", "assets/js/document-parsing.js"]
 errors = [f"Missing output: {p}" for p in routes if not (root / p).is_file()]
 
 class Links(HTMLParser):
@@ -28,7 +27,7 @@ class Links(HTMLParser):
                 self.links.append(href)
 
 indexes = ["index.html", "writing/index.html", "research/index.html", "projects/index.html",
-           "newsletter/index.html", "book/index.html", "404.html"]
+           "newsletter/index.html", "404.html"]
 indexes += fa_routes
 for name in indexes:
     path = root / name
@@ -62,7 +61,7 @@ class Locale(HTMLParser):
         if tag == "a":
             self.anchors.append(a.get("href"))
 
-pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research", "projects", "newsletter", "book")]
+pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing", "research", "newsletter")]
 pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/")]
 def inspect_route(route):
     p = root / route.lstrip("/")
@@ -78,15 +77,15 @@ for en, fa in pairs:
         errors.append(f"{fa}: missing Persian RTL metadata")
     if en not in g.anchors or fa not in f.anchors:
         errors.append(f"{en} / {fa}: missing reciprocal language navigation")
-    if en not in ("/book/", "/roadmap.html", "/about.html") and (g.alternates.get("en") != en or g.alternates.get("fa") != fa):
+    if en not in ("/roadmap.html", "/about.html") and (g.alternates.get("en") != en or g.alternates.get("fa") != fa):
         errors.append(f"{fa}: missing language alternates")
-    if en not in ("/book/", "/roadmap.html", "/about.html"):
+    if en not in ("/roadmap.html", "/about.html"):
         if f.html.get("lang") != "en" or f.html.get("dir") != "ltr":
             errors.append(f"{en}: missing English LTR metadata")
         if f.alternates.get("fa") != fa or f.alternates.get("en") != en:
             errors.append(f"{en}: missing language alternates")
 article_route = "/fa/writing/document-parsing/"
-for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
+for path in ("fa/index.html", "fa/writing/index.html"):
     parser = Links()
     if (root / path).is_file():
         parser.feed((root / path).read_text(encoding="utf-8"))
@@ -95,6 +94,20 @@ for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/in
 for path in ("feed.xml", "sitemap.xml"):
     if (root / path).is_file() and article_route not in (root / path).read_text(encoding="utf-8"):
         errors.append(f"{path}: missing published article")
+for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
+    parser = Links()
+    if (root / path).is_file():
+        parser.feed((root / path).read_text(encoding="utf-8"))
+        if any(link.startswith(("/book/", "/fa/book/", "/projects/", "/fa/projects/")) for link in parser.links):
+            errors.append(f"{path}: retired section linked")
+        for destination in ("https://t.me/LLMEngineers", "https://t.me/AI_LLMs"):
+            if destination not in parser.links:
+                errors.append(f"{path}: missing Telegram destination {destination}")
+        if path in ("index.html", "writing/index.html") and article_route in parser.links:
+            errors.append(f"{path}: Persian-only post leaked into English")
+for retired in ("book", "fa/book"):
+    if (root / retired).exists():
+        errors.append(f"Retired book published: {retired}")
 if errors:
     print("\n".join(sorted(set(errors))))
     sys.exit(1)

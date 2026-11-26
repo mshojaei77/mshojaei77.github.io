@@ -1,5 +1,7 @@
 ---
-layout: default
+layout: publication
+lang: en
+prose: true
 title: "LLM Interview Questions"
 description: "Interview preparation by topic and technical depth."
 permalink: /interview.html

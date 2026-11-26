@@ -23,7 +23,7 @@ fs.mkdirSync(out, { recursive: true });
           const switcher = $('.language-switch');
           const boxes = [...switcher.children].map(x => x.getBoundingClientRect());
           const nav = $('header nav').getBoundingClientRect();
-          const toggle = switcher.getBoundingClientRect();
+          const toggle = $('.header-controls').getBoundingClientRect();
           const intersects = nav.left < toggle.right && nav.right > toggle.left && nav.top < toggle.bottom && nav.bottom > toggle.top;
           const sections = $$('[data-home-section]').map(s => [s.dataset.homeSection, s.querySelectorAll('.entry-card').length]);
           const grid = $$('[data-home-section="writing"] .entry-card').map(x => x.getBoundingClientRect().top);
@@ -44,14 +44,21 @@ fs.mkdirSync(out, { recursive: true });
             json: JSON.parse($('script[type="application/ld+json"]').textContent)
           };
         });
+        assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+        await page.locator('#theme').click();
+        assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+        await page.reload();
+        assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+        await page.locator('#theme').click();
+        assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
         assert.equal(facts.lang, lang); assert.equal(facts.dir, lang === 'fa' ? 'rtl' : 'ltr');
-        assert.equal(facts.version, 'bilingual-3');
+        assert.equal(facts.version, 'bilingual-4');
         assert(!facts.overflow, width + ' ' + lang + ' overflow');
         assert(!facts.intersects, width + ' ' + lang + ' nav overlap');
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
-        assert.equal(facts.navLinks, 7); assert.equal(facts.ctas, 3); assert(facts.rss);
-        assert.deepEqual(facts.sections, [['writing',3],['projects',2],['start',6],['elsewhere',3]]);
+        assert.equal(facts.navLinks, 5); assert.equal(facts.ctas, 3); assert(facts.rss);
+        assert.deepEqual(facts.sections, [['writing',3],['start',5],['elsewhere',3],['community',2]]);
         if (width > 680) assert.equal(new Set(facts.grid).size, 1, 'featured cards should share a row');
         if (lang === 'fa') {
           assert(facts.fontLoaded, 'self-hosted Persian font did not load');
@@ -81,7 +88,7 @@ fs.mkdirSync(out, { recursive: true });
     const articleRoute = '/fa/writing/document-parsing/';
     for (const route of ['/', '/fa/', '/writing/', '/fa/writing/']) {
       assert((await p.goto(origin+route)).ok());
-      assert.equal(await p.locator('a[href="'+articleRoute+'"]').count(), 1);
+      assert.equal(await p.locator('a[href="'+articleRoute+'"]').count(), route.startsWith('/fa/') ? 1 : 0);
     }
     for (const width of [375, 1440]) {
       const ctx = await browser.newContext({viewport:{width,height:900},colorScheme:'dark',acceptDownloads:true});
@@ -98,9 +105,9 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await a.locator('.notebook textarea').count(),10);
       assert(await a.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'article horizontal overflow '+width);
       assert(await a.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
-      assert.equal(await a.locator('html').getAttribute('data-theme'),'dark');
-      await a.locator('#theme').click();
       assert.equal(await a.locator('html').getAttribute('data-theme'),'light');
+      await a.locator('#theme').click();
+      assert.equal(await a.locator('html').getAttribute('data-theme'),'dark');
       await a.locator('[data-filter="open"]').click();
       assert.equal(await a.locator('.issue-table tbody tr:visible').count(),19);
       await a.locator('[data-filter="fixed"]').click();

@@ -1,5 +1,7 @@
 ---
-layout: default
+layout: publication
+lang: en
+prose: true
 title: "About — Mohammad Shojaei"
 description: "Professional portfolio, experience, open-source work and technical skills."
 permalink: /about.html

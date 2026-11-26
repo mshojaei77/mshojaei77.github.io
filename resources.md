@@ -1,5 +1,7 @@
 ---
-layout: default
+layout: publication
+lang: en
+prose: true
 title: "Learning Resources"
 description: "Curated resources organized by LLM development stage."
 permalink: /resources.html

@@ -1,5 +1,7 @@
 ---
-layout: weekend-reading
+layout: publication
+prose: true
+article_tools: document-parsing
 lang: fa
 title: "هنر استخراج اطلاعات از اسناد؛ از یک PDF ساده تا یک سیستم هوش مصنوعی قابل اعتماد"
 description: "یادداشت آخر هفته دربارهٔ Document Parsing فارسی، OCR، بازسازی جدول‌ها، تجربه‌های آزمایشگاهی و مهندسی سیستم‌های قابل‌اعتماد."
@@ -8,12 +10,10 @@ date: 2026-11-26 00:00:00 +0000
 permalink: /fa/writing/document-parsing/
 nav_exclude: true
 image: /assets/img/social-card.png
-feed:
-  excerpt_only: true
 tags: [document-parsing, OCR, Persian, RAG, weekend-reading]
 ---
-<div class="progress" id="progress"></div><header class="top"><a class="brand site-return" href="/fa/writing/">← نوشته‌ها · محمد شجاعی</a><span class="brand">مطالعه آخر هفته · مهندسی AI</span><div class="actions"><button id="theme">حالت تاریک</button><button onclick="window.print()">چاپ / PDF</button></div></header><div class="layout"><aside class="sidebar"><strong>فهرست مطالب</strong><nav><a href="#section-1">بخش اول: چرا خواندن یک PDF تا این اندازه پیچیده است؟</a><a href="#section-5">بخش دوم: شناخت ابزارها و معماری</a><a href="#section-10">بخش سوم: چرا اسناد فارسی دشوارتر هستند؟</a><a href="#section-19">بخش چهارم: مدل‌های بینایی و بازیابی اطلاعات</a><a href="#section-23">بخش پنجم: آزمایش‌هایی که انجام شدند و درس‌های آن‌ها</a><a href="#section-28">بخش ششم: مهندسی قابلیت اطمینان</a><a href="#section-34">بخش هفتم: مرور همه مشکلات تجربه‌شده</a><a href="#section-40">بخش هشتم: چگونه یک Parser بهتر بسازیم؟</a><a href="#section-46">بخش نهم: ایده‌هایی برای فکر کردن و آزمایش</a><a href="#section-54">بخش دهم: بزرگ‌ترین موانع فنی</a><a href="#section-55">چند سؤال برای فکر کردن در آخر هفته</a><a href="#section-56">جمع‌بندی: آنچه به‌عنوان یک AI Engineer باید یاد بگیریم</a><a href="#section-57">برای مطالعه بیشتر</a></nav></aside><main class="main"><header class="hero"><div class="eyebrow">WEEKEND READING / DOCUMENT INTELLIGENCE</div><h1>هنر استخراج اطلاعات از اسناد؛ از یک PDF ساده تا یک سیستم هوش مصنوعی قابل اعتماد</h1><p>یک مطالعه آخر هفته برای مهندسان هوش مصنوعی؛ درباره Document Parsing، پردازش اسناد فارسی، OCR، مدل‌های بینایی، بازسازی ساختار سند و چالش‌هایی که در محیط واقعی با آن‌ها مواجه می‌شویم.</p><p class="publication-date">محمد شجاعی · <time datetime="2026-11-26">۲۶ نوامبر ۲۰۲۶</time> · متن فارسی</p><div class="chips"><span>۲۲ فصل</span><span>۳۷ خانواده خطا</span><span>۷ ایده پژوهشی</span><span>مطالعه تعاملی</span></div></header>
-
+<header class="article-heading"><p class="eyebrow">مطالعهٔ آخر هفته · مهندسی اسناد</p><h1>هنر استخراج اطلاعات از اسناد؛ از یک PDF ساده تا یک سیستم هوش مصنوعی قابل اعتماد</h1><p class="meta">محمد شجاعی · <time datetime="2026-11-26">۲۶ نوامبر ۲۰۲۶</time></p><p class="lede">دربارهٔ Document Parsing فارسی، OCR، بازسازی جدول‌ها و درس‌هایی از آزمایش‌های واقعی.</p></header>
+<div class="article-tools"><a href="/fa/writing/">← همهٔ نوشته‌ها</a><button type="button" onclick="window.print()">چاپ / PDF</button></div><details class="article-toc"><summary>فهرست مطالب</summary><ul><li><a href="#section-1">بخش اول: چرا خواندن یک PDF تا این اندازه پیچیده است؟</a></li><li><a href="#section-5">بخش دوم: شناخت ابزارها و معماری</a></li><li><a href="#section-10">بخش سوم: چرا اسناد فارسی دشوارتر هستند؟</a></li><li><a href="#section-19">بخش چهارم: مدل‌های بینایی و بازیابی اطلاعات</a></li><li><a href="#section-23">بخش پنجم: آزمایش‌هایی که انجام شدند و درس‌های آن‌ها</a></li><li><a href="#section-28">بخش ششم: مهندسی قابلیت اطمینان</a></li><li><a href="#section-34">بخش هفتم: مرور همه مشکلات تجربه‌شده</a></li><li><a href="#section-40">بخش هشتم: چگونه یک Parser بهتر بسازیم؟</a></li><li><a href="#section-46">بخش نهم: ایده‌هایی برای فکر کردن و آزمایش</a></li><li><a href="#section-54">بخش دهم: بزرگ‌ترین موانع فنی</a></li><li><a href="#section-55">چند سؤال برای فکر کردن در آخر هفته</a></li><li><a href="#section-56">جمع‌بندی: آنچه به‌عنوان یک AI Engineer باید یاد بگیریم</a></li><li><a href="#section-57">برای مطالعه بیشتر</a></li></ul></details>
 <p>در این مطلب، از تجربه‌های عملی پردازش اسناد فارسی استفاده می‌کنیم تا بفهمیم چرا تبدیل یک فایل PDF به دانش قابل اعتماد، مسئله‌ای بسیار فراتر از انتخاب یک مدل هوش مصنوعی است. اعداد و نتایج آزمایش‌ها به نمونه‌های محدود و ثبت‌شده مربوط‌اند؛ مثال‌های آموزشی و ایده‌های آینده نیز از نتایج اثبات‌شده جدا شده‌اند.</p>
 <hr/>
 <h2 id="section-1">بخش اول: چرا خواندن یک PDF تا این اندازه پیچیده است؟</h2>
@@ -1288,4 +1288,5 @@ Outputs:
 <li><a href="https://www.unicode.org/reports/tr9/">Unicode Standard Annex #9: Bidirectional Algorithm</a></li>
 </ul>
 <p><em>یادداشت درباره نتایج: اعداد و تجربه‌های مطرح‌شده از گزارش مهندسی و آزمایش‌های ثبت‌شده قبلی استخراج شده‌اند، نه یک Benchmark جدید یا یک مقایسه مستقل و جامع بین محصولات. شمارش ۱۸ اصلاح محدود و ۱۹ مسئله باز براساس فهرست تک‌تک مشکلات انجام شده است. منابع عمومی بالا برای مطالعه مفاهیم و ابزارها هستند و تأیید مستقل نتایج تجربی این مطلب محسوب نمی‌شوند. ایده‌های پژوهشی نیز پیشنهادهایی برای آزمایش هستند، نه راهکارهایی که برتری آن‌ها از قبل اثبات شده باشد.</em></p>
-<footer class="footer"><p><a href="/fa/writing/">همهٔ نوشته‌ها</a> · <a href="/fa/">خانه</a> · <a href="/writing/" lang="en">English writing index</a> · <a href="/feed.xml">RSS</a></p>تصاویر شماتیک آموزشی بازسازی شده‌اند؛ نتایج ثبت‌شده با مثال‌های فرضی و ایده‌های آینده متمایز هستند.</footer></main></div>
+
+<p class="meta">تصاویر شماتیک آموزشی بازسازی شده‌اند؛ نتایج ثبت‌شده با مثال‌های فرضی و ایده‌های آینده متمایز هستند.</p>
