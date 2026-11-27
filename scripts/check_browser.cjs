@@ -217,7 +217,7 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await guide.locator('link[rel=canonical]').getAttribute('href'),'https://mshojaei77.github.io'+articleRoute);
       assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'Persian article horizontal overflow '+width);
       assert(await guide.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
-      assert((await guide.locator('main').innerText()).length>1000);
+      assert((await guide.locator('main article').innerText()).length>1000);
       assert.deepEqual(failures,[]);
       await guide.screenshot({path:out+'/document-parsing-fa-'+width+'.png'});
       await ctx.close();
