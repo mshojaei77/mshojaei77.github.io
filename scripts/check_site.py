@@ -1,4 +1,5 @@
 """Check the publication's owned routes and navigational links in a built site."""
+import re
 import sys
 from pathlib import Path
 from html.parser import HTMLParser
