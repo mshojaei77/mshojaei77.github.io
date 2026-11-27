@@ -194,17 +194,25 @@ def submit(key: str, urls: list[str]) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="List changed article/archive URLs without accessing production or submitting.")
-    parser.add_argument("--before", help="Previous deployment SHA (local validation only).")
-    parser.add_argument("--after", help="Current deployment SHA (local validation only).")
+    parser.add_argument("--before", help="Previous deployment SHA for an explicit diff.")
+    parser.add_argument("--after", help="Current deployment SHA for an explicit diff.")
     args = parser.parse_args()
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    run_id = os.environ.get("INDEXNOW_PAGES_RUN_ID", "")
+    token = os.environ.get("GITHUB_TOKEN", "")
     if args.before or args.after:
         if not (args.before and args.after):
             parser.error("--before and --after must be supplied together.")
+        if not (re.fullmatch(r"[0-9a-f]{40}", args.before) and re.fullmatch(r"[0-9a-f]{40}", args.after)):
+            parser.error("--before and --after must be full commit SHAs.")
         before, after = args.before, args.after
+        if not args.dry_run:
+            if not (repo and run_id and token):
+                parser.error("Submitting an explicit deployment diff also requires GITHUB_REPOSITORY, INDEXNOW_PAGES_RUN_ID and GITHUB_TOKEN.")
+            current = deployment_pair(repo, run_id, token)
+            if current is None or current[1] != after:
+                raise RuntimeError("Refusing to submit explicit URLs unless --after is the latest successful Pages deployment.")
     else:
-        repo = os.environ.get("GITHUB_REPOSITORY", "")
-        run_id = os.environ.get("INDEXNOW_PAGES_RUN_ID", "")
-        token = os.environ.get("GITHUB_TOKEN", "")
         if not (repo and run_id and token):
             parser.error("Set GITHUB_REPOSITORY, INDEXNOW_PAGES_RUN_ID and GITHUB_TOKEN in deployment mode.")
         pair = deployment_pair(repo, run_id, token)

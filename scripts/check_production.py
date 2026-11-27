@@ -9,9 +9,11 @@ import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
+from urllib.parse import urlsplit
 
 BASE = "https://mshojaei77.github.io"
 REPO = "mshojaei77/mshojaei77.github.io"
@@ -66,6 +68,35 @@ def robots_group(text: str, user_agent: str) -> list[str]:
     return groups.get(user_agent.lower(), groups.get("*", []))
 
 
+class IndexablePage(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.lang = ""
+        self.in_title = False
+        self.title = ""
+        self.canonicals: list[str] = []
+        self.robots: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = dict(attrs)
+        if tag == "html":
+            self.lang = values.get("lang", "") or ""
+        elif tag == "title":
+            self.in_title = True
+        elif tag == "meta" and (values.get("name", "").lower() in {"robots", "googlebot", "bingbot"}):
+            self.robots.append((values.get("content", "") or "").lower())
+        elif tag == "link" and "canonical" in (values.get("rel", "").lower().split()):
+            self.canonicals.append(values.get("href", "") or "")
+
+    def handle_data(self, data: str) -> None:
+        if self.in_title:
+            self.title += data
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "title":
+            self.in_title = False
+
+
 def main() -> None:
     sha = os.environ.get("DEPLOYMENT_SHA", "")
     created_at = os.environ.get("DEPLOYMENT_CREATED_AT", "")
@@ -91,9 +122,11 @@ def main() -> None:
 
     required = ["/", "/fa/", "/writing/", "/fa/writing/", "/about.html", "/roadmap.html", "/admin/", "/fa/writing/document-parsing/"]
     pages = {}
+    page_headers = {}
     for path in required:
-        body, _ = assert_200(path)
+        body, headers = assert_200(path)
         pages[path] = body
+        page_headers[path] = headers
 
     sitemap, _ = assert_200("/sitemap.xml")
     sitemap_urls = {element.text for element in ET.fromstring(sitemap).findall("s:url/s:loc", NS)}
@@ -101,6 +134,27 @@ def main() -> None:
     assert BASE + "/fa/writing/document-parsing-fa-review-v7/" not in sitemap_urls
     assert not any("/admin/" in url for url in sitemap_urls)
     print(f"PASS sitemap XML: {len(sitemap_urls)} canonical URLs")
+
+    for canonical in sorted(sitemap_urls):
+        parts = urlsplit(canonical)
+        assert parts.scheme == "https" and parts.netloc == "mshojaei77.github.io" and not parts.query and not parts.fragment, canonical
+        path = parts.path or "/"
+        body = pages.get(path)
+        headers = page_headers.get(path, {})
+        if body is None:
+            body, headers, status = get(path, attempts=4)
+            assert status == 200, f"Sitemap URL {path}: HTTP {status}"
+            pages[path] = body
+            page_headers[path] = headers
+        page = IndexablePage()
+        page.feed(body.decode("utf-8"))
+        assert page.canonicals == [canonical], f"{path}: canonical mismatch {page.canonicals}"
+        assert page.title.strip(), f"{path}: missing title"
+        expected_lang = "fa" if path == "/fa/" or path.startswith("/fa/") else "en"
+        assert page.lang == expected_lang, f"{path}: expected lang={expected_lang}, got {page.lang!r}"
+        assert not any("noindex" in directive for directive in page.robots), f"{path}: sitemap includes a noindex page"
+        assert "noindex" not in headers.get("x-robots-tag", "").lower(), f"{path}: sitemap includes an X-Robots-Tag noindex page"
+    print(f"PASS production sitemap crawlability/indexability: {len(sitemap_urls)} URLs return canonical, titled, indexable HTML")
 
     feed, _ = assert_200("/feed.xml")
     ET.fromstring(feed)
