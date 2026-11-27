@@ -79,6 +79,18 @@
     "transformers": [
       "foundations",
       "systems"
+    ],
+    "ai-agent-use-cases": [
+      "systems",
+      "general"
+    ],
+    "academic-research-agent": [
+      "systems",
+      "evaluation"
+    ],
+    "deep-research-agents": [
+      "systems",
+      "evaluation"
     ]
   }
 }
