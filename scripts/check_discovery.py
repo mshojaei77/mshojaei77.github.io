@@ -92,3 +92,9 @@ for route in ["/admin/","/projects/","/fa/market-analysis/","/writing/document-p
         assert not analytics(parse(file_for(route))), route
 assert "/admin/" not in routes
 print(f"Verified SEO, canonical URLs and analytics isolation for {len(articles)} live articles; configured={bool(settings['goatcounter_site'])}.")
+
+# Preserve Google's exact root verification file through every build.
+verification = "google483b45b4cf9637cf.html"
+assert (root / verification).read_bytes() == b"google-site-verification: google483b45b4cf9637cf.html"
+assert "/" + verification not in routes, "Verification file should not be in sitemap"
+print("Verified exact Google ownership file.")
