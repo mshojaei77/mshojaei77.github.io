@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_acknowledged_revision": "c5e49ede0f04c5cb7f3c3991080052183a073794",
-  "last_acknowledged_at": "2026-11-27T16:18:18.057738+00:00",
-  "notification_state": "submission_accepted",
+  "last_acknowledged_revision": "ad49d77c96e43010b95742f8fd5c45e9fc30c70d",
+  "last_acknowledged_at": "2026-11-27T16:25:33.630810+00:00",
+  "notification_state": "full_resync_accepted",
   "known_canonical_urls": [
     "https://mshojaei77.github.io/",
     "https://mshojaei77.github.io/about.html",
@@ -18,6 +18,7 @@
     "https://mshojaei77.github.io/fa/writing/agent-skills/",
     "https://mshojaei77.github.io/fa/writing/agent-vs-workflow/",
     "https://mshojaei77.github.io/fa/writing/ai-engineering-week-01-preface-reading-notes/",
+    "https://mshojaei77.github.io/fa/writing/ai-reasoning-evaluation/",
     "https://mshojaei77.github.io/fa/writing/chunking-strategies/",
     "https://mshojaei77.github.io/fa/writing/coding-agent-productivity/",
     "https://mshojaei77.github.io/fa/writing/context-compaction-agents/",
@@ -42,6 +43,7 @@
     "https://mshojaei77.github.io/fa/writing/production-rag-architecture/",
     "https://mshojaei77.github.io/fa/writing/rag-failure-diagnostics/",
     "https://mshojaei77.github.io/fa/writing/resources/",
+    "https://mshojaei77.github.io/fa/writing/rl-in-llms/",
     "https://mshojaei77.github.io/fa/writing/secure-nl2sql/",
     "https://mshojaei77.github.io/fa/writing/spec-driven-development/",
     "https://mshojaei77.github.io/fa/writing/tasmim-bench/",
@@ -53,10 +55,14 @@
     "https://mshojaei77.github.io/writing/academic-research-agent/",
     "https://mshojaei77.github.io/writing/ai-agent-use-cases/",
     "https://mshojaei77.github.io/writing/deep-research-agents/",
+    "https://mshojaei77.github.io/writing/embeddings/",
     "https://mshojaei77.github.io/writing/interview/",
+    "https://mshojaei77.github.io/writing/intro-to-llms/",
     "https://mshojaei77.github.io/writing/market-analysis/",
     "https://mshojaei77.github.io/writing/open-source-ai/",
     "https://mshojaei77.github.io/writing/resources/",
+    "https://mshojaei77.github.io/writing/swiglu/",
+    "https://mshojaei77.github.io/writing/tokenization/",
     "https://mshojaei77.github.io/writing/vector-databases/"
   ]
 }
