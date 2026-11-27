@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Evaluation chart and verification mark</title>
+  <rect width="96" height="96" rx="16" fill="#172c3b"/>
+  <g fill="none" stroke="#e5f0fb" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+    <path d="M20 73V25M20 73h56"/>
+    <path d="M32 65V51M45 65V40M58 65V31"/>
+    <circle cx="70" cy="27" r="11" stroke="#8de0cd"/>
+    <path d="m65 27 4 4 7-8" stroke="#8de0cd"/>
+  </g>
+</svg>

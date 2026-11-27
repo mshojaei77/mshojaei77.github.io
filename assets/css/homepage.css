@@ -76,6 +76,12 @@ html[lang=fa] .home-latest .entry-card:hover .post-arrow{transform:translate(-3p
 .project-stack{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:5px;margin-top:auto;padding-top:8px}
 .project-stack span{font-size:13px;color:var(--muted);padding:2px 6px;border:1px solid var(--line);border-radius:4px;unicode-bidi:isolate}
 .featured-work h3 a{display:inline-flex;align-items:center;gap:7px}
+.project-identity{display:flex;align-items:center;gap:12px;min-width:0}
+.project-art{display:block;width:64px;height:64px;flex:0 0 64px;border:1px solid var(--line);border-radius:9px;background:var(--icon-bg)}
+.project-meta{flex:1;align-items:center;min-width:0}
+.home-latest .entry-card h3 a{display:flex;align-items:flex-start;gap:9px;text-decoration:none}
+.home-latest .entry-card h3 a:hover{text-decoration:underline}
+.home-latest .post-topic-icon{margin-block-start:1px}
 .project-arrow{color:var(--accent);font-size:.78em;line-height:1;pointer-events:none}
 .publication-home .home-connect .entry-card{padding:15px;height:100%;gap:3px}
 .contact-panel h3{font-size:1.15rem;margin:5px 0 0}

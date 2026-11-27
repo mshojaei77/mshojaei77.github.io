@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Connected search nodes</title>
+  <rect width="96" height="96" rx="16" fill="#172c3b"/>
+  <g fill="none" stroke="#e5f0fb" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+    <circle cx="39" cy="39" r="19"/>
+    <path d="m53 53 19 19M54 25l15-8M58 43h18"/>
+  </g>
+  <g fill="#8de0cd"><circle cx="72" cy="17" r="5"/><circle cx="77" cy="43" r="5"/></g>
+</svg>

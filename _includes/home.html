@@ -17,7 +17,7 @@
   <div class="home-work-grid">
   {% for project in site.data.home.selected_work %}{% assign entry = project[page.lang] %}
     <article class="entry-card featured-work{% if project.flagship %} flagship{% endif %}" data-project="{{ project.repo | escape }}">
-      <div class="project-meta"><span class="meta">{{ entry.tag | escape }}</span><span class="project-stars" aria-label="{{ project.stars }} {{ copy.work_stars | escape }}"><span aria-hidden="true">★</span> <bdi>{% if page.lang == 'fa' %}{% include persian-digits.html value=project.stars %}{% else %}{{ project.stars }}{% endif %}</bdi></span></div>
+      <div class="project-identity">{% if project.image %}<img class="project-art" src="{{ project.image | relative_url }}" alt="" width="96" height="96" loading="lazy" decoding="async">{% endif %}<div class="project-meta"><span class="meta">{{ entry.tag | escape }}</span><span class="project-stars" aria-label="{{ project.stars }} {{ copy.work_stars | escape }}"><span aria-hidden="true">★</span> <bdi>{% if page.lang == 'fa' %}{% include persian-digits.html value=project.stars %}{% else %}{{ project.stars }}{% endif %}</bdi></span></div></div>
       <h3><a href="https://github.com/mshojaei77/{{ project.repo }}" dir="ltr">{{ entry.title | escape }} <span class="project-arrow" aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span></a></h3>
       <p>{{ entry.desc | escape }}</p>
       <div class="project-stack" aria-label="{% if page.lang == 'fa' %}فناوری‌ها{% else %}Technologies{% endif %}">{% for tech in project.stack %}<span dir="ltr">{{ tech | escape }}</span>{% endfor %}</div>

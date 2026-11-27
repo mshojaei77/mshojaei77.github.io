@@ -127,6 +127,7 @@
   "selected_work": [
     {
       "repo": "ReActMCP",
+      "image": "/assets/img/projects/reactmcp.svg",
       "stars": 144,
       "en": {
         "tag": "Agent tooling · MCP",
@@ -147,6 +148,7 @@
     },
     {
       "repo": "ParsiEval",
+      "image": "/assets/img/projects/parsieval.svg",
       "stars": 42,
       "en": {
         "tag": "LLM evaluation · Persian AI",
@@ -167,6 +169,7 @@
     },
     {
       "repo": "SubTrans-Ollama",
+      "image": "/assets/img/projects/subtrans.svg",
       "stars": 24,
       "en": {
         "tag": "Local AI · Product engineering",
@@ -187,6 +190,7 @@
     },
     {
       "repo": "invoice-to-pay-agent",
+      "image": "/assets/img/projects/invoice-agent.svg",
       "stars": 9,
       "en": {
         "tag": "Enterprise AI · Finance",
