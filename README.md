@@ -36,7 +36,7 @@ Some articles have equivalent English and Persian editions; others are single-la
 
 ## Direct publication policy
 
-Publish authored articles directly in the bilingual blog; do not link to Medium or advertise a separate newsletter. Keep existing technical reference titles and replace missing links to the author's work with verified local article routes only after the migrated articles have been published. The retired newsletter pages are removed from the generated site.
+Publish authored articles directly in the bilingual blog rather than using Medium as a mirror or destination for the author's posts. Third-party Medium pages may be linked when they are relevant technical references. Do not advertise a separate newsletter; retired newsletter pages and newsletter links are excluded from the generated site. Keep existing technical reference titles and replace missing links to the author's work with verified local article routes only after the migrated articles have been published.
 
 ## Document parsing tutorial
 
