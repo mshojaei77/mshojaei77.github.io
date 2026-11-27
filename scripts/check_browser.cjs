@@ -75,7 +75,7 @@ fs.mkdirSync(out, { recursive: true });
         assert(!facts.intersects, width + ' ' + lang + ' nav overlap');
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
-        assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 2); assert(facts.rss);
+        assert.equal(facts.navLinks, 4); assert.equal(facts.ctas, 2); assert(facts.rss);
         const latestCount=Math.min(3,postCounts[lang]);
         assert.deepEqual(facts.sections.map(x=>x[0]),latestCount?['latest','work','elsewhere']:['work','elsewhere']);
         assert(!facts.startPresent,'Start here must be absent');
