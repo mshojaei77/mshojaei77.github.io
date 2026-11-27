@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/112"
 ---
 
 # چرا Agentها در محیط عملیاتی شکست می‌خورند؟
 
-یک Agent که در یک demo موفق می‌شود، هنوز ثابت نکرده در محیط واقعی قابل اتکاست. بین یک اجرای خوش‌شانس و سیستمی که برای کاربران، داده‌های ناقص و سرویس‌های گاهی‌خراب کار می‌کند فاصله هست. در [پست کانال دربارهٔ آمادگی Production](https://t.me/LLMEngineers/112) و [یادداشت بعدی دربارهٔ شکست فریمورک‌ها و orchestration](https://t.me/LLMEngineers/171) روی همین فاصله تأکید کردم.
+یک Agent که در یک demo موفق می‌شود، هنوز ثابت نکرده در محیط واقعی قابل اتکاست. بین یک اجرای خوش‌شانس و سیستمی که برای کاربران، داده‌های ناقص و سرویس‌های گاهی‌خراب کار می‌کند فاصله هست. این فاصله را باید با failure modeها، ابزارهای قابل‌خطا، کنترل دسترسی، هزینه و معیارهای ارزیابی سنجید.
 
-در متن کانال گفته بودم «اکثر Agentها شکست می‌خورند»، اما آن جمله یک اندازه‌گیری آماری نبود. برای طراحی بهتر، مهم‌تر است failureها را به شکل مشخص ببینیم و برای هرکدام کنترل داشته باشیم.
+جملهٔ «اکثر Agentها شکست می‌خورند» را نباید نتیجهٔ آماری دانست، مگر این‌که جامعه، تعریف شکست و دادهٔ پشتیبان روشن باشند. برای طراحی بهتر، مهم‌تر است failureها را به شکل مشخص ببینیم و برای هرکدام کنترل داشته باشیم.
 
 ## ورودی مبهم، خروجی مبهم
 
@@ -71,8 +70,5 @@ source_url: "https://t.me/LLMEngineers/112"
 در Production، Agent با خطای API، تکرار، state ناقص، context بد و دسترسی ناامن روبه‌رو می‌شود. راه‌حل یک prompt طولانی‌تر یا framework تازه‌تر نیست؛ قرارداد روشن، ابزار قابل‌کنترل، state پایدار، ارزیابی بر مبنای outcome و مسیر توقف انسانی است. اگر هنوز نمی‌توانید بفهمید Agent چرا کاری را انجام داده، هنوز آماده نیستید اختیار بیشتری به آن بدهید.
 
 ## منابع
-
-- [پست کانال: نقشهٔ راه Agent برای Production](https://t.me/LLMEngineers/112)
-- [پست کانال: نقد orchestration و فریمورک‌ها](https://t.me/LLMEngineers/171)
 - **منبع:** [Demystifying evals for AI agents، Anthropic](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)
 - **منبع:** [OpenAI Agents API architecture](https://developers.openai.com/api/docs/guides/agents-api/architecture)

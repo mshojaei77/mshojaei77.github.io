@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 700" role="img" aria-labelledby="title desc">
+  <title id="title">Research readiness checks</title>
+  <desc id="desc">Before drafting, confirm a clear question, a defined study type, inclusion and exclusion criteria, named data sources, a reproducibility plan, and any ethics requirements.</desc>
+  <rect x="20" y="20" width="720" height="660" rx="24" fill="#f7f9fc" stroke="#cbd5e1" stroke-width="3"/>
+  <rect x="20" y="20" width="720" height="90" rx="24" fill="#e8eef8"/>
+  <text x="74" y="76" font-family="system-ui, sans-serif" font-size="27" font-weight="700" fill="#172c3b">Before drafting: research readiness</text>
+  <g font-family="system-ui, sans-serif" fill="#172c3b" font-size="22">
+    <path d="M64 154h34l8 8-8 8H64a8 8 0 0 1 0-16Z" fill="#315f8d"/>
+    <text x="130" y="174" font-weight="700">Question</text><text x="302" y="174">Population, method, comparison, outcome</text>
+    <path d="M54 208h652" stroke="#d4dde6" stroke-width="2"/>
+    <path d="M64 234h34l8 8-8 8H64a8 8 0 0 1 0-16Z" fill="#4b8680"/>
+    <text x="130" y="254" font-weight="700">Study type</text><text x="302" y="254">Review, experiment, survey, benchmark…</text>
+    <path d="M54 288h652" stroke="#d4dde6" stroke-width="2"/>
+    <path d="M64 314h34l8 8-8 8H64a8 8 0 0 1 0-16Z" fill="#a77a35"/>
+    <text x="130" y="334" font-weight="700">Selection rules</text><text x="302" y="334">Inclusion and exclusion criteria</text>
+    <path d="M54 368h652" stroke="#d4dde6" stroke-width="2"/>
+    <path d="M64 394h34l8 8-8 8H64a8 8 0 0 1 0-16Z" fill="#8063a3"/>
+    <text x="130" y="414" font-weight="700">Data sources</text><text x="302" y="414">Named, accessible, legal, and ethical</text>
+    <path d="M54 448h652" stroke="#d4dde6" stroke-width="2"/>
+    <path d="M64 474h34l8 8-8 8H64a8 8 0 0 1 0-16Z" fill="#315f8d"/>
+    <text x="130" y="494" font-weight="700">Reproducibility</text><text x="302" y="494">Code, environment, seeds, analysis plan</text>
+    <path d="M54 528h652" stroke="#d4dde6" stroke-width="2"/>
+    <path d="M64 554h34l8 8-8 8H64a8 8 0 0 1 0-16Z" fill="#a46660"/>
+    <text x="130" y="574" font-weight="700">Ethics</text><text x="302" y="574">Human, animal, or sensitive data concerns</text>
+  </g>
+  <text x="380" y="640" text-anchor="middle" font-family="system-ui, sans-serif" font-size="19" fill="#4c5d6b">An LLM can check for missing fields; the researcher validates the choices.</text>
+</svg>

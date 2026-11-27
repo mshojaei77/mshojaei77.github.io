@@ -13,16 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://medium.com/@mshojaei77/how-to-build-an-academic-research-agent-with-langgraph-42274bc3cd02"
 ---
 
 # How to Build an Academic Research Agent with LangGraph
 
-*Originally published on [Medium](https://medium.com/@mshojaei77/how-to-build-an-academic-research-agent-with-langgraph-42274bc3cd02) on July 6, 2026.*
-
 Design a LangGraph research-assistance workflow with separate gates for citation checks, novelty review, methods, and human approval. The runnable example demonstrates one approval gate; research adapters and validation logic remain application-specific.
 
-![Academic research agent with LangGraph](https://cdn-images-1.medium.com/max/1024/1*E0kJiRubBOFOogkBeCtb5w.png)
+![An academic research agent workflow with protocol, citation, methodology, reproducibility, and human approval gates](/assets/img/articles/academic-research-agent-workflow.svg)
 
 *Academic Research Agent with LangGraph*
 
@@ -66,7 +63,7 @@ The important trick: **LLM nodes can write and reason, but validation gates shou
 
 The agent should block progress unless the protocol has:
 
-![Protocol approval gate in the academic research workflow](https://cdn-images-1.medium.com/max/1024/1*xO9O9SIZrXnPS0IxisIrVQ.png)
+![A research readiness checklist for questions, study design, data, reproducibility, and ethics](/assets/img/articles/academic-research-readiness-checklist.svg)
 
 *Gate A — Research question and protocol*
 
@@ -138,7 +135,7 @@ limitations
 reproducibility package
 ```
 
-For systematic reviews, require database list, search strings, screening process, inclusion/exclusion rules, risk-of-bias approach, extraction schema, and PRISMA checklist. PRISMA 2020 includes checklist and expanded checklist materials for systematic reviews. ([PRISMA statement)](https://www.prisma-statement.org/prisma-2020-checklist)
+For systematic reviews, require database list, search strings, screening process, inclusion/exclusion rules, risk-of-bias approach, extraction schema, and PRISMA checklist. PRISMA 2020 includes checklist and expanded checklist materials for systematic reviews. ([PRISMA statement](https://www.prisma-statement.org/prisma-2020-checklist))
 
 ## Gate E — Journal fit
 
@@ -184,6 +181,13 @@ class GateReport(TypedDict):
     score: float
     issues: list[str]
     required_fixes: list[str]
+class CitationPrecheckReport(TypedDict):
+    name: str
+    status: Literal["pending_source_and_claim_verification"]
+    verified: Literal[False]
+    identifier_issues: list[str]
+    issues: list[str]
+    required_fixes: list[str]
 class CitationRecord(TypedDict):
     raw_reference: str
     doi: NotRequired[str]
@@ -194,7 +198,9 @@ class CitationRecord(TypedDict):
     authors: list[str]
     year: int
     venue: str
-    verified: bool
+    verified: NotRequired[bool | None]
+    identifier_present: NotRequired[bool]
+    verification_status: NotRequired[Literal["pending"]]
     supports_claims: list[str]
     problems: list[str]
 
@@ -207,6 +213,7 @@ class AcademicState(TypedDict, total=False):
     literature_queries: list[str]
     retrieved_papers: list[dict[str, Any]]
     citations: list[CitationRecord]
+    citation_precheck: CitationPrecheckReport
     evidence_table: list[dict[str, Any]]
     novelty_report: GateReport
     methodology_report: GateReport
@@ -334,35 +341,35 @@ def literature_search_node(state: AcademicState) -> AcademicState:
     }
 ```
 
-## Citation validation node
+## Citation identifier precheck
+
+This illustrative node only checks whether a citation has a non-empty identifier or landing-page URL field. It does not validate the identifier's format, resolve metadata, or verify that a source supports a claim, so it must not mark citations as verified or report the citation gate as passed. A production system should perform those checks separately and retain an explicit pending state when they have not run.
 
 ```python
-def citation_validation_node(state: AcademicState) -> AcademicState:
+def citation_identifier_precheck_node(state: AcademicState) -> AcademicState:
     citations = state.get("citations", [])
-    verified = []
+    checked = []
     problems = []
     for c in citations:
-        # Production:
-        # 1. Resolve DOI in Crossref.
-        # 2. Match title/year/authors.
-        # 3. Verify source actually supports the attached claim.
-        # 4. Reject citation if metadata or claim support fails.
-        if not any(c.get(key) for key in ("doi", "pmid", "arxiv_id", "official_url")):
-            c["verified"] = False
+        has_identifier = any(c.get(key) for key in ("doi", "pmid", "arxiv_id", "official_url"))
+        c["identifier_present"] = has_identifier
+        c["verification_status"] = "pending"
+        if not has_identifier:
             c["problems"] = c.get("problems", []) + ["Missing DOI, PMID, arXiv ID, or official landing-page URL"]
             problems.append(c["raw_reference"])
-        verified.append(c)
+        checked.append(c)
     return {
         **state,
-        "citations": verified,
-        "integrity_report": {
-            "name": "citation_validation",
-            "passed": len(problems) == 0,
-            "score": 1.0 if len(problems) == 0 else 0.0,
+        "citations": checked,
+        "citation_precheck": {
+            "name": "citation_identifier_precheck",
+            "status": "pending_source_and_claim_verification",
+            "verified": False,
+            "identifier_issues": problems,
             "issues": problems,
-            "required_fixes": ["Replace or remove every unverified citation"],
+            "required_fixes": ["Resolve citation metadata and check source-to-claim support before accepting the citation gate"],
         },
-        "status": "citations_validated",
+        "status": "citations_pending_verification",
     }
 ```
 
@@ -559,7 +566,7 @@ def build_graph():
     builder.add_node("protocol", protocol_node)
     builder.add_node("protocol_human_gate", protocol_human_gate_node)
     builder.add_node("literature_search", literature_search_node)
-    builder.add_node("citation_validation", citation_validation_node)
+    builder.add_node("citation_identifier_precheck", citation_identifier_precheck_node)
     builder.add_node("novelty_gate", novelty_gate_node)
     builder.add_node("repair_research_question", repair_research_question_node)
     builder.add_node("methodology", methodology_node)
@@ -573,8 +580,8 @@ def build_graph():
     builder.add_edge("intake", "protocol")
     builder.add_edge("protocol", "protocol_human_gate")
     builder.add_edge("protocol_human_gate", "literature_search")
-    builder.add_edge("literature_search", "citation_validation")
-    builder.add_edge("citation_validation", "novelty_gate")
+    builder.add_edge("literature_search", "citation_identifier_precheck")
+    builder.add_edge("citation_identifier_precheck", "novelty_gate")
     builder.add_conditional_edges(
         "novelty_gate",
         route_after_novelty,

@@ -18,6 +18,7 @@ jobs:
           python3 scripts/check_site.py _site
           python3 scripts/check_discovery.py _site
           python3 scripts/test_publication_routes.py
+          python3 scripts/test_distribution.py
           python3 scripts/test_indexnow.py
           python3 scripts/check_ai_visibility_benchmark.py
           node scripts/check_analytics.cjs

@@ -151,6 +151,19 @@
     "tokenization": [
       "foundations"
     ],
+    "swiglu": [
+      "foundations",
+      "systems"
+    ],
+    "ai-reasoning-evaluation": [
+      "foundations",
+      "evaluation"
+    ],
+    "rl-in-llms": [
+      "foundations",
+      "evaluation",
+      "systems"
+    ],
     "traditional-language-models": [
       "foundations"
     ],

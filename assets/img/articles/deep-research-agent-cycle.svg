@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 920" role="img" aria-labelledby="title desc">
+  <title id="title">A deep-research agent cycle</title>
+  <desc id="desc">A research agent scopes a question, retrieves and parses sources, maintains a structured evidence state, drafts a synthesis, and verifies it against a rubric before revising.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#365a75"/></marker>
+  </defs>
+  <rect x="24" y="24" width="672" height="872" rx="28" fill="#f5f8fb" stroke="#c9d7e2" stroke-width="3"/>
+  <text x="360" y="78" text-anchor="middle" font-family="system-ui, sans-serif" font-size="29" font-weight="700" fill="#172c3b">Research as a controlled loop</text>
+  <g font-family="system-ui, sans-serif" fill="#172c3b">
+    <rect x="105" y="112" width="510" height="94" rx="16" fill="#e3eff8" stroke="#4f7896" stroke-width="3"/>
+    <text x="360" y="150" text-anchor="middle" font-size="25" font-weight="700">1 · Scope the question</text>
+    <text x="360" y="180" text-anchor="middle" font-size="19">Define constraints and the expected deliverable</text>
+    <path d="M360 207v32" stroke="#365a75" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <rect x="105" y="246" width="510" height="94" rx="16" fill="#e8f3e8" stroke="#628864" stroke-width="3"/>
+    <text x="360" y="284" text-anchor="middle" font-size="25" font-weight="700">2 · Retrieve and inspect sources</text>
+    <text x="360" y="314" text-anchor="middle" font-size="19">Search, fetch, parse, and record provenance</text>
+    <path d="M360 341v32" stroke="#365a75" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <rect x="105" y="380" width="510" height="94" rx="16" fill="#fff1dc" stroke="#a77a35" stroke-width="3"/>
+    <text x="360" y="418" text-anchor="middle" font-size="25" font-weight="700">3 · Maintain evidence state</text>
+    <text x="360" y="448" text-anchor="middle" font-size="19">Separate verified, disputed, and missing claims</text>
+    <path d="M360 475v32" stroke="#365a75" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <rect x="105" y="514" width="510" height="94" rx="16" fill="#f0eafa" stroke="#8063a3" stroke-width="3"/>
+    <text x="360" y="552" text-anchor="middle" font-size="25" font-weight="700">4 · Plan and gather what is missing</text>
+    <text x="360" y="582" text-anchor="middle" font-size="19">Use bounded tools and explicit stopping rules</text>
+    <path d="M360 609v32" stroke="#365a75" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <rect x="105" y="648" width="510" height="94" rx="16" fill="#e4f3f2" stroke="#4b8680" stroke-width="3"/>
+    <text x="360" y="686" text-anchor="middle" font-size="25" font-weight="700">5 · Synthesize a structured report</text>
+    <text x="360" y="716" text-anchor="middle" font-size="19">Connect claims to sources and show uncertainty</text>
+    <path d="M360 743v32" stroke="#365a75" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <rect x="105" y="782" width="510" height="78" rx="16" fill="#fce8e6" stroke="#a46660" stroke-width="3"/>
+    <text x="360" y="815" text-anchor="middle" font-size="25" font-weight="700">6 · Verify against a task rubric</text>
+    <text x="360" y="843" text-anchor="middle" font-size="19">Revise or stop when required checks pass</text>
+  </g>
+</svg>

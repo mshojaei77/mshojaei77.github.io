@@ -13,24 +13,23 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/134"
 ---
 
 # چطور توانایی واقعی مدل‌های زبانی را در فارسی بسنجیم؟
 
 یک مدل ممکن است سؤال دانشی فارسی را درست جواب دهد، اما در مکالمه مصنوعی حرف بزند، تصویر را غلط بخواند یا درخواست حساس را ناامن پاسخ دهد. برای همین یک leaderboard یا benchmark به‌تنهایی جواب «کدام مدل فارسی را بلد است؟» را نمی‌دهد؛ باید مشخص کنیم چه توانایی‌ای را برای کدام محصول می‌سنجیم.
 
-در [پست معرفی ParsiEval](https://t.me/LLMEngineers/134)، [آزمایش روی Konkur 1404](https://t.me/LLMEngineers/310) و [ارزیابی روانی کلام](https://t.me/LLMEngineers/313) من چند لایهٔ متفاوت را بررسی کردم.
+ارزیابی مدل فارسی باید چند لایه را پوشش دهد: توانایی انجام task، کیفیت زبان، ایمنی، و رفتار روی داده‌ای نزدیک به کاربرد واقعی. برای هر لایه، مجموعه‌داده و معیار جداگانه لازم است؛ یک امتیاز کلی این تفاوت‌ها را پنهان می‌کند.
 
 ## دانش و فهم زبان
 
-در ParsiEval، من ۳۶۴ سؤال چندگزینه‌ای دربارهٔ تاریخ، ادبیات، دانش عمومی و علم ساختم تا baselineای برای دانش و استدلال فارسی داشته باشم. نتیجهٔ پست اولیه در آگوست ۲۰۲۵، GPT-4o را حدود ۷۹٪ و Kimi K2 را حدود ۷۷٪ گزارش می‌کرد. این score یک snapshot تاریخی از آن dataset و run است، نه رتبه‌بندی امروز.
+در ParsiEval، من ۳۶۴ سؤال چندگزینه‌ای دربارهٔ تاریخ، ادبیات، دانش عمومی و علم ساختم تا baselineای برای دانش و استدلال فارسی داشته باشم. snapshot منتشرشده در آگوست ۲۰۲۵، GPT-4o را حدود ۷۹٪ و Kimi K2 را حدود ۷۷٪ گزارش می‌کرد. این score فقط نتیجهٔ همان dataset و run است، نه رتبه‌بندی امروز.
 
 در [repository فعلی ParsiEval](https://github.com/mshojaei77/ParsiEval)، benchmarkها در یک suite جمع شده‌اند. Konkur 1404، امتحان ورودی دانشگاه سال ۱۴۰۴ را می‌سنجد: ۲٬۱۳۷ سؤال فارسی و انگلیسی در ده session، با پشتیبانی از شکل و تصویر. این مجموعه علاوه بر دانش، محاسبه و استدلال را آزمایش می‌کند؛ اما نمرهٔ امتحان، معادل کیفیت chatbot در کار روزانه نیست.
 
 ## زبان روان و register
 
-مدل می‌تواند پاسخ درست بدهد ولی ترجمه‌وار، بیش‌ازحد رسمی یا ناآشنا برای مکالمهٔ ایرانی بنویسد. در پست اولیه، Persian Linguistic Fluency را با معیارهایی مثل دستور، طبیعی‌بودن و idiomها توضیح دادم و از Gemini به‌عنوان judge استفاده کرده بودم. ارزیابی judge خودکار را باید همراه prompt، مدل judge و روش کالیبراسیون گزارش کرد؛ یک مدل دیگر هم ممکن است slang یا register را متفاوت بفهمد.
+مدل می‌تواند پاسخ درست بدهد ولی ترجمه‌وار، بیش‌ازحد رسمی یا ناآشنا برای مکالمهٔ ایرانی بنویسد. در ارزیابی Persian Linguistic Fluency، معیارهایی مثل دستور، طبیعی‌بودن و idiomها جداگانه بررسی شدند و Gemini نقش judge را داشت. نتیجهٔ judge خودکار را باید همراه prompt، نسخهٔ مدل judge و روش کالیبراسیون گزارش کرد؛ مدل دیگری هم ممکن است slang یا register را متفاوت بفهمد.
 
 در نسخهٔ فعلی repository، Persian Fluency Bench شامل ۳۰ case داوری‌شده در ۱۰ domain روزمره و دو track رسمی و محاورهٔ تهرانی است. این bench یک بخش خاص را می‌سنجد؛ آن را با دانش، reasoning یا safety در یک score جمع نکنید مگر ترکیب و وزن‌دهی را دقیقاً توضیح دهید.
 
@@ -42,7 +41,7 @@ source_url: "https://t.me/LLMEngineers/134"
 
 ## توانایی‌های multimodal و دنیای واقعی
 
-در Konkur 1404 امکان ارزیابی سؤال‌های تصویری و هندسی هم هست. در پست فنی دربارهٔ همین leaderboard نوشتم که text-only score با standard score می‌تواند فرق کند؛ این یادآوری می‌کند که وقتی محصول PDF، نمودار یا تصویر دریافت می‌کند، benchmark متنی کافی نیست.
+در Konkur 1404 امکان ارزیابی سؤال‌های تصویری و هندسی هم هست. نتیجهٔ text-only می‌تواند با standard score فرق کند؛ وقتی محصول PDF، نمودار یا تصویر دریافت می‌کند، benchmark متنی به‌تنهایی کافی نیست.
 
 اگر سیستم قرار است سند بخواند، OCR و parsing را جداگانه بسنجید؛ اگر intent را route می‌کند، confusion matrix هر دسته را ببینید؛ و اگر پاسخ حساس می‌دهد، abstention و ارجاع به انسان را هم بسنجید. failure در محصول ممکن است از preprocessing باشد، نه خود مدل زبانی.
 
@@ -62,10 +61,6 @@ source_url: "https://t.me/LLMEngineers/134"
 ارزیابی مدل فارسی یک عدد نیست. برای انتخاب model، benchmark را با کار واقعی هم‌راستا کنید: intent، knowledge، fluency، multimodal، safety و هنجارهای فرهنگی را جدا بسنجید و بعد روی دادهٔ محصول خودتان retest کنید. benchmark عمومی مسیر انتخاب را کوتاه می‌کند؛ تصمیم نهایی باید بر اساس failureهایی باشد که برای کاربر شما مهم‌اند.
 
 ## منابع
-
-- [پست کانال: ParsiEval](https://t.me/LLMEngineers/134)
-- [پست کانال: Konkur 1404](https://t.me/LLMEngineers/310)
-- [پست کانال: Persian Linguistic Fluency](https://t.me/LLMEngineers/313)
 - **منبع:** [ParsiEval repository](https://github.com/mshojaei77/ParsiEval)
 - **منبع:** [ELAB: Extensive LLM Alignment Benchmark in Persian](https://arxiv.org/abs/2504.12553)
 - **منبع:** [PERCUL: A Story-Driven Cultural Evaluation of LLMs in Persian](https://aclanthology.org/2025.naacl-long.631/)

@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/539"
 ---
 
 # بازیابی Contextual؛ چطور context گم‌شدهٔ chunk را برگردانیم؟
 
 ممکن است chunk دقیقاً جواب سؤال را داشته باشد، اما معلوم نباشد «این بخش» دربارهٔ کدام مشتری، قرارداد یا بازهٔ زمانی است. وقتی chunk جداگانه جست‌وجو می‌شود، عنوان و زمینهٔ سند اصلی از دید retriever پنهان می‌ماند. Contextual Retrieval می‌کوشد همین زمینهٔ گم‌شده را پیش از ساخت index به chunk اضافه کند.
 
-این همان مشکلی است که در [پست کانال دربارهٔ Contextual Retrieval](https://t.me/LLMEngineers/539) توضیح دادم.
+این مسئله زمانی پیش می‌آید که chunk پس از جداشدن از سند، اطلاعاتی را که برای فهم موضوع و ارجاع‌هایش لازم است با خود نداشته باشد.
 
 ## روش چطور کار می‌کند؟
 
@@ -51,6 +50,4 @@ source_url: "https://t.me/LLMEngineers/539"
 این روش زمینهٔ لازم را پیش از index به chunk اضافه می‌کند تا جست‌وجوی واژگانی و معنایی بتواند بهتر آن را پیدا کند. ایده به‌خصوص برای chunkهایی که بیرون از سند مبهم‌اند جذاب است، اما باید روی queryهای خودتان ارزیابی شود. اول علت miss را پیدا کنید؛ بعد این مرحله را با هزینه و metricهای روشن وارد pipeline کنید.
 
 ## منابع
-
-- [پست کانال: Contextual Retrieval](https://t.me/LLMEngineers/539)
 - **منبع:** [Contextual retrieval in AI systems، Anthropic](https://www.anthropic.com/research/contextual-retrieval)

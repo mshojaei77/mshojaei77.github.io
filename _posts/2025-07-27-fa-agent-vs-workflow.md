@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/75"
 ---
 
 # فرق Agent، Workflow و LLM App در کجاست؟
 
 برای ساخت قابلیت AI لازم نیست از همان اول سراغ Agent برویم. اگر مسیر کار را می‌شود از قبل مشخص کرد، معمولاً یک workflow ساده‌تر، ارزان‌تر و قابل‌پیش‌بینی‌تر است. Agent زمانی معنا دارد که سیستم در زمان اجرا باید بر اساس نتیجهٔ قدم قبلی تصمیم بگیرد قدم بعدی چیست.
 
-این تفکیک را در [پست کانال دربارهٔ Agent و Workflow](https://t.me/LLMEngineers/75) مطرح کردم. دلیلش فقط درست‌بودن اصطلاح‌ها نیست؛ انتخاب معماری روی تست، هزینه، امنیت و دیباگ اثر می‌گذارد.
+این تفکیک فقط به درست‌بودن اصطلاح‌ها مربوط نیست؛ انتخاب معماری روی تست، هزینه، امنیت و دیباگ اثر می‌گذارد.
 
 ## یک LLM App لزوماً Agent نیست
 
@@ -62,7 +61,5 @@ source_url: "https://t.me/LLMEngineers/75"
 نتیجه؟ برای فرایندهای ثابت، workflow؛ برای فهم یا تولید یک بخش زبانی، LLM App؛ و برای هدفی که نیاز به انتخاب چند اقدام وابسته به نتیجه دارد، Agent محدود و قابل‌ارزیابی. هر جا بتوان تصمیم را با قاعدهٔ ساده و قابل‌بررسی گرفت، همان راه معمولاً بهتر است.
 
 ## منابع
-
-- [پست کانال: تفاوت Agent و Workflow](https://t.me/LLMEngineers/75)
 - **منبع:** [Building effective agents، Anthropic](https://www.anthropic.com/research/building-effective-agents)
 - **منبع:** [Agents API و انتخاب runtime، OpenAI](https://developers.openai.com/api/docs/guides/agents)

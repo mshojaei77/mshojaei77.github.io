@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/15"
 ---
 
 # چطور Embedding Model مناسب برای فارسی انتخاب کنیم؟
 
 برای RAG فارسی دنبال یک «بهترین embedding model» همیشگی نگردید. مدلی که روی similarity خوب است ممکن است برای retrieval یا reranking انتخاب اول نباشد؛ مدل چندزبانه شاید بهتر از مدل فارسی‌محور به corpus خاص شما بخورد، یا برعکس. انتخاب را از task و query set شروع کنید.
 
-در [پست کانال دربارهٔ PTEB](https://t.me/LLMEngineers/15) به leaderboard فارسی اشاره کردم. آن زمان PTEB راهی بود برای مقایسهٔ Text Embeddingها روی چند task؛ از آن زمان benchmarkهای فارسی دیگری هم اضافه شده‌اند.
+برای مقایسهٔ Text Embeddingهای فارسی می‌توان از PTEB استفاده کرد، اما رتبهٔ یک leaderboard به‌تنهایی انتخاب مدل را تعیین نمی‌کند. ابتدا task و domain محصول را مشخص کنید و عملکرد را روی داده‌ای نزدیک به همان کاربرد بسنجید.
 
 ## دو benchmark فارسی چه taskهایی دارند؟
 
@@ -58,8 +57,6 @@ source_url: "https://t.me/LLMEngineers/15"
 برای انتخاب مدل، FaMTEB و PTEB فهرست کوتاهی از candidateها و taskهای مرتبط فراهم می‌کنند؛ آن‌ها answer نهایی محصول شما نیستند. مدلی را بردارید که روی query و سند فارسی خودتان، با setting درست، retrieval و پاسخ را بهتر می‌کند و از نظر هزینه، latency، license و privacy قابل‌استقرار است.
 
 ## منابع
-
-- [پست کانال: PTEB Leaderboard](https://t.me/LLMEngineers/15)
 - **منبع:** Zinvandi و همکاران، [FaMTEB: Massive Text Embedding Benchmark in Persian Language](https://arxiv.org/abs/2502.11571).
 - **منبع:** [PTEB Leaderboard و داده‌های مدل](https://huggingface.co/spaces/opll-org/pteb-leaderboard)
 - **منبع:** [MTEB: Massive Text Embedding Benchmark](https://arxiv.org/abs/2210.07316)

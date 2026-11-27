@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/174"
 ---
 
 # فشرده‌سازی Context برای Agentهای طولانی؛ خلاصه‌سازی کافی نیست
 
 وقتی گفت‌وگوی Agent طولانی می‌شود، پاک‌کردن چند پیام قدیمی و گذاشتن یک خلاصه معمولاً اطلاعات لازم برای ادامه را حفظ نمی‌کند. Context Compaction باید context فعال را کوچک کند، اما state مهم کار را با دقت نگه دارد یا به منبعی قابل‌بازیابی وصل کند.
 
-در [پست کانال دربارهٔ محدودیت long context](https://t.me/LLMEngineers/174) و [یادداشت اجرایی‌تر دربارهٔ compaction](https://t.me/LLMEngineers/482) گفتم که پنجرهٔ context حافظهٔ کاری مدل است، نه کل حافظهٔ سامانه. این تفاوت برای Agentهایی که چند ساعت یا چند روز کار می‌کنند مهم می‌شود.
+پنجرهٔ context حافظهٔ کاری مدل است، نه حافظهٔ کامل سامانه. این تفاوت برای Agentهایی که چند ساعت یا چند روز کار می‌کنند مهم می‌شود؛ وضعیت پایدار باید جداگانه ذخیره و در شروع هر گام لازم، دوباره به context اضافه شود.
 
 ## خلاصه با state یکی نیست
 
@@ -30,7 +29,7 @@ source_url: "https://t.me/LLMEngineers/174"
 
 ## یک چرخهٔ compaction قابل‌بازیابی
 
-فرایندی که در [نوشتهٔ کانال](https://t.me/LLMEngineers/482) پیشنهاد کردم، چند مرحله دارد:
+یک فرایند compaction قابل‌بررسی می‌تواند چند مرحله داشته باشد:
 
 ۱. خروجی بزرگ ابزار را از پیام‌های رفت‌وبرگشت بیرون ببرید و در فایل، پایگاه داده یا store مناسب ذخیره کنید.
 ۲. پیام‌های تکراری و اطلاعات منقضی را حذف کنید؛ اما دستور اصلی کاربر، محدودیت‌ها و شواهد هنوز لازم را حفظ کنید.
@@ -63,9 +62,6 @@ source_url: "https://t.me/LLMEngineers/174"
 فشرده‌سازی راهی برای سبک‌کردن context فعال است، نه حافظه‌سازی جادویی. خروجی‌های حجیم را بیرون ببرید، state حیاتی را دقیق ثبت کنید، خلاصه را به منابع قابل‌بازیابی وصل کنید و ادامهٔ کار را با آزمون واقعی اعتبارسنجی کنید. هرچه هزینهٔ فراموشی بیشتر باشد، کمتر باید به یک خلاصهٔ آزاد و غیرقابل‌ممیزی تکیه کرد.
 
 ## منابع
-
-- [پست کانال: ارزیابی long context](https://t.me/LLMEngineers/174)
-- [پست کانال: Context Compaction برای Agentهای طولانی](https://t.me/LLMEngineers/482)
 - [راهنمای Compaction در OpenAI Responses API](https://developers.openai.com/api/docs/guides/compaction)
 - [مستندات Compaction در Claude API](https://platform.claude.com/docs/en/build-with-claude/compaction)
 - **منبع:** [Context Compaction Theory](https://arxiv.org/abs/2608.01326)

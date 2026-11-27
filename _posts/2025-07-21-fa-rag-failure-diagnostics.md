@@ -13,12 +13,11 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/50"
 ---
 
 # ده خطای RAG و راه پیدا کردن لایه‌ای که خراب شده
 
-وقتی پاسخ RAG بی‌ربط یا غلط است، اولین واکنش گاهی عوض‌کردن embedding یا مدل زبانی است. قبل از آن trace را از ابتدا دنبال کنید: چه سندی parse شد، چه chunkی ساخته شد، retriever چه چیزی آورد و مدل دقیقاً چه contextی دید؟ در [پست کانال دربارهٔ خطاهای رایج RAG](https://t.me/LLMEngineers/50) ده مشکل را فهرست کرده بودم؛ این نسخه آن‌ها را به نشانه و روش تشخیص تبدیل می‌کند.
+وقتی پاسخ RAG بی‌ربط یا غلط است، اولین واکنش گاهی عوض‌کردن embedding یا مدل زبانی است. قبل از آن trace را از ابتدا دنبال کنید: چه سندی parse شد، چه chunkی ساخته شد، retriever چه چیزی آورد و مدل دقیقاً چه contextی دید؟ این راهنما نشانه‌های رایج را به روش‌های تشخیص و بررسی تبدیل می‌کند.
 
 ## ۱. سند موقع parsing خراب شده
 
@@ -71,7 +70,5 @@ source_url: "https://t.me/LLMEngineers/50"
 در RAG یک زنجیره را بررسی می‌کنیم و خطای انتهایی ممکن است از چند مرحله قبل آمده باشد. parsing، مرز chunk، retrieval، ranking، context، کیفیت پاسخ و ACL را جدا log و ارزیابی کنید. بعد همان لایه‌ای را تغییر دهید که evidence نشان می‌دهد مشکل دارد. این مسیر کمی کندتر از «مدل را عوض کنیم» به نظر می‌آید، ولی نتیجه‌اش قابل‌فهم‌تر و قابل‌تکرارتر است.
 
 ## منابع
-
-- [پست کانال: ده خطای رایج RAG](https://t.me/LLMEngineers/50)
 - **منبع:** [Ragas: Automated Evaluation of Retrieval Augmented Generation](https://arxiv.org/abs/2309.15217)
 - **منبع:** [ARES: An Automated Evaluation Framework for RAG Systems](https://arxiv.org/abs/2311.09476)

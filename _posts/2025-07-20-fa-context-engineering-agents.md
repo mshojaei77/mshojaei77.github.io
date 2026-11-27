@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/44"
 ---
 
 # مهندسی Context برای Agentها؛ فراتر از نوشتن Prompt بهتر
 
 اگر Agent پاسخ بی‌ربط می‌دهد، همیشه مشکل از ضعیف‌بودن مدل یا بدبودن prompt نیست. شاید مدرک درست به آن نرسیده، اطلاعات قدیمی با جدید قاطی شده یا خروجی ابزار آن‌قدر زیاد بوده که نکتهٔ مهم میان بقیه گم شده باشد. Context Engineering یعنی طراحی این‌که در هر مرحله چه چیزی به مدل برسد و چه چیزی بیرون از پنجرهٔ فعال نگه‌داری شود.
 
-این ایده را در [نوشتهٔ اولیهٔ کانال](https://t.me/LLMEngineers/44)، و بعدتر در [یادداشت مدیریت context در taskهای طولانی](https://t.me/LLMEngineers/380) و [طراحی محیط و دسترسی Agent](https://t.me/LLMEngineers/387) باز کردم. نکتهٔ اصلی برای من این است که context فقط یک prompt ثابت نیست؛ جریان داده‌ای است که همراه task تغییر می‌کند.
+در عمل، context یک prompt ثابت نیست؛ جریان اطلاعاتی است که همراه task، ابزارها و وضعیت Agent تغییر می‌کند.
 
 ## دستورالعمل مدل فقط بخشی از context است
 
@@ -61,9 +60,5 @@ source_url: "https://t.me/LLMEngineers/44"
 در این نگاه، prompt می‌گوید مدل چطور با اطلاعات کار کند؛ Context Engineering مشخص می‌کند چه اطلاعاتی، در چه زمانی، با چه سطح دسترسی و در چه قالبی اصلاً به مدل برسد. برای Agentهای طولانی، از اول state پایدار، retrieval هدفمند، فشرده‌سازی قابل‌بازگشت و trace بسازید. بیشترکردن context همیشه راه‌حل نیست؛ رساندن مدرک درست به قدم درست، مسئلهٔ اصلی است.
 
 ## منابع
-
-- [پست کانال: Context Engineering](https://t.me/LLMEngineers/44)
-- [پست کانال: تجربهٔ مدیریت context](https://t.me/LLMEngineers/380)
-- [پست کانال: محیط و action space در Agentها](https://t.me/LLMEngineers/387)
 - **منبع:** [Effective context engineering for AI agents، Anthropic](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents)
 - **منبع:** [Harness engineering: leveraging Codex in an agent-first world، OpenAI](https://openai.com/index/harness-engineering/)

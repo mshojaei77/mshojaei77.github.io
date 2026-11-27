@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/538"
 ---
 
 # چرا برای جست‌وجوی یک سند به چند embedding نیاز داریم؟
 
 یک embedding برای کل سند ممکن است عنوان کوتاه یا نام خاصی را که فقط یک‌بار آمده زیر سایهٔ متن طولانی پنهان کند. گاهی بهتر است نمایه‌های مختلف را جدا نگه داریم: یکی برای عنوان، یکی برای چکیده و چند مورد برای بخش‌های متن. بعد می‌توانیم جست‌وجو را روی هرکدام انجام دهیم و نتیجه‌ها را دوباره ترکیب کنیم.
 
-در [پست کانال دربارهٔ چند representation برای یک سند](https://t.me/LLMEngineers/538) به نمونه‌ای از Qdrant اشاره کردم. این طرح را باید از معنای دیگری از multi-vector هم جدا کرد.
+در Qdrant می‌توان برای یک سند چند بازنمایی متنی با سطح جزئیات متفاوت نگه داشت و هنگام retrieval آن‌ها را جداگانه جست‌وجو کرد. این طرح را باید از معنای دیگری از multi-vector هم جدا کرد.
 
 ## دو اصطلاح شبیه، دو طراحی متفاوت
 
@@ -28,7 +27,7 @@ source_url: "https://t.me/LLMEngineers/538"
 
 روش **multi-vector با late interaction** یعنی مدل برای یک query یا passage چند بردار، مثلاً بردارهای token-level، تولید می‌کند و رتبه‌بندی روی تعامل چند بردار انجام می‌شود. ColBERT یک نمونهٔ شناخته‌شده از این رویکرد است. این طراحی محاسبات و index خاص خود را دارد و با ذخیرهٔ یک بردار برای عنوان و یکی برای متن یکی نیست.
 
-در مقالهٔ کوتاه کانال، منظورم بیشتر representationهای جداگانه برای بخش‌های سند و ترکیب dense با BM25 بود؛ نه این‌که هر نوع multi-vector را یک روش واحد بنامیم.
+در این طراحی، منظور representationهای جداگانه برای بخش‌های سند و ترکیب dense با BM25 است؛ این دو را نباید با همهٔ تعریف‌های multi-vector یکی گرفت.
 
 ## یک جست‌وجوی چندنمایشی
 
@@ -53,7 +52,5 @@ source_url: "https://t.me/LLMEngineers/538"
 چند representation به سیستم اجازه می‌دهد عنوان، چکیده و متن را با سیگنال‌های مناسب خودشان جست‌وجو کند. این قابلیت برای اسناد پژوهشی و corpusهایی با اسم خاص می‌تواند مفید باشد، اما یک نمایش اضافه رایگان نیست. retrieval legها را جدا اندازه بگیرید، نتایج را با روش روشن fuse کنید و بین جست‌وجوی چندنمایشی و late-interaction multi-vector تفاوت بگذارید.
 
 ## منابع
-
-- [پست کانال: جست‌وجو با چند representation](https://t.me/LLMEngineers/538)
 - **منبع:** [Multi-Representation Search، Qdrant](https://qdrant.tech/documentation/tutorials-search-engineering/multi-representation-search/)
 - **منبع:** Khattab و Zaharia، [ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT](https://arxiv.org/abs/2004.12832).
