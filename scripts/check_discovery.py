@@ -140,7 +140,7 @@ for route in public:
     assert p.meta.get("og:title") and p.meta.get("og:description"), route
     assert p.meta.get("og:image"), route
     icons = [link for link in p.links if "icon" in (link.get("rel", "").split())]
-    assert icons == [{"rel": "icon", "type": "image/png", "sizes": "512x512", "href": "/assets/img/favicon.png"}], (route, icons)
+    assert icons == [{"rel": "icon", "type": "image/x-icon", "href": "/favicon.ico"}], (route, icons)
     title = p.meta["og:title"][0].strip()
     description = p.meta["description"][0].strip()
     assert description.casefold() != title.casefold(), f"Page description repeats its title: {route}"

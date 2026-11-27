@@ -20,10 +20,20 @@
     {% assign slug = post.url | split: '/' | last %}
     {% assign topic_ids = site.data.topics.posts[slug] %}
     {% if topic_ids == nil %}{% assign topic_ids = 'general' | split: ',' %}{% endif %}
+    {% assign primary_topic = topic_ids.first %}
+    {% assign topic_icon = 'i-pen' %}
+    {% case primary_topic %}
+      {% when 'systems' %}{% assign topic_icon = 'i-agent' %}
+      {% when 'evaluation' %}{% assign topic_icon = 'i-evaluation' %}
+      {% when 'persian' %}{% assign topic_icon = 'i-language' %}
+      {% when 'rag' %}{% assign topic_icon = 'i-retrieval' %}
+      {% when 'career' %}{% assign topic_icon = 'i-career' %}
+      {% when 'foundations' %}{% assign topic_icon = 'i-book' %}
+    {% endcase %}
     {% assign words = post.content | strip_html | number_of_words %}
     {% assign minutes = words | plus: 199 | divided_by: 200 | at_least: 1 %}
     <article class="entry-card{% if include.home and forloop.first %} latest-featured{% endif %}" data-post-topics="{{ topic_ids | join: ' ' | escape }}">
-      <h3 lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'fa' %}rtl{% else %}ltr{% endif %}"><a href="{{ post.url | relative_url }}" hreflang="{{ post.lang | default: 'en' }}">{{ post.title | escape }}</a></h3>
+      <h3 lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'fa' %}rtl{% else %}ltr{% endif %}"><a href="{{ post.url | relative_url }}" hreflang="{{ post.lang | default: 'en' }}"><span class="post-topic-icon" aria-hidden="true"><svg class="icon"><use href="#{{ topic_icon }}"></use></svg></span>{{ post.title | escape }}</a></h3>
       <div class="meta post-metadata">
         {% if include.home and forloop.first %}<span class="latest-indicator">{{ site.data.home[page.lang].newest | escape }}</span><span aria-hidden="true">·</span>{% endif %}
         {% for id in topic_ids limit:2 %}<span>{{ site.data.topics.labels[id][page.lang] | escape }}</span><span aria-hidden="true">·</span>{% endfor %}

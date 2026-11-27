@@ -68,6 +68,21 @@
       vertical-align: -0.14em;
     }
 
+    .post-topic-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      flex: 0 0 32px;
+      color: var(--accent);
+      background: var(--icon-bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      vertical-align: middle;
+    }
+
+    .post-topic-icon .icon { width: 17px; height: 17px; }
+
     .brand-icon {
       width: 1em;
       height: 1em;

@@ -203,7 +203,7 @@ def main() -> None:
         assert page.lang == expected_lang, f"{path}: expected lang={expected_lang}, got {page.lang!r}"
         assert not any("noindex" in directive for directive in page.robots), f"{path}: sitemap includes a noindex page"
         assert "noindex" not in headers.get("x-robots-tag", "").lower(), f"{path}: sitemap includes an X-Robots-Tag noindex page"
-        assert page.icons == [{"rel": "icon", "type": "image/png", "sizes": "512x512", "href": "/assets/img/favicon.png"}], f"{path}: invalid favicon declaration {page.icons}"
+        assert page.icons == [{"rel": "icon", "type": "image/x-icon", "href": "/favicon.ico"}], f"{path}: invalid favicon declaration {page.icons}"
         websites = [node for node in schema_nodes(page) if node.get("@type") == "WebSite"]
         if path == "/":
             assert len(websites) == 1 and websites[0].get("name") == "Mohammad Shojaei" and websites[0].get("url") == BASE + "/", f"Root WebSite schema missing or inaccurate: {websites}"

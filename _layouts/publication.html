@@ -24,10 +24,11 @@
   {% if page.retired_post %}<meta name="robots" content="noindex,nofollow">{% endif %}
   <meta name="color-scheme" content="light dark">
   <script src="/assets/js/theme.js?v=3"></script>
-  <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="512x512" href="/assets/img/favicon.png">
   {% if language == 'fa' %}<link rel="preload" href="/assets/fonts/Vazirmatn-variable.woff2" as="font" type="font/woff2" crossorigin>{% endif %}
-  <link rel="stylesheet" href="/assets/css/publication.css?v=6">
-  {% if page.url == '/' or page.url == '/fa/' %}<link rel="stylesheet" href="/assets/css/homepage.css?v=5">{% endif %}
+  <link rel="stylesheet" href="/assets/css/publication.css?v=7">
+  {% if page.url == '/' or page.url == '/fa/' %}<link rel="stylesheet" href="/assets/css/homepage.css?v=6">{% endif %}
   <script defer src="/assets/js/writing-search.js?v=1"></script>
   {% include discovery-head.html %}
   {% feed_meta %}
@@ -65,6 +66,21 @@
     </symbol>
     <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
       <path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2" /><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2" />
+    </symbol>
+    <symbol id="i-agent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="5" r="2.2" /><circle cx="5" cy="18" r="2.2" /><circle cx="19" cy="18" r="2.2" /><path d="m10.9 7-4.8 8.9M13.1 7l4.8 8.9M7.2 18h9.6" />
+    </symbol>
+    <symbol id="i-retrieval" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5h11M4 10h8M4 15h6M4 20h6" /><circle cx="16" cy="15" r="3.5" /><path d="m18.6 17.6 2 2" />
+    </symbol>
+    <symbol id="i-evaluation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 20V5M4 20h17" /><path d="M8 17v-5M13 17V8M18 17v-9" /><path d="m8 8 3-3 3 2 5-4" />
+    </symbol>
+    <symbol id="i-language" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
+    </symbol>
+    <symbol id="i-career" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" />
     </symbol>
     <symbol id="i-rss" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 5a15 15 0 0 1 15 15M4 11a9 9 0 0 1 9 9"/><circle cx="5" cy="19" r="1" fill="currentColor"/></symbol>
     <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linejoin="round"><path d="m3 10 18-7-7 18-4-7-7-4Zm7 4L21 3"/></symbol>
