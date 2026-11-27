@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_acknowledged_revision": "ad49d77c96e43010b95742f8fd5c45e9fc30c70d",
-  "last_acknowledged_at": "2026-11-27T16:25:33.630810+00:00",
-  "notification_state": "full_resync_accepted",
+  "last_acknowledged_revision": "db379a89f64a133cb076cd7480a4129759872520",
+  "last_acknowledged_at": "2026-11-27T16:50:44.578375+00:00",
+  "notification_state": "submission_accepted",
   "known_canonical_urls": [
     "https://mshojaei77.github.io/",
     "https://mshojaei77.github.io/about.html",
@@ -56,8 +56,11 @@
     "https://mshojaei77.github.io/writing/ai-agent-use-cases/",
     "https://mshojaei77.github.io/writing/deep-research-agents/",
     "https://mshojaei77.github.io/writing/embeddings/",
+    "https://mshojaei77.github.io/writing/evaluating-coding-harnesses/",
+    "https://mshojaei77.github.io/writing/inkling-effort-evaluation/",
     "https://mshojaei77.github.io/writing/interview/",
     "https://mshojaei77.github.io/writing/intro-to-llms/",
+    "https://mshojaei77.github.io/writing/llm-model-merging/",
     "https://mshojaei77.github.io/writing/market-analysis/",
     "https://mshojaei77.github.io/writing/open-source-ai/",
     "https://mshojaei77.github.io/writing/resources/",
