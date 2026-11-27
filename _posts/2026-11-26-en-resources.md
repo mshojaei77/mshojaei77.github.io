@@ -115,7 +115,7 @@ This is a reference shelf, not a required syllabus. It groups courses, papers, a
 
 **Essential Papers & Articles:**
 - [Learning Representations by Backpropagating Errors](http://www.iro.umontreal.ca/~vincentp/ift3395/lectures/backprop_old.pdf)
-- [Yes, You Should Understand Backprop](https://medium.com/@karpathy/yes-you-should-understand-backprop-e2f06eab496b)
+- [PyTorch automatic differentiation with torch.autograd](https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html)
 - [Natural Language Processing (Almost) from Scratch](http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf)
 
 ## 2. Traditional Language Models
