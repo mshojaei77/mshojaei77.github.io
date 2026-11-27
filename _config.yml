@@ -41,6 +41,10 @@ defaults:
     values:
       seo:
         type: BlogPosting
+  - scope:
+      path: "google483b45b4cf9637cf.html"
+    values:
+      sitemap: false
 
 # Site logo and branding
 favicon_ico: "/assets/img/favicon.ico"
