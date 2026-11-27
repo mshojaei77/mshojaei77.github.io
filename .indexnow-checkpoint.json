@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_acknowledged_revision": "9dd8dcaa4a58f7d415a9b44bd649f2b3c2583646",
-  "last_acknowledged_at": "2026-11-27T13:53:46.665341+00:00",
-  "notification_state": "full_resync_accepted",
+  "last_acknowledged_revision": "043cd6adf011cccb213065ff088c329518453c5c",
+  "last_acknowledged_at": "2026-11-27T15:48:59.572560+00:00",
+  "notification_state": "submission_accepted",
   "known_canonical_urls": [
     "https://mshojaei77.github.io/",
     "https://mshojaei77.github.io/about.html",
@@ -17,6 +17,7 @@
     "https://mshojaei77.github.io/fa/writing/agent-production-failures/",
     "https://mshojaei77.github.io/fa/writing/agent-skills/",
     "https://mshojaei77.github.io/fa/writing/agent-vs-workflow/",
+    "https://mshojaei77.github.io/fa/writing/ai-engineering-week-01-preface-reading-notes/",
     "https://mshojaei77.github.io/fa/writing/chunking-strategies/",
     "https://mshojaei77.github.io/fa/writing/coding-agent-productivity/",
     "https://mshojaei77.github.io/fa/writing/context-compaction-agents/",
