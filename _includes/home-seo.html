@@ -6,6 +6,7 @@
 <meta name="description" content="{{ page.description | escape }}">
 <link rel="canonical" href="{{ canonical }}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Mohammad Shojaei">
 <meta property="og:title" content="{{ page.title | escape }}">
 <meta property="og:description" content="{{ page.description | escape }}">
 <meta property="og:url" content="{{ canonical }}">
@@ -22,7 +23,8 @@
 {
  "@context":"https://schema.org",
  "@graph":[
- {"@type":"WebPage","@id":{{ canonical | append: '#webpage' | jsonify }},"url":{{ canonical | jsonify }},"name":{{ page.title | jsonify }},"headline":{{ page.title | jsonify }},"description":{{ page.description | jsonify }},"inLanguage":{{ page.lang | jsonify }},"image":{{ social_image | jsonify }},"about":{"@id":"https://mshojaei77.github.io/#person"}},
+ {% if page.url == '/' %}{"@type":"WebSite","@id":"https://mshojaei77.github.io/#website","url":"https://mshojaei77.github.io/","name":"Mohammad Shojaei","alternateName":"mshojaei77.github.io","publisher":{"@id":"https://mshojaei77.github.io/#person"}},{% endif %}
+ {"@type":"WebPage","@id":{{ canonical | append: '#webpage' | jsonify }},"url":{{ canonical | jsonify }},"name":{{ page.title | jsonify }},"headline":{{ page.title | jsonify }},"description":{{ page.description | jsonify }},"inLanguage":{{ page.lang | jsonify }},"image":{{ social_image | jsonify }},"isPartOf":{"@id":"https://mshojaei77.github.io/#website"},"about":{"@id":"https://mshojaei77.github.io/#person"}},
  {"@type":"Person","@id":"https://mshojaei77.github.io/#person","name":{{ author_profile.name | jsonify }},"alternateName":{{ author_profile.alternate_name | jsonify }},"url":{{ author_profile.url | jsonify }},"image":{{ author_profile.image | jsonify }},"jobTitle":{{ author_profile.job_title | jsonify }},"sameAs":{{ author_profile.same_as | jsonify }},"knowsAbout":{{ author_profile.knows_about | jsonify }}}
  ]}
 </script>

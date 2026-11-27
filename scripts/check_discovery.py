@@ -21,6 +21,7 @@ class Head(HTMLParser):
         self.schemas = []
         self.meta = {}
         self.canonicals = []
+        self.links = []
         self.title = ""
         self.scripts = []
     def handle_starttag(self, tag, attrs):
@@ -35,8 +36,10 @@ class Head(HTMLParser):
             key = a.get("name") or a.get("property")
             if key:
                 self.meta.setdefault(key, []).append(a.get("content", ""))
-        if tag == "link" and a.get("rel") == "canonical":
-            self.canonicals.append(a.get("href"))
+        if tag == "link":
+            self.links.append(a)
+            if a.get("rel") == "canonical":
+                self.canonicals.append(a.get("href"))
         if tag == "script":
             self.scripts.append(a)
             if a.get("type") == "application/ld+json":
@@ -76,6 +79,30 @@ class AuthorLinks(HTMLParser):
         values = dict(attrs)
         if tag == "a" and "author" in values.get("rel", "").split():
             self.hrefs.append(values.get("href", ""))
+class ArticleByline(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.inside = False
+        self.active_time = None
+        self.times = []
+        self.text = ""
+    def handle_starttag(self, tag, attrs):
+        values = dict(attrs)
+        if tag == "p" and "article-byline" in values.get("class", "").split():
+            self.inside = True
+        elif self.inside and tag == "time":
+            self.active_time = {"datetime": values.get("datetime", ""), "text": ""}
+            self.times.append(self.active_time)
+    def handle_data(self, data):
+        if self.inside:
+            self.text += data
+            if self.active_time is not None:
+                self.active_time["text"] += data
+    def handle_endtag(self, tag):
+        if tag == "time":
+            self.active_time = None
+        elif tag == "p" and self.inside:
+            self.inside = False
 def parse(path):
     p = Head()
     p.feed(path.read_text(encoding="utf-8"))
@@ -93,7 +120,13 @@ def analytics(p):
     return [s for s in p.scripts if s.get("data-analytics-provider") == "goatcounter" or "gc.zgo.at" in s.get("src","")]
 def values(p, key, expected):
     assert p.meta.get(key,[]) == ([expected] if expected else []), (key,p.meta.get(key))
-urls = [e.text for e in ET.parse(root/"sitemap.xml").iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+sitemap_tree = ET.parse(root/"sitemap.xml")
+urls = [e.text for e in sitemap_tree.iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+sitemap_lastmod = {
+    (entry.find("{http://www.sitemaps.org/schemas/sitemap/0.9}loc").text or ""): (entry.findtext("{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod") or "")
+    for entry in sitemap_tree.iter("{http://www.sitemaps.org/schemas/sitemap/0.9}url")
+    if entry.find("{http://www.sitemaps.org/schemas/sitemap/0.9}loc") is not None
+}
 routes = {urlsplit(u).path for u in urls}
 articles = sorted(r for r in routes if re.fullmatch(r"/(?:fa/)?writing/[^/]+/",r))
 public = {"/","/fa/","/writing/","/fa/writing/","/roadmap.html","/fa/roadmap/","/about.html","/fa/about/","/privacy/","/fa/privacy/"} | set(articles)
@@ -106,6 +139,8 @@ for route in public:
     assert p.canonicals == [host+route], (route,p.canonicals)
     assert p.meta.get("og:title") and p.meta.get("og:description"), route
     assert p.meta.get("og:image"), route
+    icons = [link for link in p.links if "icon" in (link.get("rel", "").split())]
+    assert icons == [{"rel": "icon", "type": "image/png", "sizes": "512x512", "href": "/assets/img/favicon.png"}], (route, icons)
     title = p.meta["og:title"][0].strip()
     description = p.meta["description"][0].strip()
     assert description.casefold() != title.casefold(), f"Page description repeats its title: {route}"
@@ -136,11 +171,22 @@ for route in public:
     else:
         assert not profile_pages, f"Unexpected ProfilePage markup: {route}"
     if route in {"/", "/fa/"}:
+        assert p.meta.get("og:site_name") == ["Mohammad Shojaei"], route
         people = [node for node in nodes if node.get("@type") == "Person" and node.get("@id") == "https://mshojaei77.github.io/#person"]
         language = "fa" if route == "/fa/" else "en"
         identity = author_profiles["محمد شجاعی" if language == "fa" else "Mohammad Shojaei"]
         assert len(people) == 1 and people[0].get("sameAs") == identity["same_as"], route
         assert people[0].get("name") == identity["name"] and people[0].get("url") == identity["url"], route
+        websites = [node for node in nodes if node.get("@type") == "WebSite"]
+        if route == "/":
+            assert len(websites) == 1, (route, websites)
+            assert websites[0].get("@id") == host + "/#website"
+            assert websites[0].get("url") == host + "/"
+            assert websites[0].get("name") == "Mohammad Shojaei"
+            assert websites[0].get("alternateName") == "mshojaei77.github.io"
+            assert websites[0].get("publisher") == {"@id": host + "/#person"}
+        else:
+            assert not websites, f"WebSite site-name markup should be declared on the domain root only: {route}"
     if route in articles:
         language = "fa" if route.startswith("/fa/") else "en"
         slug = route.rstrip("/").split("/")[-1]
@@ -172,6 +218,17 @@ for route in public:
         author_links.feed(file_for(route).read_text(encoding="utf-8"))
         assert author_links.hrefs == [author_profiles[identity_key]["url"]], (route, author_links.hrefs)
         assert blog.get("url") == host+route, (route,blog)
+        byline = ArticleByline()
+        byline.feed(file_for(route).read_text(encoding="utf-8"))
+        published = blog["datePublished"]
+        assert any(item["datetime"].startswith(published[:10]) for item in byline.times), (route, byline.times, published)
+        assert ("تاریخ انتشار" in byline.text) if route.startswith("/fa/") else ("Published" in byline.text), route
+        modified = blog.get("dateModified", "")
+        if modified and modified[:10] != published[:10]:
+            assert any(item["datetime"].startswith(modified[:10]) for item in byline.times), (route, byline.times, modified)
+            assert ("آخرین به‌روزرسانی" in byline.text) if route.startswith("/fa/") else ("Last updated" in byline.text), route
+        listed_lastmod = sitemap_lastmod.get(host + route, "")
+        assert listed_lastmod and listed_lastmod[:10] == (modified or published)[:10], (route, listed_lastmod, modified or published)
 for route in ["/admin/","/projects/","/fa/market-analysis/","/writing/document-parsing/","/fa/writing/document-parsing/"]:
     if route not in public and file_for(route).is_file():
         assert not analytics(parse(file_for(route))), route

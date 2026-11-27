@@ -1,26 +1,57 @@
 name: Notify IndexNow after deployment
 on:
   deployment_status:
+  schedule:
+    - cron: "17 8 * * *"
 permissions:
   actions: read
-  contents: read
+  contents: write
+  pages: read
 concurrency:
   group: indexnow-main
-  cancel-in-progress: false
+  queue: max
 jobs:
   notify:
-    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'github-pages' && github.event.deployment.ref == 'main'
+    if: github.event_name == 'schedule' || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'github-pages' && github.event.deployment.ref == 'main')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - name: Identify the latest deployed Pages revision
+        id: pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          DEPLOYMENT_EVENT_SHA: ${{ github.event_name == 'deployment_status' && github.event.deployment.sha || '' }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, re, urllib.request
+          repo = os.environ["GITHUB_REPOSITORY"]
+          request = urllib.request.Request(
+              f"https://api.github.com/repos/{repo}/pages/builds/latest",
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                  "User-Agent": "Publication-IndexNow/1.0",
+              },
+          )
+          with urllib.request.urlopen(request, timeout=20) as response:
+              build = json.loads(response.read())
+          sha = build.get("commit", "")
+          if not re.fullmatch(r"[0-9a-f]{40}", sha):
+              raise SystemExit("GitHub Pages did not return a valid deployed revision.")
+          event_sha = os.environ.get("DEPLOYMENT_EVENT_SHA", "")
+          print(f"sha={sha}")
+          print(f"superseded={'true' if event_sha and event_sha != sha else 'false'}")
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # actions/checkout v4
         with:
-          ref: ${{ github.event.deployment.sha }}
+          ref: ${{ steps.pages.outputs.sha }}
           fetch-depth: 0
-      - name: Submit only changed, production-verified article URLs
+      - name: Reconcile and submit production-verified canonical URLs
+        if: steps.pages.outputs.superseded != 'true'
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          INDEXNOW_PAGES_RUN_URL: ${{ github.event.deployment_status.log_url }}
-          INDEXNOW_DEPLOYMENT_SHA: ${{ github.event.deployment.sha }}
+          INDEXNOW_PAGES_RUN_URL: ${{ github.event_name == 'deployment_status' && github.event.deployment_status.log_url || '' }}
+          INDEXNOW_DEPLOYMENT_SHA: ${{ steps.pages.outputs.sha }}
         run: python3 scripts/indexnow.py

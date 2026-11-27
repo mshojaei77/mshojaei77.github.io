@@ -76,6 +76,14 @@ class IndexablePage(HTMLParser):
         self.title = ""
         self.canonicals: list[str] = []
         self.robots: list[str] = []
+        self.icons: list[dict[str, str]] = []
+        self.schemas: list[dict] = []
+        self.in_jsonld = False
+        self.jsonld = ""
+        self.in_byline = False
+        self.active_time: dict[str, str] | None = None
+        self.byline_times: list[dict[str, str]] = []
+        self.byline_text = ""
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
@@ -87,14 +95,50 @@ class IndexablePage(HTMLParser):
             self.robots.append((values.get("content", "") or "").lower())
         elif tag == "link" and "canonical" in (values.get("rel", "").lower().split()):
             self.canonicals.append(values.get("href", "") or "")
+        if tag == "link" and "icon" in (values.get("rel", "").lower().split()):
+            self.icons.append({key: value or "" for key, value in values.items() if key in {"rel", "type", "sizes", "href"}})
+        if tag == "p" and "article-byline" in (values.get("class", "").split()):
+            self.in_byline = True
+        elif self.in_byline and tag == "time":
+            self.active_time = {"datetime": values.get("datetime", "") or "", "text": ""}
+            self.byline_times.append(self.active_time)
+        if tag == "script" and (values.get("type", "").lower() == "application/ld+json"):
+            self.in_jsonld = True
+            self.jsonld = ""
 
     def handle_data(self, data: str) -> None:
         if self.in_title:
             self.title += data
+        if self.in_byline:
+            self.byline_text += data
+            if self.active_time is not None:
+                self.active_time["text"] += data
+        if self.in_jsonld:
+            self.jsonld += data
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "title":
             self.in_title = False
+        elif tag == "time":
+            self.active_time = None
+        elif tag == "p" and self.in_byline:
+            self.in_byline = False
+        elif tag == "script" and self.in_jsonld:
+            parsed = json.loads(self.jsonld)
+            if isinstance(parsed, dict):
+                self.schemas.append(parsed)
+            elif isinstance(parsed, list):
+                self.schemas.extend(item for item in parsed if isinstance(item, dict))
+            self.in_jsonld = False
+
+
+def schema_nodes(page: IndexablePage) -> list[dict]:
+    nodes = []
+    for schema in page.schemas:
+        nodes.append(schema)
+        if isinstance(schema.get("@graph"), list):
+            nodes.extend(node for node in schema["@graph"] if isinstance(node, dict))
+    return nodes
 
 
 def main() -> None:
@@ -129,7 +173,12 @@ def main() -> None:
         page_headers[path] = headers
 
     sitemap, _ = assert_200("/sitemap.xml")
-    sitemap_urls = {element.text for element in ET.fromstring(sitemap).findall("s:url/s:loc", NS)}
+    sitemap_root = ET.fromstring(sitemap)
+    sitemap_urls = {element.text for element in sitemap_root.findall("s:url/s:loc", NS) if element.text}
+    sitemap_lastmod = {
+        element.findtext("s:loc", namespaces=NS): element.findtext("s:lastmod", namespaces=NS) or ""
+        for element in sitemap_root.findall("s:url", NS)
+    }
     assert BASE + "/fa/writing/document-parsing/" in sitemap_urls
     assert BASE + "/fa/writing/document-parsing-fa-review-v7/" not in sitemap_urls
     assert not any("/admin/" in url for url in sitemap_urls)
@@ -154,6 +203,31 @@ def main() -> None:
         assert page.lang == expected_lang, f"{path}: expected lang={expected_lang}, got {page.lang!r}"
         assert not any("noindex" in directive for directive in page.robots), f"{path}: sitemap includes a noindex page"
         assert "noindex" not in headers.get("x-robots-tag", "").lower(), f"{path}: sitemap includes an X-Robots-Tag noindex page"
+        assert page.icons == [{"rel": "icon", "type": "image/png", "sizes": "512x512", "href": "/assets/img/favicon.png"}], f"{path}: invalid favicon declaration {page.icons}"
+        websites = [node for node in schema_nodes(page) if node.get("@type") == "WebSite"]
+        if path == "/":
+            assert len(websites) == 1 and websites[0].get("name") == "Mohammad Shojaei" and websites[0].get("url") == BASE + "/", f"Root WebSite schema missing or inaccurate: {websites}"
+        else:
+            assert not websites, f"WebSite site-name markup should be declared at the domain root only: {path}"
+        if re.fullmatch(r"/(?:fa/)?writing/[^/]+/", path):
+            posts = [node for node in schema_nodes(page) if node.get("@type") == "BlogPosting"]
+            assert len(posts) == 1, f"{path}: expected one BlogPosting schema"
+            post = posts[0]
+            published = post.get("datePublished", "")
+            modified = post.get("dateModified", "")
+            assert published and any(item["datetime"].startswith(published[:10]) for item in page.byline_times), f"{path}: visible publication date does not match BlogPosting"
+            if path.startswith("/fa/"):
+                assert "تاریخ انتشار" in page.byline_text, f"{path}: missing Persian publication-date label"
+            else:
+                assert "Published" in page.byline_text, f"{path}: missing publication-date label"
+            if modified and modified[:10] != published[:10]:
+                assert any(item["datetime"].startswith(modified[:10]) for item in page.byline_times), f"{path}: visible modification date does not match BlogPosting"
+                if path.startswith("/fa/"):
+                    assert "آخرین به‌روزرسانی" in page.byline_text, f"{path}: missing Persian modification-date label"
+                else:
+                    assert "Last updated" in page.byline_text, f"{path}: missing modification-date label"
+            lastmod = sitemap_lastmod.get(canonical, "")
+            assert lastmod and lastmod[:10] == (modified or published)[:10], f"{path}: sitemap lastmod does not match article dates"
     print(f"PASS production sitemap crawlability/indexability: {len(sitemap_urls)} URLs return canonical, titled, indexable HTML")
 
     feed, _ = assert_200("/feed.xml")
@@ -180,7 +254,15 @@ def main() -> None:
     assert key_body == key.encode("ascii")
     assert BASE + f"/{key}.txt" not in sitemap_urls
 
+    favicon, _ = assert_200("/assets/img/favicon.png")
+    expected_favicon = Path("assets/img/favicon.png").read_bytes()
+    assert favicon == expected_favicon
+    assert favicon[:8] == bytes.fromhex("89504e470d0a1a0a") and int.from_bytes(favicon[16:20], "big") == 512 and int.from_bytes(favicon[20:24], "big") == 512
+    print("PASS production PNG favicon bytes and dimensions")
+
     home = pages["/"].decode("utf-8")
+    fa_home = pages["/fa/"].decode("utf-8")
+    assert '<meta property="og:site_name" content="Mohammad Shojaei">' in home and '<meta property="og:site_name" content="Mohammad Shojaei">' in fa_home
     assert '/assets/js/analytics.js?v=1' in home
     assert 'data-goatcounter-site="mshojaei77"' in home
     analytics, _ = assert_200("/assets/js/analytics.js?v=1")
