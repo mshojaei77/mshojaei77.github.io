@@ -3,7 +3,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from indexnow import BASE, changed_urls, permalink
+from indexnow import BASE, changed_urls, pages_run_id_from_url, permalink
 
 
 def run(root: Path, *args: str) -> str:
@@ -18,6 +18,13 @@ def commit(root: Path, message: str) -> str:
 
 def main() -> None:
     assert permalink('---\ntitle: "Example"\npermalink: /fa/writing/example/\n---\nBody') == "/fa/writing/example/"
+    assert pages_run_id_from_url("https://github.com/mshojaei77/mshojaei77.github.io/actions/runs/45925179377/job/140264859010") == "45925179377"
+    try:
+        pages_run_id_from_url("https://example.invalid/actions/runs/123")
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("untrusted Pages log URLs must be rejected")
     with tempfile.TemporaryDirectory() as temp:
         root = Path(temp)
         run(root, "init", "-b", "main")

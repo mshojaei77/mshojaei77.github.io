@@ -1,9 +1,6 @@
 name: Notify IndexNow after deployment
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
-    branches: [main]
+  deployment_status:
 permissions:
   actions: read
   contents: read
@@ -12,7 +9,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   notify:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'github-pages' && github.event.deployment.ref == 'main'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -30,5 +27,6 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          INDEXNOW_PAGES_RUN_ID: ${{ github.event.workflow_run.id }}
+          INDEXNOW_PAGES_RUN_URL: ${{ github.event.deployment_status.log_url }}
+          INDEXNOW_DEPLOYMENT_SHA: ${{ github.event.deployment.sha }}
         run: python3 scripts/indexnow.py

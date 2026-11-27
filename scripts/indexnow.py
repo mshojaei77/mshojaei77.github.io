@@ -11,6 +11,7 @@ import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
+from urllib.parse import urlsplit
 from pathlib import Path
 
 HOST = "mshojaei77.github.io"
@@ -96,6 +97,16 @@ def api_json(url: str, token: str) -> dict:
         return json.loads(response.read())
 
 
+def pages_run_id_from_url(url: str) -> str:
+    parsed = urlsplit(url)
+    if parsed.scheme != "https" or parsed.netloc != "github.com":
+        raise RuntimeError("Expected a GitHub Actions URL for the Pages deployment status.")
+    match = re.fullmatch(r"/mshojaei77/mshojaei77\.github\.io/actions/runs/(\d+)(?:/job/\d+)?", parsed.path)
+    if not match:
+        raise RuntimeError("Could not identify the GitHub Pages workflow run from its deployment status URL.")
+    return match.group(1)
+
+
 def deployment_pair(repo: str, run_id: str, token: str) -> tuple[str, str] | None:
     run = api_json(f"https://api.github.com/repos/{repo}/actions/runs/{run_id}", token)
     if run.get("status") != "completed" or run.get("conclusion") != "success" or run.get("head_branch") != "main":
@@ -165,6 +176,21 @@ def validate_production(live_urls: list[str], deleted_urls: list[str], key: str,
             raise RuntimeError(f"Refusing a removal notice without noindex: {url}")
 
 
+def current_sitemap_urls() -> list[str]:
+    body, _, status = fetch(BASE + f"/sitemap.xml?indexnow={int(time.time())}")
+    if status != 200:
+        raise RuntimeError(f"Production sitemap returned HTTP {status}.")
+    root = ET.fromstring(body)
+    urls = [node.text or "" for node in root.findall("s:url/s:loc", XML_NS)]
+    if not urls or len(urls) != len(set(urls)):
+        raise RuntimeError("Production sitemap is empty or contains duplicate URL entries.")
+    for url in urls:
+        parsed = urlsplit(url)
+        if parsed.scheme != "https" or parsed.netloc != HOST or not parsed.path or parsed.query or parsed.fragment:
+            raise RuntimeError(f"Refusing an ineligible sitemap URL: {url}")
+    return sorted(urls)
+
+
 def submit(key: str, urls: list[str]) -> int:
     body = json.dumps({"host": HOST, "key": key, "urlList": urls}).encode("utf-8")
     request = urllib.request.Request("https://api.indexnow.org/indexnow", data=body, headers={"Content-Type": "application/json; charset=utf-8", "Accept": "application/json"}, method="POST")
@@ -194,12 +220,41 @@ def submit(key: str, urls: list[str]) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="List changed article/archive URLs without accessing production or submitting.")
+    parser.add_argument("--all-current", action="store_true", help="Submit every current canonical sitemap URL once after verifying the latest successful deployment.")
     parser.add_argument("--before", help="Previous deployment SHA for an explicit diff.")
     parser.add_argument("--after", help="Current deployment SHA for an explicit diff.")
     args = parser.parse_args()
     repo = os.environ.get("GITHUB_REPOSITORY", "")
     run_id = os.environ.get("INDEXNOW_PAGES_RUN_ID", "")
+    run_url = os.environ.get("INDEXNOW_PAGES_RUN_URL", "")
     token = os.environ.get("GITHUB_TOKEN", "")
+    expected_deployment_sha = os.environ.get("INDEXNOW_DEPLOYMENT_SHA", "")
+    if not run_id and run_url:
+        run_id = pages_run_id_from_url(run_url)
+    if args.all_current:
+        if args.dry_run or args.before or args.after:
+            parser.error("--all-current is a one-time live submission mode and cannot be combined with --dry-run or explicit diffs.")
+        if not (repo and run_id and token):
+            parser.error("--all-current requires a successful Pages run identity and GitHub token.")
+        pair = deployment_pair(repo, run_id, token)
+        if pair is None:
+            return 0
+        before, after = pair
+        if expected_deployment_sha and after != expected_deployment_sha:
+            raise RuntimeError("Pages workflow SHA does not match the successful deployment status event.")
+        updates, deletions = current_sitemap_urls(), []
+        key, key_path = key_and_file()
+        print(f"Initial rollout: {before[:12]} -> {after[:12]}; canonical sitemap URLs: {len(updates)}.")
+        for url in updates:
+            print(url)
+        validate_production(updates, deletions, key, key_path)
+        latest = deployment_pair(repo, run_id, token)
+        if latest is None or latest[1] != after:
+            print("A newer successful Pages deployment overtook this run; no URLs were submitted.")
+            return 0
+        submit(key, updates)
+        Path(".indexnow-run-marker").write_text(after, encoding="ascii")
+        return 0
     if args.before or args.after:
         if not (args.before and args.after):
             parser.error("--before and --after must be supplied together.")
@@ -219,6 +274,8 @@ def main() -> int:
         if pair is None:
             return 0
         before, after = pair
+        if expected_deployment_sha and after != expected_deployment_sha:
+            raise RuntimeError("Pages workflow SHA does not match the successful deployment status event.")
     updates, deletions = changed_urls(before, after)
     key, key_path = key_and_file()
     print(f"Deployments: {before[:12]} -> {after[:12]}; changed URLs: {len(updates)} live, {len(deletions)} retired.")

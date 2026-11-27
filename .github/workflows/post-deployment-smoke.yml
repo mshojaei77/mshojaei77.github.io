@@ -1,24 +1,21 @@
 name: Production smoke check
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
-    branches: [main]
+  deployment_status:
 permissions:
   contents: read
   pages: read
 jobs:
   smoke:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'github-pages' && github.event.deployment.ref == 'main'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event.deployment.sha }}
       - name: Verify the deployed production site
         env:
-          DEPLOYMENT_SHA: ${{ github.event.workflow_run.head_sha }}
-          DEPLOYMENT_CREATED_AT: ${{ github.event.workflow_run.created_at }}
+          DEPLOYMENT_SHA: ${{ github.event.deployment.sha }}
+          DEPLOYMENT_CREATED_AT: ${{ github.event.deployment.created_at }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/check_production.py
