@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_acknowledged_revision": "932707da24593286b69ec91abd1c3ccac780e4d8",
-  "last_acknowledged_at": "2026-11-27T19:31:47.024993+00:00",
-  "notification_state": "no_changes",
+  "last_acknowledged_revision": "7134f4b4c9608a3da5d95157f02ffc8e5f488448",
+  "last_acknowledged_at": "2026-11-27T21:36:35.880025+00:00",
+  "notification_state": "full_resync_accepted",
   "known_canonical_urls": [
     "https://mshojaei77.github.io/",
     "https://mshojaei77.github.io/about.html",
