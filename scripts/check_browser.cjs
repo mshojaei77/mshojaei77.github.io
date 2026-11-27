@@ -236,7 +236,7 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await guide.locator('link[rel=canonical]').getAttribute('href'),'https://mshojaei77.github.io'+articleRoute);
       assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'Persian article horizontal overflow '+width);
       assert(await guide.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
-      assert((await guide.locator('main article').innerText()).length>1000);
+      assert((await guide.locator('main > article.article-content').innerText()).length>1000);
       assert.deepEqual(failures,[]);
       await guide.screenshot({path:out+'/document-parsing-fa-'+width+'.png'});
       await ctx.close();
@@ -247,7 +247,7 @@ fs.mkdirSync(out, { recursive: true });
     await p.waitForURL(origin+articleRoute);
     assert((await p.goto(origin+articleRoute)).ok());
     assert.equal(await p.locator('main h1').count(),1);
-    assert((await p.locator('main article').innerText()).length>1000,'canonical Persian article content');
+    assert((await p.locator('main > article.article-content').innerText()).length>1000,'canonical Persian article content');
     for(const [route,removed] of [[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
     console.log('Verified canonical Persian article, RTL rendering, theme and legacy redirects.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 26 migrated article redirects.');
