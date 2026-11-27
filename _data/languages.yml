@@ -14,6 +14,11 @@
   fa: "/fa/about/"
   en_label: "About"
   fa_label: "دربارهٔ من"
+- en: "/privacy/"
+  fa: "/fa/privacy/"
+  en_label: "Privacy"
+  fa_label: "حریم خصوصی"
+  hidden: true
 - en: "/writing/vector-databases/"
   fa: "/fa/writing/vector-databases/"
   en_label: "Vector databases"

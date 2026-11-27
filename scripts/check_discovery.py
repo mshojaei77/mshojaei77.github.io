@@ -65,7 +65,7 @@ def values(p, key, expected):
 urls = [e.text for e in ET.parse(root/"sitemap.xml").iter("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
 routes = {urlsplit(u).path for u in urls}
 articles = sorted(r for r in routes if re.fullmatch(r"/(?:fa/)?writing/[^/]+/",r))
-public = {"/","/fa/","/writing/","/fa/writing/","/roadmap.html","/fa/roadmap/","/about.html","/fa/about/"} | set(articles)
+public = {"/","/fa/","/writing/","/fa/writing/","/roadmap.html","/fa/roadmap/","/about.html","/fa/about/","/privacy/","/fa/privacy/"} | set(articles)
 for route in public:
     p = parse(file_for(route))
     assert p.title.strip(), route
@@ -93,6 +93,36 @@ for route in ["/admin/","/projects/","/fa/market-analysis/","/writing/document-p
 assert "/admin/" not in routes
 print(f"Verified SEO, canonical URLs and analytics isolation for {len(articles)} live articles; configured={bool(settings['goatcounter_site'])}.")
 
+# The wildcard robots group currently permits all public search, AI-search,
+# user-fetch, and training crawlers. Keep its Studio exclusion intact when
+# adding any provider-specific groups.
+robots = (root / "robots.txt").read_text(encoding="utf-8")
+groups = {}
+agents = []
+rules = []
+def save_robots_group():
+    global agents, rules
+    for agent in agents:
+        groups.setdefault(agent, []).extend(rules)
+    agents, rules = [], []
+for raw in robots.splitlines():
+    line = raw.split("#", 1)[0].strip()
+    if not line or ":" not in line:
+        continue
+    name, value = (part.strip() for part in line.split(":", 1))
+    if name.lower() == "user-agent":
+        if rules:
+            save_robots_group()
+        agents.append(value.lower())
+    elif agents:
+        rules.append((name.lower(), value))
+save_robots_group()
+for agent in ("googlebot", "google-extended", "bingbot", "duckduckbot", "duckassistbot", "oai-searchbot", "gptbot", "chatgpt-user", "perplexitybot", "perplexity-user", "claudebot"):
+    effective = groups.get(agent, groups.get("*", []))
+    assert ("disallow", "/admin/") in effective, (agent, effective)
+    assert not any(name == "disallow" and value == "/" for name, value in effective), (agent, effective)
+print("Verified crawler access policy for search, user-fetch and training agents; Studio remains excluded.")
+
 # Preserve Google's exact root verification file through every build.
 verification = "google483b45b4cf9637cf.html"
 assert (root / verification).read_bytes() == b"google-site-verification: google483b45b4cf9637cf.html"
@@ -103,3 +133,11 @@ print("Verified exact Google ownership file.")
 assert (root / "BingSiteAuth.xml").read_bytes() == "<?xml version=\"1.0\"?>\n<users>\n\t<user>2AA6B158D3D26282FB332CC19F0505F7</user>\n</users>".encode("utf-8")
 assert "/BingSiteAuth.xml" not in routes
 print("Verified exact Bing ownership file.")
+
+# IndexNow's key is intentionally public: the protocol requires a root file
+# whose name and bytes match the key. It is not a credential for any dashboard.
+indexnow_key = settings.get("indexnow_key", "")
+assert re.fullmatch(r"[A-Za-z0-9-]{8,128}", indexnow_key), "Invalid IndexNow key"
+assert (root / f"{indexnow_key}.txt").read_bytes() == indexnow_key.encode("ascii")
+assert f"/{indexnow_key}.txt" not in routes, "IndexNow proof file should not be in the editorial sitemap"
+print("Verified public IndexNow key file and sitemap exclusion.")
