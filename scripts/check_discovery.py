@@ -98,3 +98,8 @@ verification = "google483b45b4cf9637cf.html"
 assert (root / verification).read_bytes() == b"google-site-verification: google483b45b4cf9637cf.html"
 assert "/" + verification not in routes, "Verification file should not be in sitemap"
 print("Verified exact Google ownership file.")
+
+# Preserve the exact Bing ownership file in the published root.
+assert (root / "BingSiteAuth.xml").read_bytes() == "<?xml version=\"1.0\"?>\n<users>\n\t<user>2AA6B158D3D26282FB332CC19F0505F7</user>\n</users>".encode("utf-8")
+assert "/BingSiteAuth.xml" not in routes
+print("Verified exact Bing ownership file.")
