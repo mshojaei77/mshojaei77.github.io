@@ -7,7 +7,6 @@
   if (location.pathname.startsWith('/admin/') || location.pathname === '/admin') return;
   const site = config.dataset.goatcounterSite;
   if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(site || '') || site.length > 63) return;
-  try { if (localStorage.getItem('skipgc') === 't') return; } catch (_) {}
   const script = document.createElement('script');
   script.src = 'https://gc.zgo.at/count.v5.js';
   script.async = true;
