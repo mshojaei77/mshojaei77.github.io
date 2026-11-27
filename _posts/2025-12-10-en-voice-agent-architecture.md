@@ -3,7 +3,7 @@ layout: article
 lang: en
 title: "Voice Agents in Production: Turn Taking, Interruptions, and Latency"
 description: "Design voice agents around the full audio loop: turn detection, cancellation, playback state, tool safety, observability, and task-based evaluation."
-date: 2025-12-10 07:32:55 +0000
+date: 2025-12-10 07:35:02 +0000
 permalink: /writing/voice-agent-architecture/
 nav_exclude: true
 article_kind: guide
