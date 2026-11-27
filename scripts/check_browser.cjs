@@ -228,7 +228,7 @@ fs.mkdirSync(out, { recursive: true });
     await p.waitForURL(origin+articleRoute);
     assert((await p.goto(origin+articleRoute)).ok());
     assert.equal(await p.locator('main h1').count(),1);
-    assert((await p.locator('main').innerText()).length>1000,'canonical Persian article content');
+    assert((await p.locator('main article').innerText()).length>1000,'canonical Persian article content');
     for(const [route,removed] of [[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
     console.log('Verified canonical Persian article, RTL rendering, theme and legacy redirects.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 26 migrated article redirects.');
