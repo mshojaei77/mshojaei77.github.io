@@ -3,7 +3,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from indexnow import BASE, changed_urls, pages_run_id_from_url, permalink
+from indexnow import BASE, changed_urls, has_successful_notification, pages_run_id_from_url, permalink
 
 
 def run(root: Path, *args: str) -> str:
@@ -25,6 +25,15 @@ def main() -> None:
         pass
     else:
         raise AssertionError("untrusted Pages log URLs must be rejected")
+    sha = "a" * 40
+    prior_runs = [
+        {"id": 1, "name": "Notify IndexNow after deployment", "head_sha": sha, "conclusion": "success"},
+        {"id": 2, "name": "Notify IndexNow after deployment", "head_sha": "b" * 40, "conclusion": "success"},
+        {"id": 3, "name": "Production smoke check", "head_sha": sha, "conclusion": "success"},
+    ]
+    assert has_successful_notification(prior_runs, sha, "4")
+    assert not has_successful_notification(prior_runs, sha, "1"), "the current run is not a previous notification"
+    assert not has_successful_notification(prior_runs, "c" * 40, "4")
     with tempfile.TemporaryDirectory() as temp:
         root = Path(temp)
         run(root, "init", "-b", "main")

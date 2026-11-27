@@ -15,15 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event.deployment.sha }}
           fetch-depth: 0
-      - uses: actions/cache@v4
-        id: processed
-        with:
-          path: .indexnow-run-marker
-          key: indexnow-deployment-${{ github.event.workflow_run.id }}
       - name: Submit only changed, production-verified article URLs
-        if: steps.processed.outputs.cache-hit != 'true'
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

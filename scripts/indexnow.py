@@ -21,6 +21,7 @@ POST_PATH = re.compile(r"^_posts/[^/]+\.(?:md|markdown|html)$")
 PERMALINK = re.compile(r"^permalink:\s*['\"]?([^\s'\"]+)['\"]?\s*$", re.M)
 FRONT_MATTER = re.compile(r"\A---\s*\r?\n(.*?)\r?\n---(?:\r?\n|$)", re.S)
 XML_NS = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+NOTIFY_WORKFLOW_NAME = "Notify IndexNow after deployment"
 
 
 def git(*args: str, cwd: Path = Path(".")) -> str:
@@ -123,6 +124,29 @@ def deployment_pair(repo: str, run_id: str, token: str) -> tuple[str, str] | Non
         print("No previous successful Pages deployment exists; seeding baseline without submissions.")
         return None
     return ordered[1]["head_sha"], run["head_sha"]
+
+
+def has_successful_notification(runs: list[dict], deployment_sha: str, current_run_id: str = "") -> bool:
+    return any(
+        run.get("name") == NOTIFY_WORKFLOW_NAME
+        and run.get("head_sha") == deployment_sha
+        and str(run.get("id", "")) != current_run_id
+        and run.get("conclusion") == "success"
+        for run in runs
+    )
+
+
+def already_notified(repo: str, deployment_sha: str, token: str, current_run_id: str, run_attempt: int) -> bool:
+    if current_run_id and run_attempt > 1:
+        previous_attempt = api_json(
+            f"https://api.github.com/repos/{repo}/actions/runs/{current_run_id}/attempts/{run_attempt - 1}", token
+        )
+        if previous_attempt.get("conclusion") == "success":
+            return True
+    runs = api_json(
+        f"https://api.github.com/repos/{repo}/actions/runs?branch=main&event=deployment_status&status=success&per_page=100", token
+    ).get("workflow_runs", [])
+    return has_successful_notification(runs, deployment_sha, current_run_id)
 
 
 def fetch(url: str, attempts: int = 8) -> tuple[bytes, dict[str, str], int]:
@@ -253,7 +277,6 @@ def main() -> int:
             print("A newer successful Pages deployment overtook this run; no URLs were submitted.")
             return 0
         submit(key, updates)
-        Path(".indexnow-run-marker").write_text(after, encoding="ascii")
         return 0
     if args.before or args.after:
         if not (args.before and args.after):
@@ -276,6 +299,15 @@ def main() -> int:
         before, after = pair
         if expected_deployment_sha and after != expected_deployment_sha:
             raise RuntimeError("Pages workflow SHA does not match the successful deployment status event.")
+    if not args.all_current and not (args.before or args.after):
+        current_run_id = os.environ.get("GITHUB_RUN_ID", "")
+        try:
+            run_attempt = int(os.environ.get("GITHUB_RUN_ATTEMPT", "1"))
+        except ValueError as exc:
+            raise RuntimeError("GITHUB_RUN_ATTEMPT must be an integer.") from exc
+        if already_notified(repo, after, token, current_run_id, run_attempt):
+            print(f"A successful IndexNow workflow already handled deployment {after[:12]}; duplicate submission skipped.")
+            return 0
     updates, deletions = changed_urls(before, after)
     key, key_path = key_and_file()
     print(f"Deployments: {before[:12]} -> {after[:12]}; changed URLs: {len(updates)} live, {len(deletions)} retired.")
@@ -285,7 +317,6 @@ def main() -> int:
         return 0
     if not updates and not deletions:
         print("No published article URLs changed; no IndexNow request sent.")
-        Path(".indexnow-run-marker").write_text(after, encoding="ascii")
         return 0
     validate_production(updates, deletions, key, key_path)
     # Recheck the latest Pages run immediately before submitting, so a deploy
@@ -295,7 +326,6 @@ def main() -> int:
         print("A newer successful Pages deployment overtook this job; no URLs were submitted.")
         return 0
     submit(key, updates + deletions)
-    Path(".indexnow-run-marker").write_text(after, encoding="ascii")
     return 0
 
 
