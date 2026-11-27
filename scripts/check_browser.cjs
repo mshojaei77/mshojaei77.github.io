@@ -143,7 +143,7 @@ fs.mkdirSync(out, { recursive: true });
       await p.locator('#writing-search').fill('');assert.equal(await visible.count(),postCounts[lang]);
       await p.locator('[data-topic="rag"]').click();const expected=await all.evaluateAll(rows=>rows.filter(r=>r.dataset.postTopics.split(' ').includes('rag')).length);assert.equal(await visible.count(),expected);
       await p.reload();assert.equal(await visible.count(),expected);assert.equal(await p.locator('[data-topic="rag"]').getAttribute('aria-pressed'),'true');
-      await p.locator('#writing-kind').selectOption('tutorial');const tutorialCount=await all.evaluateAll(rows=>rows.filter(r=>r.dataset.articleKind==='tutorial').length);assert.equal(await visible.count(),tutorialCount);assert.equal(new URL(p.url()).searchParams.get('kind'),'tutorial');
+      await p.locator('#writing-kind').selectOption('tutorial');const tutorialCount=await all.evaluateAll(rows=>rows.filter(r=>r.dataset.articleKind==='tutorial'&&r.dataset.postTopics.split(' ').includes('rag')).length);assert.equal(await visible.count(),tutorialCount);assert.equal(new URL(p.url()).searchParams.get('kind'),'tutorial');
       await p.reload();assert.equal(await p.locator('#writing-kind').inputValue(),'tutorial');assert.equal(await visible.count(),tutorialCount);
       await p.locator('#writing-kind').selectOption('');assert.equal(await visible.count(),expected);
       await p.goto(origin+root);await p.locator('.home-focus a[href*="topic=systems"]').click();await p.locator('[data-topic="systems"][aria-pressed="true"]').waitFor();assert(await visible.evaluateAll(rows=>rows.every(r=>r.dataset.postTopics.split(' ').includes('systems'))));
