@@ -52,6 +52,8 @@ A hands-on roadmap to master LLM development from neural networks to production 
 
 # Part 1: The Foundations 🔍
 
+**Related articles:** [How Large Language Models Work](https://mshojaei77.github.io/writing/intro-to-llms/), [Tokenization](https://mshojaei77.github.io/writing/tokenization/), and [Word Embeddings to Retrieval Vectors](https://mshojaei77.github.io/writing/embeddings/).
+
 <img width="1026" height="443" alt="image" src="https://github.com/user-attachments/assets/3abad5b8-23b8-4388-baf1-c5e28efec422" />
 
 **🎯 Focus:** Core ML concepts, neural networks, traditional models, tokenization, embeddings, transformers  
@@ -174,6 +176,8 @@ nucleus sampling, top-k sampling, beam search, masked attention, mini-GPT implem
 
 # Part 2: Building & Training Models 🧬
 
+**Related articles:** [A Practical Guide to Merging LLMs](https://mshojaei77.github.io/writing/llm-model-merging/) and [SwiGLU in Transformer Feed-Forward Layers](https://mshojaei77.github.io/writing/swiglu/).
+
 <img width="1020" height="450" alt="image" src="https://github.com/user-attachments/assets/f2fc0e54-d150-4610-ba52-b0e8bd4ea4f5" />
 
 **🎯 Focus:** Data preparation, pre-training, fine-tuning, preference alignment  
@@ -291,6 +295,8 @@ automated assessment, human assessment, self-critique systems, response revision
 ---
 
 # Part 3: Advanced Topics & Specialization ⚙️
+
+**Related articles:** [Inkling: Reasoning-Effort Evaluation](https://mshojaei77.github.io/writing/inkling-effort-evaluation/) and [Evaluating AI Coding Harnesses](https://mshojaei77.github.io/writing/evaluating-coding-harnesses/).
 
 <img width="1019" height="419" alt="image" src="https://github.com/user-attachments/assets/866d3789-96ed-4ae6-8140-8edb0b828048" />
 
@@ -429,6 +435,8 @@ ensembling systems, specialized model integration, compressed model deployment, 
 ---
 
 # Part 4: Engineering & Applications 🚀
+
+**Related articles:** [Vector Databases for RAG](https://mshojaei77.github.io/writing/vector-databases/), [AI Agent Use Cases](https://mshojaei77.github.io/writing/ai-agent-use-cases/), and [Voice Agents in Production](https://mshojaei77.github.io/writing/voice-agent-architecture/).
 
 <img width="1024" height="446" alt="image" src="https://github.com/user-attachments/assets/1d7ee1a8-3981-478f-9ba6-1a5143ff98ec" />
 

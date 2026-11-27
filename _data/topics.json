@@ -130,22 +130,11 @@
     "resources": [
       "foundations"
     ],
-    "mini-roadmap": [
-      "foundations",
-      "systems"
-    ],
-    "data-preparation": [
-      "foundations",
-      "systems"
-    ],
     "embeddings": [
       "rag",
       "foundations"
     ],
     "intro-to-llms": [
-      "foundations"
-    ],
-    "neural-networks": [
       "foundations"
     ],
     "tokenization": [
@@ -162,13 +151,6 @@
     "rl-in-llms": [
       "foundations",
       "evaluation",
-      "systems"
-    ],
-    "traditional-language-models": [
-      "foundations"
-    ],
-    "transformers": [
-      "foundations",
       "systems"
     ],
     "ai-agent-use-cases": [
@@ -246,6 +228,1286 @@
       "foundations",
       "evaluation",
       "systems"
+    ],
+    "ai-engineering-week-01-preface-reading-notes": [
+      "foundations",
+      "general"
+    ]
+  },
+  "clusters": {
+    "ai_agents": {
+      "labels": {
+        "en": "AI Agents",
+        "fa": "ایجنت‌های هوش مصنوعی"
+      },
+      "articles": [
+        "agent-vs-workflow",
+        "context-engineering-agents",
+        "agent-harness",
+        "agent-skills",
+        "agent-production-failures",
+        "context-compaction-agents",
+        "agent-costs",
+        "voice-agent-architecture",
+        "deep-research-agents",
+        "academic-research-agent",
+        "ai-agent-use-cases",
+        "secure-nl2sql"
+      ]
+    },
+    "rag_document_intelligence": {
+      "labels": {
+        "en": "Production RAG & Document Intelligence",
+        "fa": "RAG عملیاتی و هوش اسناد"
+      },
+      "articles": [
+        "embeddings",
+        "persian-embedding-models",
+        "chunking-strategies",
+        "vector-databases",
+        "contextual-retrieval",
+        "multi-representation-retrieval",
+        "production-rag-architecture",
+        "rag-failure-diagnostics",
+        "document-parsing",
+        "build-search-engine-from-scratch"
+      ]
+    },
+    "llm_architecture": {
+      "labels": {
+        "en": "LLM Architecture",
+        "fa": "معماری LLM"
+      },
+      "articles": [
+        "intro-to-llms",
+        "tokenization",
+        "llm-architecture",
+        "swiglu",
+        "open-source-ai",
+        "when-not-to-use-llm",
+        "decision-models-vs-llms"
+      ]
+    },
+    "training_optimization": {
+      "labels": {
+        "en": "Training & Optimization",
+        "fa": "آموزش و بهینه‌سازی مدل"
+      },
+      "articles": [
+        "muon-vs-adamw",
+        "efficient-fine-tuning",
+        "llm-post-training",
+        "rl-in-llms",
+        "knowledge-distillation",
+        "llm-model-merging"
+      ]
+    },
+    "evaluation_persian_ai": {
+      "labels": {
+        "en": "Evaluation & Persian AI",
+        "fa": "ارزیابی و هوش مصنوعی فارسی"
+      },
+      "articles": [
+        "persian-open-ai-ecosystem",
+        "persian-llm-evaluation",
+        "persian-embedding-models",
+        "massive-intent-benchmark",
+        "tasmim-bench",
+        "ai-reasoning-evaluation",
+        "inkling-effort-evaluation",
+        "decision-models-vs-llms",
+        "evaluating-coding-harnesses",
+        "document-parsing"
+      ]
+    },
+    "production_infrastructure": {
+      "labels": {
+        "en": "Production Infrastructure",
+        "fa": "زیرساخت عملیاتی هوش مصنوعی"
+      },
+      "articles": [
+        "local-llm-inference",
+        "serving-kimi-k2-vllm",
+        "serving-gpt-oss-120b-vllm",
+        "voice-agent-architecture",
+        "agent-costs",
+        "production-rag-architecture"
+      ]
+    },
+    "ai_software_engineering": {
+      "labels": {
+        "en": "AI Software Engineering",
+        "fa": "مهندسی نرم‌افزار با AI"
+      },
+      "articles": [
+        "when-not-to-use-llm",
+        "secure-nl2sql",
+        "spec-driven-development",
+        "agent-skills",
+        "coding-agent-productivity",
+        "evaluating-coding-harnesses",
+        "build-search-engine-from-scratch",
+        "agent-harness",
+        "ai-agent-use-cases"
+      ]
+    },
+    "learning_careers": {
+      "labels": {
+        "en": "Learning & Careers",
+        "fa": "یادگیری و مسیر شغلی"
+      },
+      "articles": [
+        "intro-to-llms",
+        "resources",
+        "interview",
+        "market-analysis",
+        "open-source-ai",
+        "ai-engineering-week-01-preface-reading-notes"
+      ]
+    }
+  },
+  "article_clusters": {
+    "academic-research-agent": [
+      "ai_agents"
+    ],
+    "agent-costs": [
+      "ai_agents",
+      "production_infrastructure"
+    ],
+    "agent-harness": [
+      "ai_agents",
+      "ai_software_engineering"
+    ],
+    "agent-production-failures": [
+      "ai_agents"
+    ],
+    "agent-skills": [
+      "ai_agents",
+      "ai_software_engineering"
+    ],
+    "agent-vs-workflow": [
+      "ai_agents"
+    ],
+    "ai-agent-use-cases": [
+      "ai_agents",
+      "ai_software_engineering"
+    ],
+    "ai-engineering-week-01-preface-reading-notes": [
+      "learning_careers"
+    ],
+    "ai-reasoning-evaluation": [
+      "evaluation_persian_ai"
+    ],
+    "build-search-engine-from-scratch": [
+      "rag_document_intelligence",
+      "ai_software_engineering"
+    ],
+    "chunking-strategies": [
+      "rag_document_intelligence"
+    ],
+    "coding-agent-productivity": [
+      "ai_software_engineering"
+    ],
+    "context-compaction-agents": [
+      "ai_agents"
+    ],
+    "context-engineering-agents": [
+      "ai_agents"
+    ],
+    "contextual-retrieval": [
+      "rag_document_intelligence"
+    ],
+    "decision-models-vs-llms": [
+      "llm_architecture",
+      "evaluation_persian_ai"
+    ],
+    "deep-research-agents": [
+      "ai_agents"
+    ],
+    "document-parsing": [
+      "rag_document_intelligence",
+      "evaluation_persian_ai"
+    ],
+    "efficient-fine-tuning": [
+      "training_optimization"
+    ],
+    "embeddings": [
+      "rag_document_intelligence"
+    ],
+    "evaluating-coding-harnesses": [
+      "evaluation_persian_ai",
+      "ai_software_engineering"
+    ],
+    "inkling-effort-evaluation": [
+      "evaluation_persian_ai"
+    ],
+    "interview": [
+      "learning_careers"
+    ],
+    "intro-to-llms": [
+      "llm_architecture",
+      "learning_careers"
+    ],
+    "knowledge-distillation": [
+      "training_optimization"
+    ],
+    "llm-architecture": [
+      "llm_architecture"
+    ],
+    "llm-model-merging": [
+      "training_optimization"
+    ],
+    "llm-post-training": [
+      "training_optimization"
+    ],
+    "local-llm-inference": [
+      "production_infrastructure"
+    ],
+    "market-analysis": [
+      "learning_careers"
+    ],
+    "massive-intent-benchmark": [
+      "evaluation_persian_ai"
+    ],
+    "multi-representation-retrieval": [
+      "rag_document_intelligence"
+    ],
+    "muon-vs-adamw": [
+      "training_optimization"
+    ],
+    "open-source-ai": [
+      "llm_architecture",
+      "learning_careers"
+    ],
+    "persian-embedding-models": [
+      "rag_document_intelligence",
+      "evaluation_persian_ai"
+    ],
+    "persian-llm-evaluation": [
+      "evaluation_persian_ai"
+    ],
+    "persian-open-ai-ecosystem": [
+      "evaluation_persian_ai"
+    ],
+    "production-rag-architecture": [
+      "rag_document_intelligence",
+      "production_infrastructure"
+    ],
+    "rag-failure-diagnostics": [
+      "rag_document_intelligence"
+    ],
+    "resources": [
+      "learning_careers"
+    ],
+    "rl-in-llms": [
+      "training_optimization"
+    ],
+    "secure-nl2sql": [
+      "ai_agents",
+      "ai_software_engineering"
+    ],
+    "serving-gpt-oss-120b-vllm": [
+      "production_infrastructure"
+    ],
+    "serving-kimi-k2-vllm": [
+      "production_infrastructure"
+    ],
+    "spec-driven-development": [
+      "ai_software_engineering"
+    ],
+    "swiglu": [
+      "llm_architecture"
+    ],
+    "tasmim-bench": [
+      "evaluation_persian_ai"
+    ],
+    "tokenization": [
+      "llm_architecture"
+    ],
+    "vector-databases": [
+      "rag_document_intelligence"
+    ],
+    "voice-agent-architecture": [
+      "ai_agents",
+      "production_infrastructure"
+    ],
+    "when-not-to-use-llm": [
+      "llm_architecture",
+      "ai_software_engineering"
+    ]
+  },
+  "prerequisites": {
+    "tokenization": [
+      "intro-to-llms"
+    ],
+    "llm-architecture": [
+      "intro-to-llms"
+    ],
+    "swiglu": [
+      "llm-architecture"
+    ],
+    "embeddings": [
+      "intro-to-llms",
+      "tokenization"
+    ],
+    "vector-databases": [
+      "embeddings"
+    ],
+    "production-rag-architecture": [
+      "embeddings",
+      "chunking-strategies",
+      "vector-databases"
+    ],
+    "document-parsing": [
+      "production-rag-architecture",
+      "rag-failure-diagnostics"
+    ],
+    "agent-harness": [
+      "agent-vs-workflow"
+    ],
+    "agent-production-failures": [
+      "agent-vs-workflow",
+      "agent-harness"
+    ],
+    "context-compaction-agents": [
+      "context-engineering-agents"
+    ],
+    "coding-agent-productivity": [
+      "spec-driven-development",
+      "agent-harness"
+    ],
+    "evaluating-coding-harnesses": [
+      "coding-agent-productivity",
+      "agent-harness"
+    ],
+    "llm-post-training": [
+      "llm-architecture"
+    ],
+    "efficient-fine-tuning": [
+      "llm-architecture"
+    ],
+    "rl-in-llms": [
+      "llm-post-training"
+    ],
+    "knowledge-distillation": [
+      "llm-post-training"
+    ],
+    "local-llm-inference": [
+      "intro-to-llms"
+    ],
+    "serving-kimi-k2-vllm": [
+      "local-llm-inference"
+    ],
+    "serving-gpt-oss-120b-vllm": [
+      "local-llm-inference"
+    ],
+    "massive-intent-benchmark": [
+      "persian-llm-evaluation"
+    ],
+    "tasmim-bench": [
+      "persian-llm-evaluation"
+    ],
+    "ai-reasoning-evaluation": [
+      "llm-architecture",
+      "persian-llm-evaluation"
+    ],
+    "interview": [
+      "resources",
+      "intro-to-llms"
+    ],
+    "market-analysis": [
+      "interview",
+      "resources"
+    ],
+    "llm-model-merging": [
+      "intro-to-llms"
+    ]
+  },
+  "curated_related": {
+    "/fa/writing/document-parsing/": [
+      "production-rag-architecture",
+      "rag-failure-diagnostics",
+      "persian-embedding-models"
+    ],
+    "/fa/writing/production-rag-architecture/": [
+      "document-parsing",
+      "chunking-strategies",
+      "vector-databases"
+    ],
+    "/writing/vector-databases/": [
+      "embeddings",
+      "production-rag-architecture",
+      "contextual-retrieval"
+    ],
+    "/fa/writing/vector-databases/": [
+      "persian-embedding-models",
+      "production-rag-architecture",
+      "multi-representation-retrieval"
+    ],
+    "/fa/writing/agent-vs-workflow/": [
+      "agent-production-failures",
+      "context-engineering-agents",
+      "agent-harness"
+    ],
+    "/fa/writing/agent-production-failures/": [
+      "agent-vs-workflow",
+      "agent-harness",
+      "agent-costs"
+    ],
+    "/writing/ai-agent-use-cases/": [
+      "agent-vs-workflow",
+      "agent-production-failures",
+      "voice-agent-architecture"
+    ],
+    "/fa/writing/coding-agent-productivity/": [
+      "spec-driven-development",
+      "agent-harness",
+      "evaluating-coding-harnesses"
+    ],
+    "/fa/writing/llm-architecture/": [
+      "intro-to-llms",
+      "tokenization",
+      "swiglu"
+    ],
+    "/fa/writing/persian-llm-evaluation/": [
+      "massive-intent-benchmark",
+      "tasmim-bench",
+      "ai-reasoning-evaluation"
+    ],
+    "/fa/writing/persian-embedding-models/": [
+      "embeddings",
+      "vector-databases",
+      "document-parsing"
+    ],
+    "/writing/resources/": [
+      "intro-to-llms",
+      "interview",
+      "market-analysis"
+    ],
+    "/fa/writing/agent-costs/": [
+      "local-llm-inference",
+      "agent-production-failures",
+      "production-rag-architecture"
+    ],
+    "/writing/intro-to-llms/": [
+      "tokenization",
+      "swiglu",
+      "llm-model-merging"
+    ],
+    "/fa/writing/resources/": [
+      "persian-open-ai-ecosystem",
+      "ai-engineering-week-01-preface-reading-notes",
+      "interview"
+    ],
+    "/writing/embeddings/": [
+      "vector-databases",
+      "build-search-engine-from-scratch",
+      "intro-to-llms"
+    ],
+    "/fa/writing/context-engineering-agents/": [
+      "context-compaction-agents",
+      "agent-vs-workflow",
+      "agent-harness"
+    ]
+  },
+  "related_by_route": {
+    "/writing/intro-to-llms/": [
+      {
+        "slug": "llm-model-merging",
+        "reason": "curated"
+      },
+      {
+        "slug": "swiglu",
+        "reason": "curated"
+      },
+      {
+        "slug": "tokenization",
+        "reason": "curated"
+      }
+    ],
+    "/writing/embeddings/": [
+      {
+        "slug": "build-search-engine-from-scratch",
+        "reason": "curated"
+      },
+      {
+        "slug": "intro-to-llms",
+        "reason": "curated"
+      },
+      {
+        "slug": "vector-databases",
+        "reason": "curated"
+      }
+    ],
+    "/writing/tokenization/": [
+      {
+        "slug": "intro-to-llms",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "swiglu",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "open-source-ai",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/muon-vs-adamw/": [
+      {
+        "slug": "efficient-fine-tuning",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "llm-post-training",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "knowledge-distillation",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/persian-embedding-models/": [
+      {
+        "slug": "document-parsing",
+        "reason": "curated"
+      },
+      {
+        "slug": "vector-databases",
+        "reason": "curated"
+      },
+      {
+        "slug": "chunking-strategies",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/llm-architecture/": [
+      {
+        "slug": "open-source-ai",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "decision-models-vs-llms",
+        "reason": "shared_cluster_and_topic"
+      },
+      {
+        "slug": "when-not-to-use-llm",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/context-engineering-agents/": [
+      {
+        "slug": "agent-harness",
+        "reason": "curated"
+      },
+      {
+        "slug": "agent-vs-workflow",
+        "reason": "curated"
+      },
+      {
+        "slug": "context-compaction-agents",
+        "reason": "curated"
+      }
+    ],
+    "/writing/serving-kimi-k2-vllm/": [
+      {
+        "slug": "serving-gpt-oss-120b-vllm",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "voice-agent-architecture",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/production-rag-architecture/": [
+      {
+        "slug": "chunking-strategies",
+        "reason": "curated"
+      },
+      {
+        "slug": "document-parsing",
+        "reason": "curated"
+      },
+      {
+        "slug": "vector-databases",
+        "reason": "curated"
+      }
+    ],
+    "/fa/writing/rag-failure-diagnostics/": [
+      {
+        "slug": "document-parsing",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "production-rag-architecture",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "multi-representation-retrieval",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/swiglu/": [
+      {
+        "slug": "open-source-ai",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "tokenization",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "intro-to-llms",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/writing/build-search-engine-from-scratch/": [
+      {
+        "slug": "evaluating-coding-harnesses",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "ai-agent-use-cases",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "embeddings",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/knowledge-distillation/": [
+      {
+        "slug": "llm-post-training",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "rl-in-llms",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "efficient-fine-tuning",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/llm-post-training/": [
+      {
+        "slug": "llm-architecture",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "efficient-fine-tuning",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "rl-in-llms",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/agent-vs-workflow/": [
+      {
+        "slug": "agent-harness",
+        "reason": "curated"
+      },
+      {
+        "slug": "agent-production-failures",
+        "reason": "curated"
+      },
+      {
+        "slug": "context-engineering-agents",
+        "reason": "curated"
+      }
+    ],
+    "/fa/writing/local-llm-inference/": [
+      {
+        "slug": "agent-costs",
+        "reason": "shared_cluster_and_topic"
+      },
+      {
+        "slug": "production-rag-architecture",
+        "reason": "shared_cluster_and_topic"
+      },
+      {
+        "slug": "agent-vs-workflow",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/agent-production-failures/": [
+      {
+        "slug": "agent-costs",
+        "reason": "curated"
+      },
+      {
+        "slug": "agent-harness",
+        "reason": "curated"
+      },
+      {
+        "slug": "agent-vs-workflow",
+        "reason": "curated"
+      }
+    ],
+    "/fa/writing/chunking-strategies/": [
+      {
+        "slug": "persian-embedding-models",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "vector-databases",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "contextual-retrieval",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/persian-llm-evaluation/": [
+      {
+        "slug": "ai-reasoning-evaluation",
+        "reason": "curated"
+      },
+      {
+        "slug": "massive-intent-benchmark",
+        "reason": "curated"
+      },
+      {
+        "slug": "tasmim-bench",
+        "reason": "curated"
+      }
+    ],
+    "/writing/llm-model-merging/": [
+      {
+        "slug": "intro-to-llms",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "build-search-engine-from-scratch",
+        "reason": "shared_cluster_and_topic"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/writing/serving-gpt-oss-120b-vllm/": [
+      {
+        "slug": "serving-kimi-k2-vllm",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "voice-agent-architecture",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/context-compaction-agents/": [
+      {
+        "slug": "context-engineering-agents",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "agent-costs",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "agent-production-failures",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/efficient-fine-tuning/": [
+      {
+        "slug": "llm-architecture",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "llm-post-training",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "muon-vs-adamw",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/voice-agent-architecture/": [
+      {
+        "slug": "deep-research-agents",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "serving-gpt-oss-120b-vllm",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/agent-harness/": [
+      {
+        "slug": "agent-vs-workflow",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "agent-skills",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "context-engineering-agents",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/academic-research-agent/": [
+      {
+        "slug": "secure-nl2sql",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "agent-costs",
+        "reason": "shared_cluster_and_topic"
+      },
+      {
+        "slug": "agent-production-failures",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/secure-nl2sql/": [
+      {
+        "slug": "spec-driven-development",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "when-not-to-use-llm",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/deep-research-agents/": [
+      {
+        "slug": "academic-research-agent",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "voice-agent-architecture",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "ai-agent-use-cases",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/academic-research-agent/": [
+      {
+        "slug": "ai-agent-use-cases",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "deep-research-agents",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "voice-agent-architecture",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/when-not-to-use-llm/": [
+      {
+        "slug": "decision-models-vs-llms",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "open-source-ai",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "secure-nl2sql",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/inkling-effort-evaluation/": [
+      {
+        "slug": "evaluating-coding-harnesses",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "shared_cluster_and_topic"
+      },
+      {
+        "slug": "build-search-engine-from-scratch",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/writing/evaluating-coding-harnesses/": [
+      {
+        "slug": "build-search-engine-from-scratch",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "inkling-effort-evaluation",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "ai-agent-use-cases",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/writing/ai-agent-use-cases/": [
+      {
+        "slug": "voice-agent-architecture",
+        "reason": "curated"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "build-search-engine-from-scratch",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/agent-skills/": [
+      {
+        "slug": "agent-harness",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "agent-production-failures",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "coding-agent-productivity",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/spec-driven-development/": [
+      {
+        "slug": "agent-skills",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "secure-nl2sql",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "coding-agent-productivity",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/persian-open-ai-ecosystem/": [
+      {
+        "slug": "persian-llm-evaluation",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "persian-embedding-models",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "ai-reasoning-evaluation",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/agent-costs/": [
+      {
+        "slug": "agent-production-failures",
+        "reason": "curated"
+      },
+      {
+        "slug": "local-llm-inference",
+        "reason": "curated"
+      },
+      {
+        "slug": "production-rag-architecture",
+        "reason": "curated"
+      }
+    ],
+    "/fa/writing/coding-agent-productivity/": [
+      {
+        "slug": "agent-harness",
+        "reason": "curated"
+      },
+      {
+        "slug": "spec-driven-development",
+        "reason": "curated"
+      },
+      {
+        "slug": "agent-skills",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/rl-in-llms/": [
+      {
+        "slug": "llm-post-training",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "knowledge-distillation",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "efficient-fine-tuning",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/decision-models-vs-llms/": [
+      {
+        "slug": "when-not-to-use-llm",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "ai-reasoning-evaluation",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "document-parsing",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/massive-intent-benchmark/": [
+      {
+        "slug": "persian-llm-evaluation",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "persian-embedding-models",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "tasmim-bench",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/tasmim-bench/": [
+      {
+        "slug": "persian-llm-evaluation",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "ai-reasoning-evaluation",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "massive-intent-benchmark",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/multi-representation-retrieval/": [
+      {
+        "slug": "contextual-retrieval",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "production-rag-architecture",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "rag-failure-diagnostics",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/contextual-retrieval/": [
+      {
+        "slug": "multi-representation-retrieval",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "vector-databases",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "chunking-strategies",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/interview/": [
+      {
+        "slug": "intro-to-llms",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "resources",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "market-analysis",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/market-analysis/": [
+      {
+        "slug": "interview",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "resources",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "open-source-ai",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/open-source-ai/": [
+      {
+        "slug": "market-analysis",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "swiglu",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "interview",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/writing/resources/": [
+      {
+        "slug": "interview",
+        "reason": "curated"
+      },
+      {
+        "slug": "intro-to-llms",
+        "reason": "curated"
+      },
+      {
+        "slug": "market-analysis",
+        "reason": "curated"
+      }
+    ],
+    "/writing/vector-databases/": [
+      {
+        "slug": "embeddings",
+        "reason": "curated"
+      },
+      {
+        "slug": "build-search-engine-from-scratch",
+        "reason": "shared_cluster_and_topic"
+      },
+      {
+        "slug": "academic-research-agent",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/document-parsing/": [
+      {
+        "slug": "persian-embedding-models",
+        "reason": "curated"
+      },
+      {
+        "slug": "production-rag-architecture",
+        "reason": "curated"
+      },
+      {
+        "slug": "rag-failure-diagnostics",
+        "reason": "curated"
+      }
+    ],
+    "/fa/writing/interview/": [
+      {
+        "slug": "resources",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "market-analysis",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "open-source-ai",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/market-analysis/": [
+      {
+        "slug": "interview",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "resources",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "open-source-ai",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/open-source-ai/": [
+      {
+        "slug": "ai-engineering-week-01-preface-reading-notes",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "market-analysis",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "when-not-to-use-llm",
+        "reason": "curated_reading_path"
+      }
+    ],
+    "/fa/writing/resources/": [
+      {
+        "slug": "ai-engineering-week-01-preface-reading-notes",
+        "reason": "curated"
+      },
+      {
+        "slug": "interview",
+        "reason": "curated"
+      },
+      {
+        "slug": "persian-open-ai-ecosystem",
+        "reason": "curated"
+      }
+    ],
+    "/fa/writing/vector-databases/": [
+      {
+        "slug": "multi-representation-retrieval",
+        "reason": "curated"
+      },
+      {
+        "slug": "persian-embedding-models",
+        "reason": "curated"
+      },
+      {
+        "slug": "production-rag-architecture",
+        "reason": "curated"
+      }
+    ],
+    "/fa/writing/ai-engineering-week-01-preface-reading-notes/": [
+      {
+        "slug": "open-source-ai",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "market-analysis",
+        "reason": "curated_reading_path"
+      },
+      {
+        "slug": "interview",
+        "reason": "shared_cluster_and_topic"
+      }
+    ],
+    "/fa/writing/ai-reasoning-evaluation/": [
+      {
+        "slug": "llm-architecture",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "persian-llm-evaluation",
+        "reason": "prerequisite"
+      },
+      {
+        "slug": "tasmim-bench",
+        "reason": "curated_reading_path"
+      }
     ]
   }
 }
