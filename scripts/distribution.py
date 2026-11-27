@@ -21,7 +21,10 @@ SITE = "https://mshojaei77.github.io"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 REGISTRY_VERSION = 1
 PLATFORMS = {"medium", "devto", "virgool", "telegram", "telegraph", "linkedin", "hashnode", "github", "huggingface", "x", "reddit"}
-SOURCES = PLATFORMS
+# Campaign sources include distribution platforms and independent discovery
+# channels. This list controls UTM labels only; it does not enable posting.
+DISCOVERY_SOURCES = {"hackernews", "lobsters", "stackoverflow", "kagi", "marginalia", "oohdirectory"}
+SOURCES = PLATFORMS | DISCOVERY_SOURCES
 MEDIUMS = {"social", "referral", "syndication", "newsletter"}
 RELATIONSHIPS = {
     "exact_copy", "substantially_equivalent", "older_edition", "newer_edition",

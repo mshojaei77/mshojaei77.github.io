@@ -49,7 +49,7 @@ When blog content changes materially, mark a full external copy for review. Do n
 
 ## Links and analytics
 
-The distribution helper can create campaign links for approved blog URLs. Tracking parameters are added only to the share link; never to canonicals, sitemap URLs, or language alternates. The current campaign format uses `utm_source`, `utm_medium`, and `utm_campaign`. GoatCounter documents `utm_campaign`/`campaign` and `utm_source` as campaign inputs. Its visit and referrer counts are not search clicks, impressions, indexing state, or AI citations.
+The distribution helper can create campaign links for approved blog URLs. Tracking parameters are added only to the share link; never to canonicals, sitemap URLs, or language alternates. The current campaign format uses `utm_source`, `utm_medium`, and `utm_campaign`. In addition to configured platforms, campaign source labels include independent channels such as Hacker News and Lobsters; this only creates a URL and does not post to those services. GoatCounter documents `utm_campaign`/`campaign` and `utm_source` as campaign inputs. Its visit and referrer counts are not search clicks, impressions, indexing state, or AI citations.
 
 ## Privacy, rights, and external actions
 
