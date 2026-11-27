@@ -18,6 +18,7 @@
   fa: "/fa/privacy/"
   en_label: "Privacy"
   fa_label: "حریم خصوصی"
+  hidden: true
 - en: "/writing/vector-databases/"
   fa: "/fa/writing/vector-databases/"
   en_label: "Vector databases"
