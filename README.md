@@ -10,7 +10,7 @@ Hosted at https://mshojaei77.github.io/. Existing URLs are public contracts: pre
 
 ## Local validation
 
-Install Ruby and Bundler, then run `bundle install`, `bundle exec jekyll build`, `python3 scripts/check_site.py _site`, `python3 scripts/check_discovery.py _site`, `python3 scripts/test_publication_routes.py`, `python3 scripts/test_indexnow.py`, and `node scripts/check_analytics.cjs`. CI also runs the browser, Studio and document-parsing checks. Preview using `bundle exec jekyll serve`.
+Install Ruby and Bundler, then run `bundle install`, `bundle exec jekyll build`, `python3 scripts/check_site.py _site`, `python3 scripts/check_discovery.py _site`, `python3 scripts/test_publication_routes.py`, `python3 scripts/test_distribution.py`, `python3 scripts/test_indexnow.py`, and `node scripts/check_analytics.cjs`. CI also runs the browser, Studio and document-parsing checks. Preview using `bundle exec jekyll serve`.
 
 Do not configure analytics with placeholder measurement IDs. GitHub Pages deployment remains unchanged. The weekly production SEO audit crawls sitemap, linked, retired and compatibility routes and retains JSON evidence as a GitHub Actions artifact. To run it locally against production, first obtain the actual Pages deployment SHA and pass it to `python3 scripts/audit_production.py --revision <deployed-sha> --strict`. The audit is read-only; it does not submit URLs or create analytics visits. See Analytics and discovery setup below.
 
@@ -34,9 +34,9 @@ Light is the first-visit default; the shared theme toggle saves the preference. 
 
 Some articles have equivalent English and Persian editions; others are single-language or related but non-equivalent. `_data/languages.yml` defines only genuine language pairs and explicitly marks different editions. Resource links retain their original publication titles; Persian OCR examples retain source characters. The theme starts in light mode and remembers explicit user selection.
 
-## Direct publication policy
+## Blog-first publication and distribution
 
-Publish authored articles directly in the bilingual blog rather than using Medium as a mirror or destination for the author's posts. Third-party Medium pages may be linked when they are relevant technical references. Do not advertise a separate newsletter; retired newsletter pages and newsletter links are excluded from the generated site. Keep existing technical reference titles and replace missing links to the author's work with verified local article routes only after the migrated articles have been published.
+The personal blog is the authoritative maintained edition and the first publication location for future long-form work. Publish validated migrations as live posts, preserve verified historical dates, and keep source mappings in the private machine-local registry; do not add migration notices or links to the author's own secondary copies. External copies and adaptations remain owner-managed, and only equivalent full copies should use a verified blog canonical. Read [`docs/PUBLICATION_POLICY.md`](docs/PUBLICATION_POLICY.md) for the distribution rules. The policy and `docs/` directory are excluded from the generated public site.
 
 ## Document parsing tutorial
 
