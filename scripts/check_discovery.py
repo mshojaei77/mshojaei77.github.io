@@ -202,6 +202,11 @@ for route in public:
                     if candidate_route.rstrip("/").split("/")[-1] == target_slug
                     and ("fa" if candidate_route.startswith("/fa/") else "en") == language
                 ]
+                # The CI deletion simulation removes two live routes and
+                # installs retirement tombstones. Liquid naturally skips a
+                # recommendation whose article is no longer in site.posts.
+                if not target_routes:
+                    continue
                 assert len(target_routes) == 1, (route, target_slug, target_routes)
                 expected_related_order.append(target_routes[0])
             expected_related = set(expected_related_order)
