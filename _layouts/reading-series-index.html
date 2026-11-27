@@ -1,0 +1,28 @@
+---
+layout: publication
+---
+<article class="learning-page reading-library">
+  <header class="learning-intro">
+    <p class="eyebrow">{% if page.lang == 'fa' %}یادداشت‌های مطالعه{% else %}Reading notes{% endif %}</p>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="lede">{{ page.description | escape }}</p>
+    <p>{% if page.lang == 'fa' %}این یادداشت، برداشت و تحلیل شخصی نویسنده از منبع اصلی است؛ جایگزین کتاب یا مقاله نیست و متن منبع را بازنشر نمی‌کند.{% else %}These are the author's reading notes and interpretation. They complement the original source and do not reproduce it.{% endif %}</p>
+  </header>
+  {% assign series_ids = site.posts | map: 'series_id' | uniq %}
+  {% for series_id in series_ids %}
+    {% if series_id %}
+      {% assign series_posts = site.posts | where: 'series_id', series_id | sort: 'series_number' %}
+      {% assign first_post = series_posts | first %}
+      <section class="reading-series" aria-labelledby="series-{{ series_id }}">
+        <p class="eyebrow">{% if page.lang == 'fa' %}{{ series_posts.size }} یادداشت منتشرشده{% else %}{{ series_posts.size }} published installments{% endif %}</p>
+        <h2 id="series-{{ series_id }}">{{ first_post.series_title[page.lang] | default: first_post.series_title.en | escape }}</h2>
+        <p>{% if page.lang == 'fa' %}منبع اصلی:{% else %}Source material:{% endif %} <a href="{{ first_post.series_source_url }}">{{ first_post.series_source_title | escape }}</a> · {{ first_post.series_source_author | escape }}</p>
+        <ol class="reading-installments">
+        {% for post in series_posts %}
+          <li><article class="entry-card"><p class="meta">{% if page.lang == 'fa' %}قسمت{% else %}Part{% endif %} {{ post.series_number }} <span lang="{{ post.lang }}">{% if post.lang == 'fa' %}فارسی{% else %}English{% endif %}</span></p><h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3><p>{{ post.description | escape }}</p><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y-%m-%d' }}</time></article></li>
+        {% endfor %}
+        </ol>
+      </section>
+    {% endif %}
+  {% endfor %}
+</article>

@@ -1,0 +1,59 @@
+---
+layout: publication
+---
+{% assign learning_path = site.data.learning_paths.paths | where: "id", page.path_id | first %}
+<article class="learning-page learning-path-detail" data-path-id="{{ learning_path.id | escape }}">
+  <header class="learning-intro">
+    <p class="eyebrow">{{ learning_path.level[page.lang] | escape }} · {% if page.lang == 'fa' %}مسیر یادگیری{% else %}Learning path{% endif %}</p>
+    <h1>{{ learning_path.title[page.lang] | escape }}</h1>
+    <p class="lede">{{ learning_path.description[page.lang] | escape }}</p>
+    <dl class="learning-meta">
+      <div><dt>{% if page.lang == 'fa' %}برای چه کسی{% else %}Intended audience{% endif %}</dt><dd>{{ learning_path.audience[page.lang] | escape }}</dd></div>
+      <div><dt>{% if page.lang == 'fa' %}پیش‌نیاز{% else %}Prerequisites{% endif %}</dt><dd>{{ learning_path.prerequisites[page.lang] | escape }}</dd></div>
+    </dl>
+  </header>
+  <section aria-labelledby="path-objectives">
+    <h2 id="path-objectives">{% if page.lang == 'fa' %}هدف‌های یادگیری{% else %}Learning objectives{% endif %}</h2>
+    <ul>{% for objective in learning_path.objectives[page.lang] %}<li>{{ objective | escape }}</li>{% endfor %}</ul>
+  </section>
+  <section class="path-progress" aria-labelledby="path-progress-title">
+    <div class="section-heading"><h2 id="path-progress-title">{% if page.lang == 'fa' %}پیشرفت محلی{% else %}Local progress{% endif %}</h2><button class="action" type="button" data-progress-reset>{% if page.lang == 'fa' %}بازنشانی پیشرفت{% else %}Reset progress{% endif %}</button></div>
+    <p id="learning-progress-note">{% if page.lang == 'fa' %}علامت‌گذاری بخش‌ها فقط در این مرورگر ذخیره می‌شود. هیچ حسابی ساخته نمی‌شود و این داده به سایت ارسال نمی‌شود.{% else %}Module checks are stored only in this browser. There is no account, synchronization or transmission to the site.{% endif %}</p>
+    <p class="meta" role="status" aria-live="polite" data-progress-summary></p>
+  </section>
+  <section aria-labelledby="path-modules-title">
+    <h2 id="path-modules-title">{% if page.lang == 'fa' %}بخش‌های مسیر{% else %}Path modules{% endif %}</h2>
+    <ol class="learning-modules">
+    {% for module in learning_path.modules %}
+      <li class="learning-module" id="module-{{ module.id | escape }}">
+        <header><h3>{{ forloop.index }}. {{ module.title[page.lang] | escape }}</h3>
+          <label class="module-complete"><input type="checkbox" data-module-id="{{ module.id | escape }}" aria-describedby="learning-progress-note">{% if page.lang == 'fa' %}این بخش را انجام دادم{% else %}Mark this module complete{% endif %}</label>
+        </header>
+        <h4>{% if page.lang == 'fa' %}مطالعه{% else %}Read{% endif %}</h4>
+        <ul>
+        {% for reference in module.articles %}
+          {% assign matched_post = nil %}
+          {% for post in site.posts %}
+            {% assign post_slug = post.url | split: '/' | last %}
+            {% if post_slug == reference.slug and post.lang == reference.lang %}{% assign matched_post = post %}{% break %}{% endif %}
+          {% endfor %}
+          {% if matched_post %}
+            <li><a href="{{ matched_post.url | relative_url }}">{{ matched_post.title | escape }}</a> <span class="meta" lang="{% if reference.lang == 'fa' %}fa{% else %}en{% endif %}">{% if reference.lang == 'fa' %}فارسی{% else %}English{% endif %}</span></li>
+          {% endif %}
+        {% endfor %}
+        </ul>
+        <h4>{% if page.lang == 'fa' %}تمرین{% else %}Practice activity{% endif %}</h4>
+        <p>{{ module.activity[page.lang] | escape }}</p>
+      </li>
+    {% endfor %}
+    </ol>
+  </section>
+  <section aria-labelledby="path-completion">
+    <h2 id="path-completion">{% if page.lang == 'fa' %}معیار پایان مسیر{% else %}Completion criteria{% endif %}</h2>
+    <p>{{ learning_path.completion[page.lang] | escape }}</p>
+  </section>
+  <aside class="learning-limitations" aria-labelledby="path-gaps">
+    <h2 id="path-gaps">{% if page.lang == 'fa' %}محدودیت این مسیر{% else %}Known gaps{% endif %}</h2>
+    <p>{{ learning_path.known_gaps[page.lang] | escape }}</p>
+  </aside>
+</article>

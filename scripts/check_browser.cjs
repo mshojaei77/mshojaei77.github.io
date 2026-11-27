@@ -75,7 +75,7 @@ fs.mkdirSync(out, { recursive: true });
         assert(!facts.intersects, width + ' ' + lang + ' nav overlap');
         assert(facts.switchGap > 0, 'language toggle spacing');
         for (const line of [facts.switchUnderline, facts.buttonUnderline, facts.cardUnderline]) assert.equal(line, 'none');
-        assert.equal(facts.navLinks, 3); assert.equal(facts.ctas, 2); assert(facts.rss);
+        assert.equal(facts.navLinks, 4); assert.equal(facts.ctas, 2); assert(facts.rss);
         const latestCount=Math.min(3,postCounts[lang]);
         assert.deepEqual(facts.sections.map(x=>x[0]),latestCount?['latest','work','elsewhere']:['work','elsewhere']);
         assert(!facts.startPresent,'Start here must be absent');
@@ -143,6 +143,9 @@ fs.mkdirSync(out, { recursive: true });
       await p.locator('#writing-search').fill('');assert.equal(await visible.count(),postCounts[lang]);
       await p.locator('[data-topic="rag"]').click();const expected=await all.evaluateAll(rows=>rows.filter(r=>r.dataset.postTopics.split(' ').includes('rag')).length);assert.equal(await visible.count(),expected);
       await p.reload();assert.equal(await visible.count(),expected);assert.equal(await p.locator('[data-topic="rag"]').getAttribute('aria-pressed'),'true');
+      await p.locator('#writing-kind').selectOption('tutorial');const tutorialCount=await all.evaluateAll(rows=>rows.filter(r=>r.dataset.articleKind==='tutorial'&&r.dataset.postTopics.split(' ').includes('rag')).length);assert.equal(await visible.count(),tutorialCount);assert.equal(new URL(p.url()).searchParams.get('kind'),'tutorial');
+      await p.reload();assert.equal(await p.locator('#writing-kind').inputValue(),'tutorial');assert.equal(await visible.count(),tutorialCount);
+      await p.locator('#writing-kind').selectOption('');assert.equal(await visible.count(),expected);
       await p.goto(origin+root);await p.locator('.home-focus a[href*="topic=systems"]').click();await p.locator('[data-topic="systems"][aria-pressed="true"]').waitFor();assert(await visible.evaluateAll(rows=>rows.every(r=>r.dataset.postTopics.split(' ').includes('systems'))));
       await p.goto(origin+root);await p.keyboard.press('Control+k');await p.waitForURL(origin+archive+'?search=1');assert.equal(await p.locator('#writing-search').evaluate(el=>document.activeElement===el),true);
     }
@@ -249,7 +252,58 @@ fs.mkdirSync(out, { recursive: true });
     assert.equal(await p.locator('main h1').count(),1);
     assert((await p.locator('main > article.article-content').innerText()).length>1000,'canonical Persian article content');
     for(const [route,removed] of [[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
+    for (const [lang, route] of [['en','/knowledge/'],['fa','/fa/knowledge/']]) {
+      assert((await p.goto(origin+route)).ok());
+      assert.equal(await p.locator('html').getAttribute('lang'),lang);
+      assert.equal(await p.locator('html').getAttribute('dir'),lang==='fa'?'rtl':'ltr');
+      assert.equal(await p.locator('main h1').count(),1);
+      assert.equal(await p.locator('main .knowledge-domain').count(),8);
+      assert(await p.locator('main .knowledge-article-list a').count()>=15);
+      assert.equal(await p.locator('link[hreflang="'+(lang==='fa'?'en':'fa')+'"]').count(),1);
+      assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),route+' should not overflow horizontally');
+    }
+    const platformContext = await browser.newContext({viewport:{width:375,height:900}});
+    const platform = await platformContext.newPage();
+    assert((await platform.goto(origin+'/learn/foundations/')).ok());
+    assert.equal(await platform.locator('main .learning-module').count(),4);
+    const firstModule = platform.locator('[data-module-id="model-basics"]');
+    await firstModule.check();
+    assert.equal(await platform.locator('[data-progress-summary]').getAttribute('role'),'status');
+    assert((await platform.locator('[data-progress-summary]').innerText()).includes('1 of 4'));
+    assert.equal(await platform.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('ai-engineering-learning:v1:')).length),1);
+    await platform.reload();
+    assert.equal(await platform.locator('[data-module-id="model-basics"]').isChecked(),true);
+    await platform.locator('[data-progress-reset]').click();
+    assert.equal(await platform.locator('[data-module-id="model-basics"]').isChecked(),false);
+    assert.equal(await platform.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('ai-engineering-learning:v1:')).length),0);
+    assert((await platform.goto(origin+'/fa/playground/persian-text-inspector/')).ok());
+    const outboundBodies = [];
+    platform.on('request', request=>outboundBodies.push(request.url()+' '+(request.postData()||'')));
+    await platform.locator('#inspector-input').fill('ك ي ١٢ 12 نیم‌فاصله LOCAL_ONLY_SENTINEL');
+    await platform.locator('[data-transform="letters"]').check();
+    await platform.locator('[data-transform="digits"]').check();
+    await platform.locator('[data-analyze]').click();
+    assert.equal(await platform.locator('#inspector-output').inputValue(),'ک ی ۱۲ ۱۲ نیم‌فاصله LOCAL_ONLY_SENTINEL');
+    assert((await platform.locator('[data-characters]').innerText()).includes('NON-JOINER'));
+    assert(!outboundBodies.some(body=>body.includes('LOCAL_ONLY_SENTINEL')),'Entered text must never be sent in a request');
+    assert((await platform.goto(origin+'/playground/bm25/')).ok());
+    await platform.locator('[data-sample]').selectOption('fa');
+    await platform.locator('#bm25-query').fill('بازیابی اسناد');
+    await platform.locator('[data-rank]').click();
+    assert((await platform.locator('[data-rankings]').innerText()).includes('F1'));
+    assert((await platform.locator('[data-rankings]').innerText()).includes('contribution'));
+    assert((await platform.goto(origin+'/fa/playground/llm-memory-estimator/')).ok());
+    await platform.locator('[data-estimate]').click();
+    assert((await platform.locator('[data-output]').innerText()).includes('GiB'));
+    assert((await platform.locator('[data-output]').innerText()).includes('KV cache'));
+    for (const route of ['/playground/','/fa/playground/','/learn/','/fa/learn/']) {
+      assert((await platform.goto(origin+route)).ok(),route);
+      assert.equal(await platform.locator('main h1').count(),1,route+' has one primary heading');
+      assert(await platform.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),route+' should not overflow horizontally');
+    }
+    await platformContext.close();
     console.log('Verified canonical Persian article, RTL rendering, theme and legacy redirects.');
+    console.log('Verified bilingual knowledge pages, local learning progress, and three browser-only engineering tools.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 26 migrated article redirects.');
   } finally { await browser.close(); }
 })().catch(err => { console.error(err); process.exitCode = 1; });

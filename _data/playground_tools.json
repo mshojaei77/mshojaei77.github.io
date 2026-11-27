@@ -1,0 +1,23 @@
+[
+  {
+    "id": "persian-text-inspector",
+    "title": {"en": "Persian Text Inspector", "fa": "بازرس متن فارسی"},
+    "description": {"en": "Inspect Unicode code points, Persian/Arabic variants, digits, whitespace, ZWNJ and bidi controls. Choose transformations and review their exact output.", "fa": "code point، تفاوت نویسه‌های فارسی و عربی، رقم، فاصله، نیم‌فاصله و کنترل جهت متن را بررسی کنید و تبدیل‌های انتخابی را دقیق ببینید."},
+    "path": {"en": "/playground/persian-text-inspector/", "fa": "/fa/playground/persian-text-inspector/"},
+    "script": "/assets/js/persian-text-inspector.js"
+  },
+  {
+    "id": "bm25",
+    "title": {"en": "BM25 Search Playground", "fa": "محیط آموزشی جست‌وجوی BM25"},
+    "description": {"en": "Edit a small document collection and inspect tokenization, term frequency, document frequency, inverse document frequency, length normalization and ranking contributions.", "fa": "مجموعهٔ کوچکی از سند را ویرایش و tokenization، فراوانی واژه، فراوانی سند، IDF، نرمال‌سازی طول و سهم امتیاز را مشاهده کنید."},
+    "path": {"en": "/playground/bm25/", "fa": "/fa/playground/bm25/"},
+    "script": "/assets/js/bm25-playground.js"
+  },
+  {
+    "id": "llm-memory-estimator",
+    "title": {"en": "LLM Memory Estimator", "fa": "تخمین‌گر حافظهٔ LLM"},
+    "description": {"en": "Estimate model-weight and KV-cache memory from architecture and workload inputs, with runtime overhead and safety margin shown separately.", "fa": "حافظهٔ وزن مدل و KV cache را با ورودی‌های معماری و workload تخمین بزنید؛ سربار runtime و حاشیهٔ ایمنی جدا نمایش داده می‌شود."},
+    "path": {"en": "/playground/llm-memory-estimator/", "fa": "/fa/playground/llm-memory-estimator/"},
+    "script": "/assets/js/llm-memory-estimator.js"
+  }
+]

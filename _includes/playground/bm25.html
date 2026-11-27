@@ -1,0 +1,15 @@
+<section class="tool-panel" data-bm25>
+  <p class="tool-explanation">{% if page.lang == 'fa' %}این ابزار آموزشی از BM25 با IDF مثبت و tokenizer سادهٔ واژه‌محور استفاده می‌کند. stemming، stop-word removal، phrase search و زبان‌ویژه‌سازی پیشرفته انجام نمی‌شود؛ نتیجه را موتور جست‌وجوی production تلقی نکنید.{% else %}This educational tool uses BM25 with positive IDF and a simple word tokenizer. It does not implement stemming, stop-word removal, phrase search, or advanced language-specific processing; do not treat it as a production search engine.{% endif %}</p>
+  <label class="tool-field" for="bm25-sample">{% if page.lang == 'fa' %}نمونهٔ مجموعهٔ اسناد{% else %}Sample collection{% endif %}<select id="bm25-sample" data-sample><option value="mixed">{% if page.lang == 'fa' %}ترکیبی{% else %}Mixed{% endif %}</option><option value="en">English</option><option value="fa">فارسی</option></select></label>
+  <label class="tool-field" for="bm25-docs">{% if page.lang == 'fa' %}مجموعهٔ اسناد به قالب JSON{% else %}Document collection as JSON{% endif %}</label>
+  <textarea id="bm25-docs" data-documents rows="9" spellcheck="false" dir="auto">[{"id":"D1","text":"BM25 ranks documents with lexical term frequency and document length."},{"id":"D2","text":"Persian document retrieval needs careful text normalization and evaluation."},{"id":"D3","text":"Hybrid retrieval combines lexical search with embedding vectors."},{"id":"D4","text":"A retrieval augmented generation system retrieves context before language model generation."}]</textarea>
+  <label class="tool-field" for="bm25-query">{% if page.lang == 'fa' %}پرس‌وجو{% else %}Query{% endif %}</label>
+  <input id="bm25-query" data-query type="search" dir="auto" value="retrieval lexical search">
+  <div class="tool-control-grid">
+    <label class="tool-field" for="bm25-k1">k₁ <input id="bm25-k1" data-k1 type="number" min="0" max="5" step="0.1" value="1.2"></label>
+    <label class="tool-field" for="bm25-b">b <input id="bm25-b" data-b type="number" min="0" max="1" step="0.05" value="0.75"></label>
+  </div>
+  <div class="tool-actions"><button type="button" class="action primary" data-rank>{% if page.lang == 'fa' %}رتبه‌بندی{% else %}Rank documents{% endif %}</button><button type="button" class="action" data-reset>{% if page.lang == 'fa' %}بازگردانی نمونه{% else %}Restore example{% endif %}</button></div>
+  <p class="tool-status" role="status" aria-live="polite" data-status></p>
+  <section class="tool-results" data-results hidden aria-labelledby="bm25-results-title"><h2 id="bm25-results-title">{% if page.lang == 'fa' %}رتبه و سهم هر واژه{% else %}Ranking and term contributions{% endif %}</h2><p data-summary></p><div class="table-scroll" tabindex="0" role="region" aria-label="{% if page.lang == 'fa' %}جدول امتیاز BM25{% else %}BM25 score table{% endif %}"><table><thead><tr><th>Rank</th><th>ID</th><th>Score</th><th>Term breakdown</th></tr></thead><tbody data-rankings></tbody></table></div></section>
+</section>

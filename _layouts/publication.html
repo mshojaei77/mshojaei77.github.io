@@ -27,9 +27,13 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="apple-touch-icon" sizes="512x512" href="/assets/img/favicon.png">
   {% if language == 'fa' %}<link rel="preload" href="/assets/fonts/Vazirmatn-variable.woff2" as="font" type="font/woff2" crossorigin>{% endif %}
-  <link rel="stylesheet" href="/assets/css/publication.css?v=7">
+  <link rel="stylesheet" href="/assets/css/publication.css?v=8">
   {% if page.url == '/' or page.url == '/fa/' %}<link rel="stylesheet" href="/assets/css/homepage.css?v=6">{% endif %}
+  {% assign platform_layouts = "knowledge,learning-path-index,learning-path,playground-index,playground-tool,research-lab,reading-series-index,work-index,project-case-study" | split: "," %}
+  {% if platform_layouts contains page.layout %}<link rel="stylesheet" href="/assets/css/learning-platform.css?v=1">{% endif %}
   <script defer src="/assets/js/writing-search.js?v=1"></script>
+  {% if page.layout == 'learning-path' %}<script defer src="/assets/js/learning-progress.js?v=1"></script>{% endif %}
+  {% if page.layout == 'playground-tool' %}{% assign selected_tool = site.data.playground_tools | where: "id", page.tool_id | first %}<script defer src="{{ selected_tool.script }}?v=1"></script>{% endif %}
   {% include discovery-head.html %}
   {% feed_meta %}
   {% if page.article_widgets %}<script defer src="/assets/js/document-parsing.js"></script>{% endif %}

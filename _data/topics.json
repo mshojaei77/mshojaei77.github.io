@@ -240,6 +240,18 @@
         "en": "AI Agents",
         "fa": "ایجنت‌های هوش مصنوعی"
       },
+      "descriptions": {
+        "en": "Agent engineering combines model decisions with tools, state, context and control flow. Identify which behavior is delegated to a model and which must remain deterministic.",
+        "fa": "مهندسی عامل، تصمیم‌های مدل را با ابزار، state، context و control flow ترکیب می‌کند. مشخص کنید کدام رفتار به مدل سپرده می‌شود و کدام بخش باید قطعی بماند."
+      },
+      "concepts": {
+        "en": ["Workflow versus agent", "Tool contracts and state", "Context construction", "Reliability and evaluation"],
+        "fa": ["تفاوت workflow و agent", "قرارداد ابزار و state", "ساخت context", "قابلیت اتکا و ارزیابی"]
+      },
+      "failure_modes": {
+        "en": ["Unbounded retries or duplicate side effects", "State loss in long runs", "Treating tool success as task success"],
+        "fa": ["retry نامحدود یا اثر جانبی تکراری", "از دست‌رفتن state در اجرای طولانی", "یکی‌گرفتن اجرای موفق ابزار با موفقیت وظیفه"]
+      },
       "articles": [
         "agent-vs-workflow",
         "context-engineering-agents",
@@ -260,6 +272,18 @@
         "en": "Production RAG & Document Intelligence",
         "fa": "RAG عملیاتی و هوش اسناد"
       },
+      "descriptions": {
+        "en": "Retrieval systems depend on document ingestion, representations, ranking and context assembly. Inspect each stage before attributing an incorrect answer to generation.",
+        "fa": "سامانهٔ بازیابی به ingestion سند، بازنمایی، رتبه‌بندی و ساخت context وابسته است. پیش از نسبت‌دادن پاسخ نادرست به generation، هر مرحله را بررسی کنید."
+      },
+      "concepts": {
+        "en": ["Document parsing and structure", "Chunking and representations", "Lexical, vector and hybrid retrieval", "Context selection and failure diagnosis"],
+        "fa": ["استخراج ساختار سند", "chunking و بازنمایی", "بازیابی واژگانی، برداری و ترکیبی", "انتخاب context و عیب‌یابی"]
+      },
+      "failure_modes": {
+        "en": ["Lost reading order or table structure", "Retrieval misses hidden by fluent generation", "Chunk boundaries that break evidence"],
+        "fa": ["ازبین‌رفتن ترتیب خواندن یا ساختار جدول", "پنهان‌شدن خطای retrieval پشت پاسخ روان", "مرز chunk نامناسب برای شواهد"]
+      },
       "articles": [
         "embeddings",
         "persian-embedding-models",
@@ -278,6 +302,18 @@
         "en": "LLM Architecture",
         "fa": "معماری LLM"
       },
+      "descriptions": {
+        "en": "Explore how tokenization, model blocks and design choices shape the representations and behavior of large language models.",
+        "fa": "بررسی کنید tokenization، بلوک‌های مدل و انتخاب‌های طراحی چگونه بر بازنمایی و رفتار مدل‌های زبانی بزرگ اثر می‌گذارند."
+      },
+      "concepts": {
+        "en": ["Tokens and embeddings", "Attention and Transformer blocks", "Feed-forward components", "Open model constraints"],
+        "fa": ["توکن و embedding", "attention و بلوک‌های Transformer", "اجزای feed-forward", "محدودیت‌های مدل‌های باز"]
+      },
+      "failure_modes": {
+        "en": ["Assuming token counts equal character counts", "Confusing model architecture with application behavior", "Overgeneralizing from one model family"],
+        "fa": ["برابرگرفتن تعداد توکن و نویسه", "اشتباه‌گرفتن معماری مدل با رفتار برنامه", "تعمیم یک خانوادهٔ مدل به همهٔ مدل‌ها"]
+      },
       "articles": [
         "intro-to-llms",
         "tokenization",
@@ -293,6 +329,18 @@
         "en": "Training & Optimization",
         "fa": "آموزش و بهینه‌سازی مدل"
       },
+      "descriptions": {
+        "en": "Study how objectives, update rules and post-training procedures change model behavior. Interpret comparisons in the context of their stated data, setup and evaluation.",
+        "fa": "بررسی کنید objective، قواعد به‌روزرسانی و مراحل post-training چگونه رفتار مدل را تغییر می‌دهند؛ مقایسه‌ها را با توجه به داده، setup و ارزیابی گزارش‌شده تفسیر کنید."
+      },
+      "concepts": {
+        "en": ["Optimizer behavior", "Fine-tuning and post-training", "Distillation and model merging", "Evaluation of training changes"],
+        "fa": ["رفتار optimizer", "fine-tuning و post-training", "distillation و ادغام مدل", "ارزیابی تغییرات آموزش"]
+      },
+      "failure_modes": {
+        "en": ["Comparing runs with different data or schedules", "Confusing training loss with task quality", "Omitting inference-time trade-offs"],
+        "fa": ["مقایسهٔ اجراها با داده یا زمان‌بندی متفاوت", "یکی‌گرفتن training loss با کیفیت وظیفه", "نادیده‌گرفتن موازنه‌های زمان inference"]
+      },
       "articles": [
         "muon-vs-adamw",
         "efficient-fine-tuning",
@@ -306,6 +354,18 @@
       "labels": {
         "en": "Evaluation & Persian AI",
         "fa": "ارزیابی و هوش مصنوعی فارسی"
+      },
+      "descriptions": {
+        "en": "Evaluation connects task definition, data provenance, metrics, execution conditions and interpretation. Persian AI evaluation also needs transparent treatment of script, dialect, code-switching and annotation.",
+        "fa": "ارزیابی، تعریف وظیفه، provenance داده، معیار، شرایط اجرا و تفسیر را به هم پیوند می‌دهد. در ارزیابی هوش مصنوعی فارسی، خط، گونهٔ زبانی، code-switching و حاشیه‌نویسی هم باید شفاف بررسی شوند."
+      },
+      "concepts": {
+        "en": ["Dataset construction and provenance", "Metrics and aggregation", "Human review and eligibility", "Synthetic versus real-world evidence"],
+        "fa": ["ساخت داده و provenance", "معیار و تجمیع", "بازبینی انسانی و صلاحیت", "شواهد مصنوعی در برابر دنیای واقعی"]
+      },
+      "failure_modes": {
+        "en": ["Treating synthetic cases as real-world validation", "Comparing incompatible task coverage", "Claiming human validation without evidence"],
+        "fa": ["تعبیر سناریوی مصنوعی به‌عنوان اعتبارسنجی واقعی", "مقایسهٔ وظایف با پوشش ناسازگار", "ادعای بازبینی انسانی بدون مدرک"]
       },
       "articles": [
         "persian-open-ai-ecosystem",
@@ -325,6 +385,18 @@
         "en": "Production Infrastructure",
         "fa": "زیرساخت عملیاتی هوش مصنوعی"
       },
+      "descriptions": {
+        "en": "Connect model choice to serving, memory, latency, throughput and cost. Configuration examples are workload-specific; validate them on the target runtime and hardware.",
+        "fa": "انتخاب مدل را به serving، حافظه، latency، throughput و هزینه وصل کنید. مثال‌های پیکربندی به workload وابسته‌اند و باید روی runtime و سخت‌افزار مقصد سنجیده شوند."
+      },
+      "concepts": {
+        "en": ["Weights and quantization", "KV cache and context", "Serving configuration", "Latency, throughput and capacity"],
+        "fa": ["وزن و quantization", "KV cache و context", "پیکربندی serving", "latency، throughput و ظرفیت"]
+      },
+      "failure_modes": {
+        "en": ["Assuming memory estimates guarantee a successful load", "Comparing throughput across unlike workloads", "Ignoring runtime and allocator overhead"],
+        "fa": ["تضمین اجرای مدل با تخمین حافظه", "مقایسهٔ throughput در workloadهای متفاوت", "نادیده‌گرفتن سربار runtime و allocator"]
+      },
       "articles": [
         "local-llm-inference",
         "serving-kimi-k2-vllm",
@@ -338,6 +410,18 @@
       "labels": {
         "en": "AI Software Engineering",
         "fa": "مهندسی نرم‌افزار با AI"
+      },
+      "descriptions": {
+        "en": "Apply software design, testing and security discipline to systems with probabilistic components. Identify where uncertainty enters and how surrounding software constrains it.",
+        "fa": "اصول طراحی، آزمون و امنیت را به سامانه‌های دارای اجزای احتمالی بیاورید؛ مشخص کنید عدم‌قطعیت کجا وارد می‌شود و نرم‌افزار پیرامون چگونه آن را محدود می‌کند."
+      },
+      "concepts": {
+        "en": ["Specifications and tool interfaces", "Testing and harness design", "Security boundaries", "Human approval and reliability"],
+        "fa": ["مشخصات و رابط ابزار", "آزمون و طراحی harness", "مرزهای امنیتی", "تأیید انسانی و قابلیت اتکا"]
+      },
+      "failure_modes": {
+        "en": ["Accepting plausible output without validation", "Allowing untrusted data to control tools", "Testing prompts without system outcomes"],
+        "fa": ["پذیرفتن خروجی محتمل بدون اعتبارسنجی", "کنترل ابزار با دادهٔ نامطمئن", "آزمون prompt بدون سنجش نتیجهٔ سامانه"]
       },
       "articles": [
         "when-not-to-use-llm",
@@ -355,6 +439,18 @@
       "labels": {
         "en": "Learning & Careers",
         "fa": "یادگیری و مسیر شغلی"
+      },
+      "descriptions": {
+        "en": "Combine foundations, curated learning resources and career context. Use the roadmap for broad sequencing, then choose articles based on the engineering problem you want to understand.",
+        "fa": "مبانی، منابع گزینش‌شده و زمینهٔ شغلی را کنار هم ببینید. برای ترتیب کلی از نقشهٔ راه استفاده کنید و مقاله‌ها را بر اساس مسئلهٔ مهندسی موردنظرتان انتخاب کنید."
+      },
+      "concepts": {
+        "en": ["Learning prerequisites", "Role expectations", "Open-source participation", "Technical interview practice"],
+        "fa": ["پیش‌نیاز یادگیری", "انتظارات شغلی", "مشارکت متن‌باز", "تمرین مصاحبهٔ فنی"]
+      },
+      "failure_modes": {
+        "en": ["Treating a roadmap as a guaranteed career outcome", "Collecting resources without practice", "Treating a market snapshot as permanent fact"],
+        "fa": ["تعبیر roadmap به‌عنوان تضمین شغلی", "جمع‌کردن منابع بدون تمرین", "تعمیم snapshot بازار کار به واقعیت همیشگی"]
       },
       "articles": [
         "intro-to-llms",

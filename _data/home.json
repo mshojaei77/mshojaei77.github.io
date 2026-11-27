@@ -144,7 +144,28 @@
         "MCP",
         "Exa"
       ],
-      "flagship": true
+      "flagship": true,
+      "case_study": {
+        "slug": "reactmcp",
+        "verified_on": "2026-11-28",
+        "implementation": {
+          "en": "The public README describes a Model Context Protocol server that calls Exa for basic and advanced web search and returns structured Markdown results with titles, URLs, dates and summaries.",
+          "fa": "README عمومی، سرور Model Context Protocol را توصیف می‌کند که جست‌وجوی ساده و پیشرفته را از Exa می‌گیرد و نتیجه را به‌صورت Markdown ساختاریافته با عنوان، URL، تاریخ و خلاصه برمی‌گرداند."
+        },
+        "architecture": {
+          "en": "MCP client → ReActMCP server → Exa API → structured search results returned to the assistant.",
+          "fa": "کلاینت MCP ← سرور ReActMCP ← API سرویس Exa؛ نتیجهٔ جست‌وجوی ساختاریافته به دستیار برمی‌گردد."
+        },
+        "tradeoffs": {
+          "en": "The MCP boundary lets compatible assistants invoke search tools through a common protocol. Search availability and coverage depend on the external Exa service and a runtime API credential.",
+          "fa": "مرز MCP امکان فراخوانی ابزار جست‌وجو را از دستیارهای سازگار با یک قرارداد مشترک می‌دهد؛ دسترس‌پذیری و پوشش جست‌وجو به سرویس بیرونی Exa و اعتبارنامهٔ runtime وابسته است."
+        },
+        "limitations": {
+          "en": "This is a search integration, not an independent search index. The README requires an Exa API key; no claim is made here about provider uptime or search-result quality.",
+          "fa": "این پروژه یکپارچه‌سازی جست‌وجو است، نه index مستقل. README به کلید API سرویس Exa نیاز دارد؛ دربارهٔ uptime یا کیفیت نتیجه ادعایی نمی‌شود."
+        },
+        "domains": ["ai_agents"]
+      }
     },
     {
       "repo": "ParsiEval",
@@ -165,7 +186,28 @@
         "LLM evals",
         "Gradio"
       ],
-      "flagship": true
+      "flagship": true,
+      "case_study": {
+        "slug": "parsieval",
+        "verified_on": "2026-11-28",
+        "implementation": {
+          "en": "The current repository README organizes several Persian evaluation resources. It describes an original 364-question multiple-choice benchmark and a Konkur 1404 suite of 2,137 Persian and English MCQs across ten exam sessions.",
+          "fa": "README فعلی مخزن چند منبع ارزیابی فارسی را دسته‌بندی می‌کند. در آن benchmark اصلی ۳۶۴ پرسشی و مجموعهٔ Konkur 1404 با ۲٬۱۳۷ پرسش فارسی و انگلیسی در ده نوبت آزمون توصیف شده‌اند."
+        },
+        "architecture": {
+          "en": "The repository includes benchmark data, provider-compatible runners, result files and separate benchmark subprojects; consult each subproject README for its own setup and scope.",
+          "fa": "مخزن دادهٔ benchmark، runnerهای سازگار با چند provider، فایل نتیجه و زیرپروژه‌های جدا دارد؛ روش اجرا و دامنهٔ هر benchmark را در README همان زیرپروژه بررسی کنید."
+        },
+        "tradeoffs": {
+          "en": "Provider-compatible runners reduce provider-specific evaluation code, while results remain conditioned on model revision, prompt, scoring procedure and dataset coverage.",
+          "fa": "runnerهای سازگار با چند provider نیاز به کد اختصاصی هر provider را کم می‌کنند؛ اما نتیجه همچنان به نسخهٔ مدل، prompt، روش امتیازدهی و پوشش داده وابسته است."
+        },
+        "limitations": {
+          "en": "The README's counts describe the published benchmark inventory; they do not alone establish human review, independent reproduction, or model quality. GitHub does not report a declared repository license in its current metadata.",
+          "fa": "شمارهای README موجودی benchmark منتشرشده را توصیف می‌کنند؛ به‌تنهایی بازبینی انسانی، بازتولید مستقل یا کیفیت مدل را ثابت نمی‌کنند. metadata فعلی GitHub مجوز اعلام‌شده‌ای برای مخزن نشان نمی‌دهد."
+        },
+        "domains": ["evaluation_persian_ai"]
+      }
     },
     {
       "repo": "SubTrans-Ollama",
@@ -186,7 +228,28 @@
         "Ollama",
         "LM Studio"
       ],
-      "flagship": false
+      "flagship": false,
+      "case_study": {
+        "slug": "subtrans-ollama",
+        "verified_on": "2026-11-28",
+        "implementation": {
+          "en": "The README describes a local subtitle translation application using Ollama, LM Studio and compatible local model servers. It lists SRT, ASS/SSA, VTT and LRC support, structure preservation, glossary, translation memory, quality checks, parallel work and resumable checkpoints.",
+          "fa": "README برنامهٔ ترجمهٔ محلی زیرنویس با Ollama، LM Studio و سرورهای محلی سازگار را توصیف می‌کند. فرمت‌های SRT، ASS/SSA، VTT و LRC، حفظ ساختار، واژه‌نامه، حافظهٔ ترجمه، کنترل کیفیت، پردازش موازی و checkpoint ادامه‌پذیر را ذکر می‌کند."
+        },
+        "architecture": {
+          "en": "A local interface sends subtitle segments to a user-selected compatible local model service; the application tracks translation state and writes translated text back while preserving timing and supported formatting.",
+          "fa": "رابط محلی بخش‌های زیرنویس را به سرویس مدل محلی انتخاب‌شده می‌فرستد؛ برنامه state ترجمه را نگه می‌دارد و متن ترجمه‌شده را با حفظ زمان‌بندی و قالب پشتیبانی‌شده بازمی‌نویسد."
+        },
+        "tradeoffs": {
+          "en": "Keeping inference local can avoid sending subtitle content to a hosted model, but latency and output quality depend on the user's hardware, model and local server configuration.",
+          "fa": "استنتاج محلی می‌تواند از ارسال متن زیرنویس به مدل میزبانی‌شده جلوگیری کند؛ در عوض latency و کیفیت خروجی به سخت‌افزار کاربر، مدل و پیکربندی سرور محلی وابسته است."
+        },
+        "limitations": {
+          "en": "The README warns that model output may be imperfect for slang, jokes, names and ambiguous dialogue. Local processing does not guarantee correct translation.",
+          "fa": "README هشدار می‌دهد که خروجی مدل ممکن است در slang، شوخی، نام‌ها و گفت‌وگوی مبهم نادرست باشد. اجرای محلی تضمین صحت ترجمه نیست."
+        },
+        "domains": ["production_infrastructure"]
+      }
     },
     {
       "repo": "invoice-to-pay-agent",
@@ -207,7 +270,28 @@
         "LangGraph",
         "Docling"
       ],
-      "flagship": false
+      "flagship": false,
+      "case_study": {
+        "slug": "invoice-to-pay-agent",
+        "verified_on": "2026-11-28",
+        "implementation": {
+          "en": "The public README describes an accounts-payable automation prototype using FastAPI, LangGraph, Pydantic and document parsing. Its workflow includes deterministic checks, human approval, mock ERP posting and audit records.",
+          "fa": "README عمومی، نمونهٔ اولیهٔ اتوماسیون حساب‌های پرداختنی با FastAPI، LangGraph، Pydantic و پردازش سند را توصیف می‌کند. جریان کار شامل بررسی قطعی، تأیید انسانی، ثبت آزمایشی ERP و رکورد ممیزی است."
+        },
+        "architecture": {
+          "en": "Support documents → parsing and normalization → three-way matching and rule checks → approval interrupt → mock ERP payload → audit record. The repository also documents an in-memory graph checkpoint.",
+          "fa": "اسناد پشتیبان ← parsing و نرمال‌سازی ← تطبیق سه‌طرفه و قواعد ← توقف برای تأیید ← payload آزمایشی ERP ← رکورد ممیزی. مخزن checkpoint درون‌حافظه‌ای graph را نیز مستند می‌کند."
+        },
+        "tradeoffs": {
+          "en": "Typed data and deterministic controls make review points explicit; the mock ERP keeps the demonstration isolated from a real finance system.",
+          "fa": "دادهٔ typed و کنترل‌های قطعی نقاط بازبینی را روشن می‌کنند؛ ERP آزمایشی نمونه را از سامانهٔ مالی واقعی جدا نگه می‌دارد."
+        },
+        "limitations": {
+          "en": "This is a prototype, not an authorized payment system. Mock posting and in-memory checkpointing do not demonstrate production ERP integration or durable distributed recovery.",
+          "fa": "این پروژه نمونهٔ اولیه است، نه سامانهٔ مجاز پرداخت. ثبت آزمایشی و checkpoint درون‌حافظه‌ای یکپارچگی production با ERP یا بازیابی توزیع‌شدهٔ پایدار را ثابت نمی‌کند."
+        },
+        "domains": ["rag_document_intelligence", "ai_agents", "ai_software_engineering"]
+      }
     }
   ],
   "snapshot_date": "2026-11-27",

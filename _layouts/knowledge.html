@@ -1,0 +1,51 @@
+---
+layout: publication
+---
+<article class="learning-page knowledge-index">
+  <header class="learning-intro">
+    <p class="eyebrow">{% if page.lang == 'fa' %}پایگاه دانش{% else %}Knowledge base{% endif %}</p>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="lede">{{ page.description | escape }}</p>
+    <p>{% if page.lang == 'fa' %}این نمای موضوعی از خوشه‌ها و مقاله‌های موجود سایت ساخته می‌شود. ترتیب مقاله‌ها راهی برای مرور است، نه ادعای پیش‌نیاز قطعی.{% else %}This topical view is generated from the site's existing clusters and articles. The article order is a reading suggestion, not a claim of strict prerequisites.{% endif %}</p>
+    <p><a class="action" href="{% if page.lang == 'fa' %}/fa/learn/{% else %}/learn/{% endif %}">{% if page.lang == 'fa' %}دیدن مسیرهای یادگیری{% else %}Explore learning paths{% endif %}</a></p>
+  </header>
+  <nav class="knowledge-index-nav" aria-label="{% if page.lang == 'fa' %}فهرست دامنه‌ها{% else %}Knowledge domains{% endif %}">
+    <ul>{% for cluster in site.data.topics.clusters %}{% assign domain = cluster[1] %}<li><a href="#domain-{{ cluster[0] }}">{{ domain.labels[page.lang] | escape }}</a></li>{% endfor %}</ul>
+  </nav>
+  {% for cluster in site.data.topics.clusters %}
+  {% assign domain = cluster[1] %}
+  <section class="knowledge-domain" id="domain-{{ cluster[0] }}" aria-labelledby="domain-title-{{ forloop.index }}">
+    <header>
+      <p class="eyebrow">{% if page.lang == 'fa' %}دامنهٔ مهندسی{% else %}Engineering domain{% endif %}</p>
+      <h2 id="domain-title-{{ forloop.index }}">{{ domain.labels[page.lang] | escape }}</h2>
+      <p>{{ domain.descriptions[page.lang] | escape }}</p>
+    </header>
+    <div class="knowledge-domain-columns">
+      <section aria-labelledby="concepts-{{ forloop.index }}">
+        <h3 id="concepts-{{ forloop.index }}">{% if page.lang == 'fa' %}مفاهیم کلیدی{% else %}Core concepts{% endif %}</h3>
+        <ul>{% for concept in domain.concepts[page.lang] %}<li>{{ concept | escape }}</li>{% endfor %}</ul>
+      </section>
+      <section aria-labelledby="failures-{{ forloop.index }}">
+        <h3 id="failures-{{ forloop.index }}">{% if page.lang == 'fa' %}خطاهای رایج{% else %}Common failure modes{% endif %}</h3>
+        <ul>{% for failure in domain.failure_modes[page.lang] %}<li>{{ failure | escape }}</li>{% endfor %}</ul>
+      </section>
+    </div>
+    <h3>{% if page.lang == 'fa' %}مقاله‌های این دامنه{% else %}Articles in this domain{% endif %}</h3>
+    <ul class="knowledge-article-list">
+    {% assign article_count = 0 %}
+    {% for slug in domain.articles %}
+      {% assign matched_post = nil %}
+      {% for post in site.posts %}
+        {% assign post_slug = post.url | split: '/' | last %}
+        {% if post_slug == slug and post.lang == page.lang %}{% assign matched_post = post %}{% break %}{% endif %}
+      {% endfor %}
+      {% if matched_post %}
+        {% assign article_count = article_count | plus: 1 %}
+        <li><a href="{{ matched_post.url | relative_url }}">{{ matched_post.title | escape }}</a><p>{{ matched_post.description | escape }}</p></li>
+      {% endif %}
+    {% endfor %}
+    {% if article_count == 0 %}<li>{% if page.lang == 'fa' %}هنوز مقاله‌ای به این زبان در این دامنه منتشر نشده است.{% else %}No article in this language edition is currently assigned to this domain.{% endif %}</li>{% endif %}
+    </ul>
+  </section>
+  {% endfor %}
+</article>
