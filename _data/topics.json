@@ -1,0 +1,84 @@
+{
+  "labels": {
+    "systems": {
+      "en": "LLM systems",
+      "fa": "سیستم‌های LLM"
+    },
+    "evaluation": {
+      "en": "Evaluation",
+      "fa": "ارزیابی"
+    },
+    "persian": {
+      "en": "Persian AI",
+      "fa": "هوش مصنوعی فارسی"
+    },
+    "rag": {
+      "en": "RAG",
+      "fa": "RAG"
+    },
+    "career": {
+      "en": "Careers",
+      "fa": "بازار کار"
+    },
+    "foundations": {
+      "en": "Foundations",
+      "fa": "مبانی"
+    },
+    "general": {
+      "en": "Engineering notes",
+      "fa": "یادداشت مهندسی"
+    }
+  },
+  "posts": {
+    "document-parsing": [
+      "rag",
+      "evaluation",
+      "persian"
+    ],
+    "vector-databases": [
+      "rag",
+      "systems"
+    ],
+    "market-analysis": [
+      "career"
+    ],
+    "interview": [
+      "career",
+      "foundations"
+    ],
+    "open-source-ai": [
+      "foundations"
+    ],
+    "resources": [
+      "foundations"
+    ],
+    "mini-roadmap": [
+      "foundations",
+      "systems"
+    ],
+    "data-preparation": [
+      "foundations",
+      "systems"
+    ],
+    "embeddings": [
+      "rag",
+      "foundations"
+    ],
+    "intro-to-llms": [
+      "foundations"
+    ],
+    "neural-networks": [
+      "foundations"
+    ],
+    "tokenization": [
+      "foundations"
+    ],
+    "traditional-language-models": [
+      "foundations"
+    ],
+    "transformers": [
+      "foundations",
+      "systems"
+    ]
+  }
+}

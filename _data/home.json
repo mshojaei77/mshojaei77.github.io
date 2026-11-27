@@ -3,41 +3,61 @@
     "name": "Mohammad Shojaei",
     "role": "AI engineer",
     "tagline": "Building AI systems that survive production.",
-    "intro": "I build LLM systems and write about the parts that break outside demos: agents that lose state, retrieval that sounds right until it isn’t, unreliable evaluations, and serving costs that get out of hand.",
+    "intro": "I build LLM systems and write about what breaks outside demos: stateful agents, unreliable retrieval and evaluations, and unexpected serving costs.",
     "actions": [
       {
         "url": "/writing/",
         "label": "Explore writing"
+      },
+      {
+        "url": "/about.html",
+        "label": "About me"
       }
     ],
-    "focus": "Production LLM systems · Evaluation · Persian and multilingual AI",
     "latest": "Latest writing",
     "all_writing": "All writing",
     "work_heading": "Selected work",
-    "work_link": "View repository",
     "work_stars": "GitHub stars",
     "work_all": "All repositories →",
-    "work_snapshot": "GitHub stars as of 2026-11-27"
+    "contact_title": "Collaborate",
+    "contact_desc": "Have a technical question or a project in mind?",
+    "contact_action": "Send an email",
+    "community_title": "Follow the conversation",
+    "community_desc": "Engineering notes and discussions from the Persian AI community.",
+    "channel": "Telegram channel",
+    "group": "Community",
+    "snapshot_label": "GitHub stars as of",
+    "newest": "Latest"
   },
   "fa": {
     "name": "محمد شجاعی",
     "role": "مهندس هوش مصنوعی",
     "tagline": "سیستم‌های هوش مصنوعی می‌سازم که بیرون از دمو هم کار کنند.",
-    "intro": "سیستم‌های مبتنی بر LLM می‌سازم و دربارهٔ چالش‌های اجرای آن‌ها در محیط واقعی می‌نویسم: ایجنت‌هایی که وضعیت مکالمه را گم می‌کنند، بازیابیِ متن قانع‌کننده اما نادرست، ارزیابی‌های غیرقابل‌اعتماد و هزینه‌های پیش‌بینی‌نشدهٔ اجرای مدل.",
+    "intro": "سیستم‌های مبتنی بر LLM می‌سازم و دربارهٔ چالش‌های اجرای آن‌ها در محیط واقعی می‌نویسم؛ از وضعیت ایجنت‌ها و خطاهای بازیابی تا ارزیابی مدل و هزینهٔ اجرا.",
     "actions": [
       {
         "url": "/fa/writing/",
         "label": "خواندن نوشته‌ها"
+      },
+      {
+        "url": "/fa/about/",
+        "label": "دربارهٔ من"
       }
     ],
-    "focus": "سیستم‌های LLM در محیط واقعی · ارزیابی · هوش مصنوعی فارسی و چندزبانه",
     "latest": "تازه‌ترین نوشته‌ها",
     "all_writing": "همهٔ نوشته‌ها",
     "work_heading": "کارهای منتخب",
-    "work_link": "مشاهدهٔ مخزن",
     "work_stars": "ستارهٔ GitHub",
     "work_all": "همهٔ مخازن ←",
-    "work_snapshot": "تعداد ستاره‌ها در تاریخ ۲۰۲۶-۱۱-۲۷"
+    "contact_title": "همکاری و پرسش فنی",
+    "contact_desc": "برای گفت‌وگو دربارهٔ پروژه‌ها، همکاری یا مسائل فنی.",
+    "contact_action": "ارسال ایمیل",
+    "community_title": "جامعهٔ مهندسان هوش مصنوعی",
+    "community_desc": "یادداشت‌های فنی، گفت‌وگو و تبادل تجربه.",
+    "channel": "کانال تلگرام",
+    "group": "گروه تلگرام",
+    "snapshot_label": "تعداد ستاره‌ها در تاریخ",
+    "newest": "تازه‌ترین"
   },
   "sections": [
     {
@@ -57,34 +77,6 @@
             "title": "ایمیل",
             "desc": "برای پرسش‌های فنی، همکاری و فرصت‌های کاری.",
             "tag": "ارتباط مستقیم"
-          }
-        },
-        {
-          "en": {
-            "tag": "Code",
-            "url": "https://github.com/mshojaei77",
-            "title": "GitHub",
-            "desc": "Tools, experiments, and small engineering artifacts. Some are useful. Some are suspiciously alive."
-          },
-          "fa": {
-            "tag": "کد و آزمایش",
-            "url": "https://github.com/mshojaei77",
-            "title": "مخازن GitHub",
-            "desc": "کد، ابزار و آزمایش‌های مهندسی؛ از نمونه‌های اولیه تا پروژه‌های کامل‌تر."
-          }
-        },
-        {
-          "en": {
-            "tag": "Lab",
-            "url": "https://huggingface.co/mshojaei77",
-            "title": "Hugging Face",
-            "desc": "Models, datasets, adapters, and evaluation leftovers from the build loop."
-          },
-          "fa": {
-            "tag": "مدل و داده",
-            "url": "https://huggingface.co/mshojaei77",
-            "title": "Hugging Face",
-            "desc": "مدل‌ها، دیتاست‌ها، آداپترها و نتایج آزمایش‌های ارزیابی مدل."
           }
         },
         {
@@ -117,34 +109,6 @@
         },
         {
           "en": {
-            "url": "https://www.linkedin.com/in/mshojaei77/",
-            "title": "LinkedIn",
-            "desc": "Professional background and connections.",
-            "tag": "Professional"
-          },
-          "fa": {
-            "url": "https://www.linkedin.com/in/mshojaei77/",
-            "title": "LinkedIn",
-            "desc": "سوابق حرفه‌ای و ارتباط با همکاران.",
-            "tag": "حرفه‌ای"
-          }
-        },
-        {
-          "en": {
-            "url": "https://x.com/realshojaei",
-            "title": "X",
-            "desc": "Short notes and conversations.",
-            "tag": "Social"
-          },
-          "fa": {
-            "url": "https://x.com/realshojaei",
-            "title": "X",
-            "desc": "یادداشت‌های کوتاه و گفت‌وگوها.",
-            "tag": "شبکهٔ اجتماعی"
-          }
-        },
-        {
-          "en": {
             "url": "/feed.xml",
             "title": "RSS",
             "desc": "Follow new articles in your own reader.",
@@ -173,7 +137,13 @@
         "tag": "ابزار ایجنت · MCP",
         "title": "ReActMCP",
         "desc": "سرور MCP برای جست‌وجوی وب با فیلترهای پیشرفتهٔ Exa و خروجی Markdown برای دستیارهای هوش مصنوعی."
-      }
+      },
+      "stack": [
+        "Python",
+        "MCP",
+        "Exa"
+      ],
+      "flagship": true
     },
     {
       "repo": "ParsiEval",
@@ -187,21 +157,13 @@
         "tag": "ارزیابی LLM · هوش مصنوعی فارسی",
         "title": "ParsiEval",
         "desc": "مجموعهٔ بنچمارک‌های فارسی برای سنجش دانش، پرسش‌های چندوجهی و روانی زبان در گفتار و نوشتار رسمی."
-      }
-    },
-    {
-      "repo": "invoice-to-pay-agent",
-      "stars": 9,
-      "en": {
-        "tag": "Enterprise AI · Finance",
-        "title": "Invoice-to-Pay Agent",
-        "desc": "An accounts-payable automation prototype with document parsing, three-way matching, human approval, mock ERP posting and audit logs."
       },
-      "fa": {
-        "tag": "هوش مصنوعی سازمانی · مالی",
-        "title": "Invoice-to-Pay Agent",
-        "desc": "نمونهٔ اولیهٔ اتوماسیون حساب‌های پرداختنی با پردازش اسناد، تطبیق سه‌طرفه، تأیید انسانی، ثبت آزمایشی در ERP و لاگ ممیزی."
-      }
+      "stack": [
+        "Python",
+        "LLM evals",
+        "Gradio"
+      ],
+      "flagship": true
     },
     {
       "repo": "SubTrans-Ollama",
@@ -215,7 +177,46 @@
         "tag": "هوش مصنوعی محلی · مهندسی محصول",
         "title": "SubTrans-Ollama",
         "desc": "مترجم محلی زیرنویس به فارسی با حفظ قالب، واژه‌نامه، حافظهٔ ترجمه، کنترل کیفیت و قابلیت ادامهٔ پردازش."
-      }
+      },
+      "stack": [
+        "Python",
+        "Ollama",
+        "LM Studio"
+      ],
+      "flagship": false
+    },
+    {
+      "repo": "invoice-to-pay-agent",
+      "stars": 9,
+      "en": {
+        "tag": "Enterprise AI · Finance",
+        "title": "Invoice-to-Pay Agent",
+        "desc": "An accounts-payable automation prototype with document parsing, three-way matching, human approval, mock ERP posting and audit logs."
+      },
+      "fa": {
+        "tag": "هوش مصنوعی سازمانی · مالی",
+        "title": "Invoice-to-Pay Agent",
+        "desc": "نمونهٔ اولیهٔ اتوماسیون حساب‌های پرداختنی با پردازش اسناد، تطبیق سه‌طرفه، تأیید انسانی، ثبت آزمایشی در ERP و لاگ ممیزی."
+      },
+      "stack": [
+        "FastAPI",
+        "LangGraph",
+        "Docling"
+      ],
+      "flagship": false
     }
-  ]
+  ],
+  "snapshot_date": "2026-11-27",
+  "hero_topics": {
+    "en": [
+      "systems",
+      "rag",
+      "foundations"
+    ],
+    "fa": [
+      "systems",
+      "evaluation",
+      "persian"
+    ]
+  }
 }

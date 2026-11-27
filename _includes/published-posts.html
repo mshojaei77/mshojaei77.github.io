@@ -4,13 +4,34 @@
 <section aria-labelledby="latest-posts-title"{% if include.home %} class="home-latest" data-home-section="latest"{% endif %}>
   {% if include.home %}<div class="section-heading">{% endif %}
   <h2 id="latest-posts-title">{% if page.lang == 'fa' %}تازه‌ترین نوشته‌ها{% else %}Latest writing{% endif %}</h2>
-  {% if include.home %}<a class="section-link" href="{% if page.lang == 'fa' %}/fa/writing/{% else %}/writing/{% endif %}">{% if page.lang == 'fa' %}همهٔ نوشته‌ها ←{% else %}All writing →{% endif %}</a></div>{% endif %}
-  <div class="section-grid{% if include.home %} three home-latest-grid{% endif %}">
+  {% if include.home %}<a class="section-link" href="{% if page.lang == 'fa' %}/fa/writing/{% else %}/writing/{% endif %}">{% if page.lang == 'fa' %}همهٔ نوشته‌ها ←{% else %}All writing →{% endif %}</a></div>{% else %}
+  <div id="writing-filters" class="writing-filters" hidden>
+    <label for="writing-search">{% if page.lang == 'fa' %}جست‌وجوی عنوان، توضیحات و موضوع{% else %}Search titles, descriptions and topics{% endif %}</label>
+    <input id="writing-search" type="search" dir="auto" autocomplete="off" placeholder="{% if page.lang == 'fa' %}جست‌وجوی نوشته‌ها…{% else %}Search articles…{% endif %}">
+    <div class="writing-topics" role="group" aria-label="{% if page.lang == 'fa' %}موضوعات{% else %}Topics{% endif %}">
+      <button type="button" class="topic-pill" data-topic="" aria-pressed="true">{% if page.lang == 'fa' %}همه{% else %}All{% endif %}</button>
+      {% for topic in site.data.topics.labels %}<button type="button" class="topic-pill" data-topic="{{ topic[0] | escape }}" aria-pressed="false">{{ topic[1][page.lang] | escape }}</button>{% endfor %}
+    </div>
+    <p id="writing-count" role="status" aria-live="polite"></p>
+  </div>
+  {% endif %}
+  <div class="section-grid{% if include.home %} three home-latest-grid{% else %} writing-list{% endif %}">
     {% for post in published_posts limit:post_limit %}
-    <article class="entry-card">
-      <div class="meta"><time datetime="{{ post.date | date_to_xmlschema }}" dir="ltr">{% assign display_date = post.date | date: "%Y-%m-%d" %}{% if page.lang == 'fa' %}{% include persian-digits.html value=display_date %}{% else %}{{ display_date }}{% endif %}</time>{% unless include.home %}{% if post.lang != page.lang %} · {{ post.lang | escape }}{% endif %}{% endunless %}</div>
-      <h3 lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'fa' %}rtl{% else %}ltr{% endif %}"><a href="{{ post.url | relative_url }}" hreflang="{{ post.lang | default: 'en' }}">{{ post.title | escape }}{% if include.home %}<span class="post-arrow" aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>{% endif %}</a></h3>
+    {% assign slug = post.url | split: '/' | last %}
+    {% assign topic_ids = site.data.topics.posts[slug] %}
+    {% if topic_ids == nil %}{% assign topic_ids = 'general' | split: ',' %}{% endif %}
+    {% assign words = post.content | strip_html | number_of_words %}
+    {% assign minutes = words | plus: 199 | divided_by: 200 | at_least: 1 %}
+    <article class="entry-card{% if include.home and forloop.first %} latest-featured{% endif %}" data-post-topics="{{ topic_ids | join: ' ' | escape }}">
+      <h3 lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'fa' %}rtl{% else %}ltr{% endif %}"><a href="{{ post.url | relative_url }}" hreflang="{{ post.lang | default: 'en' }}">{{ post.title | escape }}</a></h3>
+      <div class="meta post-metadata">
+        {% if include.home and forloop.first %}<span class="latest-indicator">{{ site.data.home[page.lang].newest | escape }}</span><span aria-hidden="true">·</span>{% endif %}
+        {% for id in topic_ids limit:2 %}<span>{{ site.data.topics.labels[id][page.lang] | escape }}</span><span aria-hidden="true">·</span>{% endfor %}
+        <span class="read-time" title="{% if page.lang == 'fa' %}برآورد بر اساس ۲۰۰ واژه در دقیقه{% else %}Estimate at 200 words per minute{% endif %}">{% if page.lang == 'fa' %}{% include persian-digits.html value=minutes %} دقیقه مطالعه{% else %}{{ minutes }} min read{% endif %}</span><span aria-hidden="true">·</span>
+        <time datetime="{{ post.date | date_to_xmlschema }}" dir="ltr">{% assign display_date = post.date | date: "%Y-%m-%d" %}{% if page.lang == 'fa' %}{% include persian-digits.html value=display_date %}{% else %}{{ display_date }}{% endif %}</time>
+      </div>
       <p lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'fa' %}rtl{% else %}ltr{% endif %}">{{ post.description | escape }}</p>
+      {% if include.home %}<span class="post-arrow" aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span>{% endif %}
     </article>
     {% endfor %}
   </div>
