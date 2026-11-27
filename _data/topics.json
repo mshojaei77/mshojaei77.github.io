@@ -231,6 +231,16 @@
       "foundations",
       "systems",
       "evaluation"
+    ],
+    "voice-agent-architecture": [
+      "systems",
+      "evaluation"
+    ],
+    "serving-gpt-oss-120b-vllm": [
+      "systems"
+    ],
+    "serving-kimi-k2-vllm": [
+      "systems"
     ]
   }
 }
