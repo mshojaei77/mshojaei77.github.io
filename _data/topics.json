@@ -30,6 +30,84 @@
     }
   },
   "posts": {
+    "agent-harness": [
+      "systems"
+    ],
+    "agent-vs-workflow": [
+      "systems",
+      "foundations"
+    ],
+    "agent-production-failures": [
+      "systems",
+      "evaluation"
+    ],
+    "context-engineering-agents": [
+      "systems",
+      "foundations"
+    ],
+    "context-compaction-agents": [
+      "systems",
+      "evaluation"
+    ],
+    "spec-driven-development": [
+      "systems",
+      "general"
+    ],
+    "agent-skills": [
+      "systems",
+      "general"
+    ],
+    "production-rag-architecture": [
+      "rag",
+      "systems",
+      "evaluation"
+    ],
+    "chunking-strategies": [
+      "rag",
+      "evaluation"
+    ],
+    "contextual-retrieval": [
+      "rag",
+      "systems"
+    ],
+    "multi-representation-retrieval": [
+      "rag",
+      "evaluation"
+    ],
+    "rag-failure-diagnostics": [
+      "rag",
+      "evaluation"
+    ],
+    "secure-nl2sql": [
+      "systems",
+      "evaluation"
+    ],
+    "when-not-to-use-llm": [
+      "systems",
+      "general"
+    ],
+    "decision-models-vs-llms": [
+      "systems",
+      "evaluation"
+    ],
+    "massive-intent-benchmark": [
+      "evaluation",
+      "persian"
+    ],
+    "tasmim-bench": [
+      "evaluation",
+      "persian",
+      "systems"
+    ],
+    "persian-llm-evaluation": [
+      "evaluation",
+      "persian"
+    ],
+    "persian-embedding-models": [
+      "rag",
+      "evaluation",
+      "persian"
+    ],
     "document-parsing": [
       "rag",
       "evaluation",
@@ -91,6 +169,42 @@
     "deep-research-agents": [
       "systems",
       "evaluation"
+    ],
+    "persian-open-ai-ecosystem": [
+      "persian",
+      "foundations"
+    ],
+    "llm-architecture": [
+      "foundations",
+      "systems"
+    ],
+    "efficient-fine-tuning": [
+      "foundations",
+      "systems"
+    ],
+    "llm-post-training": [
+      "foundations",
+      "evaluation"
+    ],
+    "knowledge-distillation": [
+      "foundations",
+      "systems"
+    ],
+    "muon-vs-adamw": [
+      "foundations",
+      "systems"
+    ],
+    "local-llm-inference": [
+      "systems",
+      "foundations"
+    ],
+    "agent-costs": [
+      "systems",
+      "evaluation"
+    ],
+    "coding-agent-productivity": [
+      "systems",
+      "general"
     ]
   }
 }

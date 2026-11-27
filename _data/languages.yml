@@ -90,3 +90,8 @@
   en_label: "Transformers"
   fa_label: "آموزش Transformer؛ سازوکار Attention"
   hidden: true
+- en: "/writing/academic-research-agent/"
+  fa: "/fa/writing/academic-research-agent/"
+  en_label: "Academic research agent"
+  fa_label: "ایجنت پژوهش دانشگاهی"
+  hidden: true
