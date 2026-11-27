@@ -1,6 +1,7 @@
 /etc
 /.cursor
 /labs
+/analytics/
 AGENTS.md
 book/mini_projects
 /book/chapters_draft.txt
