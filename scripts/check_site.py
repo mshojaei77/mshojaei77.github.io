@@ -16,7 +16,18 @@ fa_routes = ["fa/index.html"] + [f"fa/{part}/index.html" for part in ("writing",
 fa_routes += [f"fa/{part}/index.html" for part in ("open-source-ai", "vector-databases", "market-analysis", "resources", "interview", "mini-roadmap")]
 fa_routes += ["fa/writing/document-parsing/index.html", "fa/writing/market-analysis/index.html", "fa/writing/vector-databases/index.html"]
 routes += ["writing/market-analysis/index.html", "writing/vector-databases/index.html"]
+routes += ["knowledge/index.html", "learn/index.html", "playground/index.html"]
+routes += ["reading/index.html", "lab/index.html", "work/index.html"]
+routes += [f"learn/{path}/index.html" for path in ("foundations", "production-rag", "agent-engineering", "persian-ai-evaluation", "llm-infrastructure")]
+routes += [f"playground/{tool}/index.html" for tool in ("persian-text-inspector", "bm25", "llm-memory-estimator")]
 routes += fa_routes + ["assets/fonts/Vazirmatn-variable.woff2", "assets/fonts/OFL.txt", "assets/img/social-card.png", "assets/img/favicon.png", "favicon.ico", "assets/img/projects/reactmcp.svg", "assets/img/projects/parsieval.svg", "assets/img/projects/subtrans.svg", "assets/img/projects/invoice-agent.svg", "assets/js/theme.js", "assets/js/document-parsing.js"]
+routes += ["fa/knowledge/index.html", "fa/learn/index.html", "fa/playground/index.html"]
+routes += ["fa/reading/index.html", "fa/lab/index.html", "fa/work/index.html"]
+routes += [f"work/{name}/index.html" for name in ("reactmcp", "parsieval", "subtrans-ollama", "invoice-to-pay-agent")]
+routes += [f"fa/work/{name}/index.html" for name in ("reactmcp", "parsieval", "subtrans-ollama", "invoice-to-pay-agent")]
+routes += [f"fa/learn/{path}/index.html" for path in ("foundations", "production-rag", "agent-engineering", "persian-ai-evaluation", "llm-infrastructure")]
+routes += [f"fa/playground/{tool}/index.html" for tool in ("persian-text-inspector", "bm25", "llm-memory-estimator")]
+routes += ["assets/css/learning-platform.css", "assets/js/learning-progress.js", "assets/js/persian-text-inspector.js", "assets/js/bm25-playground.js", "assets/js/llm-memory-estimator.js"]
 routes += ["materials/Data_Preparation/index.html","fa/materials/Data_Preparation/index.html","materials/Embeddings/index.html","fa/materials/Embeddings/index.html","materials/Intro/index.html","fa/materials/Intro/index.html","materials/Neural_Networks/index.html","fa/materials/Neural_Networks/index.html","materials/Tokenization/index.html","fa/materials/Tokenization/index.html","materials/Traditional_LMs/index.html","fa/materials/Traditional_LMs/index.html","materials/Transformers/index.html","fa/materials/Transformers/index.html"]
 routes += ["assets/examples/document-parsing/" + name for name in ("parse_pdf.py", "make_demo.py", "requirements.txt")]
 errors = [f"Missing output: {p}" for p in routes if not (root / p).is_file()]
@@ -48,6 +59,15 @@ class Links(HTMLParser):
 
 indexes = ["index.html", "writing/index.html", "projects/index.html",
            "newsletter/index.html", "404.html"]
+indexes += ["knowledge/index.html", "learn/index.html", "playground/index.html"]
+indexes += ["reading/index.html", "lab/index.html", "work/index.html", "fa/knowledge/index.html", "fa/learn/index.html", "fa/playground/index.html", "fa/reading/index.html", "fa/lab/index.html", "fa/work/index.html"]
+indexes += [f"learn/{name}/index.html" for name in ("foundations", "production-rag", "agent-engineering", "persian-ai-evaluation", "llm-infrastructure")]
+indexes += [f"playground/{name}/index.html" for name in ("persian-text-inspector", "bm25", "llm-memory-estimator")]
+indexes += ["fa/knowledge/index.html", "fa/learn/index.html", "fa/playground/index.html"]
+indexes += [f"fa/learn/{name}/index.html" for name in ("foundations", "production-rag", "agent-engineering", "persian-ai-evaluation", "llm-infrastructure")]
+indexes += [f"fa/playground/{name}/index.html" for name in ("persian-text-inspector", "bm25", "llm-memory-estimator")]
+indexes += [f"work/{name}/index.html" for name in ("reactmcp", "parsieval", "subtrans-ollama", "invoice-to-pay-agent")]
+indexes += [f"fa/work/{name}/index.html" for name in ("reactmcp", "parsieval", "subtrans-ollama", "invoice-to-pay-agent")]
 indexes += [p for p in fa_routes if p in ("fa/index.html", "fa/writing/index.html", "fa/roadmap/index.html", "fa/about/index.html") or p.startswith("fa/writing/")]
 for name in indexes:
     path = root / name
@@ -71,6 +91,7 @@ class Locale(HTMLParser):
         super().__init__()
         self.html = {}
         self.alternates = {}
+        self.canonical = None
         self.anchors = []
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -78,6 +99,8 @@ class Locale(HTMLParser):
             self.html = a
         if tag == "link" and a.get("rel") == "alternate" and a.get("hreflang"):
             self.alternates[a["hreflang"]] = urlsplit(a.get("href", "")).path
+        if tag == "link" and a.get("rel") == "canonical":
+            self.canonical = a.get("href")
         if tag == "a":
             self.anchors.append(a.get("href"))
 
@@ -139,6 +162,28 @@ for lang, own in article_routes.items():
     for path in ("feed.xml", "sitemap.xml"):
         if (root / path).is_file() and (path != "feed.xml" or retired(own)) and (listed_xml(path, own) == retired(own)):
             errors.append(f"{path}: missing {own}")
+
+platform_routes = ["/knowledge/", "/learn/", "/playground/", "/reading/", "/lab/", "/work/", "/fa/knowledge/", "/fa/learn/", "/fa/playground/", "/fa/reading/", "/fa/lab/", "/fa/work/"]
+platform_routes += [f"/learn/{name}/" for name in ("foundations", "production-rag", "agent-engineering", "persian-ai-evaluation", "llm-infrastructure")]
+platform_routes += [f"/fa/learn/{name}/" for name in ("foundations", "production-rag", "agent-engineering", "persian-ai-evaluation", "llm-infrastructure")]
+platform_routes += [f"/playground/{name}/" for name in ("persian-text-inspector", "bm25", "llm-memory-estimator")]
+platform_routes += [f"/fa/playground/{name}/" for name in ("persian-text-inspector", "bm25", "llm-memory-estimator")]
+platform_routes += [f"/work/{name}/" for name in ("reactmcp", "parsieval", "subtrans-ollama", "invoice-to-pay-agent")]
+platform_routes += [f"/fa/work/{name}/" for name in ("reactmcp", "parsieval", "subtrans-ollama", "invoice-to-pay-agent")]
+for route in platform_routes:
+    if not listed_xml("sitemap.xml", route):
+        errors.append(f"sitemap.xml: missing platform route {route}")
+    page_path = root / route.lstrip("/") / "index.html"
+    if not page_path.is_file():
+        errors.append(f"Missing platform page: {route}")
+    else:
+        parser = Locale()
+        parser.feed(page_path.read_text(encoding="utf-8"))
+        expected = "fa" if route.startswith("/fa/") else "en"
+        if parser.html.get("lang") != expected or parser.html.get("dir") != ("rtl" if expected == "fa" else "ltr"):
+            errors.append(f"{route}: incorrect language or direction metadata")
+        if parser.canonical != "https://mshojaei77.github.io" + route:
+            errors.append(f"{route}: incorrect canonical URL")
 for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/index.html"):
     html = (root / path).read_text(encoding="utf-8")
     if any(x in html for x in ("Living book", "Selected open-source work", "کتاب در حال نگارش", "پروژه‌های متن‌باز منتخب")):

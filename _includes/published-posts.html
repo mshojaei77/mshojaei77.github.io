@@ -8,6 +8,11 @@
   <div id="writing-filters" class="writing-filters" hidden>
     <label for="writing-search">{% if page.lang == 'fa' %}جست‌وجوی عنوان، توضیحات و موضوع{% else %}Search titles, descriptions and topics{% endif %}</label>
     <input id="writing-search" type="search" dir="auto" autocomplete="off" placeholder="{% if page.lang == 'fa' %}جست‌وجوی نوشته‌ها…{% else %}Search articles…{% endif %}">
+    <label for="writing-kind">{% if page.lang == 'fa' %}نوع محتوا{% else %}Content type{% endif %}</label>
+    <select id="writing-kind">
+      <option value="">{% if page.lang == 'fa' %}همهٔ انواع{% else %}All types{% endif %}</option>
+      {% for kind in site.data.article_kinds %}<option value="{{ kind.id | escape }}">{{ kind[page.lang] | escape }}</option>{% endfor %}
+    </select>
     <div class="writing-topics" role="group" aria-label="{% if page.lang == 'fa' %}موضوعات{% else %}Topics{% endif %}">
       <button type="button" class="topic-pill" data-topic="" aria-pressed="true">{% if page.lang == 'fa' %}همه{% else %}All{% endif %}</button>
       {% for topic in site.data.topics.labels %}<button type="button" class="topic-pill" data-topic="{{ topic[0] | escape }}" aria-pressed="false">{{ topic[1][page.lang] | escape }}</button>{% endfor %}
@@ -32,7 +37,7 @@
     {% endcase %}
     {% assign words = post.content | strip_html | number_of_words %}
     {% assign minutes = words | plus: 199 | divided_by: 200 | at_least: 1 %}
-    <article class="entry-card{% if include.home and forloop.first %} latest-featured{% endif %}" data-post-topics="{{ topic_ids | join: ' ' | escape }}">
+    <article class="entry-card{% if include.home and forloop.first %} latest-featured{% endif %}" data-post-topics="{{ topic_ids | join: ' ' | escape }}" data-article-kind="{{ post.article_kind | default: 'guide' | escape }}">
       <h3 lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'fa' %}rtl{% else %}ltr{% endif %}"><a href="{{ post.url | relative_url }}" hreflang="{{ post.lang | default: 'en' }}"><span class="post-topic-icon" aria-hidden="true"><svg class="icon"><use href="#{{ topic_icon }}"></use></svg></span>{{ post.title | escape }}</a></h3>
       <div class="meta post-metadata">
         {% if include.home and forloop.first %}<span class="latest-indicator">{{ site.data.home[page.lang].newest | escape }}</span><span aria-hidden="true">·</span>{% endif %}

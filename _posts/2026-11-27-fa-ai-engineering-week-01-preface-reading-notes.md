@@ -3,6 +3,14 @@ layout: article
 lang: fa
 author: "محمد شجاعی"
 article_kind: essay
+series_id: ai-engineering-book-notes
+series_title:
+  en: "From Book to Production"
+  fa: "از کتاب تا پروداکشن"
+series_number: 1
+series_source_title: "AI Engineering: Building Applications with Foundation Models"
+series_source_author: "Chip Huyen"
+series_source_url: "https://www.oreilly.com/library/view/ai-engineering/9781098166298/"
 show_article_header: false
 title: "قبل از انتخاب مدل بپرس: این مشکل با مدل بهتر خودش حل می‌شه یا نه؟"
 description: "یادداشت مهندسی از مقدمه‌ی AI Engineering: فیلتر «محدودیت بنیادی یا مدل ضعیف؟» و اینکه کجای سیستم ارزش مهندسی داره."

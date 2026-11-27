@@ -1,0 +1,26 @@
+---
+layout: publication
+---
+<article class="learning-page research-lab">
+  <header class="learning-intro">
+    <p class="eyebrow">{% if page.lang == 'fa' %}آزمایشگاه مهندسی{% else %}Engineering Research Lab{% endif %}</p>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="lede">{{ page.description | escape }}</p>
+    <p>{% if page.lang == 'fa' %}این صفحه فقط artifactهای عمومیِ موجود را فهرست می‌کند. وضعیت و محدودیت از منبع پروژه نقل شده؛ درج یک benchmark در این فهرست به معنای تأیید مستقل آن نیست.{% else %}This page lists existing public artifacts. Status and limitations are drawn from each project source; listing a benchmark here is not an independent validation.{% endif %}</p>
+  </header>
+  <p class="meta">{% if page.lang == 'fa' %}آخرین بازبینی فراداده: ۱۴۰۵/۰۹/۰۷{% else %}Metadata last reviewed: 2026-11-28{% endif %}</p>
+  <section class="research-artifacts" aria-label="{% if page.lang == 'fa' %}آزمایش‌ها و artifactها{% else %}Research and evaluation artifacts{% endif %}">
+  {% for artifact in site.data.research_artifacts %}
+    <article class="entry-card research-artifact">
+      <p class="eyebrow">{{ artifact.kind[page.lang] | escape }}</p>
+      <h2><a href="{{ artifact.url }}">{{ artifact.title | escape }}</a></h2>
+      <p>{{ artifact.status[page.lang] | escape }}</p>
+      <p>{{ artifact.description[page.lang] | escape }}</p>
+      <aside class="learning-limitations"><h3>{% if page.lang == 'fa' %}محدودیت و روش‌شناسی{% else %}Limitations and methodology{% endif %}</h3><p>{{ artifact.limitations[page.lang] | escape }}</p></aside>
+      <p class="meta">{% if page.lang == 'fa' %}بازبینی{% else %}Checked{% endif %}: <time datetime="{{ artifact.verified_on }}">{{ artifact.verified_on }}</time></p>
+      {% assign has_article = false %}<ul>{% for reference in artifact.articles %}{% if reference.lang == page.lang %}{% for post in site.posts %}{% assign post_slug = post.url | split: '/' | last %}{% if post.lang == reference.lang and post_slug == reference.slug %}{% assign has_article = true %}<li><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></li>{% endif %}{% endfor %}{% endif %}{% endfor %}</ul>
+      {% unless has_article %}<p>{% if page.lang == 'fa' %}مقالهٔ مرتبط در این زبان هنوز منتشر نشده است.{% else %}A related article in this language is not yet available.{% endif %}</p>{% endunless %}
+    </article>
+  {% endfor %}
+  </section>
+</article>

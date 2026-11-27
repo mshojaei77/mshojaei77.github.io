@@ -1,0 +1,71 @@
+.learning-page{max-width:920px;margin-inline:auto;padding-block:1rem 4rem}
+.learning-intro{margin-block:1rem 2.5rem;padding-block-end:1.5rem;border-block-end:1px solid var(--line)}
+.learning-intro h1{max-width:22ch}
+.learning-intro .lede{max-width:68ch}
+.knowledge-index-nav{margin-block:2rem;padding:1rem;border:1px solid var(--line);background:var(--paper)}
+.knowledge-index-nav ul{display:flex;flex-wrap:wrap;gap:.5rem 1rem;list-style:none;margin:0;padding:0}
+.knowledge-domain{padding-block:2.25rem;border-block-end:1px solid var(--line);scroll-margin-block:1rem}
+.knowledge-domain header p:last-child{max-width:72ch}
+.knowledge-domain-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem 2rem;margin-block:1.25rem}
+.knowledge-domain-columns h3,.knowledge-domain>h3{margin-block-end:.5rem}
+.knowledge-domain ul,.learning-page ul{padding-inline-start:1.35rem}
+.knowledge-article-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:.75rem 1.5rem;padding:0!important;list-style:none}
+.knowledge-article-list li{padding:1rem;border:1px solid var(--line);background:var(--paper)}
+.knowledge-article-list li p{font-size:.94rem;color:var(--muted);margin:.35rem 0 0}
+.learning-path-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1rem;margin-block:1.5rem}
+.learning-path-card{height:100%}
+.learning-path-card h2{font-size:1.25rem}
+.learning-meta{display:grid;gap:1rem;margin-block:1.5rem}
+.learning-meta>div{padding:1rem;border-inline-start:3px solid var(--accent);background:var(--paper)}
+.learning-meta dt{font-size:.9rem;font-weight:700;color:var(--muted)}
+.learning-meta dd{margin:.25rem 0 0}
+.learning-modules{padding-inline-start:1.6rem}
+.learning-module{padding:1.2rem 1.25rem;margin-block:1rem;border:1px solid var(--line);background:var(--paper);scroll-margin-block:1rem}
+.learning-module>header{display:flex;justify-content:space-between;align-items:start;gap:1rem}
+.learning-module>header h3{margin-block:0 .75rem}
+.module-complete{display:flex;align-items:center;gap:.5rem;min-height:44px;flex:0 0 auto;font-size:.92rem}
+.module-complete input{width:1.15rem;height:1.15rem;accent-color:var(--accent)}
+.learning-module h4{margin-block:.8rem .25rem}
+.learning-module h4~ul{margin-block:.25rem .75rem}
+.path-progress{padding:1rem 1.25rem;border:1px solid var(--line);background:var(--paper);margin-block:2rem}
+.path-progress .section-heading{align-items:center}
+.path-progress button,.tool-actions button{min-height:44px}
+.learning-limitations{padding:1rem 1.25rem;border-inline-start:3px solid var(--muted);background:var(--paper);margin-block:2rem}
+.series-navigation{max-width:920px;margin:2rem auto;padding:1.2rem;border:1px solid var(--line);background:var(--paper)}
+.series-navigation>p:first-child{margin-block-start:0}
+.series-navigation ol{padding-inline-start:1.35rem}
+.series-navigation [aria-current="page"]{font-weight:700}
+.reading-series{padding-block:1rem 2rem}
+.reading-installments{display:grid;gap:.75rem;list-style:none;padding:0}
+.reading-installments .entry-card{height:100%}
+.project-case-card img{display:block;width:6rem;height:6rem;object-fit:contain;margin-block-end:.75rem}
+.architecture-summary{padding:1rem;border-inline-start:3px solid var(--accent);background:var(--paper)}
+.platform-destinations{margin-block:2.5rem;padding-block-start:1rem;border-block-start:1px solid var(--line)}
+.research-artifacts{display:grid;gap:1.25rem}
+.research-artifact .learning-limitations{margin-block:1rem}
+.tool-reading{margin-block:2rem;padding-block-start:1rem;border-block-start:1px solid var(--line)}
+.tool-panel{padding:1.2rem;border:1px solid var(--line);background:var(--paper);margin-block:1.5rem}
+.tool-explanation{max-width:76ch;color:var(--muted)}
+.tool-field{display:grid;gap:.35rem;margin-block:.8rem;font-weight:600}
+.tool-field input,.tool-field select,.tool-panel textarea,.tool-panel input[type="search"]{width:100%;min-height:44px;padding:.65rem .75rem;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);font:inherit}
+.tool-panel textarea{min-height:10rem;font-family:ui-monospace,Consolas,monospace;font-size:.92rem;line-height:1.55}
+.tool-panel input[type="checkbox"]{width:1.15rem;height:1.15rem;accent-color:var(--accent);flex:0 0 auto}
+.tool-options{display:grid;gap:.6rem;margin-block:1rem;padding:1rem;border:1px solid var(--line)}
+.tool-options label{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.tool-control-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:.25rem 1rem}
+.tool-control-grid .tool-field input,.tool-control-grid .tool-field select{font-weight:400}
+.tool-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-block:1rem}
+.tool-status{min-height:1.6em;color:var(--muted)}
+.tool-results{margin-block:2rem}
+.tool-summary{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(8rem,auto);gap:.5rem 1rem;max-width:42rem}
+.tool-summary dt{font-weight:700;color:var(--muted)}
+.tool-summary dd{margin:0;font-variant-numeric:tabular-nums}
+.tool-results .table-scroll{max-width:100%;overflow:auto;overscroll-behavior-inline:contain}
+.tool-results table{width:100%;border-collapse:collapse;text-align:start}
+.tool-results th,.tool-results td{padding:.6rem .75rem;border:1px solid var(--line);vertical-align:top;text-align:start}
+.tool-results th{background:var(--bg)}
+.tool-results td ul{padding-inline-start:1.2rem;margin:.2rem}
+.tool-limitations{margin-block:2rem;padding:1rem 1.25rem;border-inline-start:3px solid var(--accent);background:var(--paper)}
+.tool-limitations h2{font-size:1.15rem;margin-block-start:0}
+.learning-page a:focus-visible,.learning-page button:focus-visible,.learning-page input:focus-visible,.learning-page textarea:focus-visible,.learning-page select:focus-visible,.knowledge-index-nav a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:560px){.learning-page{padding-block-start:.5rem}.learning-module>header{display:block}.module-complete{margin-block:.5rem}.tool-panel{padding:.9rem}.tool-summary{grid-template-columns:1fr;gap:.15rem}.tool-summary dd{margin-block-end:.6rem}}

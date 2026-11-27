@@ -1,0 +1,21 @@
+---
+layout: publication
+---
+<article class="learning-page playground-index">
+  <header class="learning-intro">
+    <p class="eyebrow">{% if page.lang == 'fa' %}آزمایشگاه تعاملی{% else %}Interactive Playground{% endif %}</p>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="lede">{{ page.description | escape }}</p>
+    <p>{% if page.lang == 'fa' %}این ابزارها آموزشی‌اند و input را روی همین مرورگر پردازش می‌کنند. فایل یا متن شما به سرور ارسال نمی‌شود و در analytics ثبت نمی‌شود.{% else %}These educational tools process inputs in this browser. Your text is not uploaded and is not recorded in analytics.{% endif %}</p>
+  </header>
+  <section class="learning-path-grid" aria-label="{% if page.lang == 'fa' %}ابزارهای آموزشی{% else %}Educational tools{% endif %}">
+  {% for tool in site.data.playground_tools %}
+    <article class="entry-card tool-card">
+      <p class="eyebrow">{% if page.lang == 'fa' %}ابزار سمت مرورگر{% else %}Browser-only tool{% endif %}</p>
+      <h2><a href="{{ tool.path[page.lang] }}">{{ tool.title[page.lang] | escape }}</a></h2>
+      <p>{{ tool.description[page.lang] | escape }}</p>
+    </article>
+  {% endfor %}
+  </section>
+  <p><a class="action" href="{% if page.lang == 'fa' %}/fa/learn/{% else %}/learn/{% endif %}">{% if page.lang == 'fa' %}مسیرهای یادگیری{% else %}Learning paths{% endif %}</a></p>
+</article>

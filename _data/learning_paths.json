@@ -1,0 +1,644 @@
+{
+  "schema_version": 1,
+  "paths": [
+    {
+      "id": "foundations",
+      "level": {
+        "en": "Foundational",
+        "fa": "مقدماتی"
+      },
+      "title": {
+        "en": "AI Engineering Foundations",
+        "fa": "مبانی مهندسی هوش مصنوعی"
+      },
+      "description": {
+        "en": "Build a practical mental model of language models, their inputs, internal architecture, and the engineering vocabulary used around them.",
+        "fa": "درکی کاربردی از مدل‌های زبانی، ورودی آن‌ها، معماری درونی و واژگان مهندسی مرتبط بسازید."
+      },
+      "audience": {
+        "en": "Software engineers and technically curious readers who want a grounded starting point for LLM systems.",
+        "fa": "مهندسان نرم‌افزار و خوانندگانی که برای شروع کار با سامانه‌های LLM به یک مبنای فنی نیاز دارند."
+      },
+      "prerequisites": {
+        "en": "Basic programming familiarity. The path does not assume prior model training experience.",
+        "fa": "آشنایی پایه با برنامه‌نویسی کافی است؛ تجربهٔ آموزش مدل پیش‌فرض گرفته نشده است."
+      },
+      "objectives": {
+        "en": [
+          "Explain tokenization and embeddings in plain engineering terms.",
+          "Relate the Transformer architecture to model behavior.",
+          "Distinguish model capability from application-system behavior."
+        ],
+        "fa": [
+          "Tokenization و embedding را با زبان مهندسی توضیح دهید.",
+          "معماری Transformer را به رفتار مدل پیوند دهید.",
+          "توانایی مدل را از رفتار سامانهٔ کاربردی جدا کنید."
+        ]
+      },
+      "modules": [
+        {
+          "id": "model-basics",
+          "title": {
+            "en": "What a language model does",
+            "fa": "مدل زبانی چه کاری انجام می‌دهد؟"
+          },
+          "activity": {
+            "en": "Write down one task where next-token prediction is a useful abstraction and one where it hides important system behavior.",
+            "fa": "یک وظیفه را بنویسید که پیش‌بینی توکن بعدی برای توضیحش مناسب است و یک مورد را که این abstraction رفتار سامانه را پنهان می‌کند."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "intro-to-llms"
+            }
+          ]
+        },
+        {
+          "id": "text-to-tokens",
+          "title": {
+            "en": "Text, tokens, and representations",
+            "fa": "متن، توکن و بازنمایی"
+          },
+          "activity": {
+            "en": "Compare how punctuation, code, Persian text, and English text can create different token boundaries; do not assume characters equal tokens.",
+            "fa": "مرز توکن را در نشانه‌گذاری، کد، فارسی و انگلیسی مقایسه کنید؛ تعداد نویسه‌ها را معادل تعداد توکن فرض نکنید."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "tokenization"
+            },
+            {
+              "lang": "en",
+              "slug": "embeddings"
+            },
+            {
+              "lang": "fa",
+              "slug": "persian-embedding-models"
+            }
+          ]
+        },
+        {
+          "id": "transformer-architecture",
+          "title": {
+            "en": "Transformer building blocks",
+            "fa": "اجزای معماری Transformer"
+          },
+          "activity": {
+            "en": "Trace how token representations pass through attention and feed-forward blocks, then list what this sketch intentionally leaves out.",
+            "fa": "مسیر بازنمایی توکن را از attention و بلوک‌های feed-forward دنبال کنید و مواردی را که این طرح ساده عمداً کنار می‌گذارد بنویسید."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "swiglu"
+            },
+            {
+              "lang": "fa",
+              "slug": "llm-architecture"
+            }
+          ]
+        },
+        {
+          "id": "open-models",
+          "title": {
+            "en": "Open models and practical limits",
+            "fa": "مدل‌های باز و محدودیت‌های عملی"
+          },
+          "activity": {
+            "en": "For a use case, list the deployment, license, data, and evaluation questions you would answer before choosing a model.",
+            "fa": "برای یک کاربرد مشخص، پرسش‌های استقرار، مجوز، داده و ارزیابی را که پیش از انتخاب مدل باید پاسخ دهید فهرست کنید."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "open-source-ai"
+            },
+            {
+              "lang": "fa",
+              "slug": "open-source-ai"
+            }
+          ]
+        }
+      ],
+      "completion": {
+        "en": "Complete the readings and activities, then explain the path from text input to an application response while identifying which parts belong to the model and which belong to surrounding software.",
+        "fa": "مطالعه و فعالیت‌ها را انجام دهید و مسیر ورودی متن تا پاسخ برنامه را توضیح دهید؛ در این توضیح اجزای مدل را از نرم‌افزار پیرامونش جدا کنید."
+      },
+      "known_gaps": {
+        "en": "This path introduces concepts; it is not a full mathematical treatment of deep learning.",
+        "fa": "این مسیر مفاهیم را معرفی می‌کند و دورهٔ کامل ریاضی یادگیری عمیق نیست."
+      }
+    },
+    {
+      "id": "production-rag",
+      "level": {
+        "en": "Intermediate",
+        "fa": "متوسط"
+      },
+      "title": {
+        "en": "Production RAG and Document Intelligence",
+        "fa": "RAG عملیاتی و هوش اسناد"
+      },
+      "description": {
+        "en": "Follow the retrieval pipeline from source documents through indexing, retrieval, context construction, and failure analysis.",
+        "fa": "مسیر بازیابی را از سند اولیه تا indexing، retrieval، ساخت context و تحلیل خطا دنبال کنید."
+      },
+      "audience": {
+        "en": "Engineers building retrieval-backed applications and technical readers diagnosing weak RAG behavior.",
+        "fa": "مهندسان سامانه‌های مبتنی بر retrieval و کسانی که رفتار ضعیف RAG را عیب‌یابی می‌کنند."
+      },
+      "prerequisites": {
+        "en": "Basic LLM familiarity; embeddings and vector search are introduced in the path.",
+        "fa": "آشنایی پایه با LLM مفید است؛ embedding و جست‌وجوی برداری در خود مسیر معرفی می‌شوند."
+      },
+      "objectives": {
+        "en": [
+          "Explain the stages and contracts of a retrieval pipeline.",
+          "Identify where document structure and language affect retrieval.",
+          "Separate retrieval failures from generation failures."
+        ],
+        "fa": [
+          "مراحل و قراردادهای pipeline بازیابی را توضیح دهید.",
+          "اثر ساختار سند و زبان بر retrieval را تشخیص دهید.",
+          "خطای retrieval را از خطای generation جدا کنید."
+        ]
+      },
+      "modules": [
+        {
+          "id": "retrieval-basics",
+          "title": {
+            "en": "Search, embeddings, and ranking",
+            "fa": "جست‌وجو، embedding و رتبه‌بندی"
+          },
+          "activity": {
+            "en": "Compare one lexical and one semantic retrieval example; write what evidence each ranker can and cannot use.",
+            "fa": "یک نمونهٔ lexical و یک نمونهٔ semantic را مقایسه کنید و بنویسید هر رتبه‌بند از چه شواهدی می‌تواند یا نمی‌تواند استفاده کند."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "build-search-engine-from-scratch"
+            },
+            {
+              "lang": "en",
+              "slug": "embeddings"
+            },
+            {
+              "lang": "fa",
+              "slug": "vector-databases"
+            },
+            {
+              "lang": "fa",
+              "slug": "persian-embedding-models"
+            }
+          ]
+        },
+        {
+          "id": "document-ingestion",
+          "title": {
+            "en": "Parsing and chunking documents",
+            "fa": "Parsing و chunking سند"
+          },
+          "activity": {
+            "en": "Choose a document with headings or tables and list the structural information that should survive extraction before chunking.",
+            "fa": "سندی دارای heading یا جدول انتخاب کنید و اطلاعات ساختاری لازم برای حفظ‌شدن در extraction پیش از chunking را فهرست کنید."
+          },
+          "articles": [
+            {
+              "lang": "fa",
+              "slug": "document-parsing"
+            },
+            {
+              "lang": "fa",
+              "slug": "chunking-strategies"
+            }
+          ]
+        },
+        {
+          "id": "retrieval-design",
+          "title": {
+            "en": "Design the retrieval stage",
+            "fa": "طراحی مرحلهٔ retrieval"
+          },
+          "activity": {
+            "en": "Draw a retrieval flow with candidate generation, filtering, and context selection; state the observable evidence at each boundary.",
+            "fa": "جریان retrieval را با candidate generation، filtering و انتخاب context ترسیم کنید و شواهد قابل‌مشاهده در هر مرز را بنویسید."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "vector-databases"
+            },
+            {
+              "lang": "fa",
+              "slug": "contextual-retrieval"
+            },
+            {
+              "lang": "fa",
+              "slug": "multi-representation-retrieval"
+            }
+          ]
+        },
+        {
+          "id": "production-failures",
+          "title": {
+            "en": "Architecture and failure diagnosis",
+            "fa": "معماری و عیب‌یابی شکست‌ها"
+          },
+          "activity": {
+            "en": "For an incorrect answer, make a table of evidence that would distinguish parsing, retrieval, context assembly, and generation causes.",
+            "fa": "برای یک پاسخ نادرست، جدولی از شواهد بسازید که parsing، retrieval، ساخت context و generation را از هم تفکیک کند."
+          },
+          "articles": [
+            {
+              "lang": "fa",
+              "slug": "production-rag-architecture"
+            },
+            {
+              "lang": "fa",
+              "slug": "rag-failure-diagnostics"
+            }
+          ]
+        }
+      ],
+      "completion": {
+        "en": "Explain a retrieval-backed system as observable stages and propose a diagnosis for one failure without treating the final answer alone as sufficient evidence.",
+        "fa": "سامانهٔ retrieval را به‌صورت مراحل قابل مشاهده توضیح دهید و برای یک شکست، عیب‌یابی پیشنهاد کنید؛ پاسخ نهایی به‌تنهایی را شاهد کافی ندانید."
+      },
+      "known_gaps": {
+        "en": "The existing detailed Persian document-parsing and failure-diagnostics material is not presented as an English translation.",
+        "fa": "مقاله‌های تفصیلی parsing سند و عیب‌یابی RAG به فارسی هستند و ترجمهٔ انگلیسی معرفی نمی‌شوند."
+      }
+    },
+    {
+      "id": "agent-engineering",
+      "level": {
+        "en": "Intermediate",
+        "fa": "متوسط"
+      },
+      "title": {
+        "en": "Reliable Agent Engineering",
+        "fa": "مهندسی عامل‌های قابل‌اتکا"
+      },
+      "description": {
+        "en": "Study when an agent is useful, how its harness and context shape behavior, and how to reason about production failure modes.",
+        "fa": "بررسی کنید عامل چه زمانی مناسب است، harness و context چگونه رفتار را شکل می‌دهند و شکست‌های عملیاتی را چگونه باید تحلیل کرد."
+      },
+      "audience": {
+        "en": "Engineers moving from prompt prototypes to tool-using or multi-step systems.",
+        "fa": "مهندسانی که از نمونه‌های prompt به سامانه‌های چندمرحله‌ای یا ابزارمحور می‌روند."
+      },
+      "prerequisites": {
+        "en": "Basic LLM application experience is useful but not mandatory.",
+        "fa": "تجربهٔ پایهٔ برنامه‌های LLM مفید است اما الزامی نیست."
+      },
+      "objectives": {
+        "en": [
+          "Distinguish agents from deterministic workflows.",
+          "Describe state, tools, context and retries as explicit system components.",
+          "Identify failure, safety and evaluation boundaries."
+        ],
+        "fa": [
+          "عامل را از workflow قطعی متمایز کنید.",
+          "state، ابزار، context و retry را به‌عنوان اجزای صریح سیستم توضیح دهید.",
+          "مرزهای شکست، ایمنی و ارزیابی را مشخص کنید."
+        ]
+      },
+      "modules": [
+        {
+          "id": "agents-or-workflows",
+          "title": {
+            "en": "Choose the right control flow",
+            "fa": "انتخاب control flow مناسب"
+          },
+          "activity": {
+            "en": "Take a multi-step task and define which steps can be deterministic and where a model decision is actually needed.",
+            "fa": "یک وظیفهٔ چندمرحله‌ای را بررسی کنید؛ مشخص کنید کدام گام‌ها قطعی‌اند و مدل واقعاً کجا باید تصمیم بگیرد."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "ai-agent-use-cases"
+            },
+            {
+              "lang": "fa",
+              "slug": "agent-vs-workflow"
+            }
+          ]
+        },
+        {
+          "id": "harness-and-context",
+          "title": {
+            "en": "Harness, tools, and context",
+            "fa": "Harness، ابزار و context"
+          },
+          "activity": {
+            "en": "Sketch a tool call with inputs, output validation, retry limit, idempotency boundary, and state transition.",
+            "fa": "یک فراخوانی ابزار را با ورودی، اعتبارسنجی خروجی، سقف retry، مرز idempotency و گذار state طراحی کنید."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "deep-research-agents"
+            },
+            {
+              "lang": "en",
+              "slug": "academic-research-agent"
+            },
+            {
+              "lang": "fa",
+              "slug": "agent-harness"
+            },
+            {
+              "lang": "fa",
+              "slug": "context-engineering-agents"
+            }
+          ]
+        },
+        {
+          "id": "state-and-reliability",
+          "title": {
+            "en": "State and production reliability",
+            "fa": "state و قابلیت اتکای عملیاتی"
+          },
+          "activity": {
+            "en": "List how the system recovers after timeout, duplicate tool response, partial output, and context compaction.",
+            "fa": "رفتار بازیابی سامانه را پس از timeout، پاسخ تکراری ابزار، خروجی ناقص و فشرده‌سازی context مشخص کنید."
+          },
+          "articles": [
+            {
+              "lang": "fa",
+              "slug": "context-compaction-agents"
+            },
+            {
+              "lang": "fa",
+              "slug": "agent-production-failures"
+            },
+            {
+              "lang": "fa",
+              "slug": "agent-costs"
+            }
+          ]
+        },
+        {
+          "id": "evaluation-and-safety",
+          "title": {
+            "en": "Evaluation and safety boundaries",
+            "fa": "ارزیابی و مرزهای ایمنی"
+          },
+          "activity": {
+            "en": "Define one measurable task outcome, one unacceptable side effect, and a human approval point for a consequential action.",
+            "fa": "یک پیامد قابل‌اندازه‌گیری، یک اثر جانبی غیرقابل‌قبول و نقطهٔ تأیید انسانی برای اقدام حساس تعریف کنید."
+          },
+          "articles": [
+            {
+              "lang": "fa",
+              "slug": "secure-nl2sql"
+            },
+            {
+              "lang": "fa",
+              "slug": "agent-skills"
+            }
+          ]
+        }
+      ],
+      "completion": {
+        "en": "Present an agent design with explicit state transitions, tool contracts, recovery behavior and an evaluation plan.",
+        "fa": "طرح عاملی ارائه کنید که گذارهای state، قرارداد ابزار، رفتار بازیابی و برنامهٔ ارزیابی آن روشن باشد."
+      },
+      "known_gaps": {
+        "en": "Several detailed implementation articles are currently available in Persian only and are marked as such in the reading list.",
+        "fa": "چند مقالهٔ پیاده‌سازی تفصیلی فعلاً فقط فارسی هستند و زبانشان در فهرست مطالعه مشخص می‌شود."
+      }
+    },
+    {
+      "id": "persian-ai-evaluation",
+      "level": {
+        "en": "Applied research",
+        "fa": "پژوهش کاربردی"
+      },
+      "title": {
+        "en": "Persian AI Evaluation: Methods and Limits",
+        "fa": "ارزیابی هوش مصنوعی فارسی: روش و محدودیت"
+      },
+      "description": {
+        "en": "Explore Persian language evaluation through dataset design, evidence quality, benchmark limits, and reproducible reporting.",
+        "fa": "ارزیابی مدل‌های فارسی را از مسیر طراحی داده، کیفیت شواهد، محدودیت benchmark و گزارش بازتولیدپذیر بررسی کنید."
+      },
+      "audience": {
+        "en": "Practitioners and researchers evaluating Persian-language models, datasets or retrieval systems.",
+        "fa": "مهندسان و پژوهشگرانی که مدل، داده یا سامانهٔ retrieval فارسی را ارزیابی می‌کنند."
+      },
+      "prerequisites": {
+        "en": "Comfort reading evaluation tables; foundational LLM knowledge is recommended.",
+        "fa": "توانایی خواندن جدول ارزیابی لازم است؛ آشنایی با مبانی LLM پیشنهاد می‌شود."
+      },
+      "objectives": {
+        "en": [
+          "Separate dataset properties from model performance claims.",
+          "Identify synthetic, human-reviewed and independently reproduced evidence.",
+          "Design an evaluation report that preserves task limits and provenance."
+        ],
+        "fa": [
+          "ویژگی داده را از ادعای عملکرد مدل جدا کنید.",
+          "شواهد مصنوعی، بازبینی‌شده توسط انسان و مستقل بازتولیدشده را تفکیک کنید.",
+          "گزارش ارزیابی را با حفظ محدودیت و provenance طراحی کنید."
+        ]
+      },
+      "modules": [
+        {
+          "id": "language-and-data",
+          "title": {
+            "en": "Persian text and evaluation scope",
+            "fa": "متن فارسی و دامنهٔ ارزیابی"
+          },
+          "activity": {
+            "en": "List the language, script, task, population, and document conditions represented—and those absent—from a dataset card.",
+            "fa": "زبان، خط، وظیفه، جامعه و شرایط سندِ موجود و غایب در یک کارت داده را فهرست کنید."
+          },
+          "articles": [
+            {
+              "lang": "fa",
+              "slug": "persian-open-ai-ecosystem"
+            },
+            {
+              "lang": "fa",
+              "slug": "persian-llm-evaluation"
+            }
+          ]
+        },
+        {
+          "id": "dataset-methodology",
+          "title": {
+            "en": "Benchmark design and evidence",
+            "fa": "طراحی benchmark و شواهد"
+          },
+          "activity": {
+            "en": "For one benchmark, record scenario origin, label review, contamination risks, eligibility rules, and what its score cannot establish.",
+            "fa": "برای یک benchmark منشأ سناریو، بازبینی برچسب، خطر آلودگی، قواعد صلاحیت و مواردی را که امتیاز ثابت نمی‌کند ثبت کنید."
+          },
+          "articles": [
+            {
+              "lang": "fa",
+              "slug": "massive-intent-benchmark"
+            },
+            {
+              "lang": "fa",
+              "slug": "tasmim-bench"
+            },
+            {
+              "lang": "en",
+              "slug": "inkling-effort-evaluation"
+            }
+          ]
+        },
+        {
+          "id": "report-and-reproduce",
+          "title": {
+            "en": "Metrics, reproduction, and limitations",
+            "fa": "معیار، بازتولید و محدودیت"
+          },
+          "activity": {
+            "en": "Write a short result statement that separates measured results, community-reported results, and untested claims.",
+            "fa": "یک گزارش کوتاه بنویسید که نتیجهٔ اندازه‌گیری‌شده، نتیجهٔ گزارش‌شده توسط جامعه و ادعای آزمون‌نشده را جدا کند."
+          },
+          "articles": [
+            {
+              "lang": "fa",
+              "slug": "ai-reasoning-evaluation"
+            },
+            {
+              "lang": "en",
+              "slug": "evaluating-coding-harnesses"
+            },
+            {
+              "lang": "fa",
+              "slug": "document-parsing"
+            }
+          ]
+        }
+      ],
+      "completion": {
+        "en": "Produce a one-page evaluation protocol with clear task scope, provenance, metrics, limitations, and reproduction steps.",
+        "fa": "یک پروتکل یک‌صفحه‌ای ارزیابی با دامنهٔ روشن، provenance، معیار، محدودیت و مراحل بازتولید آماده کنید."
+      },
+      "known_gaps": {
+        "en": "The currently linked Tasmim-Bench release is a synthetic pilot and does not establish operational decision quality.",
+        "fa": "نسخهٔ فعلی Tasmim-Bench یک pilot مصنوعی است و کیفیت تصمیم‌گیری عملیاتی را ثابت نمی‌کند."
+      }
+    },
+    {
+      "id": "llm-infrastructure",
+      "level": {
+        "en": "Intermediate",
+        "fa": "متوسط"
+      },
+      "title": {
+        "en": "LLM Inference and Serving",
+        "fa": "استنتاج و سرویس‌دهی LLM"
+      },
+      "description": {
+        "en": "Connect model and cache constraints to deployment choices, serving configurations, latency, and capacity planning.",
+        "fa": "محدودیت مدل و cache را به انتخاب استقرار، پیکربندی سرویس‌دهی، latency و ظرفیت‌سنجی پیوند دهید."
+      },
+      "audience": {
+        "en": "Engineers planning local inference or production model serving.",
+        "fa": "مهندسانی که استنتاج محلی یا سرویس‌دهی مدل در production را برنامه‌ریزی می‌کنند."
+      },
+      "prerequisites": {
+        "en": "Basic model architecture and tensor shape familiarity is helpful.",
+        "fa": "آشنایی پایه با معماری مدل و شکل tensor مفید است."
+      },
+      "objectives": {
+        "en": [
+          "Estimate weight and KV-cache memory from explicit assumptions.",
+          "Compare serving configuration choices without treating one workload as universal.",
+          "Separate lab measurements from theoretical capacity estimates."
+        ],
+        "fa": [
+          "حافظهٔ وزن و KV cache را با فرض‌های صریح تخمین بزنید.",
+          "گزینه‌های سرویس‌دهی را بدون تعمیم یک workload مقایسه کنید.",
+          "اندازه‌گیری آزمایشگاهی را از تخمین نظری ظرفیت جدا کنید."
+        ]
+      },
+      "modules": [
+        {
+          "id": "local-inference",
+          "title": {
+            "en": "Local inference and model constraints",
+            "fa": "استنتاج محلی و محدودیت مدل"
+          },
+          "activity": {
+            "en": "For a model card, identify parameter count, quantization, runtime, and hardware assumptions before estimating memory.",
+            "fa": "برای یک مدل، شمار پارامتر، quantization، runtime و فرض سخت‌افزاری را پیش از تخمین حافظه مشخص کنید."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "serving-kimi-k2-vllm"
+            },
+            {
+              "lang": "fa",
+              "slug": "local-llm-inference"
+            }
+          ]
+        },
+        {
+          "id": "memory-and-cache",
+          "title": {
+            "en": "Weights and KV cache",
+            "fa": "وزن‌ها و KV cache"
+          },
+          "activity": {
+            "en": "Calculate weight memory and KV cache separately, then vary context length and KV-head count to observe sensitivity.",
+            "fa": "حافظهٔ وزن و KV cache را جداگانه حساب کنید؛ سپس حساسیت برآورد را با تغییر طول context و تعداد KV head بررسی کنید."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "serving-gpt-oss-120b-vllm"
+            },
+            {
+              "lang": "fa",
+              "slug": "local-llm-inference"
+            }
+          ]
+        },
+        {
+          "id": "serving-tradeoffs",
+          "title": {
+            "en": "Serving trade-offs",
+            "fa": "موازنه‌های سرویس‌دهی"
+          },
+          "activity": {
+            "en": "Define a latency/throughput target and list which serving assumptions would need a real workload benchmark.",
+            "fa": "هدف latency/throughput را مشخص کنید و فرض‌هایی را بنویسید که باید با workload واقعی benchmark شوند."
+          },
+          "articles": [
+            {
+              "lang": "en",
+              "slug": "serving-kimi-k2-vllm"
+            },
+            {
+              "lang": "en",
+              "slug": "serving-gpt-oss-120b-vllm"
+            },
+            {
+              "lang": "fa",
+              "slug": "agent-costs"
+            }
+          ]
+        }
+      ],
+      "completion": {
+        "en": "Deliver a transparent capacity estimate and a measurement plan that states what must be verified on the target runtime and hardware.",
+        "fa": "تخمین ظرفیت شفاف و برنامهٔ اندازه‌گیری ارائه دهید و موارد لازم برای راستی‌آزمایی روی runtime و سخت‌افزار مقصد را بنویسید."
+      },
+      "known_gaps": {
+        "en": "Memory estimates omit architecture-specific allocator, activation, parallelism and kernel behavior; they are not a hardware compatibility guarantee.",
+        "fa": "تخمین حافظه رفتار allocator، activation، parallelism و kernel اختصاصی معماری را کامل مدل نمی‌کند و تضمین سازگاری سخت‌افزار نیست."
+      }
+    }
+  ]
+}

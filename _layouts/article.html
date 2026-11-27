@@ -27,6 +27,19 @@ layout: publication
   {% endif %}
 </p>
 {% if article_pair.different_editions and en_edition and fa_edition %}<p class="meta">{% if page.lang == 'fa' %}این نسخهٔ فارسی، راهنمای مهندسی به‌روز‌شده است. <a href="{{ article_pair.en }}">آموزش عملی انگلیسی</a> نسخهٔ قبلی است و ترجمهٔ این مقاله نیست.{% else %}This is the earlier practical tutorial. The <a href="{{ article_pair.fa }}">updated Persian engineering guide</a> is not a direct translation of this edition.{% endif %}</p>{% endif %}
-{{ content }}
+{% if page.lang == 'fa' %}
+{{ content | replace: '<pre ', '<pre role="group" tabindex="0" aria-label="نمونهٔ کد" ' | replace: '<pre>', '<pre role="group" tabindex="0" aria-label="نمونهٔ کد">' }}
+{% else %}
+{{ content | replace: '<pre ', '<pre role="group" tabindex="0" aria-label="Code example" ' | replace: '<pre>', '<pre role="group" tabindex="0" aria-label="Code example">' }}
+{% endif %}
 </article>
+{% if page.series_id %}
+  {% assign series_posts = site.posts | where: 'series_id', page.series_id | sort: 'series_number' %}
+  <nav class="series-navigation" aria-label="{% if page.lang == 'fa' %}مجموعهٔ یادداشت{% else %}Reading series{% endif %}">
+    <p class="eyebrow">{{ page.series_title[page.lang] | escape }} · {% if page.lang == 'fa' %}قسمت{% else %}Part{% endif %} {{ page.series_number }}</p>
+    <p>{% if page.lang == 'fa' %}بر اساس{% else %}Based on{% endif %} <a href="{{ page.series_source_url }}">{{ page.series_source_title | escape }}</a> · {{ page.series_source_author | escape }}</p>
+    <ol>{% for series_post in series_posts %}<li{% if series_post.url == page.url %} aria-current="page"{% endif %}><a href="{{ series_post.url | relative_url }}">{{ series_post.title | escape }}</a> <span class="meta" lang="{{ series_post.lang }}">{% if series_post.lang == 'fa' %}فارسی{% else %}English{% endif %}</span></li>{% endfor %}</ol>
+    <a class="action" href="{% if page.lang == 'fa' %}/fa/reading/{% else %}/reading/{% endif %}">{% if page.lang == 'fa' %}نمایش همهٔ یادداشت‌های مطالعه{% else %}Browse reading notes{% endif %}</a>
+  </nav>
+{% endif %}
 {% include related-articles.html %}

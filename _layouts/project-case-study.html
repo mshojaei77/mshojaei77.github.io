@@ -1,0 +1,14 @@
+---
+layout: publication
+---
+{% assign selected_project = nil %}{% for project in site.data.home.selected_work %}{% if project.case_study.slug == page.case_study_id %}{% assign selected_project = project %}{% endif %}{% endfor %}
+{% assign case = selected_project.case_study %}
+<article class="learning-page project-case-study">
+  <header class="learning-intro"><p class="eyebrow">{{ selected_project[page.lang].tag | escape }}</p><h1>{{ selected_project[page.lang].title | escape }}</h1><p class="lede">{{ selected_project[page.lang].desc | escape }}</p><p class="meta">{% if page.lang == 'fa' %}بازبینی مستندات عمومی:{% else %}Public documentation reviewed:{% endif %} <time datetime="{{ case.verified_on }}">{{ case.verified_on }}</time></p></header>
+  <section><h2>{% if page.lang == 'fa' %}پیاده‌سازی مستندشده{% else %}Documented implementation{% endif %}</h2><p>{{ case.implementation[page.lang] | escape }}</p></section>
+  <section><h2>{% if page.lang == 'fa' %}نمای متنی معماری{% else %}Architecture at a glance{% endif %}</h2><p class="architecture-summary" dir="auto">{{ case.architecture[page.lang] | escape }}</p></section>
+  <section><h2>{% if page.lang == 'fa' %}موازنه‌های فنی{% else %}Engineering trade-offs{% endif %}</h2><p>{{ case.tradeoffs[page.lang] | escape }}</p></section>
+  <aside class="learning-limitations"><h2>{% if page.lang == 'fa' %}محدودیت‌ها{% else %}Limitations{% endif %}</h2><p>{{ case.limitations[page.lang] | escape }}</p></aside>
+  <section><h2>{% if page.lang == 'fa' %}مخزن و دامنه‌های مرتبط{% else %}Repository and related domains{% endif %}</h2><p><a href="https://github.com/mshojaei77/{{ selected_project.repo }}">{{ selected_project.repo | escape }} on GitHub</a></p><ul>{% for domain_id in case.domains %}{% assign domain = site.data.topics.clusters[domain_id] %}<li><a href="{% if page.lang == 'fa' %}/fa/knowledge/{% else %}/knowledge/{% endif %}#domain-{{ domain_id }}">{{ domain.labels[page.lang] | escape }}</a></li>{% endfor %}</ul></section>
+  <p><a class="action" href="{% if page.lang == 'fa' %}/fa/work/{% else %}/work/{% endif %}">{% if page.lang == 'fa' %}بازگشت به پروژه‌ها{% else %}Back to projects{% endif %}</a></p>
+</article>

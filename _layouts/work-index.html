@@ -1,0 +1,17 @@
+---
+layout: publication
+---
+<article class="learning-page work-index">
+  <header class="learning-intro"><p class="eyebrow">{% if page.lang == 'fa' %}نمونه‌کار مهندسی{% else %}Engineering portfolio{% endif %}</p><h1>{{ page.title | escape }}</h1><p class="lede">{{ page.description | escape }}</p><p>{% if page.lang == 'fa' %}شرح‌ها از READMEهای عمومی پروژه‌ها تهیه شده‌اند و وضعیت استقرار، پذیرش کاربر یا نتیجهٔ کسب‌وکار را ادعا نمی‌کنند.{% else %}Descriptions are grounded in public project documentation. They do not claim deployments, user adoption, or business outcomes.{% endif %}</p></header>
+  <section class="learning-path-grid" aria-label="{% if page.lang == 'fa' %}پروژه‌های عمومی{% else %}Public projects{% endif %}">
+  {% for project in site.data.home.selected_work %}
+    <article class="entry-card project-case-card">
+      {% if project.image %}<img src="{{ project.image | relative_url }}" alt="" width="96" height="96" loading="lazy" decoding="async">{% endif %}
+      <p class="eyebrow">{{ project[page.lang].tag | escape }}</p>
+      <h2><a href="{% if page.lang == 'fa' %}/fa/work/{{ project.case_study.slug }}/{% else %}/work/{{ project.case_study.slug }}/{% endif %}">{{ project[page.lang].title | escape }}</a></h2>
+      <p>{{ project[page.lang].desc | escape }}</p>
+      <p class="meta">{{ project.stack | join: " · " | escape }}</p>
+    </article>
+  {% endfor %}
+  </section>
+</article>

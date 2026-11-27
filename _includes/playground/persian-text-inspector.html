@@ -1,0 +1,25 @@
+<section class="tool-panel" data-text-inspector>
+  <p class="tool-explanation">{% if page.lang == 'fa' %}متن فقط در مرورگر شما بررسی می‌شود. Unicode NFC، نگاشت نویسه‌های عربی به فارسی، تبدیل رقم‌ها و حذف کنترل‌های bidi عملیات جدا و قابل‌انتخاب هستند؛ هیچ تبدیلی خودکار اجرا نمی‌شود.{% else %}Text is processed only in this browser. Unicode NFC, Arabic-to-Persian letter mapping, digit conversion, and bidi-control removal are separate opt-in operations; nothing is changed automatically.{% endif %}</p>
+  <label class="tool-field" for="inspector-input">{% if page.lang == 'fa' %}متن برای بررسی{% else %}Text to inspect{% endif %}</label>
+  <textarea id="inspector-input" data-input rows="8" maxlength="20000" dir="auto" spellcheck="false" placeholder="{% if page.lang == 'fa' %}متن فارسی یا ترکیبی را اینجا وارد کنید…{% else %}Paste Persian, English, or mixed text…{% endif %}"></textarea>
+  <fieldset class="tool-options">
+    <legend>{% if page.lang == 'fa' %}تبدیل‌های اختیاری{% else %}Optional transformations{% endif %}</legend>
+    <label><input type="checkbox" data-transform="nfc">{% if page.lang == 'fa' %}اعمال Unicode NFC{% else %}Apply Unicode NFC{% endif %}</label>
+    <label><input type="checkbox" data-transform="letters">{% if page.lang == 'fa' %}تبدیل ي و ك عربی به ی و ک فارسی{% else %}Map Arabic Yeh/Kaf to Persian ی/ک{% endif %}</label>
+    <label><input type="checkbox" data-transform="digits">{% if page.lang == 'fa' %}تبدیل رقم‌های فارسی/عربی/لاتین به رقم فارسی{% else %}Map Persian, Arabic, and Latin digits to Persian digits{% endif %}</label>
+    <label><input type="checkbox" data-transform="bidi">{% if page.lang == 'fa' %}حذف کنترل‌های جهت متن — فقط با بررسی دقیق{% else %}Remove bidi controls — only after careful review{% endif %}</label>
+  </fieldset>
+  <div class="tool-actions"><button type="button" class="action primary" data-analyze>{% if page.lang == 'fa' %}بررسی متن{% else %}Inspect text{% endif %}</button><button type="button" class="action" data-reset>{% if page.lang == 'fa' %}پاک‌کردن{% else %}Clear{% endif %}</button></div>
+  <p class="tool-status" role="status" aria-live="polite" data-status></p>
+  <section class="tool-results" data-results hidden aria-labelledby="inspector-results-title">
+    <h2 id="inspector-results-title">{% if page.lang == 'fa' %}گزارش نویسه‌ها{% else %}Character report{% endif %}</h2>
+    <dl class="tool-summary" data-summary></dl>
+    <div data-changes-section hidden><h3>{% if page.lang == 'fa' %}تغییرهای اعمال‌شده{% else %}Applied transformations{% endif %}</h3><ul data-changes></ul></div>
+    <label class="tool-field" for="inspector-output">{% if page.lang == 'fa' %}خروجی تبدیل‌شده{% else %}Transformed output{% endif %}</label>
+    <textarea id="inspector-output" data-output rows="8" dir="auto" readonly></textarea>
+    <button type="button" class="action" data-copy>{% if page.lang == 'fa' %}کپی خروجی{% else %}Copy output{% endif %}</button>
+    <h3>{% if page.lang == 'fa' %}نویسه‌ها و کنترل‌های نیازمند توجه{% else %}Characters and controls to review{% endif %}</h3>
+    <p>{% if page.lang == 'fa' %}وجود ZWNJ، کنترل جهت یا اعراب لزوماً خطا نیست؛ کاربرد هر مورد را با متن اطراف بسنجید.{% else %}A ZWNJ, bidi control, or diacritic is not automatically an error; interpret each occurrence in context.{% endif %}</p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="{% if page.lang == 'fa' %}جدول جزئیات نویسه‌ها{% else %}Character details table{% endif %}"><table><thead><tr><th>{% if page.lang == 'fa' %}نویسه{% else %}Character{% endif %}</th><th>Code point</th><th>{% if page.lang == 'fa' %}نام یا دسته{% else %}Name or category{% endif %}</th><th>{% if page.lang == 'fa' %}تعداد{% else %}Count{% endif %}</th></tr></thead><tbody data-characters></tbody></table></div>
+  </section>
+</section>

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "parsieval",
+    "title": "ParsiEval and Konkur-eval",
+    "kind": {"en": "Evaluation repository", "fa": "مخزن ابزار ارزیابی"},
+    "status": {"en": "Published repository; inspect its benchmark-specific methodology", "fa": "مخزن منتشرشده؛ روش هر benchmark را جداگانه بررسی کنید"},
+    "description": {
+      "en": "The current repository README describes an original 364-question Persian multiple-choice benchmark and a Konkur 1404 suite with 2,137 Persian and English MCQs across ten exam sessions.",
+      "fa": "README فعلی مخزن از benchmark چندگزینه‌ای ۳۶۴ پرسشی فارسی و مجموعهٔ Konkur 1404 با ۲٬۱۳۷ پرسش فارسی و انگلیسی در ده نوبت آزمون نام می‌برد."
+    },
+    "limitations": {
+      "en": "Counts and scope are transcribed from the repository README, not an independent audit of every item or evaluation result. The repository does not publish a declared license in GitHub metadata.",
+      "fa": "شمار و دامنه از README مخزن نقل شده و ممیزی مستقل همهٔ پرسش‌ها یا نتایج نیست. metadata گیت‌هاب مجوز اعلام‌شده‌ای برای مخزن نشان نمی‌دهد."
+    },
+    "url": "https://github.com/mshojaei77/ParsiEval",
+    "language": ["fa", "en"],
+    "verified_on": "2026-11-28",
+    "articles": [{"lang": "fa", "slug": "persian-llm-evaluation"}, {"lang": "fa", "slug": "massive-intent-benchmark"}]
+  },
+  {
+    "id": "tasmim-bench",
+    "title": "Tasmim-Bench",
+    "kind": {"en": "Synthetic decision-evaluation pilot", "fa": "پایلوت مصنوعی ارزیابی تصمیم"},
+    "status": {"en": "Exploratory synthetic pilot", "fa": "پایلوت اکتشافی مصنوعی"},
+    "description": {
+      "en": "The current v1.1.2 dataset card describes 120 synthetic scenarios: 24 adapter-development cases and 96 screening cases, expressed as 480 decisions overall.",
+      "fa": "کارت دادهٔ فعلی نسخهٔ ۱٫۱٫۲ از ۱۲۰ سناریوی مصنوعی می‌گوید: ۲۴ مورد توسعهٔ adapter و ۹۶ مورد screening، در مجموع ۴۸۰ تصمیم."
+    },
+    "limitations": {
+      "en": "The card states 0 human-verified labels and 0 independently evaluation-eligible records. Results are a synthetic pilot and do not establish operational decision quality or model superiority.",
+      "fa": "کارت داده ۰ برچسب تأییدشده توسط انسان و ۰ رکورد واجد ارزیابی مستقل گزارش می‌کند. نتایج یک پایلوت مصنوعی‌اند و کیفیت تصمیم عملیاتی یا برتری مدل را ثابت نمی‌کنند."
+    },
+    "url": "https://huggingface.co/datasets/mshojaei77/tasmim-bench",
+    "language": ["fa", "en"],
+    "verified_on": "2026-11-28",
+    "articles": [{"lang": "fa", "slug": "tasmim-bench"}, {"lang": "fa", "slug": "ai-reasoning-evaluation"}]
+  },
+  {
+    "id": "persian-ocr-bench",
+    "title": "Persian OCR Evaluation Dataset",
+    "kind": {"en": "Small paired-data resource", "fa": "مجموعه‌دادهٔ کوچک جفت‌شده"},
+    "status": {"en": "Published dataset; per-record review status must be checked", "fa": "مجموعه‌دادهٔ منتشرشده؛ وضعیت بازبینی هر رکورد باید بررسی شود"},
+    "description": {
+      "en": "The dataset card describes Persian document images paired with UTF-8 transcription targets, a single-page transcription task, a `checked` record field, and size category below 1K.",
+      "fa": "کارت داده تصویر اسناد فارسی را همراه با متن مرجع UTF-8، وظیفهٔ transcription تک‌صفحه‌ای، فیلد `checked` برای هر رکورد و اندازهٔ کمتر از ۱۰۰۰ مورد توصیف می‌کند."
+    },
+    "limitations": {
+      "en": "This small transcription resource does not establish universal OCR or VLM performance. Its card declares license `other`; review the dataset card and applicable rights before redistribution.",
+      "fa": "این منبع کوچک transcription عملکرد عمومی OCR یا VLM را ثابت نمی‌کند. مجوز کارت داده `other` است؛ پیش از بازتوزیع، کارت و حقوق مرتبط را بررسی کنید."
+    },
+    "url": "https://huggingface.co/datasets/mshojaei77/persian-ocr-bench",
+    "language": ["fa"],
+    "verified_on": "2026-11-28",
+    "articles": [{"lang": "fa", "slug": "document-parsing"}]
+  }
+]

@@ -1,0 +1,32 @@
+---
+layout: publication
+---
+<article class="learning-page">
+  <header class="learning-intro">
+    <p class="eyebrow">{% if page.lang == 'fa' %}مسیرهای یادگیری{% else %}Learning paths{% endif %}</p>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="lede">{{ page.description | escape }}</p>
+    <p>{% if page.lang == 'fa' %}هر مسیر مقاله‌های موجود را با فعالیت‌های تمرینی پیوند می‌دهد. پیشرفت، در صورت فعال‌بودن JavaScript، فقط در همین مرورگر ذخیره می‌شود و حساب کاربری یا همگام‌سازی ندارد.{% else %}Each path connects existing articles with practical activities. If JavaScript is enabled, progress is stored only in this browser; no account or synchronization is used.{% endif %}</p>
+    <p><a class="action" href="{% if page.lang == 'fa' %}/fa/knowledge/{% else %}/knowledge/{% endif %}">{% if page.lang == 'fa' %}مرور دامنه‌های دانش{% else %}Browse knowledge domains{% endif %}</a> <a class="action" href="{% if page.lang == 'fa' %}/fa/playground/{% else %}/playground/{% endif %}">{% if page.lang == 'fa' %}رفتن به Playground{% else %}Open the Playground{% endif %}</a></p>
+  </header>
+  <section class="learning-path-grid" aria-label="{% if page.lang == 'fa' %}فهرست مسیرها{% else %}Available learning paths{% endif %}">
+  {% for path in site.data.learning_paths.paths %}
+    <article class="entry-card learning-path-card">
+      <p class="eyebrow">{{ path.level[page.lang] | escape }}</p>
+      <h2><a href="{% if page.lang == 'fa' %}/fa/learn/{{ path.id }}/{% else %}/learn/{{ path.id }}/{% endif %}">{{ path.title[page.lang] | escape }}</a></h2>
+      <p>{{ path.description[page.lang] | escape }}</p>
+      <p class="meta">{% if page.lang == 'fa' %}{% include persian-digits.html value=path.modules.size %} بخش{% else %}{{ path.modules.size }} modules{% endif %}</p>
+    </article>
+  {% endfor %}
+  </section>
+  <p class="learning-roadmap-link">{% if page.lang == 'fa' %}برای نمای کلی مسیرهای گسترده‌تر، {% else %}For the broader curriculum overview, read the {% endif %}<a href="{% if page.lang == 'fa' %}/fa/roadmap/{% else %}/roadmap.html{% endif %}">{% if page.lang == 'fa' %}نقشهٔ راه مهندسی هوش مصنوعی{% else %}AI Engineering Roadmap{% endif %}</a>.</p>
+  <section class="platform-destinations" aria-labelledby="platform-destinations-title">
+    <h2 id="platform-destinations-title">{% if page.lang == 'fa' %}ادامهٔ کاوش{% else %}Explore further{% endif %}</h2>
+    <ul>
+      <li><a href="{% if page.lang == 'fa' %}/fa/lab/{% else %}/lab/{% endif %}">{% if page.lang == 'fa' %}آزمایشگاه پژوهش و داده‌های عمومی{% else %}Research Lab and public artifacts{% endif %}</a></li>
+      <li><a href="{% if page.lang == 'fa' %}/fa/work/{% else %}/work/{% endif %}">{% if page.lang == 'fa' %}پروژه‌های مهندسی و شرح پیاده‌سازی{% else %}Engineering projects and implementation notes{% endif %}</a></li>
+      <li><a href="{% if page.lang == 'fa' %}/fa/reading/{% else %}/reading/{% endif %}">{% if page.lang == 'fa' %}یادداشت‌های مطالعه{% else %}Book and paper reading notes{% endif %}</a></li>
+      <li><a href="{% if page.lang == 'fa' %}/fa/writing/resources/{% else %}/writing/resources/{% endif %}">{% if page.lang == 'fa' %}منابع یادگیری{% else %}Curated learning resources{% endif %}</a></li>
+    </ul>
+  </section>
+</article>
