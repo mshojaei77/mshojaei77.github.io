@@ -1,26 +1,81 @@
 ---
 layout: article
 lang: en
-title: "Vector Database Comparison"
-description: "Compare vector databases for RAG across hosting, search, ecosystem and reported performance, with caveats where source benchmark conditions are unspecified."
+title: "Vector Databases for RAG: How to Choose and Benchmark"
+description: "Choose a vector database for RAG by workload, filtering, recall, operations, and reproducible benchmarks rather than vendor performance claims."
 permalink: /writing/vector-databases/
 nav_exclude: true
 date: 2026-11-26 16:35:12 +0000
+last_modified_at: 2026-11-27 00:00:00 +0000
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
 ---
-<h1>Vector Database Showdown</h1><p>A Comparative Guide to Leading Vector Databases</p><p class="language-note">The figures and licensing descriptions below are retained from the original comparison; benchmark conditions are not consistently specified and these are not independently verified current product specifications.</p><div class="tablewrap"><table><thead><tr><th scope="col">Database</th><th scope="col">License & Hosting</th><th scope="col">Scale & Performance</th><th scope="col">Filtering & Search</th><th scope="col">Ecosystem & Tooling</th><th scope="col">Strengths</th><th scope="col">Caveats</th></tr></thead><tbody><tr><td><strong>Qdrant</strong></td><td>Apache-2, Self-host & Cloud</td><td>⚡️ &lt;3ms p50 (1M vec)<br/>💾 Quantization cuts RAM ~30x</td><td>Payload-aware filters<br/>Multi-vector per doc</td><td>HTTP & gRPC APIs<br/>LangChain/LlamaIndex</td><td>✅ High RPS<br/>✅ Multi-vector out-of-box</td><td>⚠️ Newer managed cloud<br/>⚠️ Fewer enterprise RBAC</td></tr>
-<tr><td><strong>Milvus</strong></td><td>Apache-2 & Zilliz Cloud</td><td>📈 Billions of vectors<br/>🖥️ CPU/GPU HNSW, IVF-PQ</td><td>Hybrid sparse + dense<br/>Boolean filters</td><td>Dozens of RAG tutorials</td><td>✅ Mature scaling<br/>✅ Laptop → Cluster</td><td>⚠️ On-prem ops complexity<br/>⚠️ Cloud vendor lock-in</td></tr>
-<tr><td><strong>Weaviate</strong></td><td>Apache-2, Self-host & Serverless</td><td>Go core; auto-sharding<br/>Scales to billions</td><td>BM25 + vector "hybrid"<br/>Metadata & geo filters</td><td>GraphQL & REST APIs<br/>Agents SDK, RAG e-book</td><td>✅ Turn-key vectorization<br/>✅ Multi-tenant RBAC, SOC 2</td><td>⚠️ Higher write latencies at scale</td></tr>
-<tr><td><strong>Faiss</strong></td><td>BSD-2 (Library, not DB)</td><td>🚀 Fastest raw ANN on GPU</td><td>None; must build custom</td><td>Python/C++ wrappers<br/>Underpins many DBs</td><td>✅ Ultimate algorithm control<br/>✅ No network hop</td><td>⚠️ No persistence/auth<br/>⚠️ You build the server</td></tr>
-<tr><td><strong>Chroma</strong></td><td>Apache-2, Local & Cloud</td><td>Single-node (~100M vec)<br/>~20ms p50 (100k vec)</td><td>Metadata & full-text<br/>Multimodal support</td><td>3-line Python API<br/>Built into LangChain</td><td>✅ Easiest local prototyping<br/>✅ "Works out-of-the-box"</td><td>⚠️ Single-node today<br/>⚠️ Distributed in preview</td></tr>
-<tr><td><strong>Pinecone</strong></td><td>Proprietary; Managed Serverless</td><td>12B vectors GA<br/>O(10 ms) low-latency reads</td><td>High-recall metadata filters</td><td>Batteries-included docs<br/>Dashboard & RAG primers</td><td>✅ Zero-ops, autoscaling<br/>✅ Cross-region replication</td><td>⚠️ Usage-based cost<br/>⚠️ Closed-source, no self-host</td></tr>
-<tr><td><strong>pgvector</strong></td><td>PostgreSQL License</td><td>Tens of millions<br/>Inherits ACID, PITR</td><td>SQL WHERE clauses<br/>Joins with GIS/JSONB</td><td>Works via any Postgres driver</td><td>✅ Keep vectors with relational data<br/>✅ Simplicity</td><td>⚠️ Table bloat under writes<br/>⚠️ IVFFlat tuning required</td></tr>
-<tr><td><strong>LanceDB</strong></td><td>Apache-2, Local & Cloud</td><td>Columnar "Lance" format<br/>Sub-ms lookups</td><td>SQL-like filters<br/>ANN & brute-force</td><td>Python/TypeScript SDKs<br/>Graph-RAG template</td><td>✅ Multimodal Lakehouse vision<br/>✅ Search → EDA → Training</td><td>⚠️ Younger community<br/>⚠️ Fewer 3rd-party integrations</td></tr>
-<tr><td><strong>Vespa</strong></td><td>Apache-2 & Vespa Cloud</td><td>Proven at Yahoo/Perplexity<br/>&lt;100ms at K QPS</td><td>Native BM25 + dense<br/>Tensor ranking</td><td>YQL, REST & gRPC<br/>LangChain/LlamaIndex</td><td>✅ Unified ranking (text, tensor)<br/>✅ Real-time in-cluster inference</td><td>⚠️ Steep ops footprint (Java)<br/>⚠️ Learning curve for config</td></tr>
-<tr><td><strong>Vald</strong></td><td>Apache-2 (Helm charts)</td><td>NGT index; auto-index<br/>Scales to billions on K8s</td><td>gRPC hooks for custom filters</td><td>Go/Java/Python/Node SDKs<br/>Grafana dashboards</td><td>✅ Kubernetes-first<br/>✅ Auto-scaling, backups</td><td>⚠️ Smaller community<br/>⚠️ Limited hybrid search</td></tr>
-<tr><td><strong>Elasticsearch</strong></td><td>Elastic License & Cloud</td><td>Lucene 9.9 HNSW<br/>Sub-10ms p50 (10M vec)</td><td>BM25 + vector hybrid<br/>Rich bool/geo filters</td><td>Huge ecosystem; ESQL<br/>Kibana, LangChain plugin</td><td>✅ "All-in-one" solution<br/>✅ Mature RBAC & observability</td><td>⚠️ SSPL-like license<br/>⚠️ Can be resource-heavy</td></tr>
-<tr><td><strong>Redis</strong></td><td>BSD-3 OSS & Enterprise</td><td>In-memory KNN<br/>62% higher QPS than peers</td><td>RediSearch KNN<br/>Mix with JSON/full-text</td><td>Clients in all languages<br/>LangChain, llama-cpp</td><td>✅ Lowest latency (μs–ms)<br/>✅ Ideal for real-time RAG</td><td>⚠️ Memory-bound (unless Flash)<br/>⚠️ Some features Enterprise-only</td></tr></tbody></table></div><p>Feel free to benchmark with your own embeddings and workload to pick the best fit!</p>
+<h1>How to Choose a Vector Database for Retrieval</h1>
+
+<p>A vector database is one part of a retrieval system. The right choice depends on the workload around the vectors: filters, update patterns, lexical search, tenant isolation, availability, operations, and the quality target. A universal leaderboard hides those constraints.</p>
+<p>This guide compares architectural options and gives a method for evaluating them on your own data. It does not rank vendors or repeat performance figures whose hardware, dataset, index settings, and query mix cannot be reproduced.</p>
+
+<h2>Start with the retrieval workload</h2>
+<p>Before choosing a product, write down the queries the system must serve:</p>
+<ul>
+  <li>How many vectors, dimensions, and records are expected now and after growth?</li>
+  <li>How often are records inserted, updated, deleted, or re-embedded?</li>
+  <li>Which filters are mandatory, and how selective are they? Include tenant, access-control, date, and product filters.</li>
+  <li>Does the query need semantic similarity, exact terms such as IDs and error codes, or both?</li>
+  <li>What are the latency and availability targets at expected concurrency?</li>
+  <li>Who owns backups, upgrades, index rebuilds, monitoring, and incident response?</li>
+</ul>
+<p>These details matter because approximate nearest-neighbor (ANN) indexes reduce query work at some cost to recall, and filtering can change which candidates are reachable. For example, pgvector documents that approximate-index filtering is applied after the scan; selective filters can therefore return fewer matches unless the query scans more candidates. Its current options include iterative scans. Test that behavior against your actual filter distribution rather than ruling out PostgreSQL categorically.</p>
+
+<h2>Compare architecture before product features</h2>
+<table>
+  <thead><tr><th>Option</th><th>Consider it when</th><th>Questions to test</th></tr></thead>
+  <tbody>
+    <tr><td>PostgreSQL with pgvector</td><td>Vectors belong beside relational records, joins, transactions, and existing PostgreSQL operations.</td><td>Do filtered ANN queries preserve recall? Do index builds, updates, backups, and vacuuming fit the write workload?</td></tr>
+    <tr><td>Vector-search service, such as Qdrant or Milvus</td><td>Vector retrieval is a core service and its indexing, filtering, or dense/sparse search features fit the query plan.</td><td>How do filters affect recall and tail latency? What consistency, replication, backup, and upgrade behavior does the deployed version provide?</td></tr>
+    <tr><td>Search engine with vector retrieval, such as Elasticsearch</td><td>The application already depends on lexical search, filters, and operational tooling in that search platform.</td><td>Does combining lexical and vector retrieval meet relevance and resource targets? Compare exact scoring with approximate kNN where useful.</td></tr>
+    <tr><td>Similarity-search library, such as Faiss</td><td>You need control over index algorithms inside an application or a specialized retrieval service you are prepared to build.</td><td>Who supplies persistence, authorization, replication, API behavior, monitoring, and recovery? The library is not the whole database service.</td></tr>
+  </tbody>
+</table>
+<p>This is a shortlist by architecture, not a claim that products in a row are interchangeable. Check current documentation, supported data types, deployment modes, service limits, security controls, and license terms for the exact version and offering you plan to run.</p>
+
+<h2>Understand the index trade-offs</h2>
+<p>Exact search scores every eligible vector and provides a useful quality baseline. It may be practical for small collections or highly selective filters, but its work grows with the number of vectors that must be checked. ANN indexes reduce the candidates searched and can improve latency, at the cost of potentially missing neighbors.</p>
+<p>HNSW organizes vectors as a navigable graph. Increasing search effort can improve recall but consumes more query time; the graph also needs memory and time to build. IVF-style indexes cluster vectors and search selected lists. They can use less memory or build faster in some configurations, but the number of lists and probes affect recall. Product implementations and parameter names differ, so compare behavior rather than assuming the same setting has the same effect.</p>
+<p>Quantization stores a compressed representation to reduce memory or accelerate search. Measure the recall loss and whether reranking candidates with original vectors recovers enough quality. Hybrid retrieval combines lexical and vector candidates; it can help when exact terms and paraphrases both matter, but adds indexing and query work. Keep it only if a judged query set shows a useful gain.</p>
+
+<h2>Build a fair, small benchmark</h2>
+<ol>
+  <li><strong>Freeze inputs.</strong> Use the same document set, metadata, embedding model and version, vector normalization, distance metric, and query set for every candidate.</li>
+  <li><strong>Build ground truth.</strong> Run exact nearest-neighbor search on a manageable representative sample. Compare each ANN result using recall@k: the fraction of exact top-k items also present in the approximate top-k.</li>
+  <li><strong>Include production filters.</strong> Test common and selective filters, tenant boundaries, missing metadata, and empty-result cases. High unfiltered recall does not demonstrate correct filtered retrieval.</li>
+  <li><strong>Measure the whole path.</strong> Record p50 and p95 query latency at realistic concurrency, recall@k, indexing time, update/delete behavior, memory and disk use, and cost for the same deployment period.</li>
+  <li><strong>Repeat after tuning.</strong> Change one index or query parameter at a time. Record product version, configuration, hardware, data size, and query mix so results can be reproduced.</li>
+</ol>
+<p>A small recall calculation can help check benchmark bookkeeping:</p>
+<pre><code>def recall_at_k(exact_ids, approximate_ids, k):
+    expected = set(exact_ids[:k])
+    if not expected:
+        return 1.0
+    return len(expected &amp; set(approximate_ids[:k])) / len(expected)
+
+print(recall_at_k(["a", "b", "c"], ["a", "c", "d"], 3))  # 0.666...
+</code></pre>
+<p>This measures agreement with exact vector ranking, not whether retrieved passages answer users well. For a RAG application, also judge relevance, answer support, access-control correctness, and downstream answer quality on a labeled query set.</p>
+
+<h2>Make the decision reversible</h2>
+<p>Document the workload, required security properties, test set, and acceptance thresholds before a vendor trial. Keep embedding generation and retrieval behind interfaces that make migration possible, but avoid abstracting away features you need to benchmark. Re-run tests when changing the database version, index, embedding model, chunking, or filter logic; each can alter retrieval quality.</p>
+<p>For a new RAG system, first compare exact search with a simple baseline. Add ANN, hybrid retrieval, quantization, or a separate database only to solve a measured constraint. The smallest system that meets relevance, latency, isolation, and operational requirements is usually the easiest to trust and maintain.</p>
+
+<h2>Further reading</h2>
+<ul>
+  <li><a href="https://github.com/pgvector/pgvector">pgvector documentation</a> — exact and approximate search, HNSW and IVFFlat, filtering, iterative scans, and hybrid search.</li>
+  <li><a href="https://github.com/facebookresearch/faiss">Faiss documentation</a> — a similarity-search library and trade-offs among its index families.</li>
+  <li><a href="https://qdrant.tech/documentation/search/filtering/">Qdrant filtering</a> and <a href="https://qdrant.tech/documentation/search/hybrid-queries/">hybrid and multi-stage queries</a>.</li>
+  <li><a href="https://milvus.io/docs/index-explained.md">Milvus index guide</a> — index choices and their resource and search trade-offs.</li>
+  <li><a href="https://www.elastic.co/docs/reference/query-languages/query-dsl/query-dsl-dense-vector-query">Elasticsearch exact dense-vector query</a> — brute-force scoring compared with approximate kNN.</li>
+  <li>Zhan et al., <a href="https://www.vldb.org/pvldb/vol18/p1536-zhan.pdf">BigVectorBench</a> — a database benchmark motivated by heterogeneous data and compound queries.</li>
+</ul>
