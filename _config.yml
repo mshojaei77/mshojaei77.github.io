@@ -33,11 +33,14 @@ keywords: "LLM tutorial, Large Language Models, Transformer architecture, Machin
 defaults:
   - scope:
       path: ""
+    values:
+      image: /assets/img/social-card.png
+  - scope:
+      path: ""
       type: posts
     values:
       seo:
         type: BlogPosting
-      image: /assets/img/social-card.png
 
 # Site logo and branding
 favicon_ico: "/assets/img/favicon.ico"
