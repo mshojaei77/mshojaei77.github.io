@@ -22,6 +22,7 @@ jobs:
           python3 scripts/test_distribution.py
           python3 scripts/test_indexnow.py
           python3 scripts/check_ai_visibility_benchmark.py
+          python3 scripts/test_private_metric_imports.py
           node scripts/check_analytics.cjs
       - name: Test the document parsing tutorial
         run: |

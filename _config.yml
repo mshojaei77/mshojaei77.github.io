@@ -47,7 +47,7 @@ defaults:
       sitemap: false
 
 # Site logo and branding
-favicon_ico: "/assets/img/favicon.ico"
+favicon_ico: "/favicon.ico"
 
 # Navigation
 nav_sort: case_insensitive
@@ -131,6 +131,7 @@ exclude:
   - .bundle
   - Gemfile
   - Gemfile.lock
+  - /analytics
   - /labs
   - /docs
   - scripts

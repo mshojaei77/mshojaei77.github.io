@@ -12,6 +12,7 @@ import json
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
+from private_metric_imports import ImportErrorDetail, import_manifest, summarize_imports
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_REGISTRY = (
@@ -31,6 +32,7 @@ def main() -> int:
     parser.add_argument("--checkpoint", type=Path, help="optional private copy of the IndexNow checkpoint")
     parser.add_argument("--external-links", type=Path, help="optional sampled external-reference audit CSV")
     parser.add_argument("--browser-audit", type=Path, help="optional production Playwright/axe lab results JSON")
+    parser.add_argument("--imports-manifest", type=Path, help="optional private manifest for official provider exports")
     parser.add_argument("--output-dir", required=True, type=Path, help="private directory outside the repository")
     args = parser.parse_args()
 
@@ -100,6 +102,55 @@ def main() -> int:
         },
     }
 
+    if args.imports_manifest:
+        manifest_path = args.imports_manifest.expanduser().resolve()
+        if manifest_path == ROOT.resolve() or ROOT.resolve() in manifest_path.parents:
+            parser.error("--imports-manifest must be outside the public repository")
+        ledger_path = output_dir / "provider-import-ledger.json"
+        known_fingerprints = set()
+        if ledger_path.exists():
+            ledger = read_json(ledger_path)
+            if ledger.get("schema_version") != 1 or not isinstance(ledger.get("fingerprints"), list):
+                parser.error("private provider import ledger has an unsupported or invalid schema")
+            known_fingerprints = {str(value) for value in ledger["fingerprints"]}
+        try:
+            imported, import_warnings, known_fingerprints = import_manifest(
+                manifest_path, output_dir, known_fingerprints
+            )
+        except (ImportErrorDetail, OSError, json.JSONDecodeError) as exc:
+            parser.error(f"provider export import failed: {exc}")
+        snapshot_time = datetime.now(timezone.utc)
+        generated_at = snapshot_time.isoformat()
+        snapshot_path = output_dir / f"provider-metrics-{report['deployment_revision']}-{snapshot_time.strftime('%Y%m%dT%H%M%S%fZ')}.json"
+        snapshot = {
+            "schema_version": 1,
+            "source_revision": report["deployment_revision"],
+            "generated_at_utc": generated_at,
+            "measurement_semantics": "Provider exports are kept separate; overlapping ranges are not summed. GoatCounter hits are not unique-human counts.",
+            "imports": imported,
+            "aggregate_summary": summarize_imports(imported),
+            "warnings": import_warnings,
+        }
+        snapshot_path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        source_states = {}
+        for entry in imported:
+            source = entry["summary"]["source"]
+            state = "DATA_AVAILABLE_FROM_EXPORT" if entry["summary"]["import_status"] == "IMPORTED" else "DUPLICATE_EXPORT_NO_NEW_DATA"
+            if source_states.get(source) != "DATA_AVAILABLE_FROM_EXPORT":
+                source_states[source] = state
+        for key, source in (("google_search_console", "google_search_console"), ("bing_webmaster", "bing_webmaster"), ("bing_ai_performance", "bing_ai_performance"), ("goatcounter", "goatcounter")):
+            if source in source_states:
+                report["provider_measurements"][key] = source_states[source]
+        report["provider_imports"] = {
+            "manifest_schema_version": 1,
+            "import_count": sum(entry["summary"]["import_status"] == "IMPORTED" for entry in imported),
+            "duplicate_skipped_count": sum(entry["summary"]["import_status"] == "DUPLICATE_SKIPPED" for entry in imported),
+            "sources": dict(Counter(entry["summary"]["source"] for entry in imported)),
+            "warnings": import_warnings,
+            "normalized_snapshot": snapshot_path.name,
+            "private_details_in_report": False,
+        }
+
     if args.registry.exists():
         registry = read_json(args.registry.resolve())
         records = registry.get("records", [])
@@ -158,7 +209,7 @@ def main() -> int:
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"PRIVATE_REPORT={output}")
     print(f"DEPLOYMENT_REVISION={report['deployment_revision']}")
-    print(f"PRIVATE_PROVIDER_METRICS=NOT_INCLUDED")
+    print("PRIVATE_PROVIDER_METRICS=" + ("STORED_ONLY_IN_PRIVATE_OUTPUT" if args.imports_manifest else "NOT_IMPORTED"))
     return 0
 
 

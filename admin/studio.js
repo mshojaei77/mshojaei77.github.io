@@ -42,11 +42,10 @@ for(const button of document.querySelectorAll('[data-locale]'))button.onclick=()
 applyLocale(locale);
 
 
-const SESSION_KEY='studio-remember-v1', TITLE_KEY='studio-post-titles-v1', SESSION_TTL=7*24*60*60*1000;
+const LEGACY_SESSION_KEY='studio-remember-v1', TITLE_KEY='studio-post-titles-v1';
+try{localStorage.removeItem(LEGACY_SESSION_KEY);}catch{}
 const storageGet=key=>{try{return JSON.parse(localStorage.getItem(key)||'null');}catch{return null;}};
 const storageSet=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}};
-const storageRemove=key=>{try{localStorage.removeItem(key);}catch{}};
-function savedSession(){const r=storageGet(SESSION_KEY);if(r&&typeof r.token==='string'&&r.token.startsWith('github_pat_')&&Number.isFinite(r.expires)&&r.expires>Date.now()&&r.expires<=Date.now()+SESSION_TTL)return r;storageRemove(SESSION_KEY);return null;}
 let titles=Object.create(null), titleEpoch=0;
 const cachedTitles=storageGet(TITLE_KEY);
 if(cachedTitles&&typeof cachedTitles==='object'&&!Array.isArray(cachedTitles))for(const [path,x] of Object.entries(cachedTitles))if(allowed(path)&&x&&typeof x.sha==='string'&&typeof x.title==='string')titles[path]=x;
@@ -157,33 +156,25 @@ $('search').oninput=renderList;
 let signingIn=false;
 const loginButton=$('login-form').querySelector('button[type=submit]');
 function loginMessage(message,error=false){$('login-error').textContent=message;$('login-error').classList.toggle('is-error',error);}
-async function signIn(token,remember,restoring=false){
+async function signIn(token){
  if(signingIn||api)return;
- signingIn=true;loginButton.disabled=true;$('token').disabled=true;$('remember').disabled=true;
+ signingIn=true;loginButton.disabled=true;$('token').disabled=true;
  loginMessage(locale==='fa'?'در حال بررسی حساب مالک…':'Checking owner identity…');
  const candidate=new GitHub(token);
  try{
   await candidate.authenticate();await acquireTab();
   const result=await Promise.all([candidate.list(),drafts.all()]);
   api=candidate;items=result[0];local=new Map(result[1].map(x=>[x.path,x]));
-  let warning='';
-  if(remember){
-   if(!token.startsWith('github_pat_')){storageRemove(SESSION_KEY);warning=locale==='fa'?'فقط توکن محدود (fine-grained) قابل ذخیره است.':'Only fine-grained tokens can be remembered.';}
-   else if(!restoring&&!storageSet(SESSION_KEY,{token,expires:Date.now()+SESSION_TTL}))warning=locale==='fa'?'ذخیرهٔ ورود در مرورگر ناموفق بود.':'Browser could not remember your login.';
-  }else storageRemove(SESSION_KEY);
   $('token').value='';$('login').hidden=true;$('workspace').hidden=false;$('logout').hidden=false;$('identity').textContent=OWNER;
-  showDashboard();void hydrateTitles();if(warning)$('session-note').textContent=warning;
+  showDashboard();void hydrateTitles();
  }catch(e){
   candidate.clear();releaseTab?.();releaseTab=null;
-  if(e.status===401||/Access denied:|does not have confirmed write access/.test(e.message)){storageRemove(SESSION_KEY);$('remember').checked=false;$('token').value='';}
-  else if(restoring)$('token').value=token;
+  if(e.status===401||/Access denied:|does not have confirmed write access/.test(e.message))$('token').value='';
   loginMessage(e.message,true);
- }finally{signingIn=false;loginButton.disabled=false;$('token').disabled=false;$('remember').disabled=false;}
+ }finally{signingIn=false;loginButton.disabled=false;$('token').disabled=false;}
 }
-$('login-form').onsubmit=e=>{e.preventDefault();void signIn($('token').value.trim(),$('remember').checked);};
-$('logout').onclick=async()=>{if(busy)return;try{if(d&&version!==stored)await saveSnapshot();}catch{if(!confirm('Local save failed. Sign out anyway? Download first if needed.'))return;}storageRemove(SESSION_KEY);titleEpoch++;api?.clear();releaseTab?.();location.reload();};
-const remembered=savedSession();
-if(remembered){$('remember').checked=true;void signIn(remembered.token,true,true);}
+$('login-form').onsubmit=e=>{e.preventDefault();void signIn($('token').value.trim());};
+$('logout').onclick=async()=>{if(busy)return;try{if(d&&version!==stored)await saveSnapshot();}catch{if(!confirm('Local save failed. Sign out anyway? Download first if needed.'))return;}titleEpoch++;api?.clear();releaseTab?.();location.reload();};
 editor.addEventListener('input',()=>{if(!d||busy||d.pr||d.deleting||d.directAttempt)return;const p=splitSource(d.source);d.source=p.header+bodyWithLineEndings(editor.value,p.body);changed();});
 for(const k of ['title','description','excerpt'])$(k).addEventListener('input',()=>{if(!d||busy||d.pr||d.deleting||d.directAttempt)return;const p=splitSource(d.source);d.source=setScalar(p.header,k,$(k).value)+p.body;if(k==='title'){$('current-title').textContent=$(k).value;renderList();}changed();});
 $('local-save').onclick=()=>saveSnapshot().then(()=>status('Draft saved on this device.')).catch(()=>status('Local storage failed. Download the source before closing.',true));
