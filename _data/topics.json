@@ -241,6 +241,11 @@
     ],
     "serving-kimi-k2-vllm": [
       "systems"
+    ],
+    "build-search-engine-from-scratch": [
+      "foundations",
+      "evaluation",
+      "systems"
     ]
   }
 }
