@@ -1,6 +1,7 @@
 ---
 layout: article
 lang: fa
+author: "محمد شجاعی"
 title: "منابع یادگیری"
 description: "مجموعهٔ منابع یادگیری بر اساس مراحل توسعهٔ LLM."
 permalink: /fa/writing/resources/

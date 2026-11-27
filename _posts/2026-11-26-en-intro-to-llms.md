@@ -4,7 +4,7 @@ layout: article
 lang: en
 permalink: /writing/intro-to-llms/
 nav_exclude: true
-description: "Intro to LLMs: Large Language Models Basics"
+description: "An introductory overview of large language models, how they generate language, how the field developed and the challenges involved in building with them."
 date: 2026-11-26 00:00:00 +0000
 article_kind: tutorial
 show_article_header: false

@@ -4,7 +4,7 @@ layout: article
 lang: en
 permalink: /writing/traditional-language-models/
 nav_exclude: true
-description: "Traditional Language Models Tutorial: Pre-Transformers Era"
+description: "Trace language modeling before Transformers, from n-grams and smoothing to feedforward networks, recurrent networks, LSTMs and GRUs."
 date: 2026-11-26 00:00:00 +0000
 article_kind: tutorial
 show_article_header: false

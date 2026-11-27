@@ -2,7 +2,7 @@
 layout: article
 lang: en
 title: "LLM Interview Questions"
-description: "Interview preparation by topic and technical depth."
+description: "LLM engineering interview questions across Transformers, fine-tuning, evaluation, RAG, agents, deployment and ML system design."
 permalink: /writing/interview/
 nav_exclude: true
 date: 2026-11-26 00:00:00 +0000

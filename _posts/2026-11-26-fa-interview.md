@@ -1,8 +1,9 @@
 ---
 layout: article
 lang: fa
+author: "محمد شجاعی"
 title: "نمونه سؤالات مصاحبه شغلی"
-description: "آمادگی مصاحبه بر اساس موضوع و عمق فنی."
+description: "سؤال‌های مصاحبهٔ مهندسی هوش مصنوعی و LLM از توکن‌سازی و Transformer تا RAG، ایجنت، ارزیابی، استقرار و طراحی سیستم."
 permalink: /fa/writing/interview/
 nav_exclude: true
 date: "2025-07-09 00:00:00 +0000"

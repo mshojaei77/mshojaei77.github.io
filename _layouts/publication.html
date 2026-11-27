@@ -15,6 +15,7 @@
   {% else %}
     {% seo %}
   {% endif %}
+  {% if page.url == '/about.html' or page.url == '/fa/about/' %}{% include profile-page-schema.html %}{% endif %}
   {% if pair and pair.different_editions != true %}
     <link rel="alternate" hreflang="en" href="{{ pair.en | absolute_url }}">
     <link rel="alternate" hreflang="fa" href="{{ pair.fa | absolute_url }}">

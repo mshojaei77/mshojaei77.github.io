@@ -1,5 +1,7 @@
 {% assign canonical = page.url | absolute_url %}
 {% assign social_image = '/assets/img/social-card.png' | absolute_url %}
+{% assign author_key = 'Mohammad Shojaei' %}{% if page.lang == 'fa' %}{% assign author_key = 'محمد شجاعی' %}{% endif %}
+{% assign author_profile = site.data.authors[author_key] %}
 <title>{{ page.title | escape }}</title>
 <meta name="description" content="{{ page.description | escape }}">
 <link rel="canonical" href="{{ canonical }}">
@@ -21,6 +23,6 @@
  "@context":"https://schema.org",
  "@graph":[
  {"@type":"WebPage","@id":{{ canonical | append: '#webpage' | jsonify }},"url":{{ canonical | jsonify }},"name":{{ page.title | jsonify }},"headline":{{ page.title | jsonify }},"description":{{ page.description | jsonify }},"inLanguage":{{ page.lang | jsonify }},"image":{{ social_image | jsonify }},"about":{"@id":"https://mshojaei77.github.io/#person"}},
- {"@type":"Person","@id":"https://mshojaei77.github.io/#person","name":"{% if page.lang == 'fa' %}محمد شجاعی{% else %}Mohammad Shojaei{% endif %}","alternateName":"{% if page.lang == 'fa' %}Mohammad Shojaei{% else %}محمد شجاعی{% endif %}","url":"https://mshojaei77.github.io/","image":"https://github.com/mshojaei77.png","jobTitle":"{% if page.lang == 'fa' %}مهندس هوش مصنوعی{% else %}AI Engineer{% endif %}","sameAs":["https://github.com/mshojaei77","https://huggingface.co/mshojaei77","https://www.linkedin.com/in/mshojaei77/","https://x.com/realshojaei","https://t.me/LLMEngineers"],"knowsAbout":["Large Language Models","AI Agents","Retrieval-Augmented Generation","LLM Evaluation","LLMOps","Model Serving","LangGraph","vLLM","Hugging Face","FastAPI"]}
+ {"@type":"Person","@id":"https://mshojaei77.github.io/#person","name":{{ author_profile.name | jsonify }},"alternateName":{{ author_profile.alternate_name | jsonify }},"url":{{ author_profile.url | jsonify }},"image":{{ author_profile.image | jsonify }},"jobTitle":{{ author_profile.job_title | jsonify }},"sameAs":{{ author_profile.same_as | jsonify }},"knowsAbout":{{ author_profile.knows_about | jsonify }}}
  ]}
 </script>

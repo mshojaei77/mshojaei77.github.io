@@ -7,7 +7,7 @@ const out='/tmp/publication-screenshots';
 const path='_posts/2026-11-26-document-parsing.md';
 const en='_posts/2026-11-26-document-parsing-en.html';
 const repo='/repos/mshojaei77/mshojaei77.github.io';
-const fixture=(lang,route,body)=>['---','layout: article','lang: '+lang,'title: "Test article"','description: "Test description"','excerpt: "Test description"','date: 2026-11-26 00:00:00 +0000','permalink: '+route,'---',body].join('\n');
+const fixture=(lang,route,body)=>['---','layout: article','lang: '+lang,'author: '+JSON.stringify(lang==='fa'?'محمد شجاعی':'Mohammad Shojaei'),'title: "Test article"','description: "Test description"','excerpt: "Test description"','date: 2026-11-26 00:00:00 +0000','permalink: '+route,'---',body].join('\n');
 const source=fs.existsSync(path)?fs.readFileSync(path,'utf8'):fixture('fa','/fa/writing/document-parsing/','## سلام\n'+'<figure><svg xmlns="http://www.w3.org/2000/svg"></svg></figure>\n'.repeat(25)+'متن فارسی '.repeat(28000));
 const sha=b=>createHash('sha1').update('blob '+b.length+'\0').update(b).digest('hex');
 const entry=(p,b)=>({path:p,name:p.split('/').pop(),type:'file',encoding:'base64',size:b.length,sha:sha(b),content:b.toString('base64')});
@@ -81,7 +81,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  await page.locator('#source').fill('## Hello\n\n**سلام**');const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aawAAAABJRU5ErkJggg==','base64');await page.locator('#media').setInputFiles({name:'pixel.png',mimeType:'image/png',buffer:png});await waitStatus('Image staged locally');
  const readsBefore=readCount;
  await page.locator('#submit').click();await waitStatus('Committed to GitHub');assert.equal(commitCount,2);assert(readCount-readsBefore<=3,'new article must not fetch every existing post');
- const newPath=[...main.keys()].find(x=>x.includes('studio-test-post'));const asset=[...main.keys()].find(x=>x.startsWith('assets/uploads/'));assert(newPath&&asset);assert(newPath.startsWith('_posts/2025-03-01-'));assert(main.get(newPath).toString().includes('date: 2025-03-01 00:00:00 +0000'));assert(main.get(newPath).toString().includes('/fa/writing/studio-test-post/'));assert(main.get(newPath).toString().includes('/'+asset));assert.deepEqual(main.get(asset),png);
+ const newPath=[...main.keys()].find(x=>x.includes('studio-test-post'));const asset=[...main.keys()].find(x=>x.startsWith('assets/uploads/'));assert(newPath&&asset);assert(newPath.startsWith('_posts/2025-03-01-'));assert(main.get(newPath).toString().includes('date: 2025-03-01 00:00:00 +0000'));assert(main.get(newPath).toString().includes('author: "محمد شجاعی"'));assert(main.get(newPath).toString().includes('/fa/writing/studio-test-post/'));assert(main.get(newPath).toString().includes('/'+asset));assert.deepEqual(main.get(asset),png);
 
  // Import actual Markdown into a new local draft, preserve source including SVG/Unicode.
  const importBody='# فایل واردشده\n\n**سلام**\n<figure><svg></svg></figure>\n';

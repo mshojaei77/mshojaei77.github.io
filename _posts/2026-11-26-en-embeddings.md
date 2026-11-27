@@ -4,7 +4,7 @@ layout: article
 lang: en
 permalink: /writing/embeddings/
 nav_exclude: true
-description: "Embeddings Tutorial: Word Vectors for LLMs"
+description: "Compare static, contextual and sentence embeddings, then review Word2Vec, skip-gram, CBOW and GloVe as foundations for modern language models."
 date: 2026-11-26 00:00:00 +0000
 article_kind: tutorial
 show_article_header: false

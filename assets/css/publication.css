@@ -505,4 +505,9 @@ html[lang=fa] .foot .socials{direction:rtl}
 .post-metadata time{unicode-bidi:isolate;white-space:nowrap}
 .writing-list .entry-card h3{margin-top:0}
 .writing-list .entry-card[hidden],.writing-filters[hidden]{display:none!important}
+.related-articles{margin:3rem 0 1rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.related-articles h2{margin:0 0 1rem}
+.related-grid{margin-top:0}
+.related-card h3{margin-top:0}
+.article-byline{margin-block:0 1.5rem}
 @media(max-width:480px){.site-header .nav .brand{grid-column:1/-1}.site-header .nav .header-controls{grid-row:2;grid-column:1/-1;justify-self:start}.site-header .nav nav{grid-row:3;grid-column:1/-1}}

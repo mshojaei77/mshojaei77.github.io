@@ -4,7 +4,7 @@ layout: article
 lang: en
 permalink: /writing/data-preparation/
 nav_exclude: true
-description: "Data Preparation for LLMs: Cleaning Guide"
+description: "Learn how LLM training data is collected, deduplicated, filtered, normalized and curated, with references to public datasets and research."
 date: 2026-11-26 00:00:00 +0000
 article_kind: tutorial
 show_article_header: false

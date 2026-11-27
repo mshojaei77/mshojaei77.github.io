@@ -9,6 +9,8 @@ import re
 
 root = Path(sys.argv[1])
 settings = json.loads(Path("_data/discovery.json").read_text(encoding="utf-8"))
+topics = json.loads(Path("_data/topics.json").read_text(encoding="utf-8"))
+author_profiles = json.loads(Path("_data/authors.json").read_text(encoding="utf-8"))
 host = "https://mshojaei77.github.io"
 class Head(HTMLParser):
     def __init__(self):
@@ -52,10 +54,39 @@ class Head(HTMLParser):
         if tag == "script" and self.json is not None:
             self.schemas.append(json.loads(self.json))
             self.json = None
+class RelatedLinks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.inside = False
+        self.links = []
+    def handle_starttag(self, tag, attrs):
+        values = dict(attrs)
+        if tag == "section" and "related-articles" in values.get("class", "").split():
+            self.inside = True
+        elif self.inside and tag == "a":
+            self.links.append((values.get("href", ""), values.get("hreflang", "")))
+    def handle_endtag(self, tag):
+        if tag == "section" and self.inside:
+            self.inside = False
+class AuthorLinks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.hrefs = []
+    def handle_starttag(self, tag, attrs):
+        values = dict(attrs)
+        if tag == "a" and "author" in values.get("rel", "").split():
+            self.hrefs.append(values.get("href", ""))
 def parse(path):
     p = Head()
     p.feed(path.read_text(encoding="utf-8"))
     return p
+def schema_nodes(p):
+    nodes = []
+    for schema in p.schemas:
+        nodes.append(schema)
+        if isinstance(schema.get("@graph"), list):
+            nodes.extend(node for node in schema["@graph"] if isinstance(node, dict))
+    return nodes
 def file_for(route):
     return root / (route.lstrip("/") + ("index.html" if route.endswith("/") else ""))
 def analytics(p):
@@ -66,6 +97,8 @@ urls = [e.text for e in ET.parse(root/"sitemap.xml").iter("{http://www.sitemaps.
 routes = {urlsplit(u).path for u in urls}
 articles = sorted(r for r in routes if re.fullmatch(r"/(?:fa/)?writing/[^/]+/",r))
 public = {"/","/fa/","/writing/","/fa/writing/","/roadmap.html","/fa/roadmap/","/about.html","/fa/about/","/privacy/","/fa/privacy/"} | set(articles)
+seen_page_titles = {}
+seen_page_descriptions = {}
 for route in public:
     p = parse(file_for(route))
     assert p.title.strip(), route
@@ -73,6 +106,13 @@ for route in public:
     assert p.canonicals == [host+route], (route,p.canonicals)
     assert p.meta.get("og:title") and p.meta.get("og:description"), route
     assert p.meta.get("og:image"), route
+    title = p.meta["og:title"][0].strip()
+    description = p.meta["description"][0].strip()
+    assert description.casefold() != title.casefold(), f"Page description repeats its title: {route}"
+    assert title not in seen_page_titles, f"Duplicate page title: {title} ({route}, {seen_page_titles.get(title)})"
+    assert description not in seen_page_descriptions, f"Duplicate page description: {route}, {seen_page_descriptions.get(description)}"
+    seen_page_titles[title] = route
+    seen_page_descriptions[description] = route
     expected = settings["goatcounter_site"]
     hits = analytics(p)
     assert len(hits) == bool(expected), (route,hits)
@@ -81,11 +121,56 @@ for route in public:
         assert hits[0]["data-production-host"] == "mshojaei77.github.io"
     for key, name in (("google-site-verification","google_verification"),("msvalidate.01","bing_verification")):
         values(p,key,settings[name] if route in {"/","/fa/"} else "")
+    nodes = schema_nodes(p)
+    profile_pages = [node for node in nodes if node.get("@type") == "ProfilePage"]
+    if route in {"/about.html", "/fa/about/"}:
+        assert len(profile_pages) == 1, (route, nodes)
+        profile = profile_pages[0]
+        person = profile.get("mainEntity", {})
+        language = "fa" if route.startswith("/fa/") else "en"
+        identity = author_profiles["محمد شجاعی" if language == "fa" else "Mohammad Shojaei"]
+        assert profile.get("url") == host + route and profile.get("inLanguage") == language, route
+        assert person.get("@type") == "Person" and person.get("@id") == "https://mshojaei77.github.io/#person", route
+        assert person.get("name") == identity["name"] and person.get("alternateName") == identity["alternate_name"], route
+        assert person.get("url") == identity["url"] and person.get("sameAs") == identity["same_as"], route
+    else:
+        assert not profile_pages, f"Unexpected ProfilePage markup: {route}"
+    if route in {"/", "/fa/"}:
+        people = [node for node in nodes if node.get("@type") == "Person" and node.get("@id") == "https://mshojaei77.github.io/#person"]
+        language = "fa" if route == "/fa/" else "en"
+        identity = author_profiles["محمد شجاعی" if language == "fa" else "Mohammad Shojaei"]
+        assert len(people) == 1 and people[0].get("sameAs") == identity["same_as"], route
+        assert people[0].get("name") == identity["name"] and people[0].get("url") == identity["url"], route
     if route in articles:
-        blogs = [s for s in p.schemas if s.get("@type") == "BlogPosting"]
+        language = "fa" if route.startswith("/fa/") else "en"
+        slug = route.rstrip("/").split("/")[-1]
+        topic_ids = set(topics.get("posts", {}).get(slug, []))
+        expected_related = set()
+        if topic_ids:
+            for candidate_route in articles:
+                candidate_language = "fa" if candidate_route.startswith("/fa/") else "en"
+                candidate_slug = candidate_route.rstrip("/").split("/")[-1]
+                candidate_topics = set(topics.get("posts", {}).get(candidate_slug, []))
+                if candidate_route != route and candidate_language == language and topic_ids.intersection(candidate_topics):
+                    expected_related.add(candidate_route)
+        related = RelatedLinks()
+        related.feed(file_for(route).read_text(encoding="utf-8"))
+        if expected_related:
+            assert 1 <= len(related.links) <= 3, f"Expected one to three related links for {route}"
+            assert all(href in expected_related for href, _ in related.links), (route, related.links, expected_related)
+            assert all(hreflang == language for _, hreflang in related.links), (route, related.links)
+        else:
+            assert not related.links, f"Unrelated article suggestions rendered for {route}"
+        blogs = [s for s in nodes if s.get("@type") == "BlogPosting"]
         assert len(blogs) == 1, (route,p.schemas)
         blog = blogs[0]
         assert blog.get("headline") and blog.get("author",{}).get("name") and blog.get("datePublished"), route
+        identity_key = "محمد شجاعی" if route.startswith("/fa/") else "Mohammad Shojaei"
+        assert blog["author"].get("name") == author_profiles[identity_key]["name"], route
+        assert blog["author"].get("url") == author_profiles[identity_key]["url"], route
+        author_links = AuthorLinks()
+        author_links.feed(file_for(route).read_text(encoding="utf-8"))
+        assert author_links.hrefs == [author_profiles[identity_key]["url"]], (route, author_links.hrefs)
         assert blog.get("url") == host+route, (route,blog)
 for route in ["/admin/","/projects/","/fa/market-analysis/","/writing/document-parsing/","/fa/writing/document-parsing/"]:
     if route not in public and file_for(route).is_file():

@@ -4,7 +4,7 @@ layout: article
 lang: en
 permalink: /writing/transformers/
 nav_exclude: true
-description: "Transformers Tutorial: Attention Revolution for LLMs"
+description: "Explore self-attention, query-key-value vectors, multi-head attention, encoder and decoder blocks, positional encoding and autoregressive training."
 date: 2026-11-26 00:00:00 +0000
 article_kind: tutorial
 show_article_header: false
