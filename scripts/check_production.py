@@ -260,6 +260,14 @@ def main() -> None:
     assert favicon[:8] == bytes.fromhex("89504e470d0a1a0a") and int.from_bytes(favicon[16:20], "big") == 512 and int.from_bytes(favicon[20:24], "big") == 512
     print("PASS production PNG favicon bytes and dimensions")
 
+    favicon_ico, _ = assert_200("/favicon.ico")
+    expected_ico = Path("favicon.ico").read_bytes()
+    assert favicon_ico == expected_ico, "Root favicon.ico differs from the deployed source"
+    assert len(favicon_ico) >= 22 and favicon_ico[:4] == b"\x00\x00\x01\x00" and favicon_ico[4] >= 1
+    sizes = {favicon_ico[6 + index * 16] or 256 for index in range(favicon_ico[4])}
+    assert {16, 32, 48}.issubset(sizes), f"ICO should include 16, 32 and 48px images, got {sizes}"
+    print("PASS production root ICO favicon bytes and dimensions")
+
     home = pages["/"].decode("utf-8")
     fa_home = pages["/fa/"].decode("utf-8")
     assert '<meta property="og:site_name" content="Mohammad Shojaei">' in home and '<meta property="og:site_name" content="Mohammad Shojaei">' in fa_home
