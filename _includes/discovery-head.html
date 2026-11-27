@@ -1,0 +1,12 @@
+{% assign discovery = site.data.discovery %}
+{% if page.url == '/' or page.url == '/fa/' %}
+  {% if discovery.google_verification and discovery.google_verification != '' %}<meta name="google-site-verification" content="{{ discovery.google_verification | escape }}">{% endif %}
+  {% if discovery.bing_verification and discovery.bing_verification != '' %}<meta name="msvalidate.01" content="{{ discovery.bing_verification | escape }}">{% endif %}
+{% endif %}
+{% unless page.retired_post or page.sitemap == false %}
+  {% assign gc_site = discovery.goatcounter_site | default: '' %}
+  {% assign gc_slug = gc_site | slugify %}
+  {% if gc_site != '' and gc_site == gc_slug %}
+    <script defer src="/assets/js/analytics.js?v=1" data-analytics-provider="goatcounter" data-goatcounter-site="{{ gc_site | escape }}" data-production-host="{{ site.url | remove: 'https://' | escape }}"></script>
+  {% endif %}
+{% endunless %}

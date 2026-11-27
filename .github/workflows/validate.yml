@@ -14,7 +14,10 @@ jobs:
         with:
           source: .
           destination: ./_site
-      - run: python3 scripts/check_site.py _site
+      - run: |
+          python3 scripts/check_site.py _site
+          python3 scripts/check_discovery.py _site
+          node scripts/check_analytics.cjs
       - name: Test the document parsing tutorial
         run: |
           sudo apt-get update
@@ -39,6 +42,7 @@ jobs:
       - name: Simulate independent English and Persian deletions in the CI checkout
         run: |
           python3 scripts/simulate_deletion.py
+          python3 scripts/simulate_discovery.py
       - uses: actions/jekyll-build-pages@v1
         with:
           source: .
@@ -47,6 +51,7 @@ jobs:
         run: |
           python3 scripts/check_site.py _site-deletion
           python3 scripts/check_date_override.py _site-deletion
+          python3 scripts/check_discovery.py _site-deletion
       - uses: actions/upload-artifact@v4
         if: always()
         with:

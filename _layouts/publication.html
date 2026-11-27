@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/assets/css/publication.css?v=6">
   {% if page.url == '/' or page.url == '/fa/' %}<link rel="stylesheet" href="/assets/css/homepage.css?v=5">{% endif %}
   <script defer src="/assets/js/writing-search.js?v=1"></script>
+  {% include discovery-head.html %}
   {% feed_meta %}
   {% if page.article_widgets %}<script defer src="/assets/js/document-parsing.js"></script>{% endif %}
 </head>

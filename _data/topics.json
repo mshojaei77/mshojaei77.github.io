@@ -79,6 +79,11 @@
     "transformers": [
       "foundations",
       "systems"
+    ],
+    "document-parsing-fa-review-v7": [
+      "rag",
+      "evaluation",
+      "persian"
     ]
   }
 }
