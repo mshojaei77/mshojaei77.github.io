@@ -191,8 +191,26 @@ for route in public:
         language = "fa" if route.startswith("/fa/") else "en"
         slug = route.rstrip("/").split("/")[-1]
         topic_ids = set(topics.get("posts", {}).get(slug, []))
+        recommendations = topics.get("related_by_route", {}).get(route, [])
         expected_related = set()
-        if topic_ids:
+        expected_related_order = []
+        if recommendations:
+            for item in recommendations[:3]:
+                target_slug = item["slug"]
+                target_routes = [
+                    candidate_route for candidate_route in articles
+                    if candidate_route.rstrip("/").split("/")[-1] == target_slug
+                    and ("fa" if candidate_route.startswith("/fa/") else "en") == language
+                ]
+                # The CI deletion simulation removes two live routes and
+                # installs retirement tombstones. Liquid naturally skips a
+                # recommendation whose article is no longer in site.posts.
+                if not target_routes:
+                    continue
+                assert len(target_routes) == 1, (route, target_slug, target_routes)
+                expected_related_order.append(target_routes[0])
+            expected_related = set(expected_related_order)
+        elif topic_ids:
             for candidate_route in articles:
                 candidate_language = "fa" if candidate_route.startswith("/fa/") else "en"
                 candidate_slug = candidate_route.rstrip("/").split("/")[-1]
@@ -204,6 +222,8 @@ for route in public:
         if expected_related:
             assert 1 <= len(related.links) <= 3, f"Expected one to three related links for {route}"
             assert all(href in expected_related for href, _ in related.links), (route, related.links, expected_related)
+            if recommendations:
+                assert [href for href, _ in related.links] == expected_related_order, (route, related.links, expected_related_order)
             assert all(hreflang == language for _, hreflang in related.links), (route, related.links)
         else:
             assert not related.links, f"Unrelated article suggestions rendered for {route}"

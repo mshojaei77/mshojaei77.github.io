@@ -48,6 +48,8 @@ nav_exclude: true
 
 # بخش اول: مبانی
 
+**مطالب مرتبط:** [معماری LLM از Attention تا MoE](/fa/writing/llm-architecture/)، [مقایسهٔ Embeddingهای فارسی](/fa/writing/persian-embedding-models/) و [یادداشت مهندسی دربارهٔ انتخاب مدل](/fa/writing/ai-engineering-week-01-preface-reading-notes/).
+
 <img width="1026" height="443" alt="نمودار نسخهٔ اصلی نقشهٔ راه (انگلیسی)" src="https://github.com/user-attachments/assets/3abad5b8-23b8-4388-baf1-c5e28efec422" />
 
 **تمرکز:** مفاهیم اصلی ML، شبکه‌های عصبی، مدل‌های سنتی، توکن‌سازی، Embedding و Transformer.  
@@ -169,6 +171,8 @@ Nucleus Sampling، Top-k، Beam Search، Masked Attention و پیاده‌ساز
 
 # بخش دوم: ساخت و آموزش مدل
 
+**مطالب مرتبط:** [پس‌آموزش LLM از SFT تا یادگیری تقویتی](/fa/writing/llm-post-training/)، [Fine-tuning کم‌هزینه با LoRA، QLoRA و DoRA](/fa/writing/efficient-fine-tuning/) و [تقطیر دانش در LLM](/fa/writing/knowledge-distillation/).
+
 <img width="1020" height="450" alt="نمودار نسخهٔ اصلی نقشهٔ راه (انگلیسی)" src="https://github.com/user-attachments/assets/f2fc0e54-d150-4610-ba52-b0e8bd4ea4f5" />
 
 **تمرکز:** آماده‌سازی داده، پیش‌آموزش، Fine-tuning و هم‌ترازی ترجیحات.  
@@ -285,6 +289,8 @@ DPO، Rejection Sampling و KTO (Kahneman-Tversky Optimization).
 ---
 
 # بخش سوم: موضوعات پیشرفته و تخصص
+
+**مطالب مرتبط:** [ارزیابی توانایی مدل‌های زبانی در فارسی](/fa/writing/persian-llm-evaluation/)، [ارزیابی استدلال مدل‌ها](/fa/writing/ai-reasoning-evaluation/) و [اجرای محلی LLM](/fa/writing/local-llm-inference/).
 
 <img width="1019" height="419" alt="نمودار نسخهٔ اصلی نقشهٔ راه (انگلیسی)" src="https://github.com/user-attachments/assets/866d3789-96ed-4ae6-8140-8edb0b828048" />
 
@@ -423,6 +429,8 @@ Ensemble، یکپارچه‌سازی مدل تخصصی، استقرار مدل �
 ---
 
 # بخش چهارم: مهندسی و کاربردها
+
+**مطالب مرتبط:** [معماری Production RAG](/fa/writing/production-rag-architecture/)، [پردازش اسناد فارسی](/fa/writing/document-parsing/)، [Agent یا Workflow؟](/fa/writing/agent-vs-workflow/) و [شکست Agentها در محیط عملیاتی](/fa/writing/agent-production-failures/).
 
 <img width="1024" height="446" alt="نمودار نسخهٔ اصلی نقشهٔ راه (انگلیسی)" src="https://github.com/user-attachments/assets/1d7ee1a8-3981-478f-9ba6-1a5143ff98ec" />
 

@@ -151,3 +151,49 @@ Six additional English/Persian formulations were screened for the three PR #48 t
 The manual benchmark still contains 39 prompts and zero recorded citation observations. Search-result pages from an integrated web search tool are not observations of ChatGPT Search, Gemini, Perplexity, Copilot, or Claude citations. Current Bing AI citation counts and grounding queries are unavailable, so the AI-citation baseline remains `UNKNOWN`.
 
 For the next provider review, export the current sitemap processing/index coverage and query reports from the existing Google property; export Bing Search Performance, Backlinks, and AI Performance reports; and inspect the GoatCounter dashboard for recent production visits. For Medium, inspect each of the three story canonicals in the author's session and decide whether the blog copy is sufficiently similar to designate it as canonical. These are owner-session tasks; ownership verification and sitemap submission should not be repeated.
+
+## Phase 2 search-intelligence baseline — deployed revision 989c69a
+
+### Current production and discovery state
+
+- The fresh strict production audit [run 46047214092](https://github.com/mshojaei77/mshojaei77.github.io/actions/runs/46047214092) identified deployed revision `989c69a048b93dd6ee32e0f1249d3c24767b7907`, crawled 119 same-host URLs, and passed all 17 strict issue categories.
+- The live inventory contains 57 active article routes (19 English, 38 Persian), 67 canonical sitemap URLs, 57 RSS article entries, 14 retired routes, and 30 compatibility redirects. The sitemap returned HTTP 200 and valid XML; all 67 sitemap URLs were technically indexable. This does not establish provider discovery or indexing.
+- The [IndexNow checkpoint](https://github.com/mshojaei77/mshojaei77.github.io/tree/indexnow-state) acknowledges revision `989c69a` as `submission_accepted` and contains 67 current canonical URLs. The checkpoint is submission evidence, not indexing evidence.
+- The complete production audit JSON and summary are archived privately outside the public repository under `PublicationOperations/seo-audits/2026-11-27-989c69a/`. The public Actions run retains its 30-day artifact.
+
+### Keyword map and topical architecture
+
+The keyword-to-page map now covers all 57 active canonical article routes. Each row is marked as a candidate, and current titles/descriptions are preserved. New candidate phrases are derived from the live article title and section headings; where prior qualitative research exists, it remains labeled as qualitative. No Search Console/Bing query volumes, difficulty scores, ranking positions, or CTR data were imputed.
+
+The taxonomy adds eight explainable clusters within the existing topic data: AI Agents; Production RAG and Document Intelligence; LLM Architecture; Training and Optimization; Evaluation and Persian AI; Production Infrastructure; AI Software Engineering; and Learning and Careers. No thin cluster pages were added. The retired foundation slugs were removed from the active article-topic map; the new AI Engineering week-one reading note now has topic metadata.
+
+The production crawl's pre-change article graph had 173 same-language article-to-article outlinks across 57 posts, but 32 articles had no article-to-article inbound link, 48 had no contextual article inbound link, and 37 had no inbound link from the automatic related-article component. Full-site orphan count was still zero because archives and homepages linked those pages. Branch `seo/phase2-search-intelligence` now supplies explicit prerequisite edges, ordered cluster reading paths, curated recommendations, and shared-topic fallback. Its generated 57-route recommendation map provides three same-language recommendations per route; the updated rendered graph still requires CI build validation and a production audit after merge. The baseline counts above describe deployed revision `989c69a`, not the branch candidate.
+
+Relevant guides were linked from the existing English and Persian Roadmaps. Manuscripts were not edited. The separate editorial workflow still owns contextual link placement inside article text.
+
+### Qualitative bilingual market sample
+
+Sixteen additional English, Persian, and mixed-language query formulations were screened across the eight clusters. This uses integrated web search results, not localized Google/Bing rank tracking. Results support qualitative topic relevance only; no position, volume, or market-size claim is made.
+
+- Persian RAG/document retrieval results included the [Persian RAG implementation guide from ThinkPilot](https://thinkpilot.ir/rag/) and the [Persian-first RAG toolkit](https://github.com/sadrmanesh/persian-rag). These are topical comparators, not verified ranking competitors.
+- Persian embedding results surfaced the [PTEB leaderboard](https://theaggregate.ai/benchmark?slug=pteb), [Shekar's Persian embedding models and FaMTEB results](https://shekar.ai/projects/embeddings), and the [FaMTEB paper](https://aclanthology.org/2025.findings-emnlp.614/). These are benchmark/project sources; their reported results should be checked against their own methodology before editorial use.
+- Architecture queries surfaced academic/lecture material, including Stanford's [KV caching, sparse attention, and compression notes](https://web.stanford.edu/class/msande319/lectures/lecture-5-notes.pdf). Training and inference queries surfaced a mix of implementation guides and vendor material; those results are not independent evidence of ranking demand.
+- Coding-agent and production-agent queries returned a mixture of vendor posts, practitioner material, and one comparative study. Treat these as topic discovery, not proof of query demand.
+
+Branded and non-branded visibility remain separate. Search-result observations in this report must not be described as AI citations.
+
+### Authenticated provider and authority data
+
+The current in-app browser reaches Search Console and Bing Webmaster sign-in/landing pages, and GoatCounter's login page. No authenticated private reports or exported data were available. The current Google sitemap-processing state, Google/Bing indexed counts, query clicks/impressions/CTR/position, Bing backlinks, Bing AI Performance, and GoatCounter traffic therefore remain `UNKNOWN`, not zero.
+
+The official Search Console API currently documents Search Analytics, Sitemaps, Sites, and URL Inspection. It requires OAuth for private property data; there is no general Links-report API in that documented service list ([API reference](https://developers.google.com/webmaster-tools/v1/api_reference_index), [authorization](https://developers.google.com/webmaster-tools/v1/how-tos/authorizing)). Bing's current AI Performance report describes aggregate visible citations and grouped grounding-query phrases, not rankings or individual prompt logs ([Bing AI Performance](https://www.bing.com/webmasters/help/?topicid=9f8e7d6c)). Actual account values require the existing owner's session or official export.
+
+No backlink totals or referring-domain counts are claimed. Public asset inspection found the GitHub account's profile `blog` field empty, while the profile README already links to the site. GitHub code search found the site root in the public profile README and an invoice-to-pay launch document; this is an owned-asset link check, not a backlink report. The reviewed Hugging Face profile links to GitHub and LinkedIn but showed no direct publication link. No external profile or repository was modified.
+
+The benchmark now contains 50 queries spanning the current topic map, but all 50 are explicitly `untested` and the observation ledger contains zero rows. This is not an AI-visibility success claim.
+
+### Browser lab and link-health sample
+
+A Playwright Chromium lab spot-check at deployed revision `989c69a` covered four representative pages in mobile and desktop viewports (eight page/device runs). All eight pages returned HTTP 200 and had no JavaScript page errors. Axe reported no WCAG 2.1 A/AA violations in seven runs; one serious `scrollable-region-focusable` result affected a horizontally scrollable `<pre>` code block on the English Vector Databases article at mobile width. The shared article code-block styling needs a UI-workstream review before a visual change. This automated scan is not a full keyboard or screen-reader audit. GoatCounter and its loader were blocked in the lab to avoid generating analytics traffic. TTFB/load timing varied across repeat page/device combinations, and LCP, CLS, INP, and CrUX field data were not measured; no Core Web Vitals result is claimed.
+
+A frequency-ranked sample of 100 external reference URLs produced 96 reachable responses (HTTP 200/206), three network-unknown results, and one 403/unknown result. No confirmed 404/410 was observed in that sample. The full set contains 701 unique reference URLs across 223 hosts and has not yet been audited end to end, so reference health remains partial.

@@ -1,15 +1,30 @@
 {% assign path_parts = page.url | remove_first: '/' | split: '/' %}
 {% assign current_slug = path_parts | last %}
 {% assign current_topics = site.data.topics.posts[current_slug] %}
+{% assign recommendations = site.data.topics.related_by_route[page.url] %}
 {% assign related_count = 0 %}
-{% if current_topics and current_topics.size > 0 %}
-  {% capture related_cards %}
+{% capture related_cards %}
+  {% if recommendations %}
+    {% for recommendation in recommendations limit:3 %}
+      {% for candidate in site.posts %}
+        {% assign candidate_path_parts = candidate.url | remove_first: '/' | split: '/' %}
+        {% assign candidate_slug = candidate_path_parts | last %}
+        {% if candidate_slug == recommendation.slug and candidate.lang == page.lang and candidate.url != page.url and related_count < 3 %}
+          <article class="entry-card related-card">
+            <h3><a href="{{ candidate.url | relative_url }}" hreflang="{{ candidate.lang | escape }}" lang="{{ candidate.lang | escape }}" dir="{% if candidate.lang == 'fa' %}rtl{% else %}ltr{% endif %}">{{ candidate.title | escape }}</a></h3>
+            <p lang="{{ candidate.lang | escape }}" dir="{% if candidate.lang == 'fa' %}rtl{% else %}ltr{% endif %}">{{ candidate.description | escape }}</p>
+          </article>
+          {% assign related_count = related_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  {% else %}
     {% for candidate in site.posts %}
       {% assign candidate_path_parts = candidate.url | remove_first: '/' | split: '/' %}
       {% assign candidate_slug = candidate_path_parts | last %}
       {% assign candidate_topics = site.data.topics.posts[candidate_slug] %}
       {% assign shares_topic = false %}
-      {% if candidate.lang == page.lang and candidate.url != page.url and candidate_topics %}
+      {% if candidate.lang == page.lang and candidate.url != page.url and candidate_topics and current_topics %}
         {% for topic_id in candidate_topics %}
           {% if current_topics contains topic_id %}{% assign shares_topic = true %}{% endif %}
         {% endfor %}
@@ -22,11 +37,11 @@
         {% assign related_count = related_count | plus: 1 %}
       {% endif %}
     {% endfor %}
-  {% endcapture %}
-  {% if related_count > 0 %}
-    <section class="related-articles" aria-labelledby="related-articles-title">
-      <h2 id="related-articles-title">{% if page.lang == 'fa' %}مطالب مرتبط{% else %}Related articles{% endif %}</h2>
-      <div class="section-grid three related-grid">{{ related_cards }}</div>
-    </section>
   {% endif %}
+{% endcapture %}
+{% if related_count > 0 %}
+  <section class="related-articles" aria-labelledby="related-articles-title">
+    <h2 id="related-articles-title">{% if page.lang == 'fa' %}مطالب مرتبط{% else %}Related articles{% endif %}</h2>
+    <div class="section-grid three related-grid">{{ related_cards }}</div>
+  </section>
 {% endif %}
