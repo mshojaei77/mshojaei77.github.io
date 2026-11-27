@@ -3,7 +3,7 @@ layout: article
 lang: fa
 title: "آیا مدل‌های هوش مصنوعی واقعاً استدلال می‌کنند؟"
 description: "یافته‌های مقالهٔ The Illusion of Thinking و نقدهای بعدی را کنار هم می‌گذاریم تا ببینیم benchmark چه چیزی دربارهٔ reasoning مدل‌ها می‌گوید و چه چیزی را نمی‌تواند ثابت کند."
-date: 2026-11-27
+date: "2025-05-27 00:00:00 +0000"
 permalink: /fa/writing/ai-reasoning-evaluation/
 nav_exclude: true
 article_kind: research-summary
