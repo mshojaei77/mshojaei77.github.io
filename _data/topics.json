@@ -218,6 +218,19 @@
     "coding-agent-productivity": [
       "systems",
       "general"
+    ],
+    "evaluating-coding-harnesses": [
+      "systems",
+      "evaluation"
+    ],
+    "inkling-effort-evaluation": [
+      "evaluation",
+      "systems"
+    ],
+    "llm-model-merging": [
+      "foundations",
+      "systems",
+      "evaluation"
     ]
   }
 }
