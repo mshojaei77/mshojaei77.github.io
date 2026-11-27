@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_acknowledged_revision": "db379a89f64a133cb076cd7480a4129759872520",
-  "last_acknowledged_at": "2026-11-27T16:50:44.578375+00:00",
+  "last_acknowledged_revision": "8aca5a58254980534fee41da9cc80d3793128fd8",
+  "last_acknowledged_at": "2026-11-27T17:00:42.635995+00:00",
   "notification_state": "submission_accepted",
   "known_canonical_urls": [
     "https://mshojaei77.github.io/",
@@ -64,8 +64,11 @@
     "https://mshojaei77.github.io/writing/market-analysis/",
     "https://mshojaei77.github.io/writing/open-source-ai/",
     "https://mshojaei77.github.io/writing/resources/",
+    "https://mshojaei77.github.io/writing/serving-gpt-oss-120b-vllm/",
+    "https://mshojaei77.github.io/writing/serving-kimi-k2-vllm/",
     "https://mshojaei77.github.io/writing/swiglu/",
     "https://mshojaei77.github.io/writing/tokenization/",
-    "https://mshojaei77.github.io/writing/vector-databases/"
+    "https://mshojaei77.github.io/writing/vector-databases/",
+    "https://mshojaei77.github.io/writing/voice-agent-architecture/"
   ]
 }
