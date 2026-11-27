@@ -3,10 +3,11 @@ layout: article
 lang: fa
 author: "محمد شجاعی"
 title: "منابع یادگیری"
-description: "مجموعهٔ منابع یادگیری بر اساس مراحل توسعهٔ LLM."
+description: "مسیر مرحله‌ای منابع یادگیری مهندسی هوش مصنوعی، از مبانی ML و آموزش LLM تا RAG، ایجنت، ارزیابی و عملیات."
 permalink: /fa/writing/resources/
 nav_exclude: true
 date: "2025-07-13 00:00:00 +0000"
+last_modified_at: 2026-11-27 00:00:00 +0000
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
@@ -17,7 +18,7 @@ feed:
 
 # منابع یادگیری
 
-مجموعه‌ای جامع از منابع یادگیری که بر اساس ساختار نقشهٔ راه مهندسی هوش مصنوعی مرتب شده‌اند. عنوان منابع و لینک‌های اصلی را برای پیدا کردن آسان‌تر به زبان اصلی نگه داشته‌ام.
+این صفحه مجموعه‌ای از منابع است، نه برنامهٔ درسی اجباری. دوره‌ها، مقاله‌ها و مستندات را بر اساس موضوع دسته‌بندی کرده‌ام. در هر مرحله، یک منبع متناسب با سطح فعلی‌تان انتخاب کنید و از بقیه وقتی کمک بگیرید که توضیح دیگری یا جزئیات بیشتری لازم دارید. دوره‌ها و مقاله‌های تاریخ‌دار برای زمینهٔ تاریخی یا مبانی حفظ شده‌اند؛ پیش از پیاده‌سازی، نسخه، مستندات و مجوز ابزارها را بررسی کنید. عنوان منابع را هم برای جست‌وجوی آسان‌تر به زبان اصلی نگه داشته‌ام.
 
 ---
 
@@ -32,7 +33,6 @@ feed:
 **ریاضی و آمار:**
 - [3Blue1Brown - Essence of Linear Algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 - [StatQuest - Statistics Fundamentals](https://www.youtube.com/watch?v=qBigTkBLU6g&list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9)
-- AP Statistics Intuition
 - [Immersive Linear Algebra](https://immersivemath.com/ila/learnmore.html)
 - [Khan Academy - Linear Algebra](https://www.khanacademy.org/math/linear-algebra)
 - [Khan Academy - Calculus](https://www.khanacademy.org/math/calculus-1)
@@ -116,7 +116,7 @@ feed:
 
 **مقاله‌های ضروری:**
 - [Learning Representations by Backpropagating Errors](http://www.iro.umontreal.ca/~vincentp/ift3395/lectures/backprop_old.pdf)
-- Yes You Should Understand Backprop
+- [Yes, You Should Understand Backprop](https://medium.com/@karpathy/yes-you-should-understand-backprop-e2f06eab496b)
 - [Natural Language Processing (Almost) from Scratch](http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf)
 
 ## 2. مدل‌های زبانی سنتی
@@ -163,9 +163,6 @@ feed:
 **سطح:** مقدماتی | **پیش‌نیاز:** مبانی Python  
 
 **مفاهیم اصلی و نوشته‌ها:**
-- Introduction to Tokenization: A Theoretical Perspective
-- Understanding BPE Tokenization
-- Fast Tokenizers: How Rust is Turbocharging NLP
 - [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE)
 - [minbpe](https://github.com/karpathy/minbpe/blob/master/lecture.md)
 - [minbpe](https://www.youtube.com/watch?v=zduSFxRajkE&t=1157s)
@@ -199,9 +196,6 @@ feed:
 **سطح:** مقدماتی تا متوسط | **پیش‌نیاز:** جبر خطی و Python  
 
 **مفاهیم اصلی و نوشته‌ها:**
-- Word Embeddings Deep Dive
-- Contextual Embedding Guide
-- Sentence Embedding Techniques
 - [Illustrated Word2Vec](https://jalammar.github.io/illustrated-word2vec/)
 - [The Illustrated BERT, ELMo, and co.](https://jalammar.github.io/illustrated-bert/)
 - [CS224N Lecture 1 - Word Vectors](https://www.youtube.com/watch?v=rmVRLeJRkl4)
@@ -324,7 +318,6 @@ feed:
 **سطح:** تخصصی | **پیش‌نیاز:** Transformer و سیستم‌های توزیع‌شده  
 
 **درک مبانی:**
-- Understanding Language Models
 - [LLMs Overview](https://arxiv.org/pdf/2307.06435)
 - [LLMs Survey](https://arxiv.org/abs/2402.06196)
 
@@ -469,7 +462,6 @@ feed:
 - [AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/)
 - [Evaluation Guidebook](https://github.com/huggingface/evaluation-guidebook)
 - [Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)
-- [Language Model Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness)
 - [Lighteval](https://github.com/huggingface/lighteval)
 - [Chatbot Arena](https://lmarena.ai/)
 - [Ragas](https://github.com/explodinggradients/ragas/tree/main)
@@ -540,7 +532,6 @@ feed:
 - [4-bit LLM Quantization with GPTQ](https://mlabonne.github.io/blog/posts/4_bit_Quantization_with_GPTQ.html)
 - [Quantize Llama models with llama.cpp](https://mlabonne.github.io/blog/posts/Quantize_Llama_2_models_using_ggml.html)
 - [ExLlamaV2: Fastest Library to Run LLMs](https://mlabonne.github.io/blog/posts/ExLlamaV2_The_Fastest_Library_to_Run%C2%A0LLMs.html)
-- Understanding AWQ
 - [SmoothQuant on Llama 2](https://github.com/mit-han-lab/smoothquant/blob/main/examples/smoothquant_llama_demo.ipynb)
 - [DeepSpeed Model Compression](https://www.deepspeed.ai/tutorials/model-compression/)
 - [GPTQ Paper](https://arxiv.org/abs/2210.17323)
@@ -603,7 +594,6 @@ feed:
 
 **ادغام و ترکیب مدل:**
 - [Model Merging](https://arxiv.org/abs/2203.05482)
-- [SLERP Merging](https://arxiv.org/abs/2306.01708)
 - [TIES-Merging](https://arxiv.org/abs/2306.01708)
 - [DARE](https://arxiv.org/abs/2311.03099)
 
@@ -748,7 +738,7 @@ feed:
 
 **منابع یادگیری:**
 - [LangChain Text Splitters](https://python.langchain.com/docs/how_to/#text-splitters)
-- [Top 7 Vector Databases](https://www.datacamp.com/blog/the-top-5-vector-databases)
+- [مقایسه و Benchmark پایگاه‌های دادهٔ برداری](/fa/writing/vector-databases/)
 - [LlamaIndex High-level Concepts](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html)
 - [Model Context Protocol](https://modelcontextprotocol.io/introduction)
 - [Pinecone Retrieval Augmentation](https://www.pinecone.io/learn/series/langchain/langchain-retrieval-augmentation/)
@@ -826,7 +816,7 @@ feed:
 **سطح:** پیشرفته | **پیش‌نیاز:** مبانی امنیت و AI اخلاقی  
 
 **چارچوب‌های امنیتی:**
-- [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [Top 10 امنیتی OWASP برای اپلیکیشن‌های LLM در ۲۰۲۶](https://genai.owasp.org/top-10-for-llm-applications-2026/)
 
 **مسیرهای حمله و دفاع:**
 - [Prompt Injection](https://arxiv.org/abs/2310.12815)

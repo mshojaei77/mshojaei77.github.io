@@ -2,10 +2,11 @@
 layout: article
 lang: en
 title: "Learning Resources"
-description: "Curated resources organized by LLM development stage."
+description: "A staged learning library for AI engineering, from ML foundations and LLM training to RAG, agents, evaluation, and operations."
 permalink: /writing/resources/
 nav_exclude: true
 date: 2026-11-26 00:00:00 +0000
+last_modified_at: 2026-11-27 00:00:00 +0000
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
@@ -16,7 +17,7 @@ feed:
 
 # Learning Resources
 
-A comprehensive collection of learning resources organized to match the AI Engineering Roadmap structure.
+This is a reference shelf, not a required syllabus. It groups courses, papers, and documentation by topic. For each stage, choose one resource that fits your current level and work through it; use the rest when you need another explanation or a deeper reference. Dated courses and papers remain useful for their historical or foundational context, while tool documentation, versions, and licenses should be checked before starting an implementation.
 
 ---
 
@@ -31,7 +32,6 @@ A comprehensive collection of learning resources organized to match the AI Engin
 **Mathematics & Statistics:**
 - [3Blue1Brown - Essence of Linear Algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 - [StatQuest - Statistics Fundamentals](https://www.youtube.com/watch?v=qBigTkBLU6g&list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9)
-- AP Statistics Intuition
 - [Immersive Linear Algebra](https://immersivemath.com/ila/learnmore.html)
 - [Khan Academy - Linear Algebra](https://www.khanacademy.org/math/linear-algebra)
 - [Khan Academy - Calculus](https://www.khanacademy.org/math/calculus-1)
@@ -115,7 +115,7 @@ A comprehensive collection of learning resources organized to match the AI Engin
 
 **Essential Papers & Articles:**
 - [Learning Representations by Backpropagating Errors](http://www.iro.umontreal.ca/~vincentp/ift3395/lectures/backprop_old.pdf)
-- Yes You Should Understand Backprop
+- [Yes, You Should Understand Backprop](https://medium.com/@karpathy/yes-you-should-understand-backprop-e2f06eab496b)
 - [Natural Language Processing (Almost) from Scratch](http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf)
 
 ## 2. Traditional Language Models
@@ -162,9 +162,6 @@ A comprehensive collection of learning resources organized to match the AI Engin
 **📈 Difficulty:** Beginner | **🎯 Prerequisites:** Python basics
 
 **Core Concepts & Posts:**
-- Introduction to Tokenization: A Theoretical Perspective
-- Understanding BPE Tokenization
-- Fast Tokenizers: How Rust is Turbocharging NLP
 - [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE)
 - [minbpe](https://github.com/karpathy/minbpe/blob/master/lecture.md)
 - [minbpe](https://www.youtube.com/watch?v=zduSFxRajkE&t=1157s)
@@ -198,9 +195,6 @@ A comprehensive collection of learning resources organized to match the AI Engin
 **📈 Difficulty:** Beginner-Intermediate | **🎯 Prerequisites:** Linear algebra, Python
 
 **Core Concepts & Posts:**
-- Word Embeddings Deep Dive
-- Contextual Embedding Guide
-- Sentence Embedding Techniques
 - [Illustrated Word2Vec](https://jalammar.github.io/illustrated-word2vec/)
 - [The Illustrated BERT, ELMo, and co.](https://jalammar.github.io/illustrated-bert/)
 - [CS224N Lecture 1 - Word Vectors](https://www.youtube.com/watch?v=rmVRLeJRkl4)
@@ -323,7 +317,6 @@ A comprehensive collection of learning resources organized to match the AI Engin
 **📈 Difficulty:** Expert | **🎯 Prerequisites:** Transformers, distributed systems
 
 **Foundational Understanding:**
-- Understanding Language Models
 - [LLMs Overview](https://arxiv.org/pdf/2307.06435)
 - [LLMs Survey](https://arxiv.org/abs/2402.06196)
 
@@ -468,7 +461,6 @@ A comprehensive collection of learning resources organized to match the AI Engin
 - [AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/)
 - [Evaluation Guidebook](https://github.com/huggingface/evaluation-guidebook)
 - [Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)
-- [Language Model Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness)
 - [Lighteval](https://github.com/huggingface/lighteval)
 - [Chatbot Arena](https://lmarena.ai/)
 - [Ragas](https://github.com/explodinggradients/ragas/tree/main)
@@ -539,7 +531,6 @@ A comprehensive collection of learning resources organized to match the AI Engin
 - [4-bit LLM Quantization with GPTQ](https://mlabonne.github.io/blog/posts/4_bit_Quantization_with_GPTQ.html)
 - [Quantize Llama models with llama.cpp](https://mlabonne.github.io/blog/posts/Quantize_Llama_2_models_using_ggml.html)
 - [ExLlamaV2: Fastest Library to Run LLMs](https://mlabonne.github.io/blog/posts/ExLlamaV2_The_Fastest_Library_to_Run%C2%A0LLMs.html)
-- Understanding AWQ
 - [SmoothQuant on Llama 2](https://github.com/mit-han-lab/smoothquant/blob/main/examples/smoothquant_llama_demo.ipynb)
 - [DeepSpeed Model Compression](https://www.deepspeed.ai/tutorials/model-compression/)
 - [GPTQ Paper](https://arxiv.org/abs/2210.17323)
@@ -602,7 +593,6 @@ A comprehensive collection of learning resources organized to match the AI Engin
 
 **Model Merging & Composition:**
 - [Model Merging](https://arxiv.org/abs/2203.05482)
-- [SLERP Merging](https://arxiv.org/abs/2306.01708)
 - [TIES-Merging](https://arxiv.org/abs/2306.01708)
 - [DARE](https://arxiv.org/abs/2311.03099)
 
@@ -747,7 +737,7 @@ A comprehensive collection of learning resources organized to match the AI Engin
 
 **Learning Resources:**
 - [LangChain Text Splitters](https://python.langchain.com/docs/how_to/#text-splitters)
-- [Top 7 Vector Databases](https://www.datacamp.com/blog/the-top-5-vector-databases)
+- [Vector database comparison and benchmarking guide](/writing/vector-databases/)
 - [LlamaIndex High-level Concepts](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html)
 - [Model Context Protocol](https://modelcontextprotocol.io/introduction)
 - [Pinecone Retrieval Augmentation](https://www.pinecone.io/learn/series/langchain/langchain-retrieval-augmentation/)
@@ -825,7 +815,7 @@ A comprehensive collection of learning resources organized to match the AI Engin
 **📈 Difficulty:** Advanced | **🎯 Prerequisites:** Security fundamentals, ethical AI
 
 **Security Frameworks:**
-- [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [OWASP Top 10 for LLM Applications 2026](https://genai.owasp.org/top-10-for-llm-applications-2026/)
 
 **Attack Vectors & Defense:**
 - [Prompt Injection](https://arxiv.org/abs/2310.12815)
