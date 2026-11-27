@@ -207,9 +207,16 @@
     }
   ],
   "snapshot_date": "2026-11-27",
-  "hero_topics": [
-    "systems",
-    "evaluation",
-    "persian"
-  ]
+  "hero_topics": {
+    "en": [
+      "systems",
+      "rag",
+      "foundations"
+    ],
+    "fa": [
+      "systems",
+      "evaluation",
+      "persian"
+    ]
+  }
 }

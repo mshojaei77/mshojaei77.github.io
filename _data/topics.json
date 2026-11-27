@@ -32,7 +32,8 @@
   "posts": {
     "document-parsing": [
       "rag",
-      "evaluation"
+      "evaluation",
+      "persian"
     ],
     "vector-databases": [
       "rag",

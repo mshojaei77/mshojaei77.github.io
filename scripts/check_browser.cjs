@@ -124,7 +124,8 @@ fs.mkdirSync(out, { recursive: true });
       await p.locator('#writing-search').fill('');assert.equal(await visible.count(),postCounts[lang]);
       await p.locator('[data-topic="rag"]').click();const expected=await all.evaluateAll(rows=>rows.filter(r=>r.dataset.postTopics.split(' ').includes('rag')).length);assert.equal(await visible.count(),expected);
       await p.reload();assert.equal(await visible.count(),expected);assert.equal(await p.locator('[data-topic="rag"]').getAttribute('aria-pressed'),'true');
-      await p.goto(origin+root);await p.locator('.home-focus a[href*="topic=evaluation"]').click();await p.locator('[data-topic="evaluation"][aria-pressed="true"]').waitFor();assert(await visible.evaluateAll(rows=>rows.every(r=>r.dataset.postTopics.split(' ').includes('evaluation'))));
+      await p.goto(origin+root);await p.locator('.home-focus a[href*="topic=systems"]').click();await p.locator('[data-topic="systems"][aria-pressed="true"]').waitFor();assert(await visible.evaluateAll(rows=>rows.every(r=>r.dataset.postTopics.split(' ').includes('systems'))));
+      await p.goto(origin+root);await p.keyboard.press('Control+k');await p.waitForURL(origin+archive+'?search=1');assert.equal(await p.locator('#writing-search').evaluate(el=>document.activeElement===el),true);
     }
     for(const [route,title] of [['/roadmap.html','AI Engineering Roadmap'],['/fa/roadmap/','نقشهٔ راه مهندسی هوش مصنوعی']]){assert((await p.goto(origin+route)).ok());assert((await p.title()).includes(title));assert.equal(await p.locator('main h1').first().textContent(),title);}
     const isRetired = route => fs.existsSync('retired-posts/'+(route.startsWith('/fa/')?'fa':'en')+'-'+route.split('/').filter(Boolean).at(-1)+'.html');

@@ -20,7 +20,6 @@
     {% assign slug = post.url | split: '/' | last %}
     {% assign topic_ids = site.data.topics.posts[slug] %}
     {% if topic_ids == nil %}{% assign topic_ids = 'general' | split: ',' %}{% endif %}
-    {% if post.lang == 'fa' %}{% assign topic_ids = topic_ids | push: 'persian' %}{% endif %}
     {% assign words = post.content | strip_html | number_of_words %}
     {% assign minutes = words | plus: 199 | divided_by: 200 | at_least: 1 %}
     <article class="entry-card{% if include.home and forloop.first %} latest-featured{% endif %}" data-post-topics="{{ topic_ids | join: ' ' | escape }}">

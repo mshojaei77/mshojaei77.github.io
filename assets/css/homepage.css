@@ -49,11 +49,6 @@ html[lang=fa] .home-hero h1{line-height:1.45;font-weight:800}
 html[lang=fa] .home-hero .hero-tagline{max-width:760px;line-height:1.7;font-weight:650}
 html[lang=fa] .home-hero .lede{max-width:690px;line-height:2;font-size:18px}
 html[lang=fa] .publication-home .entry-card p{line-height:1.9}
-html[lang=fa] .home-latest .section-grid.home-latest-grid{grid-template-columns:minmax(0,1fr);gap:0}
-html[lang=fa] .home-latest .section-grid.home-latest-grid>.entry-card{display:block;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;padding:14px 0 16px}
-html[lang=fa] .home-latest .entry-card:last-child{padding-bottom:0}
-html[lang=fa] .home-latest .entry-card h3{font-size:1.2rem;margin:5px 0 0}
-html[lang=fa] .home-latest .entry-card p{margin:3px 0 0}
 html[lang=fa] .home-latest .entry-card time{direction:ltr;unicode-bidi:isolate;display:inline-block}
 @media(max-width:760px){.home-latest .section-grid.home-latest-grid{grid-template-columns:minmax(0,1fr)}.publication-home .home-hero{padding-bottom:24px}}
 @media(max-width:480px){.home-connect-grid{grid-template-columns:minmax(0,1fr)}.publication-home .entry-card{padding:16px}.publication-home .section-heading h2{font-size:1.25rem}.home-hero .lede,html[lang=fa] .home-hero .lede{font-size:17px}.home-hero .hero-tagline{font-size:1.35rem}}
