@@ -11,7 +11,7 @@ Hosted at https://mshojaei77.github.io/. Existing URLs are public contracts: pre
 
 Install Ruby and Bundler, run `bundle install`, then `bundle exec jekyll build` and `python3 scripts/check_site.py _site`. Preview using `bundle exec jekyll serve`.
 
-Do not configure analytics with placeholder measurement IDs. GitHub Pages deployment remains unchanged.
+Do not configure analytics with placeholder measurement IDs. GitHub Pages deployment remains unchanged. See Analytics and discovery setup below.
 
 ## Languages
 
@@ -84,3 +84,13 @@ Homepage refresh: removed the decorative 4px header border, consolidated hero co
 Selected work is a curated four-project grid: ReActMCP, ParsiEval, Invoice-to-Pay Agent, and SubTrans-Ollama. GitHub star counts are a dated snapshot (2026-11-27), not live user or revenue metrics. Selection combines developer interest, evaluation depth, enterprise workflow, and local AI product engineering. Theme changes intentionally do not animate card backgrounds because an instant foreground change paired with a slow background transition causes a temporary contrast violation. Regression checks measure both theme changes synchronously and keep the 4.5:1 contrast threshold.
 
 Blog-first homepages: latest posts precede selected projects; first current post receives a dynamic featured treatment. Compact contact panels replace the eight social cards, with full links in the footer. Search uses the existing language-specific archive, filters titles/descriptions/topic labels client-side, supports Ctrl/Command+K and URL topic/query state, and adds no service or external dependency. `_data/topics.json` maps canonical slugs to bilingual topics; new unknown slugs receive Engineering notes. Persian AI is a subject, not a synonym for Persian-language content. Hero topic links are curated for each edition. Reading time is a rough build-time estimate using stripped content and 200 words/minute, not measured reading behavior. Gregorian date format remains YYYY-MM-DD, with Persian digits isolated left-to-right. No post source or Studio modifications.
+
+## Analytics and discovery setup
+
+No provider is activated by default. Edit `_data/discovery.json` only with actual public site identifiers (never private credentials):
+
+- `goatcounter_site`: create a site at https://www.goatcounter.com/ and enter the subdomain code only (e.g. if the dashboard is https://my-code.goatcounter.com/, use my-code). View statistics in the provider's private dashboard; no API integration or public counters. Default metric is visits, not verified readers. Historical visits before activation cannot be reconstructed. The locally hosted loader restricts collection to the production HTTPS hostname, skips admin and retired pages, honors GoatCounter's local skip flag, and loads the official v5 script with its published SRI hash (https://www.goatcounter.com/help/countjs-versions). Review the provider's privacy and applicable consent requirements before activating; https://www.goatcounter.com/help/privacy and https://www.goatcounter.com/help/gdpr. Use the provider's documented opt-out to exclude your own visits.
+- `google_verification`: at https://search.google.com/search-console, add the URL-prefix property https://mshojaei77.github.io/ and select HTML tag verification; copy the content attribute only. After deployment verify and submit https://mshojaei77.github.io/sitemap.xml.
+- `bing_verification`: import the verified Google property at https://www.bing.com/webmasters/ or use the content attribute of Bing's msvalidate.01 meta tag. Submit the same sitemap. Importing may make this field unnecessary.
+
+Verification tags render on both homepages only. Existing Jekyll SEO metadata remains the single source for article structured data, with BlogPosting set through post defaults. CI validates every live article's generated schema, canonical, description and social metadata. Do not invent translations or change canonical URLs. Public robots policy remains open for search and AI crawlers; admin stays excluded. Search eligibility is not a guarantee of ranking, indexing or AI citations. Cloudflare Web Analytics and Clarity are intentionally not activated: additional remote JavaScript on the public site's origin expands the attack surface of the same-origin Studio; reconsider separately with privacy and integrity controls. No GA4 or llms.txt is required for baseline discovery. GitHub Pages does not supply raw reader/crawler logs. Optional third-party integrations require actual account setup.
