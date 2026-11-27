@@ -9,7 +9,7 @@ fs.mkdirSync(out, { recursive: true });
   const browser = await chromium.launch({ headless: true });
   let count = 0;
   try {
-    for (const width of [375, 768, 1024, 1440]) for (const colorScheme of ['light', 'dark']) {
+    for (const width of [360, 375, 390, 768, 1024, 1440, 1920]) for (const colorScheme of ['light', 'dark']) {
       const context = await browser.newContext({ viewport: { width, height: 900 }, colorScheme, deviceScaleFactor: 1 });
       const page = await context.newPage();
       const results = [];
@@ -56,6 +56,12 @@ fs.mkdirSync(out, { recursive: true });
             fontLoaded: [...document.fonts].some(f=>f.family === 'Vazirmatn' && f.status === 'loaded'),
             sections, grid, startPresent: !!$('.home-start, [data-home-section="start"]'), work: $$('.featured-work h3 a').map(a=>a.getAttribute('href')), email: !!$('.home-connect a[href^="mailto:"]'), labels: [...switcher.children].map(x=>x.textContent.trim()), topBorder: getComputedStyle($('.site-header')).borderTopWidth,
             latest: $$('.home-latest .entry-card h3 a').map(a=>a.getAttribute('href')),
+            hero: $('.home-hero .hero-tagline').textContent.trim(), intro: $('.home-hero .lede').textContent.trim(),
+            featuredBorder: getComputedStyle($('.home-latest .latest-featured')).borderInlineStartWidth,
+            projectArrows: $$('.featured-work .project-arrow').map(e=>({parent:e.parentElement.tagName,position:getComputedStyle(e).position,rect:e.getBoundingClientRect().toJSON(),title:e.parentElement.getBoundingClientRect().toJSON()})),
+            projectStack: (()=>{const e=$('.project-stack'),r=e.getBoundingClientRect(),first=e.firstElementChild.getBoundingClientRect();return {direction:getComputedStyle(e).direction,justify:getComputedStyle(e).justifyContent,left:r.left,right:r.right,firstLeft:first.left,firstRight:first.right};})(),
+            community: (()=>{const e=$('.home-connect-grid .contact-actions'),a=e.querySelector('a'),r=e.getBoundingClientRect(),first=a.getBoundingClientRect();return {direction:getComputedStyle(e).direction,justify:getComputedStyle(e).justifyContent,left:r.left,right:r.right,firstLeft:first.left,firstRight:first.right,external:e.querySelectorAll('a[href^="https://"] span[aria-hidden="true"]').length,rssArrow:e.querySelector('a[href="/feed.xml"] span')!==null};})(),
+            snapshot: (()=>{const e=$('.project-snapshot time');return {text:e.textContent.trim(),datetime:e.dateTime,dir:e.dir};})(),
             heroLinks: $$('.home-hero .quick-links a').map(a=>a.getAttribute('href')),
             rss: !!$('footer a[href="/feed.xml"]'),
             internal: $$('main .entry-card a').map(a=>a.getAttribute('href')).filter(x=>x.startsWith('/')),
@@ -77,6 +83,19 @@ fs.mkdirSync(out, { recursive: true });
         if(latestCount>1)assert.equal(new Set(facts.grid).size,latestCount,'Latest writing rows must stack');
         assert.equal(facts.sections.at(-1)[1],2);assert.deepEqual(facts.work,['ReActMCP','ParsiEval','SubTrans-Ollama','invoice-to-pay-agent'].map(n=>'https://github.com/mshojaei77/'+n));assert.equal(facts.sections.find(x=>x[0]==='work')[1],4);assert(facts.email);assert.deepEqual(facts.labels,['English','فارسی']);assert.equal(facts.topBorder,'0px');
         assert.equal(facts.latest.length,new Set(facts.latest).size);
+        assert.equal(facts.latest.length?await page.locator('.latest-featured').count():0,facts.latest.length?1:0);
+        assert.equal(facts.featuredBorder,'1px');
+        assert(facts.projectArrows.every(a=>a.parent==='A'&&a.position!=='absolute'&&Math.abs(a.rect.top+a.rect.height/2-(a.title.top+a.title.height/2))<12),'project arrow must sit in its title row');
+        assert.equal(facts.projectStack.direction,lang==='fa'?'rtl':'ltr');
+        assert.equal(facts.projectStack.justify,'flex-start');
+        assert(lang==='fa'?facts.projectStack.firstRight>=facts.projectStack.right-2:facts.projectStack.firstLeft<=facts.projectStack.left+2,'technology tags align to inline-start');
+        assert.equal(facts.community.direction,lang==='fa'?'rtl':'ltr');
+        assert.equal(facts.community.justify,'flex-start');
+        assert(lang==='fa'?facts.community.firstRight>=facts.community.right-2:facts.community.firstLeft<=facts.community.left+2,'community links align to inline-start');
+        assert.equal(facts.community.external,2);assert.equal(facts.community.rssArrow,false);
+        assert.deepEqual(facts.snapshot,{text:lang==='fa'?'۲۰۲۶-۱۱-۲۷':'2026-11-27',datetime:'2026-11-27',dir:'ltr'});
+        if(lang==='fa'){assert.equal(facts.hero,'ساخت و ارزیابی سیستم‌های LLM برای محیط واقعی.');assert.equal(facts.intro,'دربارهٔ معماری ایجنت‌ها، خطاهای پنهان RAG، بنچمارک مدل‌ها و چالش‌های اجرای هوش مصنوعی روی داده‌های فارسی می‌نویسم.');}
+        else assert.equal(facts.hero,'Building AI systems that survive production.');
         assert.deepEqual(facts.heroLinks,lang==='fa'?['/fa/writing/','/fa/about/']:['/writing/','/about.html']);
         assert(facts.latest.every(x=>x.startsWith(lang==='fa'?'/fa/writing/':'/writing/')));assert.equal(await page.locator('.latest-featured').count(),latestCount?1:0);assert.equal(await page.locator('.home-latest .read-time').count(),latestCount);assert.equal(await page.locator('.home-focus .topic-pill').count(),3);assert.equal(await page.locator('.project-stack').count(),4);assert.equal(await page.locator('.work-link').count(),0);assert(await page.evaluate(()=>{const a=document.querySelector('header .wrap').getBoundingClientRect(),b=document.querySelector('main.wrap').getBoundingClientRect();return Math.abs(a.left-b.left)<1&&Math.abs(a.width-b.width)<1;}));
         if (lang === 'fa') {

@@ -18,19 +18,18 @@
   {% for project in site.data.home.selected_work %}{% assign entry = project[page.lang] %}
     <article class="entry-card featured-work{% if project.flagship %} flagship{% endif %}" data-project="{{ project.repo | escape }}">
       <div class="project-meta"><span class="meta">{{ entry.tag | escape }}</span><span class="project-stars" aria-label="{{ project.stars }} {{ copy.work_stars | escape }}"><span aria-hidden="true">★</span> <bdi>{% if page.lang == 'fa' %}{% include persian-digits.html value=project.stars %}{% else %}{{ project.stars }}{% endif %}</bdi></span></div>
-      <h3><a href="https://github.com/mshojaei77/{{ project.repo }}" dir="ltr">{{ entry.title | escape }}</a></h3>
+      <h3><a href="https://github.com/mshojaei77/{{ project.repo }}" dir="ltr">{{ entry.title | escape }} <span class="project-arrow" aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span></a></h3>
       <p>{{ entry.desc | escape }}</p>
       <div class="project-stack" aria-label="{% if page.lang == 'fa' %}فناوری‌ها{% else %}Technologies{% endif %}">{% for tech in project.stack %}<span dir="ltr">{{ tech | escape }}</span>{% endfor %}</div>
-      <span class="project-arrow" aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span>
     </article>
   {% endfor %}
   </div>
-  <p class="project-snapshot">{{ copy.snapshot_label | escape }} <bdi dir="ltr">{% if page.lang == 'fa' %}{% include persian-digits.html value=site.data.home.snapshot_date %}{% else %}{{ site.data.home.snapshot_date }}{% endif %}</bdi></p>
+  <p class="project-snapshot">{{ copy.snapshot_label | escape }} <time datetime="{{ site.data.home.snapshot_date | date: '%Y-%m-%d' }}" dir="ltr">{% if page.lang == 'fa' %}{% include persian-digits.html value=site.data.home.snapshot_date %}{% else %}{{ site.data.home.snapshot_date }}{% endif %}</time></p>
 </section>
 <section class="home-connect" data-home-section="elsewhere" aria-labelledby="elsewhere-title">
   <div class="section-heading"><h2 id="elsewhere-title">{{ connect[page.lang] | escape }}</h2></div>
   <div class="home-connect-grid">
     <article class="entry-card contact-panel"><span class="meta"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg> {% if page.lang == 'fa' %}ارتباط مستقیم{% else %}Direct contact{% endif %}</span><h3>{{ copy.contact_title | escape }}</h3><p>{{ copy.contact_desc | escape }}</p><div class="contact-actions"><a class="action primary" href="mailto:shojaei.dev@gmail.com">{{ copy.contact_action | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}←{% else %}→{% endif %}</span></a></div></article>
-    <article class="entry-card contact-panel"><span class="meta"><svg class="icon" aria-hidden="true"><use href="#i-send"></use></svg> {% if page.lang == 'fa' %}جامعه و خبرخوان{% else %}Community and feed{% endif %}</span><h3>{{ copy.community_title | escape }}</h3><p>{{ copy.community_desc | escape }}</p><div class="contact-actions"><a href="https://t.me/LLMEngineers">{{ copy.channel | escape }} <span aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span></a><a href="https://t.me/AI_LLMs">{{ copy.group | escape }}</a><a href="/feed.xml">RSS</a></div></article>
+    <article class="entry-card contact-panel"><span class="meta"><svg class="icon" aria-hidden="true"><use href="#i-send"></use></svg> {% if page.lang == 'fa' %}جامعه و خبرخوان{% else %}Community and feed{% endif %}</span><h3>{{ copy.community_title | escape }}</h3><p>{{ copy.community_desc | escape }}</p><div class="contact-actions"><a href="https://t.me/LLMEngineers"><bdi>{{ copy.channel | escape }}</bdi><span aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span></a><a href="https://t.me/AI_LLMs"><bdi>{{ copy.group | escape }}</bdi><span aria-hidden="true">{% if page.lang == 'fa' %}↖{% else %}↗{% endif %}</span></a><a href="/feed.xml"><bdi>RSS</bdi></a></div></article>
   </div>
 </section>
