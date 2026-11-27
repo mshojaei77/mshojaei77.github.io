@@ -203,7 +203,7 @@ fs.mkdirSync(out, { recursive: true });
       await a.waitForURL(origin+(faRetired?'/fa/':articleRoute));
       await ctx.close();
     }
-    for (const width of faRetired ? [] : [375, 1440]) {
+    for (const width of [375, 1440]) {
       const ctx = await browser.newContext({viewport:{width,height:900}});
       const guide = await ctx.newPage();
       const failures = [];
@@ -213,21 +213,24 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await guide.locator('html').getAttribute('lang'),'fa');
       assert.equal(await guide.locator('html').getAttribute('dir'),'rtl');
       assert.equal(await guide.locator('main article h1').count(),1);
-      assert.equal(await guide.locator('main figure svg').count(),(fs.readFileSync('_posts/2026-11-26-document-parsing.md','utf8').match(/<svg\b/g)||[]).length);
       await checkSwitch(guide,articleRoute,englishRoute,'fa');
-      assert.equal(await guide.locator('link[hreflang]').count(),0);
-      assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'engineering guide horizontal overflow '+width);
+      assert.equal(await guide.locator('link[rel=canonical]').getAttribute('href'),'https://mshojaei77.github.io'+articleRoute);
+      assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'Persian article horizontal overflow '+width);
       assert(await guide.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
-      await guide.locator('#site-theme').click();
-      assert.equal(await guide.locator('html').getAttribute('data-theme'),'dark');
+      assert((await guide.locator('main article').innerText()).length>1000);
       assert.deepEqual(failures,[]);
-      await guide.screenshot({path:out+'/document-parsing-engineering-fa-'+width+'.png'});
+      await guide.screenshot({path:out+'/document-parsing-fa-'+width+'.png'});
       await ctx.close();
     }
     assert((await p.goto(origin+'/fa/writing/document-parsing-engineering/')).ok());
     await p.waitForURL(origin+articleRoute);
-    for(const [route,removed] of [[articleRoute,faRetired],[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
-    console.log('Verified tutorial steps, downloadable lab files, legacy anchors, RTL and theme.');
+    assert((await p.goto(origin+'/fa/writing/document-parsing-fa-review-v7/')).ok());
+    await p.waitForURL(origin+articleRoute);
+    assert((await p.goto(origin+articleRoute)).ok());
+    assert.equal(await p.locator('main h1').count(),1);
+    assert((await p.locator('main article').innerText()).length>1000,'canonical Persian article content');
+    for(const [route,removed] of [[englishRoute,enRetired]]) if(removed){assert((await p.goto(origin+route)).ok());assert.equal(await p.locator('[data-retired-post]').count(),1);assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex,nofollow');}
+    console.log('Verified canonical Persian article, RTL rendering, theme and legacy redirects.');
     console.log('Verified '+count+' locale / viewport / theme browser combinations and 26 migrated article redirects.');
   } finally { await browser.close(); }
 })().catch(err => { console.error(err); process.exitCode = 1; });

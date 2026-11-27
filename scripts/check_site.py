@@ -309,7 +309,8 @@ for path in Path("_posts").iterdir():
     prefix = "/fa/writing/" if lang == "fa" else "/writing/"
     if not re.fullmatch(re.escape(prefix) + r"[a-z0-9]+(?:-[a-z0-9]+)*/", route):
         errors.append(f"Post outside canonical writing namespace: {path}: {route}")
-    legacy = {"2026-11-26-document-parsing.md": "fa", "2026-11-26-document-parsing-en.html": "en"}
+    legacy = {"2026-11-26-document-parsing.md": "fa", "2026-11-26-document-parsing-en.html": "en",
+              "2026-11-26-fa-document-parsing.html": "fa"}
     filename_lang = re.match(r"^\d{4}-\d{2}-\d{2}-(fa|en)-([a-z0-9]+(?:-[a-z0-9]+)*)\.(md|markdown|html)$", path.name)
     slug = "document-parsing" if path.name in legacy else filename_lang.group(2) if filename_lang else ""
     if route != prefix + slug + "/":
