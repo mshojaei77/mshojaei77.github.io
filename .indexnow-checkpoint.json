@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_acknowledged_revision": "0a40e8312b7d585d41557c2aa199c53c57650aaf",
-  "last_acknowledged_at": "2026-11-27T17:15:54.614268+00:00",
+  "last_acknowledged_revision": "690d3480515032273c275476eb76fd0c7684bd91",
+  "last_acknowledged_at": "2026-11-27T17:25:35.500993+00:00",
   "notification_state": "submission_accepted",
   "known_canonical_urls": [
     "https://mshojaei77.github.io/",
@@ -54,6 +54,7 @@
     "https://mshojaei77.github.io/writing/",
     "https://mshojaei77.github.io/writing/academic-research-agent/",
     "https://mshojaei77.github.io/writing/ai-agent-use-cases/",
+    "https://mshojaei77.github.io/writing/build-search-engine-from-scratch/",
     "https://mshojaei77.github.io/writing/deep-research-agents/",
     "https://mshojaei77.github.io/writing/embeddings/",
     "https://mshojaei77.github.io/writing/evaluating-coding-harnesses/",
