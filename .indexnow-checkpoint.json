@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "last_acknowledged_revision": "c30ae722057ff9fecedf1d94d8ae0704ff565074",
+  "last_acknowledged_at": "2026-11-27T10:49:34.776764+00:00",
+  "notification_state": "submission_accepted",
+  "known_canonical_urls": [
+    "https://mshojaei77.github.io/",
+    "https://mshojaei77.github.io/about.html",
+    "https://mshojaei77.github.io/fa/",
+    "https://mshojaei77.github.io/fa/about/",
+    "https://mshojaei77.github.io/fa/privacy/",
+    "https://mshojaei77.github.io/fa/roadmap/",
+    "https://mshojaei77.github.io/fa/writing/",
+    "https://mshojaei77.github.io/fa/writing/document-parsing/",
+    "https://mshojaei77.github.io/fa/writing/interview/",
+    "https://mshojaei77.github.io/fa/writing/market-analysis/",
+    "https://mshojaei77.github.io/fa/writing/open-source-ai/",
+    "https://mshojaei77.github.io/fa/writing/resources/",
+    "https://mshojaei77.github.io/fa/writing/vector-databases/",
+    "https://mshojaei77.github.io/privacy/",
+    "https://mshojaei77.github.io/roadmap.html",
+    "https://mshojaei77.github.io/writing/",
+    "https://mshojaei77.github.io/writing/interview/",
+    "https://mshojaei77.github.io/writing/market-analysis/",
+    "https://mshojaei77.github.io/writing/open-source-ai/",
+    "https://mshojaei77.github.io/writing/resources/",
+    "https://mshojaei77.github.io/writing/vector-databases/"
+  ]
+}
