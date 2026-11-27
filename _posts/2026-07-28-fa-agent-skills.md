@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/438"
 ---
 
 # مهارت Agent Skills چیست؟ چطور دانش کاری را قابل‌استفادهٔ دوباره کنیم؟
 
 اگر هر بار که Agent یک کار تکراری انجام می‌دهد باید دوباره همان دستورالعمل‌ها را در prompt بنویسید، بخشی از دانش تیم هنوز به فرایند تبدیل نشده. Agent Skill یک بستهٔ قابل‌استفادهٔ دوباره از دستورالعمل، فایل‌های مرجع و در صورت نیاز script است که Agent می‌تواند هنگام مرتبط‌بودن بارگذاری کند.
 
-در [پستی که دربارهٔ SkillOpt خواندم](https://t.me/LLMEngineers/438) و [یادداشت من دربارهٔ فرمت Agent Skills](https://t.me/LLMEngineers/452)، دو پرسش را به هم وصل کردم: Skill چه چیزی است و چطور می‌شود دستورالعملش را با feedback بهتر کرد؟
+برای طراحی Skill باید دو پرسش را جداگانه پاسخ داد: چه دستورالعملی برای انجام task لازم است و چطور می‌توان کیفیت آن را با feedback ارزیابی و بهتر کرد؟
 
 ## مهارت Agent فقط یک prompt طولانی نیست
 
@@ -65,8 +64,5 @@ source_url: "https://t.me/LLMEngineers/438"
 مهارت‌ها برای تبدیل یک روند تکراری به دستورالعملی قابل‌کشف و قابل‌بازبینی مفیدند. فایل کوچک و مشخص بسازید، description را دقیق بنویسید و رفتار را با task واقعی ارزیابی کنید. Skill ابزار جادویی یا مجوز اجرایی نیست؛ کیفیتش به شواهدی که برای ساخت و نگه‌داری‌اش دارید بستگی دارد.
 
 ## منابع
-
-- [پست کانال: SkillOpt](https://t.me/LLMEngineers/438)
-- [پست کانال: Agent Skills و Progressive Disclosure](https://t.me/LLMEngineers/452)
 - [مشخصات Agent Skills](https://agentskills.io/specification)
 - [مقالهٔ SkillOpt در arXiv](https://arxiv.org/abs/2605.23904)

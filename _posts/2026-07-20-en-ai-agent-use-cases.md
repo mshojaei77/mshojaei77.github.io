@@ -13,12 +13,9 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://medium.com/@mshojaei77/most-ai-agent-use-cases-are-just-glorified-if-else-chains-8c86c14c6051"
 ---
 
 # Most “AI Agent” Use Cases Are Just Glorified If-Else Chains
-
-*Originally published on [Medium](https://medium.com/@mshojaei77/most-ai-agent-use-cases-are-just-glorified-if-else-chains-8c86c14c6051) on July 20, 2026.*
 
 A builder’s guide to separating simple API integrations from production-grade agentic architectures.
 
@@ -28,11 +25,11 @@ But if you actually write Python, manage databases, and deploy systems for a liv
 
 Many items called “agents” in use-case lists are fixed workflows: CRUD applications, linear API chains, or scheduled jobs with an LLM call. For this article, I use *agent* for a workflow where a model can choose among tools or steps at runtime. The field does not use one universally accepted definition, so the distinction here is an architectural rule of thumb rather than a formal taxonomy.
 
-However, if you strip away the marketing fluff and the vibe-coding projects that only survived long enough to win a hackathon, there is a real, highly valuable architectural core hiding underneath. When you look at the workflows that actually deliver production value, they share a distinct technical pattern: they rely on dynamic execution loops, deterministic policy guardrails, and robust state management.
+Behind the marketing claims and prototypes, some use cases do expose useful architectural patterns. Workflows that need runtime choices, controlled side effects, or durable waiting often benefit from dynamic execution loops, deterministic policy guardrails, and explicit state management. Those choices still need to be tested against the actual workload.
 
 ## The short version
 
-Most community-reported “agent” use cases can be easily built using a standard automation platform like n8n or a simple Python script using Celery. If you do not need the system to dynamically decide its own path or recover from unexpected tool failures on the fly, do not use an agent framework. It will only add latency, cost, and unpredictability.
+Many community-reported “agent” examples may be implementable with a standard automation platform such as n8n or a Python task queue such as Celery. If a workflow does not need runtime path selection or model-led recovery from tool failures, a deterministic workflow is often simpler to inspect. An agent framework can add latency, cost, and less predictable behavior, so compare those trade-offs with a representative workload before choosing it.
 
 The use cases that actually require a true agentic architecture — meaning an LLM running inside a loop with tool-access and self-correction capabilities — fall into a few narrow buckets:
 
@@ -56,7 +53,7 @@ When you look past the specific business problems being solved, three core archi
 
 ## Pattern 1: The External Policy Kernel
 
-You cannot trust a neural network with a credit card, raw SSH access, or database write permissions. If you build an agent that directly calls billing or system APIs, it will eventually hallucinate, loop infinitely, or get exploited via prompt injection.
+An LLM should not be the sole control for a credit card, raw SSH access, or database write permissions. An agent connected directly to billing or system APIs can make mistaken calls, repeat work, or be affected by prompt injection; the likelihood and impact depend on the model, tools, and surrounding controls.
 
 The most elegant solution to this is the policy kernel pattern, seen in projects like Custodian. Instead of trying to write perfect system prompts to keep the agent in check, you place a deterministic, non-LLM validation layer between the agent’s proposed tool call and the actual execution environment.
 
@@ -77,7 +74,7 @@ Giving one agent broad access increases the impact of prompt injection or a mist
 
 Many of the best developer-focused agent use cases — like running automated Kanban workflows or waiting for CI test feedback — require long periods of waiting.
 
-If your agent is running in a continuous loop waiting for a GitHub Action to finish, you are wasting money, holding open compute threads, and risking API timeouts.
+If a workflow waits in a continuous loop for a GitHub Action to finish, it may incur avoidable compute costs, hold worker capacity, and hit API timeouts. Whether that matters depends on wait duration and the execution environment.
 
 For a workflow that may wait a long time, an event-driven loop is one useful design. The agent can execute a tool call, persist the minimum state needed to continue, and release its worker. A webhook or queue event can resume the workflow after the external task finishes. This avoids holding a process open while it waits, but adds persistence, retry, idempotency, and state-versioning work; a short workflow may be simpler to run synchronously.
 

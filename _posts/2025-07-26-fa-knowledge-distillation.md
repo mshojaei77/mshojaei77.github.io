@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/70"
 ---
 
 # تقطیر دانش در LLM؛ انتقال توانایی به مدل کوچک‌تر
 
 تقطیر دانش (Knowledge Distillation) خانواده‌ای از روش‌هاست که در آن یک student از خروجی یا نمایش‌های یک teacher یاد می‌گیرد. انگیزه می‌تواند کوچک‌ترکردن مدل، سریع‌ترکردن inference یا انتقال یک توانایی به مدلی باشد که استقرارش ساده‌تر است. اما تقطیر اندازهٔ مدل را خودبه‌خود کم نمی‌کند و تضمین هم نمی‌کند دانش teacher بدون افت منتقل شود.
 
-در [پست کانال دربارهٔ distillation](https://t.me/LLMEngineers/70)، سه مسیر response-based، feature-based و instruction/rationale-based معرفی شده بود. برای انتخاب بین آن‌ها، اول باید ببینیم از teacher دقیقاً چه نوع خروجی‌ای در دسترس است.
+در Knowledge Distillation سه خانوادهٔ رایج، انتقال خروجی، انتقال ویژگی‌های میانی، و آموزش مبتنی بر instruction یا rationale هستند. برای انتخاب بین آن‌ها، اول باید ببینیم از teacher دقیقاً چه نوع خروجی‌ای در دسترس است.
 
 ## سه نوع سیگنال برای student
 
@@ -34,7 +33,7 @@ source_url: "https://t.me/LLMEngineers/70"
 
 در **logit یا distribution distillation**، student می‌کوشد توزیع خروجی teacher را تقلید کند. وقتی logits کامل و تعریف temperature روشن باشد، می‌توان توزیع‌های soft را مقایسه کرد. اگر API فقط logprobs توکن‌های برتر را بدهد، این خروجی با توزیع کامل واژگان برابر نیست: بخش حذف‌شدهٔ واژگان و شیوهٔ sampling در دسترس نیست و هر renormalization روی top-k یک تقریب تازه است.
 
-بنابراین ادعای دقیق به نوع داده وابسته است. logprobهای کاملِ یک توزیع معلوم می‌توانند برای محاسبهٔ KL روی همان پشتیبانی کافی باشند؛ top-k logprobs معمولاً تنها بخشی از توزیع را نشان می‌دهد. همچنین logit matching با MSE همان مسئلهٔ probability matching با KL نیست. در [پست فنی بعدی کانال](https://t.me/LLMEngineers/263)، این تفاوت با سناریوی API بررسی شده بود؛ تعمیم آن به همهٔ endpointها نیازمند بررسی قرارداد همان API است.
+بنابراین ادعای دقیق به نوع داده وابسته است. logprobهای کاملِ یک توزیع معلوم می‌توانند برای محاسبهٔ KL روی همان پشتیبانی کافی باشند؛ top-k logprobs معمولاً تنها بخشی از توزیع را نشان می‌دهد. همچنین logit matching با MSE همان مسئلهٔ probability matching با KL نیست. در APIها، امکان اجرای هر روش به قرارداد همان endpoint بستگی دارد؛ اگر فقط top-k score ارائه شود، توزیع کامل teacher در دسترس نیست.
 
 ### نمایش‌های میانی
 
@@ -66,9 +65,6 @@ source_url: "https://t.me/LLMEngineers/70"
 تقطیر دانش زمانی معنادار است که سیگنال teacher با هدف student سازگار و مجموعهٔ آزمون مستقل داشته باشیم. متن پاسخ، توزیع توکن و نمایش داخلی اطلاعات متفاوتی می‌دهند؛ top-k logprobs را توزیع کامل جا نزنیم و rationale متنی را شاهد قطعیِ فرایند فکر مدل ندانیم. کیفیت داده و روش ارزیابی مهم‌تر از نام الگوریتم‌اند.
 
 ## منابع
-
-- [پست کانال: مقدمهٔ Knowledge Distillation](https://t.me/LLMEngineers/70)
-- [پست کانال: distillation با logprobs](https://t.me/LLMEngineers/263)
 - **منبع:** [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531)
 - **منبع:** [DistilBERT](https://arxiv.org/abs/1910.01108)
 - **منبع:** [TinyBERT](https://arxiv.org/abs/1909.10351)

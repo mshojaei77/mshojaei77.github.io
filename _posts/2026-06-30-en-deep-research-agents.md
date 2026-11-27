@@ -13,12 +13,9 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://medium.com/@mshojaei77/building-deep-research-agents-architecture-rl-rewards-and-context-management-2ef1cf269dc3"
 ---
 
 # Building Deep Research Agents: Architecture, RL Rewards, and Context Management
-
-*Originally published on [Medium](https://medium.com/@mshojaei77/building-deep-research-agents-architecture-rl-rewards-and-context-management-2ef1cf269dc3) on June 30, 2026.*
 
 How to Build Deep Research Agents: Lessons from QUEST and S1-DeepResearch
 
@@ -36,7 +33,7 @@ Two recent papers offer concrete designs to study: **QUEST**, by researchers fro
 
 The sections below distinguish the papers’ reported methods and results from engineering recommendations inferred from them.
 
-![](https://cdn-images-1.medium.com/max/1024/1*DlWxkHH9sQhYBRupz89iYg.png)
+![A research agent workflow from question scoping through evidence retrieval, synthesis, and rubric checks](/assets/img/articles/deep-research-agent-cycle.svg)
 
 ## What the papers actually say
 
@@ -78,13 +75,13 @@ A rubric tree decomposes a task into explicit criteria. Some criteria can be che
 - The next layer decomposes the task into *Comprehensiveness*, *Instruction Following*, and *Insight*.
 - The leaf nodes check highly specific, binary conditions: “Did the agent cite the primary recall notice URL?”, “Is the death toll reported as exactly 10?”, or “Is there a Markdown comparison table comparing Outbreak A and Outbreak B?”
 
-![](https://cdn-images-1.medium.com/max/1024/1*Nbt1iXzpFLDOrybBWHhYpA.png)
+![A rubric tree decomposes a research report score into evidence, instruction, and accuracy checks](/assets/img/articles/research-rubric-tree.svg)
 
 In the QUEST implementation, objective leaves are checked by executable evaluators, while open-ended criteria use a judge model. The paper combines rubric rewards with a citation fact-checking reward for GRPO. This provides finer-grained feedback than one overall score, but judge quality and evaluation design remain sources of error.
 
 ## 2. Structured Context State vs. Naive Truncation
 
-Most long-running agents break because their context window gets polluted. If you use a naive “keep-last-N-turns” or “discard-all” strategy, the model will forget verified facts, lose track of pending sub-goals, or endlessly repeat web searches it already completed.
+Long-running agents can lose reliability when the context window fills with unstructured history. With a naive “keep-last-N-turns” or “discard-all” strategy, a model may lose verified facts, lose track of pending sub-goals, or repeat searches it already completed.
 
 The solution is to decouple the raw history from the agent’s working memory by using a structured JSON state:
 
@@ -129,12 +126,12 @@ If you want to build this without a massive GPU cluster, here is how to implemen
 
 If you let your agents hit live search and scraping APIs during development or RL rollouts, your API bills will be astronomical, and your pipeline will run incredibly slowly.
 
-You need a strict two-tier caching layer:
+Caching may reduce repeated tool work, but the right policy depends on how quickly the underlying data changes and how much query variation is safe to treat as equivalent. Start with narrowly scoped caches and measure their effect on the target workload:
 
 - **Exact-Match Cache:** For any visit or parse\_file tool call, key the cache by the exact URL or file hash. Return the cached markdown or HTML digest instantly.
-- **Semantic-Similarity Cache:** For web searches, run an exact-match lookup first. If it misses, encode the query string and run a similarity search (e.g., using a local FAISS index) against previously cached queries. If a query matches with high cosine similarity (e.g., > 0.92), serve the cached search results.
+- **Semantic-Similarity Cache (experimental):** A semantic match can be considered only after checking that intent, time range, filters, locale, and other answer-affecting constraints match. Search results become stale, and similar wording can still require different evidence. Do not reuse a universal cosine threshold such as `0.92`; calibrate any threshold on representative queries, set a short and explicit freshness policy, and fall back to live retrieval when equivalence is uncertain.
 
-The QUEST paper describes exact-match and semantic caches for search and scholarly queries, plus an exact-URL cache for page visits. It does not report a “40% of tool calls” cache-hit figure, so no numerical savings claim is made here. In another system, cache value would need to be measured on that system’s own query and URL distribution.
+The QUEST paper describes exact-match and semantic caches for search and scholarly queries, plus an exact-URL cache for page visits. It does not report a “40% of tool calls” cache-hit figure, so no numerical savings claim is made here. In another system, cache value and answer quality would need to be measured on that system’s own query and URL distribution.
 
 ## 2. Session-level trajectory formatting
 

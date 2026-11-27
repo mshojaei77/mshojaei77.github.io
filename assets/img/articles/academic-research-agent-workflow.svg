@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 890" role="img" aria-labelledby="title desc">
+  <title id="title">A gated academic research agent workflow</title>
+  <desc id="desc">A research question and approved protocol lead to literature search, citation and novelty checks, methodology approval, analysis, manuscript checks, and a final human review.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#315f8d"/></marker>
+  </defs>
+  <rect x="18" y="18" width="724" height="854" rx="24" fill="#f7f9fc" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="380" y="67" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#172c3b">Research workflow with review gates</text>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#172c3b">
+    <rect x="95" y="100" width="570" height="74" rx="15" fill="#e5f0fb" stroke="#4f7896" stroke-width="3"/>
+    <text x="380" y="145" font-size="23" font-weight="700">Question and study scope</text>
+    <path d="M380 175v29" stroke="#315f8d" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="95" y="208" width="570" height="74" rx="15" fill="#e8f4e8" stroke="#628864" stroke-width="3"/>
+    <text x="380" y="253" font-size="23" font-weight="700">Protocol draft · human approval</text>
+    <path d="M380 283v29" stroke="#315f8d" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="95" y="316" width="570" height="74" rx="15" fill="#fff1dd" stroke="#a77a35" stroke-width="3"/>
+    <text x="380" y="361" font-size="23" font-weight="700">Search and citation validation</text>
+    <path d="M380 391v29" stroke="#315f8d" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="95" y="424" width="570" height="74" rx="15" fill="#f0eafa" stroke="#8063a3" stroke-width="3"/>
+    <text x="380" y="469" font-size="23" font-weight="700">Novelty and methodology checks</text>
+    <path d="M380 499v29" stroke="#315f8d" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="95" y="532" width="570" height="74" rx="15" fill="#e3f3f1" stroke="#4b8680" stroke-width="3"/>
+    <text x="380" y="577" font-size="23" font-weight="700">Analysis and reproducibility gate</text>
+    <path d="M380 607v29" stroke="#315f8d" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="95" y="640" width="570" height="74" rx="15" fill="#e5f0fb" stroke="#4f7896" stroke-width="3"/>
+    <text x="380" y="685" font-size="23" font-weight="700">Draft and integrity checklist</text>
+    <path d="M380 715v29" stroke="#315f8d" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="95" y="748" width="570" height="74" rx="15" fill="#fce8e6" stroke="#a46660" stroke-width="3"/>
+    <text x="380" y="793" font-size="23" font-weight="700">Human approval of final package</text>
+    <text x="380" y="850" font-size="18" fill="#4c5d6b">The agent prepares and checks; a researcher remains responsible.</text>
+  </g>
+</svg>

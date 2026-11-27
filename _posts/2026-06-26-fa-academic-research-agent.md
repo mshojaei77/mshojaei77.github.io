@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/361"
 ---
 
 # چطور یک AI Research Agent بسازیم که citation جعلی نسازد؟
 
 اگر از Agent بخواهیم دربارهٔ یک موضوع مقاله بنویسد و در آخر فهرست منابع هم بسازد، روان‌بودن متن ممکن است citationهای ساختگی را پنهان کند. راه‌حل این نیست که از مدل بخواهیم «منبع خیالی نساز»؛ citation باید از رکورد قابل‌جست‌وجو بیاید، metadata آن اعتبارسنجی شود و ادعای متن جداگانه با منبع تطبیق داده شود.
 
-در [پست کانال دربارهٔ مقاله‌های دارای citation خیالی](https://t.me/LLMEngineers/361) و [طرح Research Agent با gateهای قابل‌بررسی](https://t.me/LLMEngineers/379) همین جداسازی را پیشنهاد کردم. نسخهٔ انگلیسی tutorial با [LangGraph](/writing/academic-research-agent/) هم منتشر شده است.
+در طراحی Academic Research Agent باید جست‌وجو، اعتبارسنجی citation، انتخاب روش، تحلیل و نگارش را به گام‌های جدا با معیار پذیرش روشن تقسیم کرد. نسخهٔ انگلیسی tutorial با [LangGraph](/writing/academic-research-agent/) هم در دسترس است.
 
 ## هر Citation را در دو مرحله بررسی کنید
 
@@ -71,9 +70,6 @@ source_url: "https://t.me/LLMEngineers/361"
 یک Research Agent مفید پژوهشگر را از جست‌وجو، سازمان‌دهی رکورد و بررسی‌های تکراری آزاد می‌کند؛ اما نمی‌تواند به‌جای انسان اهمیت علمی، اعتبار روش و مسئولیت نتیجه را تأیید کند. هر citation را هم از نظر وجود و هم از نظر پشتیبانی ادعا بسنجید. اگر یک gate نتواند منبع و evidence را نشان دهد، خروجی آن مرحله هنوز آمادهٔ استفاده در مقاله نیست.
 
 ## منابع
-
-- [پست کانال: citationهای ساختگی در مقالات](https://t.me/LLMEngineers/361)
-- [پست کانال: طراحی Academic Research Agent](https://t.me/LLMEngineers/379)
 - [مقالهٔ انگلیسی: How to Build an Academic Research Agent with LangGraph](/writing/academic-research-agent/)
 - **منبع:** Zhao و همکاران، [LLM hallucinations in the wild: Large-scale evidence from non-existent citations](https://arxiv.org/abs/2605.07723)، ۲۰۲۶.
 - **منبع:** [Crossref REST API](https://www.crossref.org/documentation/retrieve-metadata/rest-api/)

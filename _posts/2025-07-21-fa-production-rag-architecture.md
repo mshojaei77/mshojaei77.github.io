@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/50"
 ---
 
 # معماری Production RAG؛ از Ingestion تا پاسخ قابل‌ردیابی
 
 برای ساخت یک RAG قابل‌استفاده در محصول، وصل‌کردن چند فایل به Vector Database کافی نیست. سند باید درست وارد شود، retrieval باید شواهد مرتبط و مجاز را پیدا کند و پاسخ نهایی باید به همان شواهد متصل بماند. اگر یکی از این مرزها خراب باشد، مدل روان می‌نویسد ولی پاسخ می‌تواند غلط یا غیرقابل‌ردیابی باشد.
 
-این مقاله ادامهٔ [یادداشت کانال دربارهٔ اشتباه‌های RAG](https://t.me/LLMEngineers/50) و [مرور مرحله‌های اولیهٔ سامانه](https://t.me/LLMEngineers/101) است. راهنمای [پردازش اسناد فارسی](/fa/writing/document-parsing/) و مقالهٔ [پایگاه‌های دادهٔ برداری](/fa/writing/vector-databases/) را هم ببینید؛ اینجا روی اجزای بین parsing و پاسخ تمرکز می‌کنیم.
+یک سامانهٔ RAG از آماده‌سازی داده و parsing تا retrieval و generation امتداد دارد. راهنمای [پردازش اسناد فارسی](/fa/writing/document-parsing/) و مقالهٔ [پایگاه‌های دادهٔ برداری](/fa/writing/vector-databases/) مسیرهای مرتبط را پوشش می‌دهند؛ اینجا روی اجزای بین parsing و پاسخ تمرکز می‌کنیم.
 
 ## مسیر داده را قابل‌ردیابی نگه دارید
 
@@ -45,6 +44,8 @@ source_url: "https://t.me/LLMEngineers/50"
 ## زمینه را از «نتیجهٔ جست‌وجو» نسازید
 
 نتیجه‌های retrieval را بی‌بررسی به prompt نریزید. سیستم باید تکراری‌ها را حذف کند، snippetهای لازم را انتخاب کند و برای هر تکه عنوان، منبع و بخش را به‌شکلی نگه دارد که پاسخ بعداً قابل‌ردیابی باشد. اگر نتایج متناقض‌اند، نسخهٔ جدید یا سند مرجع‌تر را مشخص کنید یا پاسخ را به حالت ارجاع ببرید.
+
+اگر corpus کوچک و نسبتاً ثابتی دارید که کامل در پنجرهٔ context مدل جا می‌شود، **Cache-Augmented Generation (CAG)** را هم کنار RAG بسنجید. در روش [Chan و همکاران](https://arxiv.org/abs/2412.15605)، اسناد از پیش وارد context می‌شوند و KV cache آن‌ها برای پاسخ‌گویی بدون retrieval هنگام درخواست آماده می‌شود. ارزیابی مقاله به Llama 3.1 8B، دو مجموعهٔ SQuAD و HotPotQA و corpusهایی با اندازهٔ مشخص محدود بود؛ بنابراین برتری عمومی CAG بر RAG را ثابت نمی‌کند. در سامانهٔ خودتان هزینهٔ ساخت و بارگذاری cache، حافظه، به‌روزرسانی سند، کنترل دسترسی و کیفیت پاسخ را با خط مبنای RAG مقایسه کنید.
 
 درخواست‌ها و دستورهای داخل سند را دادهٔ غیرقابل‌اعتماد بدانید. متن بازیابی‌شده می‌تواند دستورهای مخرب یا نامربوط داشته باشد؛ منبع نباید اختیار تغییر سیاست سیستم یا اجرای tool را پیدا کند. محتوا را با label و boundary روشن وارد context کنید و ابزارهای دارای اثر جانبی را با کنترل مجزای runtime محدود سازید.
 
@@ -76,9 +77,7 @@ source_url: "https://t.me/LLMEngineers/50"
 یک سامانهٔ RAG را به‌صورت زنجیره‌ای از قراردادهای قابل‌آزمون طراحی کنید: سند درست وارد شود؛ هر chunk provenance و ACL داشته باشد؛ retrieval مدرک مرتبط را پیدا کند؛ context تکراری و ناامن حذف شود؛ پاسخ به منبع قابل‌بررسی متصل باشد؛ و ارزیابی بتواند failure را به مرحلهٔ درست نسبت دهد. Vector Database تنها یک قطعه از این معماری است، نه خود معماری.
 
 ## منابع
-
-- [پست کانال: اشتباه‌های رایج RAG](https://t.me/LLMEngineers/50)
-- [پست کانال: نکات ساخت RAG](https://t.me/LLMEngineers/101)
 - **منبع:** Lewis و همکاران، [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)، NeurIPS 2020.
 - **منبع:** Es و همکاران، [Ragas: Automated Evaluation of Retrieval Augmented Generation](https://arxiv.org/abs/2309.15217).
 - **منبع:** Saad-Falcon و همکاران، [ARES: An Automated Evaluation Framework for RAG Systems](https://arxiv.org/abs/2311.09476).
+- **منبع:** Chan و همکاران، [Don’t Do RAG: When Cache-Augmented Generation is All You Need for Knowledge Tasks](https://arxiv.org/abs/2412.15605).

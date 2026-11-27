@@ -13,12 +13,11 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/40"
 ---
 
 # معماری LLM چطور کار می‌کند؟ از Attention تا MoE
 
-با انتشار مدل‌های تازه، توجه معمولاً به تعداد پارامتر و leaderboard می‌رود؛ اما برای فهم هزینه و رفتار یک مدل باید ببینیم در هر مرحله چه محاسبه‌ای انجام می‌شود. پست کانال دربارهٔ [مقایسهٔ معماری‌های LLM](https://t.me/LLMEngineers/40) به یک نکتهٔ مفید اشاره می‌کرد: بسیاری از مدل‌های زبانی مدرن هنوز از بلوک‌های Transformer استفاده می‌کنند، هرچند در Attention، MLP، نرمال‌سازی و روش انتخاب مسیر تفاوت‌های مهمی دارند.
+با انتشار مدل‌های تازه، توجه معمولاً به تعداد پارامتر و leaderboard می‌رود؛ اما برای فهم هزینه و رفتار مدل باید محاسبه‌های درون هر بلوک را بررسی کرد. بسیاری از مدل‌های زبانی مدرن هنوز از بلوک‌های Transformer استفاده می‌کنند، ولی تفاوت در Attention، MLP، نرمال‌سازی و روش انتخاب مسیر می‌تواند رفتار و هزینه را تغییر دهد.
 
 در این مقاله، یک مدل متنی decoder-only را در نظر می‌گیریم. این تصویر برای فهم بسیاری از LLMهای مولد مناسب است، اما معماری همهٔ مدل‌های multimodal یا مدل‌های دارای encoder-decoder را توصیف نمی‌کند.
 
@@ -75,8 +74,6 @@ source_url: "https://t.me/LLMEngineers/40"
 یک LLM مولد را می‌توان به‌عنوان زنجیره‌ای از tokenizer، embedding، بلوک‌های attention و MLP، مسیرهای residual و head خروجی فهمید. تغییرات مهمی مثل GQA، MLA، attentionهای محدود یا خطی و MoE عموماً بخشی از هزینه را جابه‌جا می‌کنند؛ هیچ‌کدام به‌تنهایی برتری کلی را ثابت نمی‌کند. وقتی معماری را به سؤال قابل‌اندازه‌گیری تبدیل کنیم، انتخاب مدل از مقایسهٔ تعداد پارامترها فراتر می‌رود.
 
 ## منابع
-
-- [پست کانال: مقایسهٔ معماری‌های LLM](https://t.me/LLMEngineers/40)
 - **منبع:** [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 - **منبع:** [GQA: Training Generalized Multi-Query Transformer Models](https://arxiv.org/abs/2305.13245)
 - **منبع:** [DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model](https://arxiv.org/abs/2405.04434)

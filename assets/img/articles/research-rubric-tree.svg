@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 700" role="img" aria-labelledby="title desc">
+  <title id="title">An example rubric tree for a research report</title>
+  <desc id="desc">The overall report score is decomposed into evidence coverage, instruction following, and factual accuracy. Each category has specific checks that can be verified.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#365a75"/></marker>
+  </defs>
+  <rect x="18" y="18" width="724" height="664" rx="26" fill="#f7f8fb" stroke="#cbd4df" stroke-width="3"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#1b2938">
+    <rect x="230" y="48" width="300" height="74" rx="18" fill="#e9e4fa" stroke="#8063a3" stroke-width="3"/>
+    <text x="380" y="94" font-size="27" font-weight="700">Overall report score</text>
+    <path d="M380 123v28M138 151h484M138 151v22M380 151v22M622 151v22" fill="none" stroke="#365a75" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <rect x="38" y="180" width="200" height="84" rx="15" fill="#e4f0fa" stroke="#4f7896" stroke-width="3"/>
+    <text x="138" y="217" font-size="22" font-weight="700">Evidence coverage</text><text x="138" y="245" font-size="17">Are key claims sourced?</text>
+    <rect x="280" y="180" width="200" height="84" rx="15" fill="#e7f3e7" stroke="#628864" stroke-width="3"/>
+    <text x="380" y="217" font-size="22" font-weight="700">Instructions</text><text x="380" y="245" font-size="17">Does it meet the format?</text>
+    <rect x="522" y="180" width="200" height="84" rx="15" fill="#fff0dc" stroke="#a77a35" stroke-width="3"/>
+    <text x="622" y="217" font-size="22" font-weight="700">Factual accuracy</text><text x="622" y="245" font-size="17">Do facts match sources?</text>
+
+    <path d="M138 265v34M380 265v34M622 265v34" fill="none" stroke="#365a75" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="38" y="306" width="200" height="230" rx="14" fill="#fff" stroke="#9fb0bf" stroke-width="2"/>
+    <text x="138" y="348" font-size="19" font-weight="700">Check the leaves</text>
+    <text x="58" y="391" text-anchor="start" font-size="18">□ Primary source linked</text>
+    <text x="58" y="431" text-anchor="start" font-size="18">□ Contradictions noted</text>
+    <text x="58" y="471" text-anchor="start" font-size="18">□ Evidence covers each claim</text>
+
+    <rect x="280" y="306" width="200" height="230" rx="14" fill="#fff" stroke="#9fb0bf" stroke-width="2"/>
+    <text x="380" y="348" font-size="19" font-weight="700">Check the leaves</text>
+    <text x="300" y="391" text-anchor="start" font-size="18">□ Required sections present</text>
+    <text x="300" y="431" text-anchor="start" font-size="18">□ Word limit respected</text>
+    <text x="300" y="471" text-anchor="start" font-size="18">□ Requested table included</text>
+
+    <rect x="522" y="306" width="200" height="230" rx="14" fill="#fff" stroke="#9fb0bf" stroke-width="2"/>
+    <text x="622" y="348" font-size="19" font-weight="700">Check the leaves</text>
+    <text x="542" y="391" text-anchor="start" font-size="18">□ Numbers agree with source</text>
+    <text x="542" y="431" text-anchor="start" font-size="18">□ Dates are preserved</text>
+    <text x="542" y="471" text-anchor="start" font-size="18">□ Unknowns are labeled</text>
+
+    <rect x="74" y="579" width="612" height="67" rx="14" fill="#e9eef2"/>
+    <text x="380" y="608" font-size="19" font-weight="700">Critical failure → block the parent score</text>
+    <text x="380" y="634" font-size="17">A missing primary citation cannot be averaged away by good formatting.</text>
+  </g>
+</svg>

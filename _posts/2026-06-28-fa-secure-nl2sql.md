@@ -13,14 +13,13 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/365"
 ---
 
 # ساخت NL2SQL امن؛ چطور اجازه ندهیم LLM دیتابیس را کنترل کند؟
 
 دادن schema دیتابیس به یک LLM و اجرای SQL تولیدشده، ساده‌ترین demo از NL2SQL است؛ اما مدل هم می‌تواند query پرهزینه بسازد، به جدول نامربوط دست بزند یا معنای سؤال را اشتباه بفهمد. طراحی امن‌تر این است که مدل فقط اطلاعاتی را استخراج یا تصمیم‌های محدودی را پیشنهاد دهد و کد و دیتابیس مرز اجرای واقعی را enforce کنند.
 
-در [پست کانال دربارهٔ NL2SQL](https://t.me/LLMEngineers/365) و [یادداشت فرق structured output و tool calling](https://t.me/LLMEngineers/366) این تفکیک را مطرح کردم.
+این دو مسیر را باید از هم جدا کرد: Structured Output فقط قالب پاسخ را محدود می‌کند، اما Tool Calling می‌تواند عملیاتی را در یک سامانه اجرا کند و به کنترل دسترسی و اعتبارسنجی جداگانه نیاز دارد.
 
 ## اول مشخص کنید واقعاً SQL لازم است؟
 
@@ -52,7 +51,7 @@ source_url: "https://t.me/LLMEngineers/365"
 
 شرط `LIMIT` می‌تواند تعداد ردیف خروجی را کم کند، اما لزوماً جلوی scan پرهزینه را نمی‌گیرد. `statement_timeout` یا سقف زمان معادل در database و محدودیت resource در لایهٔ سرویس لازم‌اند. query plan، حجم دادهٔ خوانده‌شده و cancel شدن درخواست را هم پایش کنید.
 
-اگر نتیجه به فیلتر تاریخ وابسته است، مرزهای زمانی را در کد محاسبه و validate کنید. من در یکی از مثال‌های کانال از تبدیل «دو هفتهٔ آخر مرداد» به بازهٔ دقیق و بعد ساخت query در برنامه گفتم؛ اینجا مدل زبان طبیعی را به پارامتر قابل‌کنترل تبدیل می‌کند، نه این‌که مسئول نوشتن هر join و aggregate باشد.
+اگر نتیجه به فیلتر تاریخ وابسته است، مرزهای زمانی را در کد محاسبه و validate کنید. برای نمونه، درخواست فرضی «دو هفتهٔ آخر مرداد» را می‌توان به یک بازهٔ دقیق تاریخ تبدیل کرد و به‌صورت پارامتر به query داد؛ مدل زبان طبیعی را به ورودی قابل‌کنترل نگاشت می‌کند، نه این‌که مسئول نوشتن هر join و aggregate باشد.
 
 ## فرق Structured Output با Tool Calling چیست؟
 
@@ -69,8 +68,5 @@ source_url: "https://t.me/LLMEngineers/365"
 در طراحی NL2SQL، دسترسی آزاد به دیتابیس ندهید. مدل در فهم زبان طبیعی کمک می‌کند؛ برنامه سؤال را به schema و allowlist محدود می‌کند؛ و دیتابیس با role، RLS و timeout آسیب احتمالی را مهار می‌کند. اگر query را می‌شود با template و پارامتر ساخت، لازم نیست مدل SQL آزاد تولید کند.
 
 ## منابع
-
-- [پست کانال: NL2SQL و امنیت دیتابیس](https://t.me/LLMEngineers/365)
-- [پست کانال: Structured Output و Function Calling](https://t.me/LLMEngineers/366)
 - **منبع:** [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
 - **منبع:** [PostgreSQL: SET TRANSACTION](https://www.postgresql.org/docs/current/sql-set-transaction.html)

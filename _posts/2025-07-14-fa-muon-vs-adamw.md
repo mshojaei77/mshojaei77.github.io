@@ -13,12 +13,11 @@ show_article_header: false
 image: /assets/img/social-card.png
 feed:
   excerpt_only: true
-source_url: "https://t.me/LLMEngineers/5"
 ---
 
 # از AdamW تا Muon؛ مقایسهٔ optimizerها در آموزش LLM
 
-بهینه‌ساز (optimizer) با gradientها وزن‌ها را به‌روزرسانی می‌کند تا loss پایین بیاید. در آموزش زبان، همین انتخاب می‌تواند روی تعداد گام‌ها، حافظهٔ optimizer، پایداری و زمان رسیدن به کیفیت هدف اثر بگذارد. پست [کانال دربارهٔ Muon](https://t.me/LLMEngineers/5) نتیجهٔ یک paper را معرفی می‌کرد که نشان داده Muon در آزمایش‌های خاص می‌تواند با FLOPs کمتر به loss مشابه برسد. برای تفسیر آن نتیجه باید بدانیم Muon چه تغییری می‌دهد و مقایسه چطور انجام شده است.
+بهینه‌ساز (optimizer) با gradientها وزن‌ها را به‌روزرسانی می‌کند تا loss پایین بیاید. در آموزش زبان، همین انتخاب می‌تواند روی تعداد گام‌ها، حافظهٔ optimizer، پایداری و زمان رسیدن به کیفیت هدف اثر بگذارد. مقایسهٔ Muon با AdamW فقط در چارچوب همان مدل، benchmark و بودجهٔ محاسباتی معنا دارد؛ کاهش FLOPs در یک آزمایش به‌تنهایی برتری عمومی را ثابت نمی‌کند.
 
 ## بهینه‌ساز AdamW چه می‌کند؟
 
@@ -61,8 +60,6 @@ source_url: "https://t.me/LLMEngineers/5"
 بهینه‌ساز AdamW هنوز baseline عملی مهمی است؛ Muon یک روش ماتریسی است که در برخی آزمایش‌های LLM به trade-off امیدوارکننده‌ای رسیده است. نتیجهٔ پژوهش را باید همراه با model size، data, compute, tuning و implementation بخوانیم. پرسش مفید این نیست که «کدام optimizer همیشه بهتر است؟» بلکه این است: «برای بودجه و کیفیت هدف من، کدام روش سریع‌تر و پایدارتر است؟»
 
 ## منابع
-
-- [پست کانال: معرفی Muon](https://t.me/LLMEngineers/5)
 - **منبع:** [Muon Is Scalable for LLM Training](https://arxiv.org/abs/2502.16982)
 - **منبع:** [Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101)
 - **منبع:** [Fantastic Pretraining Optimizers and Where to Find Them](https://arxiv.org/abs/2509.02046)
