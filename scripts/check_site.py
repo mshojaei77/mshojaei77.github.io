@@ -406,6 +406,8 @@ for page in root.rglob("*.html"):
         continue
     if re.fullmatch(r"(?:fa/)?writing/[a-z0-9]+(?:-[a-z0-9]+)*/index\.html", name):
         continue
+    if re.fullmatch(r"(?:fa/)?(?:knowledge|learn|playground|reading|lab|work)(?:/[a-z0-9]+(?:-[a-z0-9]+)*)?/index\.html", name):
+        continue
     errors.append(f"Editorial page outside writing: {name}")
 for path in Path("redirects").glob("*.html"):
     source = path.read_text(encoding="utf-8")
