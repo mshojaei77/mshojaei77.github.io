@@ -2,10 +2,11 @@
 layout: article
 lang: en
 title: "LLM Interview Questions"
-description: "LLM engineering interview questions across Transformers, fine-tuning, evaluation, RAG, agents, deployment and ML system design."
+description: "A topic-based LLM engineering interview question bank with practical signals for evaluating answers about RAG, inference, agents, and system design."
 permalink: /writing/interview/
 nav_exclude: true
 date: 2026-11-26 00:00:00 +0000
+last_modified_at: 2026-11-27 00:00:00 +0000
 article_kind: essay
 show_article_header: false
 image: /assets/img/social-card.png
@@ -16,7 +17,28 @@ feed:
 
 # Interview Questions
 
-This comprehensive guide contains LLM interview questions organized by role level and technical depth. Each section progresses from foundational concepts to advanced implementation challenges, with questions sorted from simple to hard within each topic area.
+This question bank groups LLM engineering topics from foundations to production systems. It is a source of prompts, not an answer key or a checklist for every role. Use the questions that match the work, then evaluate how the candidate reasons about constraints, evidence, trade-offs, and failures.
+
+## How to evaluate an engineering answer
+
+A strong answer does more than name a model or framework. Listen for four things:
+
+1. **Scope:** What is the task, who uses it, and what constraints matter (quality, latency, cost, data access, or safety)?
+2. **Mechanism:** Can the candidate trace the relevant path through data, model, retrieval, tools, and application code?
+3. **Evidence:** How would they compare the proposed approach with a baseline and detect regressions on representative cases?
+4. **Failure handling:** What can go wrong, how will it be observed, and what is the safe fallback?
+
+These are evaluation cues, not a hidden answer template. A good candidate may choose a different design if they explain its assumptions and how they would test it. Ask follow-ups that separate hands-on understanding from memorized terminology.
+
+## Three production scenarios
+
+| Prompt | Strong answer signals | Weak signal |
+|---|---|---|
+| A RAG system retrieved a relevant passage, but the answer is still wrong. How do you debug it? | Separate retrieval relevance, context assembly, source support, and generation. Inspect the actual query and evidence; use labeled cases to test each stage; measure both retrieval and answer quality before changing components. | Immediately switch embedding models or increase the model size without locating the failing stage. |
+| p95 response latency rose after a model-serving change. What do you inspect first? | Compare the same workload and deployment conditions; split queue time, prefill, and decode; check input/output token lengths, batching, cache behavior, concurrency, and resource saturation. Change one variable at a time and keep a rollback path. | Report only average latency or change hardware, quantization, and batching together without isolating the cause. |
+| A retrieved message tells an agent to issue a refund. What controls belong outside the prompt? | Treat retrieved text as untrusted input; enforce user and transaction authorization in application code; expose a narrowly scoped tool; validate amount and state; require approval for high-impact actions when policy calls for it; log and make retries idempotent. | Assume a system prompt alone can stop an unauthorized tool call. |
+
+For RAG, distinguish retrieval behavior from generated-answer behavior; for serving, separate queueing from prefill and decode; for agents, limit the effects a mistaken model call can have. The reading list below links to primary work and current guidance for those topics.
 
 
 ## 1. Tokenization
@@ -272,7 +294,6 @@ This comprehensive guide contains LLM interview questions organized by role leve
 - How are contextual precision and recall defined in retrieval-augmented systems?
 
 ## 19. LLM Agents & Tool Use
-- What is in-context learning?
 - What is the concept of an LLM "agent"?
 - How can LLMs be integrated with external tools, functions, or APIs?
 - What are the basic concepts and strategies for implementing agents with LLMs?
@@ -302,8 +323,6 @@ This comprehensive guide contains LLM interview questions organized by role leve
 ## Prompt Engineering & In-Context Learning
 - What are types of prompt engineering?
 - Why is prompt engineering crucial for LLM performance?
-- What is zero-shot learning, and how do LLMs implement it?
-- What is few-shot learning, and what are its benefits?
 - What are zero-shot, few-shot, and chain-of-thought prompting techniques?
 - What are strategies to write good prompts?
 - What are some aspects to keep in mind while using few-shot prompting?
@@ -391,3 +410,12 @@ This comprehensive guide contains LLM interview questions organized by role leve
 3. Remove graph breaks in torch.compile
 4. Help solve Unsloth issues!
 5. Memory Efficient Backprop
+
+## Further reading
+
+- Vaswani et al., [Attention Is All You Need](https://arxiv.org/abs/1706.03762), the original Transformer paper.
+- Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html).
+- Es et al., [RAGAS: Automated Evaluation of Retrieval Augmented Generation](https://aclanthology.org/2024.eacl-demo.16/), on evaluating RAG pipeline dimensions.
+- Muennighoff et al., [MTEB: Massive Text Embedding Benchmark](https://aclanthology.org/2023.eacl-main.148/), which covers embedding tasks beyond semantic similarity.
+- [vLLM serving metrics](https://docs.vllm.ai/en/latest/design/metrics/), including queue, prefill, and decode timing.
+- OWASP, [Prompt Injection](https://genai.owasp.org/llm2026/llm012026-prompt-injection/) and [Excessive Agency](https://genai.owasp.org/llm2026/llm032026-excessive-agency/) guidance for agentic applications.
