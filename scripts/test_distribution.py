@@ -17,6 +17,17 @@ class TrackingLinkTests(unittest.TestCase):
             "https://mshojaei77.github.io/fa/writing/document-parsing/?utm_source=telegram&utm_medium=social&utm_campaign=document-parsing",
         )
 
+    def test_independent_discovery_campaign_source(self) -> None:
+        actual = distribution.tracking_url(
+            "https://mshojaei77.github.io/writing/deep-research-agents/",
+            "hackernews", "social", "deep-research-agents", "regular-story",
+        )
+        self.assertEqual(
+            actual,
+            "https://mshojaei77.github.io/writing/deep-research-agents/?utm_source=hackernews&utm_medium=social&utm_campaign=deep-research-agents&utm_content=regular-story",
+        )
+        self.assertNotIn("utm_", distribution.urlsplit(actual).path)
+
     def test_preserves_non_utm_params_unicode_and_fragment_and_replaces_old_utm(self) -> None:
         actual = distribution.tracking_url(
             "https://mshojaei77.github.io/writing/deep-research-agents/?view=full&utm_source=old&utm_campaign=old#references",
