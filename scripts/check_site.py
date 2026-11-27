@@ -6,7 +6,7 @@ from urllib.parse import urlsplit, unquote
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
 routes = ["index.html", "writing/index.html", "projects/index.html",
-          "about.html", "roadmap.html", "resources.html",
+          "about.html", "roadmap.html", "privacy/index.html", "fa/privacy/index.html", "resources.html",
           "interview.html", "market_analysis.html", "mini_roadmap.html", "open_source_ai.html",
           "vector_dbs.html", "writing/document-parsing/index.html",
           "404.html", "assets/css/publication.css", "assets/css/homepage.css", "feed.xml", "sitemap.xml"]
@@ -65,7 +65,7 @@ class Locale(HTMLParser):
             self.anchors.append(a.get("href"))
 
 pairs = [("/", "/fa/")] + [(f"/{p}/", f"/fa/{p}/") for p in ("writing",)]
-pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/writing/open-source-ai/", "/fa/writing/open-source-ai/"), ("/writing/vector-databases/", "/fa/writing/vector-databases/"), ("/writing/resources/", "/fa/writing/resources/"), ("/writing/mini-roadmap/", "/fa/writing/mini-roadmap/"), ("/writing/interview/", "/fa/writing/interview/"), ("/writing/market-analysis/", "/fa/writing/market-analysis/")]
+pairs += [("/roadmap.html", "/fa/roadmap/"), ("/about.html", "/fa/about/"), ("/privacy/", "/fa/privacy/"), ("/writing/open-source-ai/", "/fa/writing/open-source-ai/"), ("/writing/vector-databases/", "/fa/writing/vector-databases/"), ("/writing/resources/", "/fa/writing/resources/"), ("/writing/mini-roadmap/", "/fa/writing/mini-roadmap/"), ("/writing/interview/", "/fa/writing/interview/"), ("/writing/market-analysis/", "/fa/writing/market-analysis/")]
 pairs.append(("/writing/document-parsing/", "/fa/writing/document-parsing/"))
 pairs += [["/writing/data-preparation/","/fa/writing/data-preparation/"],["/writing/embeddings/","/fa/writing/embeddings/"],["/writing/intro-to-llms/","/fa/writing/intro-to-llms/"],["/writing/neural-networks/","/fa/writing/neural-networks/"],["/writing/tokenization/","/fa/writing/tokenization/"],["/writing/traditional-language-models/","/fa/writing/traditional-language-models/"],["/writing/transformers/","/fa/writing/transformers/"]]
 def inspect_route(route):
@@ -330,7 +330,8 @@ for path in Path("_posts").iterdir():
 
 # Home, roadmap and about are the only standalone editorial pages.
 allowed_pages = {"index.html", "fa/index.html", "roadmap.html", "fa/roadmap/index.html",
-                 "about.html", "fa/about/index.html", "writing/index.html", "fa/writing/index.html"}
+                 "about.html", "fa/about/index.html", "privacy/index.html", "fa/privacy/index.html",
+                 "writing/index.html", "fa/writing/index.html"}
 for page in root.rglob("*.html"):
     name = page.relative_to(root).as_posix()
     html = page.read_text(encoding="utf-8")

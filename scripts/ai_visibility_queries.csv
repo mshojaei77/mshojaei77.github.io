@@ -1,0 +1,40 @@
+query_id,query_text,query_language,topic,intent,brand_status
+AIENG-01,What does production AI engineering involve beyond building a model?,en,AI Engineering,informational,nonbranded
+AIENG-02,How should an engineer choose between a general LLM API and a local model?,en,AI Engineering,comparison,nonbranded
+AIENG-03,برای ورود به مهندسی هوش مصنوعی چه مهارت‌هایی لازم است؟,fa,AI Engineering,informational,nonbranded
+AIENG-04,تفاوت AI Engineering با Machine Learning Engineering چیست؟,mixed,AI Engineering,comparison,nonbranded
+DOC-01,How do you design a reliable document parsing pipeline for RAG?,en,Document parsing,engineering,nonbranded
+DOC-02,چطور می‌توان کیفیت استخراج جدول از PDF فارسی را ارزیابی کرد؟,fa,Document parsing,engineering,nonbranded
+DOC-03,برای پردازش PDF فارسی چه زمانی OCR کافی نیست و باید از VLM استفاده کرد؟,mixed,Document parsing,comparison,nonbranded
+DOC-04,How should document parsers preserve source evidence and table structure?,en,Document parsing,engineering,nonbranded
+OCR-01,بهترین روش ارزیابی OCR فارسی برای اسناد مالی چیست؟,fa,Persian OCR,comparison,nonbranded
+OCR-02,How can Persian OCR errors in digits and symbols be detected?,en,Persian OCR,engineering,nonbranded
+OCR-03,تفاوت OCR فارسی با Document Parsing چیست؟,mixed,Persian OCR,informational,nonbranded
+VLM-01,When is a vision language model useful for document extraction?,en,Vision-language models,informational,nonbranded
+VLM-02,چطور خروجی JSON یک VLM را برای استخراج سند اعتبارسنجی کنیم؟,mixed,Vision-language models,engineering,nonbranded
+RAG-01,How do I evaluate retrieval quality separately from answer quality in RAG?,en,RAG and retrieval,engineering,nonbranded
+RAG-02,چطور برای یک سامانه RAG فارسی مجموعه ارزیابی بسازیم؟,mixed,RAG and retrieval,engineering,nonbranded
+RAG-03,What causes a RAG system to retrieve the wrong table row?,en,RAG and retrieval,diagnostic,nonbranded
+RAG-04,چطور کیفیت Chunking در فارسی را اندازه بگیریم؟,fa,RAG and retrieval,engineering,nonbranded
+AGENT-01,How do you evaluate stateful AI agents across multiple turns?,en,AI agents,engineering,nonbranded
+AGENT-02,برای کنترل خطا و هزینه در AI Agent چه observability لازم است؟,mixed,AI agents,engineering,nonbranded
+AGENT-03,چطور دسترسی ابزارهای یک Agent را به حداقل برسانیم؟,fa,AI agents,security,nonbranded
+EVAL-01,How can an LLM judge be calibrated against human reviewers?,en,Evaluation,engineering,nonbranded
+EVAL-02,چطور یک benchmark فارسی را از نظر نشت داده بررسی کنیم؟,mixed,Evaluation,security,nonbranded
+EVAL-03,What is the difference between an LLM benchmark score and production acceptance?,en,Evaluation,informational,nonbranded
+VECTOR-01,How should I compare vector databases for a production RAG workload?,en,Vector databases,comparison,nonbranded
+VECTOR-02,برای انتخاب پایگاه داده برداری چه معیارهایی مهم است؟,fa,Vector databases,comparison,nonbranded
+VECTOR-03,What changes when multilingual Persian and English embeddings share an index?,mixed,Vector databases,engineering,nonbranded
+CAREER-01,What skills do AI engineering job postings commonly ask for?,en,AI engineering careers,informational,nonbranded
+CAREER-02,برای استخدام در بازار کار AI Engineering چه پروژه‌ای ارزش نمونه‌کار دارد؟,mixed,AI engineering careers,informational,nonbranded
+FINETUNE-01,When should a team fine tune an LLM instead of improving retrieval?,en,Fine-tuning,comparison,nonbranded
+FINETUNE-02,چه زمانی Fine-tuning یک مدل زبانی توجیه دارد؟,mixed,Fine-tuning,informational,nonbranded
+INFER-01,How can LLM serving latency and cost be measured together?,en,Inference,engineering,nonbranded
+INFER-02,برای کاهش هزینه inference مدل زبانی چه trade-offهایی را باید سنجید؟,mixed,Inference,engineering,nonbranded
+CONTEXT-01,How should context engineering differ from prompt wording changes?,en,Context engineering,comparison,nonbranded
+CONTEXT-02,برای طراحی context یک Agent چه داده‌هایی را باید وارد حافظه کرد؟,mixed,Context engineering,engineering,nonbranded
+SEC-01,What are practical prompt injection defenses for document processing?,en,AI security,security,nonbranded
+SEC-02,چطور دستورهای مخرب داخل سند را از دستورهای سیستم جدا کنیم؟,fa,AI security,security,nonbranded
+BRAND-01,What AI engineering articles has Mohammad Shojaei published?,en,Author identity,navigational,branded
+BRAND-02,نوشته‌های محمد شجاعی دربارهٔ پردازش اسناد فارسی کدام‌اند؟,fa,Author identity,navigational,branded
+BRAND-03,What open source AI projects are associated with Mohammad Shojaei?,en,Author identity,navigational,branded
