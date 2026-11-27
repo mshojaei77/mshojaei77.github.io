@@ -191,7 +191,7 @@ def main() -> None:
 
     if created_at:
         expected = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
-        _, headers = get("/")
+        _, headers, _ = get("/")
         modified = parsedate_to_datetime(headers["last-modified"]).astimezone(timezone.utc)
         assert modified >= expected, f"Root Last-Modified {modified.isoformat()} predates deployment start {expected.isoformat()}"
         print(f"PASS production Last-Modified {modified.isoformat()} follows deployment start")
