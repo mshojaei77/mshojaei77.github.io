@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
+from publication_routes import source_route_collisions
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
 routes = ["index.html", "writing/index.html", "projects/index.html",
@@ -224,7 +225,11 @@ else:
     if "Disallow: /admin/" not in (root / "robots.txt").read_text(encoding="utf-8"):
         errors.append("Admin crawler exclusion missing")
 # Unique canonical post routes, including newly created Studio posts.
-from collections import Counter
+errors.extend(source_route_collisions({
+    "article": Path("_posts"),
+    "retired": Path("retired-posts"),
+    "redirect": Path("redirects"),
+}))
 post_routes = []
 for path in Path("_posts").iterdir():
     if path.suffix not in (".md", ".markdown", ".html"):
@@ -236,9 +241,6 @@ for path in Path("_posts").iterdir():
         errors.append(f"Missing explicit permalink: {path}")
     else:
         post_routes.append(route.group(1).strip("'\\\""))
-for route, count in Counter(post_routes).items():
-    if count > 1:
-        errors.append(f"Duplicate post permalink: {route}")
 # All explicit removals must retain an unindexed notice, without a post or archive card.
 for path in Path("retired-posts").glob("*.html"):
     source = path.read_text(encoding="utf-8")
@@ -306,6 +308,11 @@ for path in Path("_posts").iterdir():
         errors.append(f"Missing post language or permalink: {path}")
         continue
     lang, route = match.group(1), route_match.group(1)
+    author_match = re.search(r"^author:\s*(.*?)\s*$", fields, re.M)
+    article_author = author_match.group(1).strip("'\"") if author_match else ""
+    expected_author = "محمد شجاعی" if lang == "fa" else "Mohammad Shojaei"
+    if (lang == "fa" and article_author != expected_author) or (article_author and article_author != expected_author):
+        errors.append(f"Article author does not match publication identity: {path}")
     prefix = "/fa/writing/" if lang == "fa" else "/writing/"
     if not re.fullmatch(re.escape(prefix) + r"[a-z0-9]+(?:-[a-z0-9]+)*/", route):
         errors.append(f"Post outside canonical writing namespace: {path}: {route}")

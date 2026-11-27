@@ -1,4 +1,4 @@
-"""Notify IndexNow of article and language archive changes after Pages deployment."""
+"""Notify IndexNow of verified content and template URL changes after Pages deployment."""
 from __future__ import annotations
 
 import argparse
@@ -22,6 +22,16 @@ PERMALINK = re.compile(r"^permalink:\s*['\"]?([^\s'\"]+)['\"]?\s*$", re.M)
 FRONT_MATTER = re.compile(r"\A---\s*\r?\n(.*?)\r?\n---(?:\r?\n|$)", re.S)
 XML_NS = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 NOTIFY_WORKFLOW_NAME = "Notify IndexNow after deployment"
+ARTICLE_RENDER_DEPENDENCIES = {"_layouts/article.html", "_includes/related-articles.html"}
+TOPIC_RENDER_DEPENDENCIES = {"_data/topics.json"}
+AUTHOR_DATA_DEPENDENCIES = {"_data/authors.json"}
+AUTHOR_PROFILE_DEPENDENCIES = {"_includes/home-seo.html", "_includes/profile-page-schema.html"}
+FULL_SITE_RENDER_DEPENDENCIES = {
+    "_config.yml",
+    "_data/languages.yml",
+    "_layouts/publication.html",
+    "_includes/language-switch.html",
+}
 
 
 def git(*args: str, cwd: Path = Path(".")) -> str:
@@ -59,19 +69,24 @@ def route_map(revision: str, directory: str, cwd: Path = Path(".")) -> dict[str,
     return result
 
 
+def changed_files(before: str, after: str, cwd: Path = Path(".")) -> list[tuple[str, str]]:
+    output = git("diff", "--name-status", "--no-renames", before, after, cwd=cwd)
+    return [parts for row in output.splitlines() if len(parts := row.split("\t", 1)) == 2]
+
+
 def changed_paths(before: str, after: str, cwd: Path = Path(".")) -> list[tuple[str, str]]:
-    output = git("diff", "--name-status", "--no-renames", before, after, "--", "_posts", cwd=cwd)
-    changes = []
-    for row in output.splitlines():
-        parts = row.split("\t", 1)
-        if len(parts) == 2 and POST_PATH.match(parts[1]):
-            changes.append((parts[0], parts[1]))
-    return changes
+    return [(status, path) for status, path in changed_files(before, after, cwd) if POST_PATH.match(path)]
+
+
+def requires_full_site_notification(before: str, after: str, cwd: Path = Path(".")) -> bool:
+    changed = {path for _, path in changed_files(before, after, cwd)}
+    return bool(changed.intersection(FULL_SITE_RENDER_DEPENDENCIES))
 
 
 def changed_urls(before: str, after: str, cwd: Path = Path(".")) -> tuple[list[str], list[str]]:
     new_posts = route_map(after, "_posts", cwd)
     retirements = route_map(after, "retired-posts", cwd)
+    changed = {path for _, path in changed_files(before, after, cwd)}
     updates: set[str] = set()
     deletions: set[str] = set()
     for status, path in changed_paths(before, after, cwd):
@@ -87,6 +102,15 @@ def changed_urls(before: str, after: str, cwd: Path = Path(".")) -> tuple[list[s
     for route in updates | deletions:
         archive = "/fa/writing/" if route.startswith("/fa/") else "/writing/"
         archives.add(archive)
+    if changed.intersection(ARTICLE_RENDER_DEPENDENCIES | TOPIC_RENDER_DEPENDENCIES):
+        updates.update(new_posts)
+        archives.update("/fa/writing/" if route.startswith("/fa/") else "/writing/" for route in new_posts)
+    if changed.intersection(TOPIC_RENDER_DEPENDENCIES):
+        updates.update({"/", "/fa/"})
+    if changed.intersection(AUTHOR_DATA_DEPENDENCIES):
+        updates.update(set(new_posts) | {"/", "/fa/", "/about.html", "/fa/about/"})
+    if changed.intersection(AUTHOR_PROFILE_DEPENDENCIES):
+        updates.update({"/", "/fa/", "/about.html", "/fa/about/"})
     live_urls = {BASE + r for r in updates | archives}
     deleted_urls = {BASE + r for r in deletions}
     return sorted(live_urls), sorted(deleted_urls)
@@ -309,6 +333,13 @@ def main() -> int:
             print(f"A successful IndexNow workflow already handled deployment {after[:12]}; duplicate submission skipped.")
             return 0
     updates, deletions = changed_urls(before, after)
+    full_site_change = requires_full_site_notification(before, after)
+    if full_site_change:
+        if args.dry_run:
+            print("A site-wide publication dependency changed; a live run would notify every current sitemap URL. Dry run avoids fetching production.")
+        else:
+            print("A site-wide publication dependency changed; the live run will notify every current sitemap URL.")
+            updates = current_sitemap_urls()
     key, key_path = key_and_file()
     print(f"Deployments: {before[:12]} -> {after[:12]}; changed URLs: {len(updates)} live, {len(deletions)} retired.")
     for url in updates + deletions:

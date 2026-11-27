@@ -1,0 +1,59 @@
+name: Weekly production SEO audit
+on:
+  schedule:
+    - cron: "30 6 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: read
+concurrency:
+  group: weekly-production-seo-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Identify the currently deployed Pages revision
+        id: pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, re, urllib.request
+          repo = os.environ["GITHUB_REPOSITORY"]
+          request = urllib.request.Request(
+              f"https://api.github.com/repos/{repo}/pages/builds/latest",
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                  "User-Agent": "Publication-Weekly-SEO-Audit/1.0",
+              },
+          )
+          with urllib.request.urlopen(request, timeout=20) as response:
+              build = json.loads(response.read())
+          sha = build.get("commit", "")
+          if not re.fullmatch(r"[0-9a-f]{40}", sha):
+              raise SystemExit("GitHub Pages did not return a valid deployed commit SHA.")
+          print(f"sha={sha}")
+          PY
+      - name: Crawl and validate public production URLs
+        env:
+          DEPLOYMENT_SHA: ${{ steps.pages.outputs.sha }}
+        run: >-
+          python3 scripts/audit_production.py
+          --revision "$DEPLOYMENT_SHA"
+          --strict
+          --output "$RUNNER_TEMP/seo-url-audit.json"
+      - name: Retain the audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-seo-audit-${{ steps.pages.outputs.sha || github.run_id }}
+          path: ${{ runner.temp }}/seo-url-audit.json
+          if-no-files-found: ignore
+          retention-days: 30

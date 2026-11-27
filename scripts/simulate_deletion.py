@@ -14,4 +14,4 @@ for path, lang, slug in [("_posts/2026-11-26-document-parsing-en.html","en","doc
 # Test date override independently of the filename in the same disposable build.
 for slug, date in (("ci-date-order-first", "2024-04-03"), ("ci-date-order-last", "2025-05-04")):
     p = Path("_posts") / f"2023-01-01-en-{slug}.md"
-    p.write_text(f'---\nlayout: article\nlang: en\ntitle: "{slug}"\ndescription: "CI-only date fixture"\npermalink: /writing/{slug}/\ndate: "{date} 00:00:00 +0000"\nshow_article_header: true\n---\nTest fixture.\n', encoding="utf-8")
+    p.write_text(f'---\nlayout: article\nlang: en\ntitle: "{slug}"\ndescription: "CI-only date fixture for {slug}"\npermalink: /writing/{slug}/\ndate: "{date} 00:00:00 +0000"\nshow_article_header: true\n---\nTest fixture.\n', encoding="utf-8")

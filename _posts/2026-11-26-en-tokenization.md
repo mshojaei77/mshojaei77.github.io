@@ -4,7 +4,7 @@ layout: article
 lang: en
 permalink: /writing/tokenization/
 nav_exclude: true
-description: "Tokenization Tutorial: Text to Tokens for LLMs"
+description: "Follow an LLM tokenization pipeline and compare character, word, subword and byte-level approaches, including the basic steps of BPE."
 date: 2026-11-26 00:00:00 +0000
 article_kind: tutorial
 show_article_header: false

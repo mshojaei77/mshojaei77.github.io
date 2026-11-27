@@ -1,0 +1,25 @@
+{% assign canonical = page.url | absolute_url %}
+{% assign author_key = 'Mohammad Shojaei' %}{% if page.lang == 'fa' %}{% assign author_key = 'محمد شجاعی' %}{% endif %}
+{% assign author_profile = site.data.authors[author_key] %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": {{ canonical | append: '#profilepage' | jsonify }},
+  "url": {{ canonical | jsonify }},
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "inLanguage": {{ page.lang | jsonify }},
+  "mainEntity": {
+    "@type": "Person",
+    "@id": "https://mshojaei77.github.io/#person",
+    "name": {{ author_profile.name | jsonify }},
+    "alternateName": {{ author_profile.alternate_name | jsonify }},
+    "url": {{ author_profile.url | jsonify }},
+    "image": {{ author_profile.image | jsonify }},
+    "jobTitle": {{ author_profile.job_title | jsonify }},
+    "sameAs": {{ author_profile.same_as | jsonify }},
+    "knowsAbout": {{ author_profile.knows_about | jsonify }}
+  }
+}
+</script>

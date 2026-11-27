@@ -4,7 +4,7 @@ layout: article
 lang: en
 permalink: /writing/neural-networks/
 nav_exclude: true
-description: "Neural Networks Tutorial: Foundations for LLMs"
+description: "Review neurons, network layers, activations, loss, optimization and backpropagation as core concepts behind deep learning and language models."
 date: 2026-11-26 00:00:00 +0000
 article_kind: tutorial
 show_article_header: false

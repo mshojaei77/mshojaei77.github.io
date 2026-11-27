@@ -1,0 +1,56 @@
+{
+  "Mohammad Shojaei": {
+    "name": "Mohammad Shojaei",
+    "alternate_name": "محمد شجاعی",
+    "url": "https://mshojaei77.github.io/about.html",
+    "image": "https://github.com/mshojaei77.png",
+    "job_title": "AI Engineer",
+    "twitter": "realshojaei",
+    "same_as": [
+      "https://github.com/mshojaei77",
+      "https://huggingface.co/mshojaei77",
+      "https://www.linkedin.com/in/mshojaei77/",
+      "https://x.com/realshojaei",
+      "https://t.me/LLMEngineers"
+    ],
+    "knows_about": [
+      "Large Language Models",
+      "AI Agents",
+      "Retrieval-Augmented Generation",
+      "LLM Evaluation",
+      "LLMOps",
+      "Model Serving",
+      "LangGraph",
+      "vLLM",
+      "Hugging Face",
+      "FastAPI"
+    ]
+  },
+  "محمد شجاعی": {
+    "name": "محمد شجاعی",
+    "alternate_name": "Mohammad Shojaei",
+    "url": "https://mshojaei77.github.io/fa/about/",
+    "image": "https://github.com/mshojaei77.png",
+    "job_title": "مهندس هوش مصنوعی",
+    "twitter": "realshojaei",
+    "same_as": [
+      "https://github.com/mshojaei77",
+      "https://huggingface.co/mshojaei77",
+      "https://www.linkedin.com/in/mshojaei77/",
+      "https://x.com/realshojaei",
+      "https://t.me/LLMEngineers"
+    ],
+    "knows_about": [
+      "Large Language Models",
+      "AI Agents",
+      "Retrieval-Augmented Generation",
+      "LLM Evaluation",
+      "LLMOps",
+      "Model Serving",
+      "LangGraph",
+      "vLLM",
+      "Hugging Face",
+      "FastAPI"
+    ]
+  }
+}
