@@ -214,7 +214,7 @@ fs.mkdirSync(out, { recursive: true });
       assert.equal(await guide.locator('html').getAttribute('dir'),'rtl');
       assert.equal(await guide.locator('main article h1').count(),1);
       await checkSwitch(guide,articleRoute,englishRoute,'fa');
-      assert.equal(await guide.locator('link[rel=canonical]').getAttribute('href'),origin+articleRoute);
+      assert.equal(await guide.locator('link[rel=canonical]').getAttribute('href'),'https://mshojaei77.github.io'+articleRoute);
       assert(await guide.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1), 'Persian article horizontal overflow '+width);
       assert(await guide.evaluate(()=>[...document.fonts].some(f=>f.family==='Vazirmatn'&&f.status==='loaded')));
       assert((await guide.locator('main').innerText()).length>1000);
