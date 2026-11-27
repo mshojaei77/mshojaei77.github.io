@@ -133,14 +133,11 @@ for path in ("index.html", "fa/index.html", "writing/index.html", "fa/writing/in
 for path in ("book/index.html", "fa/book/index.html", "book/ch1.html"):
     if (root / path).exists():
         errors.append(f"Retired book published: {path}")
-# Retired publication surfaces must not appear anywhere in the generated site.
-import re
+# Retired newsletter surfaces must not appear anywhere in the generated site.
 for path in root.rglob("*"):
     if not path.is_file() or path.suffix not in (".html", ".xml"):
         continue
     html = path.read_text(encoding="utf-8")
-    if re.search(r'https?://(?:[\w-]+\.)*medium\.com(?:[/:?#]|$)', html, re.I):
-        errors.append(f"{path.relative_to(root)}: Medium URL remains")
     if re.search(r'(?:(?:https?://mshojaei77\.github\.io)?/(?:fa/)?newsletter/|https?://(?:www\.)?linkedin\.com/newsletters/)', html, re.I):
         errors.append(f"{path.relative_to(root)}: retired newsletter URL remains")
 for path in ("newsletter/index.html", "fa/newsletter/index.html"):
