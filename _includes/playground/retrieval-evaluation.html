@@ -1,0 +1,25 @@
+<section class="tool-panel" aria-labelledby="retrieval-eval-title">
+  <h2 id="retrieval-eval-title">{% if page.lang == 'fa' %}رتبه‌بندی و ارتباط{% else %}Rankings and relevance{% endif %}</h2>
+  <p>{% if page.lang == 'fa' %}ورودی JSON را ویرایش کنید. هر سند رتبه‌بندی‌شده که برچسب ندارد، در محاسبه نامرتبط فرض می‌شود و تعداد آن گزارش می‌شود.{% else %}Edit the JSON input. Ranked documents without a relevance label are treated as non-relevant and counted in the output.{% endif %}</p>
+  <label for="retrieval-eval-k">{% if page.lang == 'fa' %}مقدار K{% else %}Cutoff K{% endif %}</label>
+  <input id="retrieval-eval-k" data-eval-k type="number" min="1" max="1000" step="1" value="5" inputmode="numeric">
+  <label for="retrieval-eval-input">{% if page.lang == 'fa' %}ورودی آزمایشی{% else %}Evaluation fixture{% endif %}</label>
+  <textarea id="retrieval-eval-input" data-eval-input rows="15" dir="auto" spellcheck="false">{
+  "queries": [
+    {"id": "q1", "ranking": ["d2", "d1", "d3", "d4"], "relevance": {"d1": 3, "d2": 0, "d3": 1, "d4": 2}},
+    {"id": "q2", "ranking": ["x1", "x2"], "relevance": {"x1": 0, "x2": 0}}
+  ]
+}</textarea>
+  <div class="tool-actions"><button class="action" type="button" data-eval-run>{% if page.lang == 'fa' %}محاسبه{% else %}Calculate metrics{% endif %}</button><button class="action secondary" type="button" data-eval-reset>{% if page.lang == 'fa' %}بازنشانی نمونه{% else %}Reset sample{% endif %}</button></div>
+  <section class="tool-output" data-eval-output data-error="false" aria-live="polite" aria-atomic="true"></section>
+  <details><summary>{% if page.lang == 'fa' %}تعریف معیارها و فرض‌ها{% else %}Metric definitions and assumptions{% endif %}</summary>
+    <ul>
+      <li><code>Precision@K = relevant retrieved / K</code>; unfilled ranks count as non-relevant.</li>
+      <li><code>Recall@K = relevant retrieved / all positively judged documents</code>.</li>
+      <li><code>MRR</code> averages reciprocal rank across every query; queries without relevant judgments contribute zero.</li>
+      <li><code>DCG@K = Σ (2^grade − 1) / log₂(rank + 1)</code>; <code>NDCG@K</code> divides by the ideal DCG from supplied positive grades.</li>
+      <li><code>MAP</code> averages precision at each relevant rank, divided by the number of positively judged documents; no-positive queries contribute zero.</li>
+      <li>{% if page.lang == 'fa' %}رتبه‌بندی‌های تکراری فقط در اولین جایگاه نگه داشته می‌شوند. سندهای بدون برچسب، relevance برابر صفر دارند؛ بنابراین تکمیل judgmentها برای تفسیر معتبر مهم است. این معیارها کیفیت کل سامانهٔ RAG را اندازه نمی‌گیرند.{% else %}Duplicate ranked IDs keep their first occurrence. Unjudged documents receive relevance zero, so complete judgments matter for interpretation. These metrics do not measure complete RAG quality.{% endif %}</li>
+    </ul>
+  </details>
+</section>

@@ -60,6 +60,9 @@
 .tool-summary{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(8rem,auto);gap:.5rem 1rem;max-width:42rem}
 .tool-summary dt{font-weight:700;color:var(--muted)}
 .tool-summary dd{margin:0;font-variant-numeric:tabular-nums}
+.metric-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:10px;margin-block:14px}
+.metric-results>div{padding:10px;border:1px solid var(--line);border-radius:6px}
+.metric-results dt{color:var(--muted);font-size:.9rem}.metric-results dd{margin-inline-start:0;font-size:1.25rem;font-variant-numeric:tabular-nums}
 .tool-results .table-scroll{max-width:100%;overflow:auto;overscroll-behavior-inline:contain}
 .tool-results table{width:100%;border-collapse:collapse;text-align:start}
 .tool-results th,.tool-results td{padding:.6rem .75rem;border:1px solid var(--line);vertical-align:top;text-align:start}

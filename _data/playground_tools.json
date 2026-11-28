@@ -19,5 +19,12 @@
     "description": {"en": "Estimate model-weight and KV-cache memory from architecture and workload inputs, with runtime overhead and safety margin shown separately.", "fa": "حافظهٔ وزن مدل و KV cache را با ورودی‌های معماری و workload تخمین بزنید؛ سربار runtime و حاشیهٔ ایمنی جدا نمایش داده می‌شود."},
     "path": {"en": "/playground/llm-memory-estimator/", "fa": "/fa/playground/llm-memory-estimator/"},
     "script": "/assets/js/llm-memory-estimator.js"
+  },
+  {
+    "id": "retrieval-evaluation",
+    "title": {"en": "Retrieval Evaluation Lab", "fa": "آزمایشگاه ارزیابی بازیابی"},
+    "description": {"en": "Enter ranked documents and graded relevance labels to inspect Precision@K, Recall@K, hit rate, reciprocal rank, MRR, DCG, NDCG and average precision.", "fa": "فهرست رتبه‌بندی‌شدهٔ سندها و برچسب‌های ارتباط را وارد کنید تا Precision@K، Recall@K، hit rate، reciprocal rank، MRR، DCG، NDCG و average precision را ببینید."},
+    "path": {"en": "/playground/retrieval-evaluation/", "fa": "/fa/playground/retrieval-evaluation/"},
+    "script": "/assets/js/retrieval-evaluation.js"
   }
 ]
