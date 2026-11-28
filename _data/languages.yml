@@ -83,6 +83,11 @@
   en_label: "Retrieval Evaluation Lab"
   fa_label: "آزمایشگاه ارزیابی بازیابی"
   hidden: true
+- en: "/playground/rag-chunking/"
+  fa: "/fa/playground/rag-chunking/"
+  en_label: "RAG Chunking Playground"
+  fa_label: "محیط آموزشی قطعه‌بندی RAG"
+  hidden: true
 - en: "/learn/foundations/"
   fa: "/fa/learn/foundations/"
   en_label: "AI Engineering Foundations"

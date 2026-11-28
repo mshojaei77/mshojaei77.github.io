@@ -26,5 +26,12 @@
     "description": {"en": "Enter ranked documents and graded relevance labels to inspect Precision@K, Recall@K, hit rate, reciprocal rank, MRR, DCG, NDCG and average precision.", "fa": "فهرست رتبه‌بندی‌شدهٔ سندها و برچسب‌های ارتباط را وارد کنید تا Precision@K، Recall@K، hit rate، reciprocal rank، MRR، DCG، NDCG و average precision را ببینید."},
     "path": {"en": "/playground/retrieval-evaluation/", "fa": "/fa/playground/retrieval-evaluation/"},
     "script": "/assets/js/retrieval-evaluation.js"
+  },
+  {
+    "id": "rag-chunking",
+    "title": {"en": "RAG Chunking Playground", "fa": "محیط آموزشی قطعه‌بندی RAG"},
+    "description": {"en": "Inspect character, word, sentence and paragraph boundaries, overlap, repeated content, chunk lengths and source offsets using local text.", "fa": "مرزهای نویسه، واژه، جمله و پاراگراف، هم‌پوشانی، محتوای تکراری، طول chunk و offset متن را به‌صورت محلی بررسی کنید."},
+    "path": {"en": "/playground/rag-chunking/", "fa": "/fa/playground/rag-chunking/"},
+    "script": "/assets/js/rag-chunking.js"
   }
 ]

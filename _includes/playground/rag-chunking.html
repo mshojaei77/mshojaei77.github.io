@@ -1,0 +1,23 @@
+<section class="tool-panel" aria-labelledby="chunking-title">
+  <h2 id="chunking-title">{% if page.lang == 'fa' %}قطعه‌بندی متن{% else %}Split text into chunks{% endif %}</h2>
+  <p>{% if page.lang == 'fa' %}این ابزار متن را در مرورگر می‌پردازد. واحد انتخابی مرز chunk را تعیین می‌کند؛ شمارش‌ها توکن مدل نیستند.{% else %}This tool processes text in your browser. The selected unit defines chunk boundaries; displayed counts are not model-token counts.{% endif %}</p>
+  <label for="chunk-strategy">{% if page.lang == 'fa' %}مرز قطعه‌بندی{% else %}Boundary strategy{% endif %}</label>
+  <select id="chunk-strategy" data-chunk-strategy>
+    <option value="characters">{% if page.lang == 'fa' %}نویسه{% else %}Characters{% endif %}</option>
+    <option value="words" selected>{% if page.lang == 'fa' %}واژه{% else %}Words{% endif %}</option>
+    <option value="sentences">{% if page.lang == 'fa' %}جمله{% else %}Sentences{% endif %}</option>
+    <option value="paragraphs">{% if page.lang == 'fa' %}پاراگراف{% else %}Paragraphs{% endif %}</option>
+  </select>
+  <div class="tool-control-grid">
+    <label class="tool-field" for="chunk-size">{% if page.lang == 'fa' %}حداکثر واحد در هر قطعه{% else %}Maximum units per chunk{% endif %}<input id="chunk-size" data-chunk-size type="number" min="1" max="2000" value="120" inputmode="numeric"></label>
+    <label class="tool-field" for="chunk-overlap">{% if page.lang == 'fa' %}واحدهای هم‌پوشان{% else %}Overlap units{% endif %}<input id="chunk-overlap" data-chunk-overlap type="number" min="0" max="1999" value="20" inputmode="numeric"></label>
+  </div>
+  <label for="chunk-input">{% if page.lang == 'fa' %}متن نمونه یا متن خودتان{% else %}Sample or your own text{% endif %}</label>
+  <textarea id="chunk-input" data-chunk-input rows="11" dir="auto">{% if page.lang == 'fa' %}قطعه‌بندی سند یکی از مراحل مهم ساخت سامانهٔ بازیابی است. مرزهای نامناسب ممکن است شواهد را از هم جدا کنند.
+
+در متن فارسی، نیم‌فاصله و ترتیب خواندن را باید در نمونهٔ واقعی بررسی کرد. شمارش نویسه و واژه معادل tokenizer مدل نیست.{% else %}Document chunking is one stage in a retrieval pipeline. Poor boundaries can separate evidence that belongs together.
+
+For Persian text, inspect real reading order and zero-width non-joiners. Character and word counts are not a model tokenizer.{% endif %}</textarea>
+  <div class="tool-actions"><button class="action" type="button" data-chunk-run>{% if page.lang == 'fa' %}ساخت قطعه‌ها{% else %}Inspect chunks{% endif %}</button><button class="action secondary" type="button" data-chunk-reset>{% if page.lang == 'fa' %}بازنشانی نمونه{% else %}Reset sample{% endif %}</button></div>
+  <section class="tool-output" data-chunk-output data-error="false" aria-live="polite" aria-atomic="true"></section>
+</section>
