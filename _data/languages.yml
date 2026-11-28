@@ -78,6 +78,11 @@
   en_label: "Memory Estimator"
   fa_label: "تخمین‌گر حافظه"
   hidden: true
+- en: "/playground/retrieval-evaluation/"
+  fa: "/fa/playground/retrieval-evaluation/"
+  en_label: "Retrieval Evaluation Lab"
+  fa_label: "آزمایشگاه ارزیابی بازیابی"
+  hidden: true
 - en: "/learn/foundations/"
   fa: "/fa/learn/foundations/"
   en_label: "AI Engineering Foundations"

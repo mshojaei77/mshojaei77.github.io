@@ -97,8 +97,8 @@ for path in paths:
 
 tools = load_json("_data/playground_tools.json")
 tool_ids = [tool.get("id") for tool in tools] if isinstance(tools, list) else []
-if len(tool_ids) != 3 or len(tool_ids) != len(set(tool_ids)):
-    errors.append("The first playground release must have three unique tools")
+if len(tool_ids) != 4 or len(tool_ids) != len(set(tool_ids)):
+    errors.append("The first playground release must have four unique tools")
 for tool in tools if isinstance(tools, list) else []:
     script = ROOT / tool.get("script", "").lstrip("/")
     if not script.is_file():
