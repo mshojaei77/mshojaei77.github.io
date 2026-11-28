@@ -309,6 +309,18 @@ fs.mkdirSync(out, { recursive: true });
     assert.equal(await platform.locator('html').getAttribute('dir'),'rtl');
     await platform.locator('[data-eval-run]').click();
     assert((await platform.locator('[data-eval-output]').innerText()).includes('Precision@5'));
+    assert((await platform.goto(origin+'/playground/rag-chunking/')).ok());
+    const chunkRequests=[];platform.on('request',request=>chunkRequests.push(request.url()+' '+(request.postData()||'')));
+    await platform.locator('[data-chunk-input]').fill('alpha beta gamma LOCAL_ONLY_CHUNK_SENTINEL');
+    await platform.locator('[data-chunk-size]').fill('2');await platform.locator('[data-chunk-overlap]').fill('1');
+    await platform.locator('[data-chunk-run]').click();
+    assert.equal(await platform.locator('[data-chunk-output] li').count(),3);
+    assert((await platform.locator('[data-chunk-output]').innerText()).includes('UTF-16 offsets'));
+    assert.equal(await platform.locator('[data-chunk-output] pre[tabindex="0"]').count(),3);
+    assert(!chunkRequests.some(request=>request.includes('LOCAL_ONLY_CHUNK_SENTINEL')),'Chunk input must remain local');
+    assert((await platform.goto(origin+'/fa/playground/rag-chunking/')).ok());
+    assert.equal(await platform.locator('html').getAttribute('dir'),'rtl');
+    assert(await platform.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Chunking playground should not overflow horizontally');
     for (const route of ['/playground/','/fa/playground/','/learn/','/fa/learn/']) {
       assert((await platform.goto(origin+route)).ok(),route);
       assert.equal(await platform.locator('main h1').count(),1,route+' has one primary heading');

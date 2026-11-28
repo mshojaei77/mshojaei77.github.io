@@ -3,6 +3,7 @@ const { inspectText } = require('../assets/js/persian-text-inspector.js');
 const { tokenize, rankDocuments } = require('../assets/js/bm25-playground.js');
 const { estimateMemory } = require('../assets/js/llm-memory-estimator.js');
 const { evaluateRetrieval } = require('../assets/js/retrieval-evaluation.js');
+const { chunkText } = require('../assets/js/rag-chunking.js');
 const { parseState, completionCount, schemaVersion } = require('../assets/js/learning-progress.js');
 
 const inspected = inspectText('ك ي ١٢ 12\u200c\u200f', { letters: true, digits: true });
@@ -52,6 +53,21 @@ assert.equal(deduplicated.queries[0].duplicates, 1);
 assert.equal(deduplicated.queries[0].precisionAtK, 0.5);
 assert.throws(() => evaluateRetrieval({ queries: [{ ranking: ['a'], relevance: { a: -1 } }] }), /grades/);
 assert.throws(() => evaluateRetrieval({ queries: [{ ranking: ['a'], relevance: {} }] }, 0), /K must/);
+
+const wordChunks = chunkText('one two three', 'words', 2, 1);
+assert.deepEqual(wordChunks.chunks.map(chunk => chunk.text), ['one two', ' two three']);
+assert.deepEqual(wordChunks.chunks.map(chunk => [chunk.start, chunk.end]), [[0, 7], [3, 13]]);
+assert.equal(wordChunks.repeatedCharacters, 4);
+const sentenceChunks = chunkText('اول. دوم؟ سوم۔', 'sentences', 1, 0);
+assert.equal(sentenceChunks.chunkCount, 3);
+assert.equal(sentenceChunks.chunks.map(chunk => chunk.text).join(''), 'اول. دوم؟ سوم۔');
+const paragraphChunks = chunkText('a\n\nb\n\nc', 'paragraphs', 1, 0);
+assert.equal(paragraphChunks.chunks.map(chunk => chunk.text).join(''), 'a\n\nb\n\nc');
+const unicodeChunks = chunkText('الف🌱ب', 'characters', 3, 1);
+assert.equal(unicodeChunks.sourceCharacters, 5);
+assert.equal(unicodeChunks.chunks[1].start, 2);
+assert.throws(() => chunkText('abc', 'words', 2, 2), /smaller/);
+assert.throws(() => chunkText('  ', 'words', 2, 0), /Enter some text/);
 
 const ids = ['one', 'two'];
 const state = parseState(JSON.stringify({ schema_version: schemaVersion, completed: { one: true, stale: true } }), ids);
