@@ -405,7 +405,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 @font-face {
  font-family: Vazirmatn;
  src: url('/assets/fonts/Vazirmatn-variable.woff2') format('woff2');
- font-weight: 100 900; font-style: normal; font-display: swap;
+ /* Avoid late font swaps moving Persian text after first paint (CLS). */
+ font-weight: 100 900; font-style: normal; font-display: optional;
 }
 :root { --max: 900px; }
 html[lang="fa"] { --fa-font: Vazirmatn, Tahoma, "Segoe UI", Arial, sans-serif; }
