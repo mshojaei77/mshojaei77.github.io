@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_acknowledged_revision": "7ed79ddcede2166708a77ac62de93c3382499e1e",
-  "last_acknowledged_at": "2026-11-28T00:10:32.558277+00:00",
+  "last_acknowledged_revision": "7152ee0aec4912e66ba3ad5058ba5db87b33b551",
+  "last_acknowledged_at": "2026-11-28T00:19:52.091345+00:00",
   "notification_state": "full_resync_accepted",
   "known_canonical_urls": [
     "https://mshojaei77.github.io/",
@@ -20,6 +20,7 @@
     "https://mshojaei77.github.io/fa/playground/bm25/",
     "https://mshojaei77.github.io/fa/playground/llm-memory-estimator/",
     "https://mshojaei77.github.io/fa/playground/persian-text-inspector/",
+    "https://mshojaei77.github.io/fa/playground/rag-chunking/",
     "https://mshojaei77.github.io/fa/playground/retrieval-evaluation/",
     "https://mshojaei77.github.io/fa/privacy/",
     "https://mshojaei77.github.io/fa/reading/",
@@ -80,6 +81,7 @@
     "https://mshojaei77.github.io/playground/bm25/",
     "https://mshojaei77.github.io/playground/llm-memory-estimator/",
     "https://mshojaei77.github.io/playground/persian-text-inspector/",
+    "https://mshojaei77.github.io/playground/rag-chunking/",
     "https://mshojaei77.github.io/playground/retrieval-evaluation/",
     "https://mshojaei77.github.io/privacy/",
     "https://mshojaei77.github.io/reading/",
